@@ -21,7 +21,7 @@ Here are some sample stories:
 * [ ] User can add a new story
   * [ ] When adding a new story, user can specify the name, description and people they choose to share their stories with
   * [ ] User has the option to import photos from their phone
-* [ ] User can add a new moment
+* [ ] User can add a new moment into a story
   * [ ] When adding a new moment, user can specify the date, description and
   * [ ] User can import photos or take new pictures
 * [ ] User can click on any story from their timeline
