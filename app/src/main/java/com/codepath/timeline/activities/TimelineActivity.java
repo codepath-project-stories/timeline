@@ -1,9 +1,11 @@
-package com.codepath.timeline;
+package com.codepath.timeline.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.codepath.timeline.R;
+
+public class TimelineActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
