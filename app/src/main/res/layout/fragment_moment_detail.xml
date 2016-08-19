@@ -60,4 +60,12 @@
       android:id="@+id/tvDescription"
       android:layout_alignParentBottom="true"
       android:layout_alignParentLeft="true"/>
+
+  <ImageView
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:id="@+id/ivClose"
+      android:src="@drawable/close"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentRight="true"/>
 </RelativeLayout>

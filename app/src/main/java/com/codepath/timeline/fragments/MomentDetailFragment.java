@@ -18,6 +18,7 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MomentDetailFragment extends Fragment {
@@ -29,6 +30,10 @@ public class MomentDetailFragment extends Fragment {
   ImageView ivMedia;
 
   private Moment mMoment;
+
+  public interface MomentDetailListener {
+    void onCloseButtonClicked();
+  }
 
   public MomentDetailFragment() {
     // Empty constructor is required for DialogFragment
@@ -71,8 +76,16 @@ public class MomentDetailFragment extends Fragment {
 
     if (mMoment.getResourceUrl() != null) {
       Glide.with(this).load(mMoment.getResourceUrl())
-          .fitCenter()
+          .centerCrop()
           .into(ivMedia);
+    }
+  }
+
+  @OnClick(R.id.ivClose)
+  public void onCloseButtonClicked() {
+    MomentDetailListener listener = (MomentDetailListener)getParentFragment();
+    if (listener != null) {
+      listener.onCloseButtonClicked();
     }
   }
 }
