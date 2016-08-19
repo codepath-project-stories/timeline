@@ -11,12 +11,11 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsAdapter;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.ItemClickSupport;
+import com.codepath.timeline.util.view.ItemClickSupport;
 import com.codepath.timeline.util.MockResponseGenerator;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,7 +51,7 @@ public class TimelineActivity extends AppCompatActivity {
           public void onItemClicked(RecyclerView recyclerView, int position, View v) {
             Moment moment = mMomentList.get(position);
             Intent intent = new Intent(TimelineActivity.this, MomentDetailActivity.class);
-            intent.putExtra(AppConstants.MOMENT_EXTRA, Parcels.wrap(moment));
+            intent.putExtra(AppConstants.INDEX, position);
             startActivity(intent);
           }
         });

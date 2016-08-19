@@ -71,7 +71,7 @@ public class MomentDetailFragment extends Fragment {
 
     if (mMoment.getResourceUrl() != null) {
       Glide.with(this).load(mMoment.getResourceUrl())
-          .centerCrop()
+          .fitCenter()
           .into(ivMedia);
     }
   }

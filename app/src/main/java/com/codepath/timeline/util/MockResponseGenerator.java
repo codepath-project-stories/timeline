@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MockResponseGenerator {
   private static final String TAG = MockResponseGenerator.class.getSimpleName();
@@ -19,9 +20,12 @@ public class MockResponseGenerator {
   private Gson gson;
   private List<Moment> mMomentList;
   private List<Story> mStoryList;
+  private List<String> mMediaList;
+  private Random mRandomGenerator;
 
   private MockResponseGenerator() {
     gson = new Gson();
+    createMediaList();
     createMockStoryList();
     createMockMomentList();
   }
@@ -32,6 +36,21 @@ public class MockResponseGenerator {
     }
 
     return instance;
+  }
+
+  private void createMediaList() {
+    mMediaList = new ArrayList<>();
+    mMediaList.add("http://pbs.twimg.com/media/CqLfimAXgAAIqyD.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqLmaWCXgAEbYCY.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqLOZTrWcAQOl0x.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqK2WIdWgAEZIFM.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqKUA_TXEAASfa5.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqJ_a9NWYAAfCMX.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqJxseQW8AA9bEa.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqJdGVLXgAAnLJl.jpg");
+    mMediaList.add("https://pbs.twimg.com/media/CqJBn4BWEAALVNo.jpg");
+
+    mRandomGenerator = new Random();
   }
 
   private void createMockStoryList() {
@@ -52,10 +71,16 @@ public class MockResponseGenerator {
         moment = new Moment();
         moment.setHeader("200" + i);
       } else {
-        moment = new Moment("Moment " + i, "January " + i + ", 2016", "http://pbs.twimg.com/media/CqLfimAXgAAIqyD.jpg", user);
+        String mediaUrl = getRandomMedia();
+        moment = new Moment("Moment " + i, "January " + i + ", 2016", mediaUrl, user);
       }
       mMomentList.add(moment);
     }
+  }
+
+  private String getRandomMedia() {
+    int index = mRandomGenerator.nextInt(mMediaList.size());
+    return mMediaList.get(index);
   }
 
   public List<Story> getStoryList() {

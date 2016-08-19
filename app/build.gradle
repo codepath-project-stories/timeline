@@ -49,4 +49,7 @@ dependencies {
 
   // GSON
   compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+  // https://github.com/ToxicBakery/ViewPagerTransforms
+  compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
 }
