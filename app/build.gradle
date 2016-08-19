@@ -7,7 +7,7 @@ android {
   buildToolsVersion "23.0.3"
 
   defaultConfig {
-    applicationId "com.codepath.apps.twitterclient"
+    applicationId "com.codepath.apps.timeline"
     minSdkVersion 16
     targetSdkVersion 23
     versionCode 1
@@ -46,4 +46,7 @@ dependencies {
   // Parceler
   compile 'org.parceler:parceler-api:1.1.1'
   apt 'org.parceler:parceler:1.1.1'
+
+  // GSON
+  compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 }
