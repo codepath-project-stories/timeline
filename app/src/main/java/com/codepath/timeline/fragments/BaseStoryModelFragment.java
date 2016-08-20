@@ -17,7 +17,6 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.adapters.StoriesAdapter;
 import com.codepath.timeline.models.Story;
-import com.codepath.timeline.util.view.DividerItemDecoration;
 import com.codepath.timeline.util.view.ItemClickSupport;
 
 import org.parceler.Parcels;
@@ -63,9 +62,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
         layoutManager.scrollToPosition(0);
 
         // setup visual line divider
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
-        rvStories.addItemDecoration(itemDecoration);
-        rvStories.setHasFixedSize(false);
+//        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+//        rvStories.addItemDecoration(itemDecoration);
+//        rvStories.setHasFixedSize(false);
 
         // abstract method call
         populateList();

@@ -1,54 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
-    android:layout_width="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    app:cardUseCompatPadding="true"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp" >
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="#E6E6E6"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="5dp" >
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ivBackgroundImage"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/tvStoryTitle"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@android:color/black"
-        tools:text="Fun times in Seattle"
-        android:textSize="15sp"
-        android:gravity="center" />
+        android:padding="10dp"
+        android:background="@android:color/white" >
 
-    <TextView
-        android:id="@+id/tvMomentsCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:text="8"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@android:color/black"
-        android:textSize="13sp"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/tvStoryTitle" />
+        <ImageView
+            android:id="@+id/ivBackgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
-    <TextView
-        android:id="@+id/tvMomentsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:text="MOMENTS"
-        android:paddingLeft="5dp"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@android:color/black"
-        android:textSize="13sp"
-        android:layout_toRightOf="@+id/tvMomentsCount"
-        android:layout_below="@+id/tvStoryTitle"/>
+        <TextView
+            android:id="@+id/tvStoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="Fun times in Seattle"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tvMomentsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStoryTitle"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:paddingTop="4dp"
+            android:textStyle="bold"
+            android:text="8"
+            android:textColor="@android:color/black"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvMomentsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStoryTitle"
+            android:layout_toRightOf="@+id/tvMomentsCount"
+            android:fontFamily="sans-serif-light"
+            android:paddingLeft="5dp"
+            android:paddingTop="4dp"
+            android:text="MOMENTS"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="11sp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

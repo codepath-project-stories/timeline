@@ -6,7 +6,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MyPagerAdapter;
 
@@ -15,10 +18,12 @@ import butterknife.ButterKnife;
 
 public class LandingActivity extends AppCompatActivity {
 
-    @BindView(R.id.vpPager)
-    ViewPager viewPager;
-    @BindView(R.id.sliding_tabs)
-    TabLayout tabs;
+    @BindView(R.id.vpPager) ViewPager viewPager;
+    @BindView(R.id.sliding_tabs) TabLayout tabs;
+    @BindView(R.id.ivBackgroundImage) ImageView backgroundImage;
+    @BindView(R.id.tvUserName) TextView userName;
+    @BindView(R.id.tvStoriesCount) TextView storiesCount;
+    @BindView(R.id.tvStoriesText) TextView storiesCountText;
     private MyPagerAdapter viewPagerAdapter;
 
     @Override
@@ -32,6 +37,13 @@ public class LandingActivity extends AppCompatActivity {
 
         // Give the TabLayout the ViewPager
         tabs.setupWithViewPager(viewPager);
+
+        // setup main views
+        backgroundImage.setImageResource(0);
+        Glide.with(getApplicationContext()).load(R.drawable.background_image).into(backgroundImage);
+        userName.setText("Dianne Bautista");
+        storiesCount.setText("20");
+        storiesCountText.setText("STORIES");
 
     }
 
