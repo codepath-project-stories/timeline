@@ -11,9 +11,15 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.view.ItemClickSupport;
 import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.view.ItemClickSupport;
 
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +44,7 @@ public class TimelineActivity extends AppCompatActivity {
   }
 
   private void initList(){
-    mMomentList = MockResponseGenerator.getInstance().getMomentList();
+    mMomentList = new ArrayList<>();
     mAdapter = new MomentsAdapter(this, mMomentList);
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     rvMoments.setLayoutManager(linearLayoutManager);
@@ -52,11 +58,18 @@ public class TimelineActivity extends AppCompatActivity {
           }
         });
 
+    getMomentList();
+  }
+
+  // TODO: Change the momentId when making network request
+  private void getMomentList() {
+    mMomentList.addAll(TimelineClient.getInstance().getMomentsList(this, -1));
+    mAdapter.notifyItemRangeInserted(0, mMomentList.size());
   }
 
   private void showDetailDialog(int position) {
     FragmentManager fragmentManager = getSupportFragmentManager();
-    DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(position);
+    DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(mMomentList, position);
     composeDialogFragment.show(fragmentManager, "fragment_compose");
   }
 }

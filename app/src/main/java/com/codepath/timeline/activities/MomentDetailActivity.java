@@ -14,6 +14,8 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.MockResponseGenerator;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,7 +44,7 @@ public class MomentDetailActivity extends AppCompatActivity {
     setContentView(R.layout.activity_moment_detail);
     ButterKnife.bind(this);
 
-    mMomentList = MockResponseGenerator.getInstance().getMomentList();
+    mMomentList = Parcels.unwrap(getIntent().getParcelableExtra(AppConstants.MOMENT_LIST_EXTRA));
     index = getIntent().getIntExtra(AppConstants.INDEX, -1);
     if (index != -1) {
       mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());

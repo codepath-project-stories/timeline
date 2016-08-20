@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.models.User;
 
 import java.util.List;
 
@@ -76,20 +78,25 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     Moment moment = mMomentList.get(position);
     if (holder instanceof MomentsViewHolder) {
       MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
-      if (moment.getUser() != null) {
+      User user = moment.getUser();
+      if (user != null) {
         Log.d(TAG, "URL: " + moment.getUser().getProfileImageUrl());
 
-        Glide.with(mContext).load(moment.getUser().getProfileImageUrl())
+        viewHolder.tvName.setText(user.getName());
+        Glide.with(mContext).load(user.getProfileImageUrl())
             .fitCenter()
             .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
             .into(viewHolder.ivProfilePhoto);
       }
 
-      if (moment.getResourceUrl() != null) {
-        Glide.with(mContext).load(moment.getResourceUrl())
+      if (moment.getMediaUrl() != null) {
+        Glide.with(mContext).load(moment.getMediaUrl())
             .centerCrop()
             .into(viewHolder.ivMedia);
       }
+
+      viewHolder.tvDate.setText(moment.getCreatedAt());
+      viewHolder.tvLocation.setText(moment.getLocation());
     }
   }
 
@@ -110,6 +117,12 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     ImageView ivProfilePhoto;
     @BindView(R.id.ivMedia)
     ImageView ivMedia;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvLocation)
+    TextView tvLocation;
+    @BindView(R.id.tvDate)
+    TextView tvDate;
 
     public MomentsViewHolder(View itemView) {
       super(itemView);

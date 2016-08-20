@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:padding="@dimen/activity_horizontal_margin">
 
   <ImageView
       android:id="@+id/ivProfilePhoto"
@@ -45,27 +45,27 @@
       android:text="San Francisco, CA"/>
 
   <ImageView
+      android:id="@+id/ivMedia"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:id="@+id/ivMedia"
-      android:layout_alignParentLeft="true"
       android:layout_above="@+id/tvDescription"
+      android:layout_alignParentLeft="true"
       android:layout_below="@+id/ivProfilePhoto"/>
 
   <TextView
+      android:id="@+id/tvDescription"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Exploring Melbourne"
-      android:layout_marginTop="@dimen/activity_horizontal_margin"
-      android:id="@+id/tvDescription"
       android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"/>
+      android:layout_alignParentLeft="true"
+      android:layout_marginTop="@dimen/activity_horizontal_margin"
+      android:text="Exploring Melbourne"/>
 
   <ImageView
+      android:id="@+id/ivClose"
       android:layout_width="30dp"
       android:layout_height="30dp"
-      android:id="@+id/ivClose"
-      android:src="@drawable/close"
+      android:layout_alignParentRight="true"
       android:layout_alignParentTop="true"
-      android:layout_alignParentRight="true"/>
+      android:src="@drawable/close"/>
 </RelativeLayout>

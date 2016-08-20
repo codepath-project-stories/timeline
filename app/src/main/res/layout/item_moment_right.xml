@@ -57,7 +57,7 @@
         android:id="@+id/tvName"
         android:layout_alignTop="@+id/ivProfilePhoto"
         android:layout_toLeftOf="@+id/ivProfilePhoto"
-        android:text="Dianne Bautista"/>
+        tools:text="John Smith"/>
 
     <ImageView
         android:layout_width="20dp"
@@ -72,7 +72,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="San Francisco, CA"
+        tools:text="Berlin, Germany"
         android:id="@+id/tvLocation"
         android:layout_alignBottom="@+id/imageView"
         android:layout_toLeftOf="@+id/ivProfilePhoto"/>
@@ -84,11 +84,11 @@
   <TextView
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:id="@+id/tvTimestamp"
+      android:id="@+id/tvDate"
       android:layout_alignTop="@+id/view2"
       android:layout_marginLeft="10dp"
       android:layout_toRightOf="@+id/view2"
-      android:text="February 2, 2016"
+      tools:text="February 2, 2016"
       style="@style/InfoText"/>
 
 </RelativeLayout>
