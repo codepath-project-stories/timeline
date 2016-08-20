@@ -23,6 +23,7 @@ import com.codepath.timeline.util.view.ItemClickSupport;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,7 +84,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected abstract void populateList();
 
-    protected void addAll(ArrayList<Story> newStories) {
+    protected void addAll(List<Story> newStories) {
         int curSize = adaptStories.getItemCount();
         stories.clear();
         adaptStories.notifyItemRangeRemoved(0, curSize);

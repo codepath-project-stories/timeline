@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.util.MockResponseGenerator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class UserStoriesFragment extends BaseStoryModelFragment {
 
@@ -27,7 +27,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
 
     @Override
     protected void populateList() {
-        stories = (ArrayList<Story>) MockResponseGenerator.getInstance().getStoryList();
+        List<Story> stories = MockResponseGenerator.getInstance().getStoryList();
         addAll(stories);
     }
 }

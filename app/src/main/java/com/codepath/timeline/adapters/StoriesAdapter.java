@@ -16,19 +16,20 @@ import com.codepath.timeline.models.Story;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Story> mStories;
+    private List<Story> mStories;
     Context context;
     private final int SIMPLE = 0;
 
-    public StoriesAdapter(ArrayList<Story> stories) {
+    public StoriesAdapter(List<Story> stories) {
         this.mStories = stories;
     }
 
@@ -66,15 +67,15 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private void configureViewHolderSimpleStory(ViewHolderSimpleStory holder, int position) {
+    private void configureViewHolderSimpleStory(StoriesAdapter.ViewHolderSimpleStory holder, int position) {
         Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
         if (story != null) {
+            holder.getTvStoryTitle().setText(story.getStoryTitle());
             Glide.with(context).load(story.getBackgroundImageUrl())
                     .fitCenter()
                     .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
                     .into(holder.getIvBackgroundImage());
-            holder.getTvStoryTitle().setText(story.getStoryTitle());
         }
     }
 
@@ -117,7 +118,14 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public static class ViewHolderSimpleStory extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    public static class ViewHolderSimpleStory extends ViewHolder {
 
         @BindView(R.id.ivBackgroundImage)
         ImageView ivBackgroundImage;
