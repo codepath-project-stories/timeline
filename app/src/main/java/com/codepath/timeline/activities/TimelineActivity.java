@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsAdapter;
@@ -30,8 +31,8 @@ public class TimelineActivity extends AppCompatActivity {
   private static final String TAG = TimelineActivity.class.getSimpleName();
   @BindView(R.id.rvMoments)
   RecyclerView rvMoments;
-  @BindView(R.id.btAutoPlay)
-  Button btAutoPlay;
+  @BindView(R.id.ivAutoPlay)
+  ImageView ivAutoPlay;
 
   private List<Moment> mMomentList;
   private MomentsAdapter mAdapter;
@@ -75,7 +76,7 @@ public class TimelineActivity extends AppCompatActivity {
     composeDialogFragment.show(fragmentManager, "fragment_compose");
   }
 
-  @OnClick(R.id.btAutoPlay)
+  @OnClick(R.id.ivAutoPlay)
   public void onAutoPlay(View view) {
     // TEMPORARY PLACEHOLDER
     Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
