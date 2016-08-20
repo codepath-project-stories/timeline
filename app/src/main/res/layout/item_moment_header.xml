@@ -7,7 +7,7 @@
       android:id="@+id/view"
       android:layout_width="1dp"
       android:layout_height="wrap_content"
-      android:background="@color/colorAccent"
+      android:background="@color/colorPrimaryDark"
       android:layout_alignBottom="@+id/tvHeader"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"/>
