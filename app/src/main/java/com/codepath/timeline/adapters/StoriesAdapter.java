@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -71,11 +70,10 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
         if (story != null) {
-            holder.getTvStoryTitle().setText(story.getStoryTitle());
-            Glide.with(context).load(story.getBackgroundImageUrl())
-                    .fitCenter()
-                    .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
-                    .into(holder.getIvBackgroundImage());
+            holder.tvStoryTitle.setText("Fun times in Melbourne");
+            Glide.with(context)
+                    .load(R.drawable.background_image)
+                    .into(holder.ivBackgroundImage);
         }
     }
 

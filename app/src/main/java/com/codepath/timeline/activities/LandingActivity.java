@@ -40,7 +40,9 @@ public class LandingActivity extends AppCompatActivity {
 
         // setup main views
         backgroundImage.setImageResource(0);
-        Glide.with(getApplicationContext()).load(R.drawable.background_image).into(backgroundImage);
+        Glide.with(getApplicationContext())
+                .load(R.drawable.background_image)
+                .into(backgroundImage);
         userName.setText("Dianne Bautista");
         storiesCount.setText("20");
         storiesCountText.setText("STORIES");

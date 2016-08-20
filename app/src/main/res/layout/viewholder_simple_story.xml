@@ -33,8 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Fun times in Seattle"
+            android:layout_below="@+id/ivBackgroundImage"
+            android:layout_alignParentLeft="true"
+            tools:text="Fun times in Seattle"
+            android:paddingTop="4dp"
             android:textColor="@android:color/black"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -45,9 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvStoryTitle"
             android:fontFamily="sans-serif-light"
-            android:gravity="center_horizontal"
             android:paddingTop="4dp"
             android:textStyle="bold"
+            android:layout_alignParentLeft="true"
             android:text="8"
             android:textColor="@android:color/black"
             android:textSize="11sp" />
