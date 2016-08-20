@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 abstract public class BaseStoryModelFragment extends Fragment {
+    // BaseStoryModelFragment calls TimelineActivity
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
@@ -69,16 +70,21 @@ abstract public class BaseStoryModelFragment extends Fragment {
         // abstract method call
         populateList();
 
-        ItemClickSupport.addTo(rvStories).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                                                                     @Override
-                                                                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                                                                         Intent i = new Intent(getContext(), TimelineActivity.class);
-                                                                         Story story = stories.get(position);
-                                                                         i.putExtra("story", Parcels.wrap(story));
-                                                                         startActivity(i);
-                                                                     }
-                                                                 }
-        );
+        ItemClickSupport
+                .addTo(rvStories)
+                .setOnItemClickListener(
+                        new ItemClickSupport.OnItemClickListener() {
+                            @Override
+                            public void onItemClicked(RecyclerView recyclerView,
+                                                      int position,
+                                                      View v) {
+                                Intent i = new Intent(getContext(), TimelineActivity.class);
+                                Story story = stories.get(position);
+                                i.putExtra("story", Parcels.wrap(story));
+                                startActivity(i);
+                            }
+                        }
+                );
     }
 
     protected abstract void populateList();

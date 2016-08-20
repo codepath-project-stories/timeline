@@ -8,6 +8,9 @@ import com.codepath.timeline.fragments.SharedStoriesFragment;
 import com.codepath.timeline.fragments.UserStoriesFragment;
 
 public class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
+    // MyPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
+    // UserStoriesFragment extends BaseStoryModelFragment
+    // BaseStoryModelFragment calls TimelineActivity
 
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "My stories", "Shared with me" };

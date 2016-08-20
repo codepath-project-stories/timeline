@@ -12,7 +12,6 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.MomentDetailFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.MockResponseGenerator;
 
 import org.parceler.Parcels;
 
@@ -22,13 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MomentDetailActivity extends AppCompatActivity {
-  // TODO: have a question
-  // not sure if the flow is the following
-  // it seems showDetailDialog() generates DetailDialogFragment
-  // DetailDialogFragment creates R.layout.fragment_moment_detail
-  // so... this activity is not used?
-  // but it is still left/right scrollable
-  // looks like it has ScreenSlidePagerAdapter
+  // MomentDetailActivity is not used
 
   @BindView(R.id.vpMoment)
   ViewPager vpMoment;

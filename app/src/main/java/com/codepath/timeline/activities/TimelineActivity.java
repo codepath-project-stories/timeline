@@ -12,12 +12,7 @@ import com.codepath.timeline.adapters.MomentsAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.ItemClickSupport;
-import com.codepath.timeline.util.MockResponseGenerator;
-import com.codepath.timeline.util.view.ItemClickSupport;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TimelineActivity extends AppCompatActivity {
+  // TimelineActivity calls showDetailDialog() to generate DetailDialogFragment
+  // DetailDialogFragment creates R.layout.fragment_moment_detail and ScreenSlidePagerAdapter
 
   private static final String TAG = TimelineActivity.class.getSimpleName();
   @BindView(R.id.rvMoments)
