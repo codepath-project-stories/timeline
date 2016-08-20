@@ -1,11 +1,13 @@
 package com.codepath.timeline.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsAdapter;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TimelineActivity extends AppCompatActivity {
   // TimelineActivity calls showDetailDialog() to generate DetailDialogFragment
@@ -27,6 +30,8 @@ public class TimelineActivity extends AppCompatActivity {
   private static final String TAG = TimelineActivity.class.getSimpleName();
   @BindView(R.id.rvMoments)
   RecyclerView rvMoments;
+  @BindView(R.id.btAutoPlay)
+  Button btAutoPlay;
 
   private List<Moment> mMomentList;
   private MomentsAdapter mAdapter;
@@ -68,5 +73,12 @@ public class TimelineActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(mMomentList, position);
     composeDialogFragment.show(fragmentManager, "fragment_compose");
+  }
+
+  @OnClick(R.id.btAutoPlay)
+  public void onAutoPlay(View view) {
+    // TEMPORARY PLACEHOLDER
+    Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
+    startActivity(intent);
   }
 }

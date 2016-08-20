@@ -22,6 +22,12 @@ android {
   }
 }
 
+repositories {
+  maven {
+    url "https://jitpack.io"
+  }
+}
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
@@ -55,4 +61,7 @@ dependencies {
 
   // Card view
   compile 'com.android.support:cardview-v7:23.2.1'
+
+  // ExpandingPager: https://github.com/qs-lll/ExpandingPager
+  compile 'com.github.qs-lll:ExpandingPager:767ff93966'
 }

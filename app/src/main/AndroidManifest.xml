@@ -18,7 +18,11 @@
       </intent-filter>
     </activity>
     <activity android:name=".activities.TimelineActivity">
-        </activity>
+    </activity>
+    <activity android:name=".activities.AutoPlayActivity">
+    </activity>
+    <activity android:name=".activities.AutoPlayInfoActivity">
+    </activity>
   </application>
 
 </manifest>

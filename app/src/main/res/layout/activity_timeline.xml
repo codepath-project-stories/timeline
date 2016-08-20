@@ -6,9 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.TimelineActivity">
 
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Auto-Play all Memories"
+      android:id="@+id/btAutoPlay"
+      android:layout_margin="10dp"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"/>
+
   <android.support.v7.widget.RecyclerView
       android:background="@android:color/white"
-      android:layout_below="@+id/testPhoto"
+      android:layout_below="@+id/btAutoPlay"
       android:id="@+id/rvMoments"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
