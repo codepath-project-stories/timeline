@@ -17,7 +17,9 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".activities.MomentDetailActivity">
+    <activity android:name=".activities.MomentDetailActivity"
+              android:theme="@style/AppThemeNoActionBar"
+        >
     </activity>
     <activity android:name=".activities.TimelineActivity">
         </activity>
