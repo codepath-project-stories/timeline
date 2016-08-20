@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.MockResponseGenerator;
 
 import java.util.List;
@@ -27,7 +28,8 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
 
     @Override
     protected void populateList() {
-        List<Story> stories = MockResponseGenerator.getInstance().getStoryList();
+        // TODO: Change the storyId when making network request
+        List<Story> stories = TimelineClient.getInstance().getStoryList(getActivity(), -1);
         addAll(stories);
     }
 }

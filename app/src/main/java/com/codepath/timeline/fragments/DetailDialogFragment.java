@@ -14,10 +14,13 @@ import android.view.ViewGroup;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.codepath.timeline.R;
+import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.view.DepthPageTransformer;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -35,9 +38,10 @@ public class DetailDialogFragment extends DialogFragment implements MomentDetail
 
 
 
-  public static DetailDialogFragment newInstance(int index) {
+  public static DetailDialogFragment newInstance(List<Moment> momentList, int index) {
     DetailDialogFragment frag = new DetailDialogFragment();
     Bundle args = new Bundle();
+    args.putParcelable(AppConstants.MOMENT_LIST_EXTRA, Parcels.wrap(momentList));
     args.putInt(AppConstants.INDEX, index);
     frag.setArguments(args);
 
@@ -56,9 +60,9 @@ public class DetailDialogFragment extends DialogFragment implements MomentDetail
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mMomentList = MockResponseGenerator.getInstance().getMomentList();
+    mMomentList = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_LIST_EXTRA));
     index = getArguments().getInt(AppConstants.INDEX);
-    if (index != -1) {
+    if (mMomentList != null && index != -1) {
       initDialog();
     }
   }
@@ -90,7 +94,7 @@ public class DetailDialogFragment extends DialogFragment implements MomentDetail
     dismiss();
   }
 
-  private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+  private class ScreenSlidePagerAdapter extends SmartFragmentStatePagerAdapter {
     public ScreenSlidePagerAdapter(FragmentManager fm) {
       super(fm);
     }

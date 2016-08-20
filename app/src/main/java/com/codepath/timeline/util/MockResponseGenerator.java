@@ -53,26 +53,32 @@ public class MockResponseGenerator {
     mRandomGenerator = new Random();
   }
 
+  private User getUser() {
+    return  new User(5555, "Jane Smith", "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
+  }
+
   private void createMockStoryList() {
     mStoryList = new ArrayList<>();
 
-    for (int i = 0; i < 20; i++) {
-      Story story = new Story("Story " + i, "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg");
+    for (int i = 0; i < 5; i++) {
+      String dummyDate = "January " + i + ", 2016";
+      Story story = new Story(8000+i, dummyDate, "Story " + i, "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg", getUser());
       mStoryList.add(story);
     }
   }
 
   private void createMockMomentList() {
     mMomentList = new ArrayList<>();
-    User user = new User("Dianne Bautista", "http://pbs.twimg.com/profile_images/762174511118585856/dIYGQ-Wa_normal.jpg");
-    for (int i = 0; i < 20; i++) {
+
+    for (int i = 0; i < 14; i++) {
       Moment moment;
       if (i % 10 == 0) {
         moment = new Moment();
         moment.setHeader("200" + i);
       } else {
+        String dummyDate = "January " + i + ", 2016";
         String mediaUrl = getRandomMedia();
-        moment = new Moment("Moment " + i, "January " + i + ", 2016", mediaUrl, user);
+        moment = new Moment(5000+i, dummyDate, "Moment " + i, mediaUrl, getUser(), "San Francisco, CA");
       }
       mMomentList.add(moment);
     }
@@ -83,10 +89,6 @@ public class MockResponseGenerator {
     return mMediaList.get(index);
   }
 
-  public List<Story> getStoryList() {
-    return mStoryList;
-  }
-
   public String getStoryListAsString() {
     Type type = new TypeToken<List<Moment>>() {
     }.getType();
@@ -94,10 +96,6 @@ public class MockResponseGenerator {
     Log.d(TAG, "stories json: " + json);
 
     return json;
-  }
-
-  public List<Moment> getMomentList() {
-    return mMomentList;
   }
 
   public String getMomentListAsString() {

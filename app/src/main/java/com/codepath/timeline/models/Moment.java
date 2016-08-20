@@ -1,22 +1,72 @@
 package com.codepath.timeline.models;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcel;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 @Parcel(analyze = {Moment.class})
 public class Moment {
+  private static final String TAG = Moment.class.getSimpleName();
+
+  private int id;
+  private String createdAt;
   private String description;
-  private String date;
-  private String resourceUrl;
+  private String mediaUrl;
   private User user;
   private String header;  // hack to show header
+  private String location;
 
   public Moment() {}
 
-  public Moment(String description, String date, String resourceUrl, User user) {
+  public static Moment fromJson(JsonObject jsonObject) {
+    Gson gson = new Gson();
+    Moment moment = gson.fromJson(jsonObject.toString(), Moment.class);
+    return moment;
+  }
+
+  public static List<Moment> fromJsonArray(JsonArray jsonArray) {
+    Gson gson = new Gson();
+    Type type = new TypeToken<List<Moment>>(){}.getType();
+    ArrayList<Moment> list = gson.fromJson(jsonArray, type);
+
+    return list;
+  }
+
+  // TEST: for generating mock response purposes
+  public Moment(int id, String createdAt, String description, String mediaUrl, User user, String location) {
+    this.id = id;
+    this.createdAt = createdAt;
     this.description = description;
-    this.date = date;
-    this.resourceUrl = resourceUrl;
+    this.mediaUrl = mediaUrl;
     this.user = user;
+    this.location = location;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
   }
 
   public String getDescription() {
@@ -27,20 +77,12 @@ public class Moment {
     this.description = description;
   }
 
-  public String getDate() {
-    return date;
+  public String getMediaUrl() {
+    return mediaUrl;
   }
 
-  public void setDate(String date) {
-    this.date = date;
-  }
-
-  public String getResourceUrl() {
-    return resourceUrl;
-  }
-
-  public void setResourceUrl(String resourceUrl) {
-    this.resourceUrl = resourceUrl;
+  public void setMediaUrl(String mediaUrl) {
+    this.mediaUrl = mediaUrl;
   }
 
   public User getUser() {
@@ -57,5 +99,13 @@ public class Moment {
 
   public void setHeader(String header) {
     this.header = header;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
   }
 }

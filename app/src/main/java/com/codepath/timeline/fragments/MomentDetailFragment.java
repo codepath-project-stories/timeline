@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.AppConstants;
 
 import org.parceler.Parcels;
@@ -28,6 +30,12 @@ public class MomentDetailFragment extends Fragment {
   ImageView ivProfilePhoto;
   @BindView(R.id.ivMedia)
   ImageView ivMedia;
+  @BindView(R.id.tvName)
+  TextView tvName;
+  @BindView(R.id.tvLocation)
+  TextView tvLocation;
+  @BindView(R.id.tvDescription)
+  TextView tvDescription;
 
   private Moment mMoment;
 
@@ -65,17 +73,24 @@ public class MomentDetailFragment extends Fragment {
     mMoment = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_EXTRA));
     if (mMoment == null) {
       Log.d(TAG, "Moment extra is NULL");
+      return;
     }
 
-    if (mMoment.getUser() != null) {
-      Glide.with(this).load(mMoment.getUser().getProfileImageUrl())
+    tvDescription.setText(mMoment.getDescription());
+    tvLocation.setText(mMoment.getLocation());
+
+    User user = mMoment.getUser();
+    if (user != null) {
+      Glide.with(this).load(user.getProfileImageUrl())
           .fitCenter()
           .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
           .into(ivProfilePhoto);
+
+      tvName.setText(user.getName());
     }
 
-    if (mMoment.getResourceUrl() != null) {
-      Glide.with(this).load(mMoment.getResourceUrl())
+    if (mMoment.getMediaUrl() != null) {
+      Glide.with(this).load(mMoment.getMediaUrl())
           .centerCrop()
           .into(ivMedia);
     }
