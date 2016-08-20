@@ -20,7 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MomentDetailActivity extends AppCompatActivity {
-  // TODO: not sure if the flow is the following
+  // TODO: have a question
+  // not sure if the flow is the following
   // it seems showDetailDialog() generates DetailDialogFragment
   // DetailDialogFragment creates R.layout.fragment_moment_detail
   // so... this activity is not used?
