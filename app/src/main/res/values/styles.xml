@@ -8,11 +8,15 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-  <!-- TODO: try to fix top empty space, but this doesn't work -->
-  <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+  <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
+    <!-- minSdkVersion 19 -->
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="colorPrimary">@color/colorPrimaryLogin</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryLoginDark</item>
+    <!-- text -->
+    <item name="colorAccent">@color/white</item>
+    <!-- login_button.xml -->
+    <item name="loginButton">@color/whiteTransparent</item>
   </style>
 
   <style name="BoldPrimaryText">

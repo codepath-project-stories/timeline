@@ -14,5 +14,11 @@
   <color name="colorPrimaryLogin">#03A9F4</color>
   <color name="colorPrimaryLoginDark">#0288D1</color>
   <color name="white">#FFFFFF</color>
+  <color name="whiteTransparent">#80FFFFFF</color>
   <color name="orange">#ffffa000</color>
+  <color name="greyLightLight">#999999</color>
+  <color name="greyLight">#848484</color>
+  <color name="grey">#757575</color>
+  <color name="greyDark">#666666</color>
+  <color name="greyDarkDark">#333333</color>
 </resources>

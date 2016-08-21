@@ -39,7 +39,7 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="100dp"
                 android:text="@string/app_name"
                 />
             <ImageView
@@ -91,7 +91,7 @@
                     />
             </android.support.design.widget.TextInputLayout>
             <Button
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimaryLoginLight"
                 android:layout_gravity="center"
                 android:id="@+id/btn_login"
                 android:background="@drawable/login_button"
@@ -103,16 +103,6 @@
                 android:layout_marginRight="64dp"
                 android:layout_marginBottom="24dp"
                 android:text="@string/login"
-                />
-            <TextView
-                android:textSize="18sp"
-                android:textColor="@color/colorPrimaryLoginDark"
-                android:gravity="center"
-                android:id="@+id/link_signup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:text="@string/welcome"
                 />
         </LinearLayout>
     </RelativeLayout>
