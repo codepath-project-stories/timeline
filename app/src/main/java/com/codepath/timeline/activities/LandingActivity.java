@@ -2,13 +2,20 @@ package com.codepath.timeline.activities;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MyPagerAdapter;
+import com.codepath.timeline.util.ParseApplication;
+import com.parse.ParseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,10 +54,53 @@ public class LandingActivity extends AppCompatActivity {
 //        userName.setText("Jane Smith");
 //        storiesCount.setText("20");
 //        storiesCountText.setText("STORIES");
+        backgroundImage.setImageResource(0);
+        Glide.with(getApplicationContext())
+                .load(R.drawable.background_image)
+                .into(backgroundImage);
+        userName.setText("Jane Smith");
+        storiesCount.setText("20");
+        storiesCountText.setText("STORIES");
+
+        // TODO: production needs to remove the following
+        if (ParseApplication.DEMO_MODE) {
+            // test LoginActivity
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser != null) {
+                // do stuff with the user
+                Log.d("LandingActivity", currentUser.toString());
+            } else {
+                // show the signup or login screen
+                Log.d("LandingActivity", "getCurrentUser failed");
+            }
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new MaterialDialog.Builder(this)
+                .content(getString(R.string.logout))
+                .positiveText(getString(android.R.string.yes))
+                .negativeText(getString(R.string.just_close))
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog,
+                                        @NonNull DialogAction which) {
+                        // http://stackoverflow.com/questions/8631095/android-preventing-going-back-to-the-previous-activity
+                        if (which.equals(DialogAction.POSITIVE)) {
+                            ParseApplication.logout();
+                            finish(); // going to kill the activity
+                        }
+                        else if (which.equals(DialogAction.NEGATIVE)) {
+                            moveTaskToBack(true); // Same as if user pressed Home button.
+                        }
+                    }
+                })
+                .show();
     }
 }
