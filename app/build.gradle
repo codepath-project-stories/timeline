@@ -75,4 +75,8 @@ dependencies {
   compile 'com.parse.bolts:bolts-android:1.+'
   compile 'com.parse:parse-android:1.+'
   compile 'com.parse:parseinterceptors:0.0.2' // for logging API calls to LogCat
+
+  // material-dialogs
+  compile 'com.afollestad.material-dialogs:core:0.9.0.1'
+  compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
 }

@@ -1,20 +1,16 @@
 package com.codepath.timeline.util;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.codepath.timeline.models.CommentParse;
 import com.codepath.timeline.models.TagParse;
 import com.codepath.timeline.models.UserParse;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseRelation;
-import com.parse.SaveCallback;
 import com.parse.interceptors.ParseLogInterceptor;
 
 public class ParseApplication extends Application {
-	static boolean PARSE_MODE = false;
+	static boolean PARSE_MODE = true;
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -78,7 +74,6 @@ public class ParseApplication extends Application {
 
 			// This will save both myPost and myComment
 			myComment.saveInBackground();
-			*/
 
 			// let’s say we have a few objects representing Author objects
 			final ParseObject authorOne = new ParseObject("Author");
@@ -97,13 +92,12 @@ public class ParseApplication extends Application {
 					ParseRelation<ParseObject> relation = book.getRelation("authors");
 					relation.add(authorOne);
 					// stick the objects in an array
-				/*
-				ArrayList<ParseObject> authors = new ArrayList<ParseObject>();
-				authors.add(authorOne);
-				authors.add(authorTwo);
-				authors.add(authorThree);
-				book.put("authors", authors);
-				*/
+
+					// ArrayList<ParseObject> authors = new ArrayList<ParseObject>();
+					// authors.add(authorOne);
+					// authors.add(authorTwo);
+					// authors.add(authorThree);
+					// book.put("authors", authors);
 
 					// now save the book object
 					book.saveInBackground(new SaveCallback() {
@@ -116,6 +110,7 @@ public class ParseApplication extends Application {
 					});
 				}
 			});
+			*/
 		}
 	}
 }
