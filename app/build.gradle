@@ -22,6 +22,12 @@ android {
   }
 }
 
+repositories {
+  maven {
+    url "https://jitpack.io"
+  }
+}
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
@@ -55,6 +61,15 @@ dependencies {
 
   // Card view
   compile 'com.android.support:cardview-v7:23.2.1'
+
+  // ExpandingPager: https://github.com/qs-lll/ExpandingPager
+  compile 'com.github.qs-lll:ExpandingPager:767ff93966'
+
+  // Scrolling viewpager: https://github.com/Trinea/android-auto-scroll-view-pager
+  // Used for autoplaying list of moments
+  compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+    exclude module: 'support-v4'
+  }
 
   // Parse
   compile 'com.parse.bolts:bolts-android:1.+'

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="@dimen/activity_horizontal_margin">
+
+  <ImageView
+      android:id="@+id/ivProfilePhoto"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentTop="true"
+      android:layout_margin="10dp"/>
+
+  <TextView
+      android:id="@+id/tvName"
+      style="@style/BoldPrimaryText"
+      android:layout_alignTop="@+id/ivProfilePhoto"
+      android:layout_toEndOf="@+id/ivProfilePhoto"
+      android:layout_toRightOf="@+id/ivProfilePhoto"
+      android:text="Dianne Bautista"/>
+
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_below="@+id/tvName"
+      android:layout_toEndOf="@+id/ivProfilePhoto"
+      android:layout_toRightOf="@+id/ivProfilePhoto"
+      android:adjustViewBounds="true"
+      android:scaleType="fitXY"
+      android:src="@drawable/map_marker"/>
+
+  <TextView
+      android:id="@+id/tvLocation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/imageView"
+      android:layout_toEndOf="@+id/imageView"
+      android:layout_toRightOf="@+id/imageView"
+      android:text="San Francisco, CA"/>
+
+  <ImageView
+      android:id="@+id/ivMedia"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/tvDescription"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@+id/ivProfilePhoto"/>
+
+  <TextView
+      android:id="@+id/tvDescription"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_marginTop="@dimen/activity_horizontal_margin"
+      android:text="Exploring Melbourne"/>
+</RelativeLayout>

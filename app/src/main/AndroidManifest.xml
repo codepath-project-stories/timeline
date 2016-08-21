@@ -19,17 +19,19 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".activities.MomentDetailActivity"
-              android:theme="@style/AppThemeNoActionBar"
-        >
-    </activity>
     <activity android:name=".activities.TimelineActivity">
-        </activity>
+    </activity>
+    <activity android:name=".activities.AutoPlayActivity">
+    </activity>
+    <activity android:name=".activities.AutoPlayInfoActivity">
+    </activity>
+
     <!-- activities and everything are here. meta-data is last inside application tagParse -->
     <!-- TODO: it seems we don't need this -->
     <meta-data
         android:name="com.parse.APPLICATION_ID"
         android:value="timeline-app" />
+
   </application>
 
 </manifest>

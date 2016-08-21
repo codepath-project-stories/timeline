@@ -33,10 +33,8 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
-    @BindView(R.id.rvStories)
-    RecyclerView rvStories;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.rvStories) RecyclerView rvStories;
+    @BindView(R.id.fab) FloatingActionButton fab;
     private Unbinder unbinder;
 
     @Override
