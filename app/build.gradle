@@ -6,23 +6,13 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
-<<<<<<< HEAD
     defaultConfig {
         applicationId "com.codepath.apps.timeline"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
-=======
-  defaultConfig {
-    applicationId "com.codepath.apps.timeline"
-    minSdkVersion 19
-    targetSdkVersion 23
-    versionCode 1
-    versionName "1.0"
-  }
->>>>>>> 01cf5ff58f2b73479de0371a666519cb36e639c1
 
     buildTypes {
         release {
@@ -76,27 +66,18 @@ dependencies {
     // ExpandingPager: https://github.com/qs-lll/ExpandingPager
     compile 'com.github.qs-lll:ExpandingPager:767ff93966'
 
-<<<<<<< HEAD
     // Scrolling viewpager: https://github.com/Trinea/android-auto-scroll-view-pager
     // Used for autoplaying list of moments
     compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
-}
-=======
-  // Scrolling viewpager: https://github.com/Trinea/android-auto-scroll-view-pager
-  // Used for autoplaying list of moments
-  compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
-    exclude module: 'support-v4'
-  }
 
-  // Parse
-  compile 'com.parse.bolts:bolts-android:1.+'
-  compile 'com.parse:parse-android:1.+'
-  compile 'com.parse:parseinterceptors:0.0.2' // for logging API calls to LogCat
+    // Parse
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.parse:parse-android:1.+'
+    compile 'com.parse:parseinterceptors:0.0.2' // for logging API calls to LogCat
 
-  // material-dialogs
-  compile 'com.afollestad.material-dialogs:core:0.9.0.1'
-  compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
+    // material-dialogs
+    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
+    compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
 }
->>>>>>> 01cf5ff58f2b73479de0371a666519cb36e639c1

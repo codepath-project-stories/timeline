@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MyPagerAdapter;
 import com.codepath.timeline.util.ParseApplication;
@@ -54,13 +53,13 @@ public class LandingActivity extends AppCompatActivity {
 //        userName.setText("Jane Smith");
 //        storiesCount.setText("20");
 //        storiesCountText.setText("STORIES");
-        backgroundImage.setImageResource(0);
-        Glide.with(getApplicationContext())
-                .load(R.drawable.background_image)
-                .into(backgroundImage);
-        userName.setText("Jane Smith");
-        storiesCount.setText("20");
-        storiesCountText.setText("STORIES");
+//        backgroundImage.setImageResource(0);
+//        Glide.with(getApplicationContext())
+//                .load(R.drawable.background_image)
+//                .into(backgroundImage);
+//        userName.setText("Jane Smith");
+//        storiesCount.setText("20");
+//        storiesCountText.setText("STORIES");
 
         // TODO: production needs to remove the following
         if (ParseApplication.DEMO_MODE) {
