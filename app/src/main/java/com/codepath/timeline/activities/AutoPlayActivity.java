@@ -33,7 +33,8 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
       Expanding view for displaying list of moments: https://github.com/qs-lll/ExpandingPager
       Automatic scroll used for auto-playing list of moments: https://github.com/Trinea/android-auto-scroll-view-pager
  */
-public class AutoPlayActivity extends AppCompatActivity implements ExpandingFragment.OnExpandingClickListener {
+public class AutoPlayActivity extends AppCompatActivity
+        implements ExpandingFragment.OnExpandingClickListener {
   @BindView(R.id.vpMoment)
   AutoScrollViewPager vpMoment;
 

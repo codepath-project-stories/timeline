@@ -9,19 +9,42 @@ import android.widget.VideoView;
 
 import com.codepath.timeline.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.input_email)
+    EditText input_email;
+    @BindView(R.id.login_video)
+    VideoView login_video;
+
+    @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView((int) R.layout.activity_login);
-        ((EditText) findViewById(R.id.input_email)).requestFocus();
-        VideoView videoView = (VideoView) findViewById(R.id.login_video);
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login_video));
-        videoView.start();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+        ButterKnife.bind(this);
+
+        input_email.requestFocus();
+        login_video.setVideoURI(
+                Uri.parse(
+                        "android.resource://"
+                                + getPackageName() + "/"
+                                + R.raw.login_video_1
+                )
+        );
+        login_video.start();
+        login_video.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
             }
         });
+    }
+
+    // http://guides.codepath.com/android/Activity-Lifecycle
+    @Override
+    protected void onResume() {
+        super.onResume();
+        login_video.start();
     }
 }
