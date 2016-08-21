@@ -1,6 +1,9 @@
 package com.codepath.timeline.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -27,6 +30,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Story> mStories;
     Context context;
     private final int SIMPLE = 0;
+    int count = 0;
 
     public StoriesAdapter(List<Story> stories) {
         this.mStories = stories;
@@ -66,14 +70,31 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private void configureViewHolderSimpleStory(StoriesAdapter.ViewHolderSimpleStory holder, int position) {
-        Story story = mStories.get(position);
+    private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, int position) {
+        final Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
-        if (story != null) {
-            holder.tvStoryTitle.setText("Fun times in Melbourne");
-            Glide.with(context)
-                    .load(R.drawable.background_image)
-                    .into(holder.ivBackgroundImage);
+        holder.tvStoryTitle.setText("Fun times");
+        Glide.with(context)
+                .load(R.drawable.image_test2)
+                .into(holder.ivBackgroundImage);
+
+        Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
+            public void onGenerated(Palette palette) {
+                // access palette colors here
+                Palette.Swatch swatch = palette.getVibrantSwatch();
+                // Gets an appropriate title text color
+                if (swatch != null) {
+                    // If we have a vibrant color
+                    // update the title TextView
+                    holder.tvStoryTitle.setBackgroundColor(
+                            swatch.getBodyTextColor());
+                }
+            }
+        };
+
+        Bitmap myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_test2);
+        if (myBitmap != null && !myBitmap.isRecycled()) {
+            Palette.from(myBitmap).generate(paletteListener);
         }
     }
 
@@ -125,25 +146,9 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public static class ViewHolderSimpleStory extends ViewHolder {
 
-        @BindView(R.id.ivBackgroundImage)
-        ImageView ivBackgroundImage;
-
-        public ImageView getIvBackgroundImage() {
-            return ivBackgroundImage;
-        }
-
-        public TextView getTvStoryTitle() {
-            return tvStoryTitle;
-        }
-
-        public TextView getTvMomentsCount() {
-            return tvMomentsCount;
-        }
-
-        @BindView(R.id.tvStoryTitle)
-        TextView tvStoryTitle;
-        @BindView(R.id.tvMomentsCount)
-        TextView tvMomentsCount;
+        @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
+        @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
+//        @BindView(R.id.tvMomentsCount) TextView tvMomentsCount;
 
         public ViewHolderSimpleStory(View itemView) {
             super(itemView);

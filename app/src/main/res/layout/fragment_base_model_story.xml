@@ -16,17 +16,15 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="top|end"
         android:layout_margin="10dp"
         android:clickable="true"
-        android:src="@drawable/add_btn"
-        android:visibility="invisible"
+        android:src="@drawable/grid"
         app:backgroundTint="@android:color/white"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="mini"
         app:layout_anchor="@id/rvStories"
-        app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior="com.codepath.timeline.util.view.ScrollAwareFABBehavior" />
+        app:layout_anchorGravity="top|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

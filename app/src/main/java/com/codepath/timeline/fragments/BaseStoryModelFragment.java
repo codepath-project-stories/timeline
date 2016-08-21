@@ -8,10 +8,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.activities.TimelineActivity;
@@ -33,37 +33,24 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
+    @BindView(R.id.fab) FloatingActionButton toggle;
     @BindView(R.id.rvStories) RecyclerView rvStories;
-    @BindView(R.id.fab) FloatingActionButton fab;
     private Unbinder unbinder;
+    private boolean clicked = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_base_model_story, parent, false);
-        unbinder = ButterKnife.bind(this, view);
-        setupViews();
-        return view;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    public void setupViews() {
-        stories = new ArrayList<>();
-        adaptStories = new StoriesAdapter(stories);
-        rvStories.setAdapter(adaptStories);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup parent, @Nullable Bundle savedInstanceState) {
 
         // setup layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false);
-        rvStories.setLayoutManager(layoutManager);
-        layoutManager.scrollToPosition(0);
+        final View view = inflater.inflate(R.layout.fragment_base_model_story, parent, false);
+        unbinder = ButterKnife.bind(this, view);
 
-        // setup visual line divider
-//        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
-//        rvStories.addItemDecoration(itemDecoration);
-//        rvStories.setHasFixedSize(false);
+        stories = new ArrayList<>();
+
+        final LinearLayoutManager layoutManagerList = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        final StaggeredGridLayoutManager layoutManagerGrid = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        setupViews(layoutManagerList);
 
         // abstract method call
         populateList();
@@ -83,6 +70,33 @@ abstract public class BaseStoryModelFragment extends Fragment {
                             }
                         }
                 );
+
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!clicked) {
+                    setupViews(layoutManagerGrid);
+                    clicked = true;
+                } else {
+                    setupViews(layoutManagerList);
+                    clicked = false;
+                }
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public void setupViews(RecyclerView.LayoutManager layout) {
+        adaptStories = new StoriesAdapter(stories);
+        rvStories.setAdapter(adaptStories);
+        rvStories.setLayoutManager(layout);
+        layout.scrollToPosition(0);
+        populateList();
     }
 
     protected abstract void populateList();

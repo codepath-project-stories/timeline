@@ -6,10 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MyPagerAdapter;
 
@@ -24,10 +21,11 @@ public class LandingActivity extends AppCompatActivity {
 
     @BindView(R.id.vpPager) ViewPager viewPager;
     @BindView(R.id.sliding_tabs) TabLayout tabBar;
-    @BindView(R.id.ivBackgroundImage) ImageView backgroundImage;
-    @BindView(R.id.tvUserName) TextView userName;
-    @BindView(R.id.tvStoriesCount) TextView storiesCount;
-    @BindView(R.id.tvStoriesText) TextView storiesCountText;
+//    @BindView(R.id.ivBackgroundImage) ImageView backgroundImage;
+//    @BindView(R.id.tvUserName) TextView userName;
+//    @BindView(R.id.tvStoriesCount) TextView storiesCount;
+//    @BindView(R.id.tvStoriesText) TextView storiesCountText;
+//    @BindView(R.id.mainView) RelativeLayout mainView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +40,13 @@ public class LandingActivity extends AppCompatActivity {
         tabBar.setupWithViewPager(viewPager);
 
         // setup main views
-        backgroundImage.setImageResource(0);
-        Glide.with(getApplicationContext())
-                .load(R.drawable.background_image)
-                .into(backgroundImage);
-        userName.setText("Jane Smith");
-        storiesCount.setText("20");
-        storiesCountText.setText("STORIES");
+//        backgroundImage.setImageResource(0);
+//        Glide.with(getApplicationContext())
+//                .load(R.drawable.background_image)
+//                .into(backgroundImage);
+//        userName.setText("Jane Smith");
+//        storiesCount.setText("20");
+//        storiesCountText.setText("STORIES");
     }
 
     @Override

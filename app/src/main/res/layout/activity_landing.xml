@@ -7,85 +7,15 @@
     android:background="@android:color/white"
     tools:context=".activities.TimelineActivity">
 
-    <RelativeLayout
-        android:id="@+id/rlHeader"
-        android:background="@android:color/white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ivBackgroundImage"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true" />
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/ivProfileImage"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:id="@+id/tvUserName"
-            android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:paddingTop="5dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-light"
-            tools:text="Billy"
-            android:textSize="13sp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/ivBackgroundImage" />
-
-        <TextView
-            android:id="@+id/tvStoriesCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            tools:text="120"
-            android:fontFamily="sans-serif-light"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:paddingTop="4dp"
-            android:layout_below="@id/tvUserName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:id="@+id/tvStoriesText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            tools:text="STORIES"
-            android:fontFamily="sans-serif-light"
-            android:textSize="11sp"
-            android:paddingLeft="4dp"
-            android:paddingTop="4dp"
-            android:layout_alignTop="@+id/tvStoriesCount"
-            android:layout_toRightOf="@+id/tvStoriesCount"
-            android:layout_toEndOf="@+id/tvStoriesCount" />
-
-    </RelativeLayout>
-
     <android.support.design.widget.TabLayout
-        android:layout_below="@id/rlHeader"
         android:id="@+id/sliding_tabs"
+        android:layout_alignParentTop="true"
         style="@style/MyCustomTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable" />
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"
@@ -95,3 +25,75 @@
         android:background="@android:color/white" />
 
 </RelativeLayout>
+
+<!--<RelativeLayout-->
+<!--android:id="@+id/rlHeader"-->
+<!--android:background="@android:color/white"-->
+<!--android:paddingLeft="10dp"-->
+<!--android:paddingRight="10dp"-->
+<!--android:paddingTop="10dp"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_alignParentTop="true"-->
+<!--android:layout_alignParentLeft="true"-->
+<!--android:layout_alignParentStart="true" >-->
+
+<!--<ImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/ivBackgroundImage"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentRight="true" />-->
+
+<!--<ImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:id="@+id/ivProfileImage"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/tvUserName"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textStyle="bold"-->
+    <!--android:fontFamily="sans-serif-light"-->
+    <!--tools:text="Billy"-->
+    <!--android:textSize="13sp"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_below="@+id/ivBackgroundImage" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/tvStoriesCount"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--tools:text="120"-->
+    <!--android:fontFamily="sans-serif-light"-->
+    <!--android:textSize="11sp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:paddingTop="4dp"-->
+    <!--android:layout_below="@id/tvUserName"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/tvStoriesText"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textColor="@android:color/darker_gray"-->
+    <!--tools:text="STORIES"-->
+    <!--android:fontFamily="sans-serif-light"-->
+    <!--android:textSize="11sp"-->
+    <!--android:paddingLeft="4dp"-->
+    <!--android:paddingTop="4dp"-->
+    <!--android:layout_alignTop="@+id/tvStoriesCount"-->
+    <!--android:layout_toRightOf="@+id/tvStoriesCount"-->
+    <!--android:layout_toEndOf="@+id/tvStoriesCount" />-->
+
+<!--</RelativeLayout>-->
