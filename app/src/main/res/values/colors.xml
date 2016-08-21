@@ -10,5 +10,9 @@
   <color name="extra_light_gray">#E1E8ED</color>
   <color name="extra_extra_light_gray">#F5F8FA</color>
 
+  <color name="colorPrimaryLoginLight">#4FC3F7</color>
+  <color name="colorPrimaryLogin">#03A9F4</color>
+  <color name="colorPrimaryLoginDark">#0288D1</color>
   <color name="white">#FFFFFF</color>
+  <color name="orange">#ffffa000</color>
 </resources>
