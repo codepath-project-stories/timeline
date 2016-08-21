@@ -6,18 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.view.DepthPageTransformer;
 
 import org.parceler.Parcels;
@@ -27,7 +24,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailDialogFragment extends DialogFragment implements MomentDetailFragment.MomentDetailListener {
+public class DetailDialogFragment extends DialogFragment
+        implements MomentDetailFragment.MomentDetailListener {
+  // DetailDialogFragment creates R.layout.fragment_moment_detail and ScreenSlidePagerAdapter
+
   @BindView(R.id.vpMoment)
   ViewPager vpMoment;
 

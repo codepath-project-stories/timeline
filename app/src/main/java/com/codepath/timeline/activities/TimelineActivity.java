@@ -1,35 +1,38 @@
 package com.codepath.timeline.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.ItemClickSupport;
-import com.codepath.timeline.util.MockResponseGenerator;
-import com.codepath.timeline.util.view.ItemClickSupport;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TimelineActivity extends AppCompatActivity {
+  // TimelineActivity calls showDetailDialog() to generate DetailDialogFragment
+  // DetailDialogFragment creates R.layout.fragment_moment_detail and ScreenSlidePagerAdapter
 
   private static final String TAG = TimelineActivity.class.getSimpleName();
   @BindView(R.id.rvMoments)
   RecyclerView rvMoments;
+  @BindView(R.id.ivAutoPlay)
+  ImageView ivAutoPlay;
 
   private List<Moment> mMomentList;
   private MomentsAdapter mAdapter;
@@ -71,5 +74,12 @@ public class TimelineActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(mMomentList, position);
     composeDialogFragment.show(fragmentManager, "fragment_compose");
+  }
+
+  @OnClick(R.id.ivAutoPlay)
+  public void onAutoPlay(View view) {
+    // TEMPORARY PLACEHOLDER
+    Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
+    startActivity(intent);
   }
 }

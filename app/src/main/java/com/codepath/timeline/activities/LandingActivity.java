@@ -17,6 +17,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LandingActivity extends AppCompatActivity {
+    // LandingActivity creates MyPagerAdapter
+    // MyPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
+    // UserStoriesFragment extends BaseStoryModelFragment
+    // BaseStoryModelFragment calls TimelineActivity
 
     @BindView(R.id.vpPager) ViewPager viewPager;
     @BindView(R.id.sliding_tabs) TabLayout tabBar;
