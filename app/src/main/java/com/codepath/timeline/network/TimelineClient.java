@@ -1,12 +1,16 @@
 package com.codepath.timeline.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonParser;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,23 +24,57 @@ public class TimelineClient {
 
   private static TimelineClient instance;
   private TimelineClient() {
-
   }
 
   public static TimelineClient getInstance() {
     if (instance == null) {
       instance = new TimelineClient();
     }
-
     return instance;
   }
 
-  public List<Story> getStoryList(Context context, int userId) {
-    // TODO: Use userId to query db; may not need context param anymore
+  // other class can implement TimelineClientGetStoryListener
+  // or, simply new TimelineClient.TimelineClientGetStoryListener() as callback
+  public interface TimelineClientGetStoryListener {
+    void onGetStoryList(List<Story> itemList); // this is a callback
+  }
+
+  public void getStoryList(Context context,
+                           ParseUser user,
+                           final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+    // Define the class we would like to query
+    ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // Define our query conditions
+    query.whereEqualTo("owner", user);
+    // Execute the find asynchronously
+    query.findInBackground(new FindCallback<Story>() {
+      @Override
+      public void done(List<Story> itemList, ParseException e) {
+        if (e == null) {
+          if (itemList != null && itemList.size() > 0) {
+            Log.d("findInBackground", itemList.get(0).getObjectId());
+            // Access the array of results here
+            if (timelineClientGetStoryListener != null) {
+              timelineClientGetStoryListener.onGetStoryList(itemList); // use callback
+            }
+          }
+        } else {
+          Log.d("findInBackground", "Error: " + e.getMessage());
+        }
+      }
+    });
+    return;
+  }
+
+  public List<Story> getMockStoryList(Context context) {
 
     JsonArray jsonArray = createMockJsonArray(context, "stories.json");
     if (jsonArray != null) {
       List<Story> storyList = Story.fromJsonArray(jsonArray);
+      for (Story theStory : storyList) {
+        theStory.setOwner(ParseUser.getCurrentUser());
+        theStory.saveInBackground();
+      }
       return storyList;
     } else {
       return null;

@@ -3,6 +3,7 @@ package com.codepath.timeline.util;
 import android.app.Application;
 
 import com.codepath.timeline.models.CommentParse;
+import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.TagParse;
 import com.codepath.timeline.models.UserParse;
 import com.parse.Parse;
@@ -22,6 +23,7 @@ public class ParseApplication extends Application {
 			ParseObject.registerSubclass(UserParse.class);
 			ParseObject.registerSubclass(CommentParse.class);
 			ParseObject.registerSubclass(TagParse.class);
+			ParseObject.registerSubclass(Story.class);
 
 			// set applicationId, and server server based on the values in the Heroku settings.
 			// clientKey is not needed unless explicitly configured

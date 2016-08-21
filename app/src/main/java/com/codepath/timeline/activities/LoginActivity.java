@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         newUser.setPassword(input_password.getText().toString());
         newUser.setEmail(input_email.getText().toString());
         // Set custom properties
-        // user.put("phone", "650-253-0000");
+        newUser.put("demoCreated", "false");
         // Invoke signUpInBackground
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
