@@ -18,6 +18,8 @@
     <item name="colorAccent">@color/white</item>
     <!-- login_button.xml -->
     <item name="loginButton">@color/whiteTransparent</item>
+    <!-- background -->
+    <item name="android:windowBackground">@drawable/splash</item>
   </style>
 
   <style name="BoldPrimaryText">

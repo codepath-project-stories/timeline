@@ -1,5 +1,6 @@
 package com.codepath.timeline.activities;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.VideoView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
 import com.parse.LogInCallback;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -30,7 +32,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView((int) R.layout.activity_login);
+
+        // Determine whether the current user is an anonymous user
+        if (ParseUser.getCurrentUser() != null) {
+            if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+                onLoginSuccess();
+            }
+        }
+        // If user is anonymous, send the user to LoginSignupActivity.class
+
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
         input_email.requestFocus();
@@ -78,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (currentUser != null) {
                                 // do stuff with the user
                                 Log.d("logInInBackground", currentUser.toString());
+                                onLoginSuccess();
                             } else {
                                 // show the signup or login screen
                                 Log.d("logInInBackground", "getCurrentUser failed");
@@ -112,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (currentUser != null) {
                         // do stuff with the user
                         Log.d("signUpInBackground", currentUser.toString());
+                        onLoginSuccess();
                     } else {
                         // show the signup or login screen
                         Log.d("signUpInBackground", "getCurrentUser failed");
@@ -136,5 +149,18 @@ public class LoginActivity extends AppCompatActivity {
                 .positiveText(android.R.string.ok)
                 .backgroundColorRes(R.color.colorPrimaryLoginDark)
                 .show();
+    }
+
+    // TODO: user can log out
+    void logout() {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+    }
+
+    void onLoginSuccess() {
+        Intent i = new Intent(this, LandingActivity.class);
+        // int story = stories.get(position);
+        // i.putExtra("story", Parcels.wrap(story));
+        startActivity(i);
     }
 }

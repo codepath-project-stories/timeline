@@ -15,14 +15,14 @@
     <activity android:name=".activities.LoginActivity"
               android:theme="@style/LoginTheme"
         >
-      <!-- @android:style/Theme.Black.NoTitleBar.Fullscreen -->
-    </activity>
-    <activity android:name=".activities.LandingActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+      <!-- @android:style/Theme.Black.NoTitleBar.Fullscreen -->
+    </activity>
+    <activity android:name=".activities.LandingActivity">
     </activity>
     <activity android:name=".activities.TimelineActivity">
     </activity>
