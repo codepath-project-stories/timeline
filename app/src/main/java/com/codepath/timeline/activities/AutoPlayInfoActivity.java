@@ -17,6 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+/*
+    Displays moment details when the item is clicked while scrolling automatically
+ */
 public class AutoPlayInfoActivity extends AppCompatActivity {
   @BindView(R.id.ivProfilePhoto)
   ImageView ivProfilePhoto;
