@@ -7,6 +7,7 @@ import com.codepath.timeline.models.TagParse;
 import com.codepath.timeline.models.UserParse;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.interceptors.ParseLogInterceptor;
 
 public class ParseApplication extends Application {
@@ -112,5 +113,10 @@ public class ParseApplication extends Application {
 			});
 			*/
 		}
+	}
+
+	public static void logout() {
+		ParseUser.logOut();
+		// ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
 	}
 }

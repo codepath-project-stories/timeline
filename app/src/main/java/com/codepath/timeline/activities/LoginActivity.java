@@ -151,12 +151,6 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-    // TODO: user can log out
-    void logout() {
-        ParseUser.logOut();
-        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-    }
-
     void onLoginSuccess() {
         Intent i = new Intent(this, LandingActivity.class);
         // int story = stories.get(position);
