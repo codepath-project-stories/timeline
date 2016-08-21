@@ -2,9 +2,11 @@
 <manifest package="com.codepath.timeline"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
   <application
+      android:name=".util.ParseApplication"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
@@ -23,6 +25,11 @@
     </activity>
     <activity android:name=".activities.TimelineActivity">
         </activity>
+    <!-- activities and everything are here. meta-data is last inside application tagParse -->
+    <!-- TODO: it seems we don't need this -->
+    <meta-data
+        android:name="com.parse.APPLICATION_ID"
+        android:value="timeline-app" />
   </application>
 
 </manifest>
