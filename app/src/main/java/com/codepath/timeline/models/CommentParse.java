@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+// This is only used for debug purpose
 @ParseClassName("CommentParse")
 public class CommentParse extends ParseObject {
 	// Ensure that your subclass has a public default constructor

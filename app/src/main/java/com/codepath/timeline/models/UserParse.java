@@ -5,6 +5,7 @@ import com.parse.ParseObject;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+// This is only used for debug purpose
 @ParseClassName("UserParse")
 public class UserParse extends ParseObject {
 	// Ensure that your subclass has a public default constructor

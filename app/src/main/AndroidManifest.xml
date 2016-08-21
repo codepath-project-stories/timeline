@@ -20,7 +20,6 @@
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
-      <!-- @android:style/Theme.Black.NoTitleBar.Fullscreen -->
     </activity>
     <activity android:name=".activities.LandingActivity">
     </activity>

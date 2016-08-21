@@ -3,6 +3,7 @@ package com.codepath.timeline.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+// This is only used for debug purpose
 @ParseClassName("TagParse")
 public class TagParse extends ParseObject {
 	// Ensure that your subclass has a public default constructor

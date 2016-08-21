@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
+    // LoginActivity calls LandingActivity
+
     @BindView(R.id.login_video)
     VideoView login_video;
     @BindView(R.id.input_email)
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 onLoginSuccess();
             }
         }
-        // If user is anonymous, send the user to LoginSignupActivity.class
+        // If user is anonymous, ask the user to login or signup
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -91,11 +93,13 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d("logInInBackground", currentUser.toString());
                                 onLoginSuccess();
                             } else {
+                                // something wrong
                                 // show the signup or login screen
                                 Log.d("logInInBackground", "getCurrentUser failed");
                                 signup();
                             }
                         } else {
+                            // usually go here
                             // Signup failed. Look at the ParseException to see what happened.
                             Log.d("logInInBackground", "done failed");
                             Log.d("logInInBackground", e.toString());
@@ -126,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("signUpInBackground", currentUser.toString());
                         onLoginSuccess();
                     } else {
-                        // show the signup or login screen
+                        // something wrong
                         Log.d("signUpInBackground", "getCurrentUser failed");
                         showMaterialDialog(getResources().getString(R.string.something_wrong));
                     }

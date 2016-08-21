@@ -9,6 +9,7 @@
   </style>
 
   <!-- Theme.AppCompat.Light.NoActionBar -->
+  <!-- @android:style/Theme.Black.NoTitleBar.Fullscreen -->
   <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
     <!-- minSdkVersion 19 -->
     <item name="android:windowTranslucentStatus">true</item>
