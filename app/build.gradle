@@ -64,4 +64,10 @@ dependencies {
 
   // ExpandingPager: https://github.com/qs-lll/ExpandingPager
   compile 'com.github.qs-lll:ExpandingPager:767ff93966'
+
+  // Scrolling viewpager: https://github.com/Trinea/android-auto-scroll-view-pager
+  // Used for autoplaying list of moments
+  compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+    exclude module: 'support-v4'
+  }
 }
