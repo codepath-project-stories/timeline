@@ -19,12 +19,11 @@ import butterknife.ButterKnife;
 public class LandingActivity extends AppCompatActivity {
 
     @BindView(R.id.vpPager) ViewPager viewPager;
-    @BindView(R.id.sliding_tabs) TabLayout tabs;
+    @BindView(R.id.sliding_tabs) TabLayout tabBar;
     @BindView(R.id.ivBackgroundImage) ImageView backgroundImage;
     @BindView(R.id.tvUserName) TextView userName;
     @BindView(R.id.tvStoriesCount) TextView storiesCount;
     @BindView(R.id.tvStoriesText) TextView storiesCountText;
-    private MyPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +31,20 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         ButterKnife.bind(this);
 
-        viewPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        final MyPagerAdapter viewPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
         // Give the TabLayout the ViewPager
-        tabs.setupWithViewPager(viewPager);
+        tabBar.setupWithViewPager(viewPager);
 
         // setup main views
         backgroundImage.setImageResource(0);
         Glide.with(getApplicationContext())
                 .load(R.drawable.background_image)
                 .into(backgroundImage);
-        userName.setText("Dianne Bautista");
+        userName.setText("Jane Smith");
         storiesCount.setText("20");
         storiesCountText.setText("STORIES");
-
     }
 
     @Override

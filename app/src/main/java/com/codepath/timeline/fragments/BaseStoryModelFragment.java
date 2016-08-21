@@ -32,10 +32,8 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
-    @BindView(R.id.rvStories)
-    RecyclerView rvStories;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.rvStories) RecyclerView rvStories;
+    @BindView(R.id.fab) FloatingActionButton fab;
     private Unbinder unbinder;
 
     @Override
@@ -69,15 +67,16 @@ abstract public class BaseStoryModelFragment extends Fragment {
         // abstract method call
         populateList();
 
-        ItemClickSupport.addTo(rvStories).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                                                                     @Override
-                                                                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                                                                         Intent i = new Intent(getContext(), TimelineActivity.class);
-                                                                         Story story = stories.get(position);
-                                                                         i.putExtra("story", Parcels.wrap(story));
-                                                                         startActivity(i);
-                                                                     }
-                                                                 }
+        ItemClickSupport.addTo(rvStories).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Intent i = new Intent(getContext(), TimelineActivity.class);
+                        Story story = stories.get(position);
+                        i.putExtra("story", Parcels.wrap(story));
+                        startActivity(i);
+                    }
+                }
         );
     }
 
