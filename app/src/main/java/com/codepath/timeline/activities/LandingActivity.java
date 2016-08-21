@@ -57,14 +57,16 @@ public class LandingActivity extends AppCompatActivity {
         storiesCountText.setText("STORIES");
 
         // TODO: production needs to remove the following
-        // test LoginActivity
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            // do stuff with the user
-            Log.d("LandingActivity", currentUser.toString());
-        } else {
-            // show the signup or login screen
-            Log.d("LandingActivity", "getCurrentUser failed");
+        if (ParseApplication.DEMO_MODE) {
+            // test LoginActivity
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser != null) {
+                // do stuff with the user
+                Log.d("LandingActivity", currentUser.toString());
+            } else {
+                // show the signup or login screen
+                Log.d("LandingActivity", "getCurrentUser failed");
+            }
         }
     }
 

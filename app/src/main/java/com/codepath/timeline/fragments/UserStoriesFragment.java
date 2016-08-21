@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -35,8 +36,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     @Override
     protected void populateList() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        String demoCreated = (String) currentUser.get("demoCreated");
-        if (demoCreated != null && demoCreated.equals("true")) {
+        String demoCreatedString = (String) currentUser.get("demoCreated");
+        boolean demoCreated = demoCreatedString != null && demoCreatedString.equals("true");
+        if (!ParseApplication.DEMO_MODE || (ParseApplication.DEMO_MODE && demoCreated)) {
             // demo already created
             // fetech stories from Parse server
             Log.d("populateList", "getStoryList");
@@ -51,8 +53,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                         }
                     });
         }
-        else {
-            // TODO: production needs to remove demo things
+        else if (ParseApplication.DEMO_MODE && !demoCreated) {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
