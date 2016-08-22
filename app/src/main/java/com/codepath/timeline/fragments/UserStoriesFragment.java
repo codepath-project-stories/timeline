@@ -38,6 +38,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
 
         if (!ParseApplication.TURN_ON_PARSE) {
             addAll(TimelineClient.getInstance().getMockStoryList(getContext()));
+            return;
         }
 
         ParseUser currentUser = ParseUser.getCurrentUser();

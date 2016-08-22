@@ -75,24 +75,29 @@ public class LandingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new MaterialDialog.Builder(this)
-                .content(getString(R.string.logout))
-                .positiveText(getString(android.R.string.yes))
-                .negativeText(getString(R.string.just_close))
-                .onAny(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog,
-                                        @NonNull DialogAction which) {
-                        // http://stackoverflow.com/questions/8631095/android-preventing-going-back-to-the-previous-activity
-                        if (which.equals(DialogAction.POSITIVE)) {
-                            ParseApplication.logout();
-                            finish(); // going to kill the activity
+        if (ParseApplication.TURN_ON_PARSE) {
+            new MaterialDialog.Builder(this)
+                    .content(getString(R.string.logout))
+                    .positiveText(getString(android.R.string.yes))
+                    .negativeText(getString(R.string.just_close))
+                    .onAny(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog,
+                                            @NonNull DialogAction which) {
+                            // http://stackoverflow.com/questions/8631095/android-preventing-going-back-to-the-previous-activity
+                            if (which.equals(DialogAction.POSITIVE)) {
+                                ParseApplication.logout();
+                                finish(); // going to kill the activity
+                            }
+                            else if (which.equals(DialogAction.NEGATIVE)) {
+                                moveTaskToBack(true); // Same as if user pressed Home button.
+                            }
                         }
-                        else if (which.equals(DialogAction.NEGATIVE)) {
-                            moveTaskToBack(true); // Same as if user pressed Home button.
-                        }
-                    }
-                })
-                .show();
+                    })
+                    .show();
+        }
+        else {
+            moveTaskToBack(true); // Same as if user pressed Home button.
+        }
     }
 }

@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (!ParseApplication.TURN_ON_PARSE) {
             onLoginSuccess();
+            return;
         }
 
         // Determine whether the current user is an anonymous user
@@ -98,7 +99,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         lock = false;
-        login_video.start();
+        if (login_video != null) {
+            login_video.start();
+        }
     }
 
     @OnClick(R.id.button_start)
