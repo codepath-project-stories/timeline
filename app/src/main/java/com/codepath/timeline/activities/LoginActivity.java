@@ -190,7 +190,9 @@ public class LoginActivity extends AppCompatActivity {
 
     void onLoginSuccess() {
         lock = false;
-        button_start.setText(getResources().getString(R.string.start));
+        if (button_start != null) {
+            button_start.setText(getResources().getString(R.string.start));
+        }
         Intent i = new Intent(this, LandingActivity.class);
         // int story = stories.get(position);
         // i.putExtra("story", Parcels.wrap(story));
