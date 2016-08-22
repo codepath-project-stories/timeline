@@ -1,9 +1,11 @@
 package com.codepath.timeline.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -36,10 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     Button button_start;
 
     boolean lock;
+    SharedPreferences mSettings;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+
+        mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        lock = false;
 
         if (!ParseApplication.TURN_ON_PARSE) {
             onLoginSuccess();
@@ -57,10 +63,22 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        lock = false;
-
+        input_email.setText(mSettings.getString("input_email", ""));
         // input_email.requestFocus();
 
+        setupVideo();
+    }
+
+    // http://guides.codepath.com/android/Activity-Lifecycle
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (login_video != null) {
+            login_video.start();
+        }
+    }
+
+    private void setupVideo() {
         // https://developer.android.com/guide/appendix/media-formats.html
         //
         // SD (High quality)
@@ -92,16 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                 mp.setLooping(true);
             }
         });
-    }
-
-    // http://guides.codepath.com/android/Activity-Lifecycle
-    @Override
-    protected void onResume() {
-        super.onResume();
-        lock = false;
-        if (login_video != null) {
-            login_video.start();
-        }
     }
 
     @OnClick(R.id.button_start)
@@ -200,6 +208,14 @@ public class LoginActivity extends AppCompatActivity {
         lock = false;
         if (button_start != null) {
             button_start.setText(getResources().getString(R.string.start));
+        }
+        if (input_email != null) {
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putString("input_email", input_email.getText().toString());
+            editor.apply();
+        }
+        if (input_password != null) {
+            input_password.setText("");
         }
         Intent i = new Intent(this, LandingActivity.class);
         // int story = stories.get(position);
