@@ -55,7 +55,7 @@ public class LandingActivity extends AppCompatActivity {
 //        storiesCountText.setText("STORIES");
 
         // TODO: production needs to remove the following
-        if (ParseApplication.DEMO_MODE) {
+        if (ParseApplication.TURN_ON_PARSE && ParseApplication.DEMO_MODE) {
             // test LoginActivity
             ParseUser currentUser = ParseUser.getCurrentUser();
             if (currentUser != null) {

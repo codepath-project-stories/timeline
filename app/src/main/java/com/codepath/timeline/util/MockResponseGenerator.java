@@ -7,13 +7,13 @@ import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// This is only used for debug purpose
 public class MockResponseGenerator {
   private static final String TAG = MockResponseGenerator.class.getSimpleName();
 
@@ -59,13 +59,12 @@ public class MockResponseGenerator {
   }
 
   private void createMockStoryList() {
-    ParseUser currentUser = ParseUser.getCurrentUser();
     mStoryList = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
       String dummyDate = "January " + i + ", 2016";
       Story story = new Story("Story " + i,
               "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
-              currentUser);
+              null);
       mStoryList.add(story);
     }
   }

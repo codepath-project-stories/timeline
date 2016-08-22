@@ -36,8 +36,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     @Override
     protected void populateList() {
 
-//        List<Story> stories = TimelineClient.getInstance().getMockStoryList(getContext());
-//        addAll(stories);
+        if (!ParseApplication.TURN_ON_PARSE) {
+            addAll(TimelineClient.getInstance().getMockStoryList(getContext()));
+        }
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         String demoCreatedString = (String) currentUser.get("demoCreated");

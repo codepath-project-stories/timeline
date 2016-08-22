@@ -12,6 +12,7 @@ import android.widget.VideoView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
+import com.codepath.timeline.util.ParseApplication;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
@@ -39,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+
+        if (!ParseApplication.TURN_ON_PARSE) {
+            onLoginSuccess();
+        }
 
         // Determine whether the current user is an anonymous user
         if (ParseUser.getCurrentUser() != null) {

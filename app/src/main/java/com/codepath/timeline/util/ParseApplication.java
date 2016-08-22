@@ -16,6 +16,7 @@ import com.parse.SaveCallback;
 import com.parse.interceptors.ParseLogInterceptor;
 
 public class ParseApplication extends Application {
+	public static boolean TURN_ON_PARSE = true;
 	public static boolean DEMO_MODE = true;
 	@Override
 	public void onCreate() {
@@ -42,6 +43,7 @@ public class ParseApplication extends Application {
 		// ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
 	}
 
+	// This is only used for debug purpose
 	void test() {
 		// New test creation of object below
 		ParseObject testObject = new ParseObject("TestObject");
