@@ -17,21 +17,34 @@ Here are some sample stories:
 
 ## Required User Stories
 
-* [ ] After logging in, user is taken to their homepage where they see their profile photo and list of stories
-* [ ] User can add a new story
-  * [ ] When adding a new story, user can specify the name, description and people they choose to share their stories with
-  * [ ] User has the option to import photos from their phone
+* [x] After logging in, user is taken to their homepage where they see their list of stories and the stories shared by friends
+* [ ] User can change settings of a story and add new collaborators to it
+* [ ] User can search for a particular story
 * [ ] User can add a new moment into a story
   * [ ] When adding a new moment, user can specify the date, description and
   * [ ] User can import photos or take new pictures
-* [ ] User can click on any story from their timeline
-  * [ ] When clicking on a story, user can view all of the moments that were shared for that story
-  * [ ] User can see a timeline of all the moments that were shared in that story
-  * [ ] User can click on a moment to be taken to a detailed view of that moment
+* [x] User can click on any story from their timeline
+  * [x] When clicking on a story, user can view all of the moments that were shared for that story
+  * [x] User can see a timeline of all the moments that were shared in that story
+  * [x] User can click on a moment to be taken to a detailed view of that moment
+  * [x] User can autoplay all moments
+  * [ ] Users can comment on a moment 
 
 ## Stretched Goals
 
+* [ ] User can add a new story
+  * [ ] When adding a new story, user can specify the name, description and people they choose to share their stories with
+  * [ ] User has the option to import photos from their phone
 * [ ] Allows the user to include videos in their timeline
+
+
+## Video Walkthrough
+
+Here's a walkthrough of implemented user stories:
+
+![Alt Text](https://github.com/Marusya82/WeTweetRedux/blob/master/demo1.gif)
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 ## Wireframes
