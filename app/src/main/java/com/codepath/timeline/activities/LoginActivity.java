@@ -1,8 +1,6 @@
 package com.codepath.timeline.activities;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -49,27 +47,27 @@ public class LoginActivity extends AppCompatActivity {
         input_email.requestFocus();
 
         // https://developer.android.com/guide/appendix/media-formats.html
-        login_video.setVideoURI(
-                Uri.parse(
-                        "android.resource://"
-                                + getPackageName() + "/"
-                                + R.raw.login_video_1
-                )
-        );
-        login_video.start();
-        login_video.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
+//        login_video.setVideoURI(
+//                Uri.parse(
+//                        "android.resource://"
+//                                + getPackageName() + "/"
+//                                + R.raw.login_video_1
+//                )
+//        );
+//        login_video.start();
+//        login_video.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                mp.setLooping(true);
+//            }
+//        });
     }
 
     // http://guides.codepath.com/android/Activity-Lifecycle
     @Override
     protected void onResume() {
         super.onResume();
-        login_video.start();
+//        login_video.start();
     }
 
     @OnClick(R.id.btn_login)

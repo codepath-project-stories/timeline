@@ -53,13 +53,6 @@ public class LandingActivity extends AppCompatActivity {
 //        userName.setText("Jane Smith");
 //        storiesCount.setText("20");
 //        storiesCountText.setText("STORIES");
-//        backgroundImage.setImageResource(0);
-//        Glide.with(getApplicationContext())
-//                .load(R.drawable.background_image)
-//                .into(backgroundImage);
-//        userName.setText("Jane Smith");
-//        storiesCount.setText("20");
-//        storiesCountText.setText("STORIES");
 
         // TODO: production needs to remove the following
         if (ParseApplication.DEMO_MODE) {

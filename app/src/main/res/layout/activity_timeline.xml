@@ -11,6 +11,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Auto-Play all Memories"
+      android:transitionName="background"
       android:src="@drawable/timeline_icon"
       android:id="@+id/ivAutoPlay"
       android:layout_margin="10dp"

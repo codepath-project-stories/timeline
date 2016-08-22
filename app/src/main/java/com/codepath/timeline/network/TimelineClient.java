@@ -71,10 +71,10 @@ public class TimelineClient {
     JsonArray jsonArray = createMockJsonArray(context, "stories.json");
     if (jsonArray != null) {
       List<Story> storyList = Story.fromJsonArray(jsonArray);
-      for (Story theStory : storyList) {
-        theStory.setOwner(ParseUser.getCurrentUser());
-        theStory.saveInBackground();
-      }
+//      for (Story theStory : storyList) {
+//        theStory.setOwner(ParseUser.getCurrentUser());
+//        theStory.saveInBackground();
+//      }
       return storyList;
     } else {
       return null;

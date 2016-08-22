@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Story;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,9 +24,8 @@ import butterknife.ButterKnife;
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Story> mStories;
-    Context context;
+    private Context context;
     private final int SIMPLE = 0;
-    int count = 0;
 
     public StoriesAdapter(List<Story> stories) {
         this.mStories = stories;
@@ -112,47 +107,14 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return SIMPLE;
     }
 
-    // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
-    public String getRelativeTimeAgo(String rawJsonDate) {
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
-
-        String relativeDate = "";
-        try {
-            long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        String[] parts = relativeDate.split(" ");
-        if (parts.length <= 1) {
-            return relativeDate;
-        }
-        else {
-            String dateToShow = parts[0] + parts[1].charAt(0);
-            return dateToShow;
-        }
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    public static class ViewHolderSimpleStory extends ViewHolder {
+    public static class ViewHolderSimpleStory extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
         @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
-//        @BindView(R.id.tvMomentsCount) TextView tvMomentsCount;
 
         public ViewHolderSimpleStory(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
-
     }
 }
