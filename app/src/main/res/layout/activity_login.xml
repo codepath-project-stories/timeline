@@ -93,7 +93,7 @@
             <Button
                 android:textColor="@color/colorPrimaryLoginLight"
                 android:layout_gravity="center"
-                android:id="@+id/btn_login"
+                android:id="@+id/button_start"
                 android:background="@drawable/login_button"
                 android:padding="12dp"
                 android:layout_width="match_parent"
@@ -102,7 +102,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginRight="64dp"
                 android:layout_marginBottom="24dp"
-                android:text="@string/login"
+                android:text="@string/start"
                 />
         </LinearLayout>
     </RelativeLayout>

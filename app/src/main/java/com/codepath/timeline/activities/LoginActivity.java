@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.VideoView;
 
@@ -30,6 +31,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText input_email;
     @BindView(R.id.input_password)
     EditText input_password;
+    @BindView(R.id.button_start)
+    Button button_start;
+
+    boolean lock;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -46,14 +51,32 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        input_email.requestFocus();
+        lock = false;
+
+        // input_email.requestFocus();
 
         // https://developer.android.com/guide/appendix/media-formats.html
+        //
+        // SD (High quality)
+        // codec        H.264 Baseline Profile codec
+        // resolution   480 x 360 px
+        // frame rate   30 fps
+        // bitrate      500 Kbps
+        //
+        // Currently we have
+        // codec        h264 constrained baseline L3.1 with yuv420p
+        // resolution   544x720 or 854x480
+        // frame rate   30 fps
+        // bitrate      500 Kbps
+        //
         login_video.setVideoURI(
                 Uri.parse(
                         "android.resource://"
                                 + getPackageName() + "/"
                                 + R.raw.login_video_1
+                        // TODO: have a better video
+                        // R.raw.login_video_2
+                        // R.raw.login_video_3
                 )
         );
         login_video.start();
@@ -69,16 +92,24 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        lock = false;
         login_video.start();
     }
 
-    @OnClick(R.id.btn_login)
+    @OnClick(R.id.button_start)
     void login() {
+        Log.d("LoginActivity", "login()");
+        if (lock) {
+            return;
+        }
         if (input_email.getText().length() == 0
                 || input_password.getText().length() == 0) {
             showMaterialDialog(getResources().getString(R.string.missing));
             return;
         }
+        Log.d("LoginActivity", "login() starts lock");
+        lock = true;
+        button_start.setText(getResources().getString(R.string.loading));
         ParseUser.logInInBackground(
                 input_email.getText().toString(),
                 input_password.getText().toString(),
@@ -148,6 +179,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void showMaterialDialog(String input) {
+        lock = false;
+        button_start.setText(getResources().getString(R.string.start));
         new MaterialDialog.Builder(LoginActivity.this)
                 .content(input)
                 .positiveText(android.R.string.ok)
@@ -156,6 +189,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void onLoginSuccess() {
+        lock = false;
+        button_start.setText(getResources().getString(R.string.start));
         Intent i = new Intent(this, LandingActivity.class);
         // int story = stories.get(position);
         // i.putExtra("story", Parcels.wrap(story));

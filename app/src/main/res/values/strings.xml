@@ -6,9 +6,10 @@
   <string name="welcome">Welcome to Timeline App</string>
   <string name="email">Email</string>
   <string name="password">Password</string>
-  <string name="login">Login</string>
+  <string name="start">START</string>
   <string name="something_wrong">Something wrong... Try again later : ></string>
   <string name="missing">Cannot be missing or blank</string>
   <string name="logout">Log out?</string>
   <string name="just_close">Just close the app</string>
+  <string name="loading">LOADING...</string>
 </resources>
