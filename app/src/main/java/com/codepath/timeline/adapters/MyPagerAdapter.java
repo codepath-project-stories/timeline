@@ -13,7 +13,7 @@ public class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
     // BaseStoryModelFragment calls TimelineActivity
 
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "My stories", "Shared with me" };
+    private String tabTitles[] = new String[] { "My stories", "Friends stories" };
 
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);

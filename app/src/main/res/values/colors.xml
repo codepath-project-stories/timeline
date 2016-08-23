@@ -21,4 +21,6 @@
   <color name="grey">#757575</color>
   <color name="greyDark">#666666</color>
   <color name="greyDarkDark">#333333</color>
+  <color name="aqua">#38eeff</color>
+  <color name="dianne">#96e1e3</color>
 </resources>

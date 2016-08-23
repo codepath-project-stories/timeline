@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
     tools:context=".activities.TimelineActivity">
 
   <ImageView
+      android:id="@+id/ivAutoPlay"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Auto-Play all Memories"
-      android:transitionName="background"
-      android:src="@drawable/timeline_icon"
-      android:id="@+id/ivAutoPlay"
-      android:layout_margin="10dp"
       android:layout_alignParentTop="true"
-      android:layout_centerHorizontal="true"/>
+      android:layout_centerHorizontal="true"
+      android:layout_margin="10dp"
+      android:text="Auto-Play all Memories"
+      android:transitionName="background" />
 
   <android.support.v7.widget.RecyclerView
-      android:background="@android:color/white"
-      android:layout_below="@+id/ivAutoPlay"
       android:id="@+id/rvMoments"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+      android:layout_height="match_parent"
+      android:layout_below="@+id/ivAutoPlay"
+      android:background="@android:color/white" />
 
 </RelativeLayout>
+    <!--android:src="@drawable/timeline_icon"-->
+
+

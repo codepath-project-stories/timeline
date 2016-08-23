@@ -1,8 +1,11 @@
 package com.codepath.timeline.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +17,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
+import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.models.Story;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -65,7 +71,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, int position) {
+    private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, final int position) {
         final Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
         holder.tvStoryTitle.setText("Fun times");
@@ -87,10 +93,23 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         };
 
-        Bitmap myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_test2);
+        final Bitmap myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_test2);
         if (myBitmap != null && !myBitmap.isRecycled()) {
             Palette.from(myBitmap).generate(paletteListener);
         }
+
+        holder.ivBackgroundImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, TimelineActivity.class);
+                Story story = mStories.get(position);
+                i.putExtra("story", Parcels.wrap(story));
+                i.putExtra("imageUrl", story.getBackgroundImageUrl());
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) context, v, "background");
+                context.startActivity(i, options.toBundle());
+            }
+        });
     }
 
     // Returns the total count of items in the list
@@ -102,8 +121,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     //Returns the view type of the item at position for the purposes of view recycling
     @Override
     public int getItemViewType(int position) {
-        // later here will be different types of tweets (with image/video or simple text)
-//        Story inspect = mStories.get(position);
         return SIMPLE;
     }
 

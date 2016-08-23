@@ -45,12 +45,12 @@ abstract public class BaseStoryModelFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_base_model_story, parent, false);
         unbinder = ButterKnife.bind(this, view);
 
-        stories = new ArrayList<>();
-
         final LinearLayoutManager layoutManagerList = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         final StaggeredGridLayoutManager layoutManagerGrid = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        setupViews(layoutManagerList);
+        stories = new ArrayList<>();
+        adaptStories = new StoriesAdapter(stories);
+        setupLayout(layoutManagerList);
 
         // abstract method call
         populateList();
@@ -75,10 +75,12 @@ abstract public class BaseStoryModelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!clicked) {
-                    setupViews(layoutManagerGrid);
+//                    rvStories.setLayoutManager(layoutManagerGrid);
+                    setupLayout(layoutManagerGrid);
                     clicked = true;
                 } else {
-                    setupViews(layoutManagerList);
+//                    rvStories.setLayoutManager(layoutManagerList);
+                    setupLayout(layoutManagerList);
                     clicked = false;
                 }
             }
@@ -91,12 +93,10 @@ abstract public class BaseStoryModelFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public void setupViews(RecyclerView.LayoutManager layout) {
-        adaptStories = new StoriesAdapter(stories);
-        rvStories.setAdapter(adaptStories);
+    public void setupLayout(RecyclerView.LayoutManager layout) {
         rvStories.setLayoutManager(layout);
         layout.scrollToPosition(0);
-        populateList();
+        rvStories.setAdapter(adaptStories);
     }
 
     protected abstract void populateList();

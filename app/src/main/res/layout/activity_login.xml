@@ -1,69 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <VideoView
-            android:layout_gravity="center"
             android:id="@+id/login_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <!-- TODO: use compound drawable -->
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:orientation="vertical">
+
             <TextView
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryLogin"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="100dp"
                 android:text="@string/app_name"
-                />
+                android:textColor="@color/dianne"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
             <ImageView
-                android:layout_gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:layout_margin="20dp"
-                android:src="@drawable/blue_marketing"
                 android:contentDescription="@string/app_name"
-                />
+                android:src="@drawable/app_icon" />
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_below="@id/logo"
-            >
+            android:orientation="vertical">
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                >
+                android:layout_marginTop="8dp">
+
                 <EditText
                     android:id="@+id/input_email"
                     android:layout_width="match_parent"
@@ -71,15 +69,16 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:hint="@string/email"
-                    android:selectAllOnFocus="true"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:selectAllOnFocus="true" />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                >
+                android:layout_marginTop="8dp">
+
                 <EditText
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
@@ -87,23 +86,22 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:hint="@string/password"
-                    android:inputType="textPassword"
-                    />
+                    android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
+
             <Button
-                android:textColor="@color/colorPrimaryLoginLight"
-                android:layout_gravity="center"
                 android:id="@+id/button_start"
-                android:background="@drawable/login_button"
-                android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="64dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
+                android:layout_marginLeft="64dp"
+                android:layout_marginRight="64dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/login_button"
+                android:padding="12dp"
                 android:text="@string/start"
-                />
+                android:textColor="@color/dianne" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

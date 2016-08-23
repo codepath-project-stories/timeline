@@ -6,15 +6,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.view.ItemClickSupport;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +64,18 @@ public class TimelineActivity extends AppCompatActivity {
                         showDetailDialog(position);
                     }
                 });
+
+        // Todo: Use the story extracted from the intent
+        // extract from the intent
+        Story story = (Story) Parcels.unwrap(getIntent().getParcelableExtra("story"));
+        Log.d("DEBUG", story.toString());
+
+        // load the image url for the background of the story into the image view
+        // Todo: Change drawable to the image loaded from the intent
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+        Glide.with(this)
+                .load(R.drawable.image_test2)
+                .into(ivAutoPlay);
 
         getMomentList();
     }
