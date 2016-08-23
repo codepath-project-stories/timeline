@@ -20,6 +20,7 @@ Here are some sample stories:
 * [ ] User can add a new story
   * [ ] When adding a new story, user can specify the title of a story
   * [ ] User has an option to import photo from their phone or take a picture for the background image of a story
+  * [ ] User can change settings of a story by adding/removing collaborators
 * [ ] User can add a new moment into a story
   * [ ] When adding a new moment, user can specify the date, description and
   * [ ] User can import photos or take a picture
@@ -31,8 +32,8 @@ Here are some sample stories:
 
 ## Stretched Goals
 * [ ] User can search for a particular story
-* [ ] User has a list of friends populated from Facebook
-* [ ] User can change settings of a story by adding/removing collaborators
+* [ ] User receives push notification when a new moment is added to the story
+* [ ] User has a list of friends auto populated from Facebook
 * [ ] Users can comment on a moment
 * [ ] Allows the user to include videos in their timeline
 
