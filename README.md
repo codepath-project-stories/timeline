@@ -14,27 +14,26 @@ Here are some sample stories:
 * My Family -- Imagine creating a story that allows you and your family to share photos --  the Hawaii vacation that you all took, your mom's 50th birthday party, Christmas celebration in 2015. Wouldn't it be great to be able to look back on these moments in one app when you're feeling homesick?
 
 
-
 ## Required User Stories
 
 * [x] After logging in, user is taken to their homepage where they see their list of stories and the stories shared by friends
-* [ ] User can change settings of a story and add new collaborators to it
-* [ ] User can search for a particular story
+* [ ] User can add a new story
+  * [ ] When adding a new story, user can specify the title of a story
+  * [ ] User has an option to import photo from their phone or take a picture for the background image of a story
 * [ ] User can add a new moment into a story
   * [ ] When adding a new moment, user can specify the date, description and
-  * [ ] User can import photos or take new pictures
+  * [ ] User can import photos or take a picture
 * [x] User can click on any story from their timeline
   * [x] When clicking on a story, user can view all of the moments that were shared for that story
   * [x] User can see a timeline of all the moments that were shared in that story
   * [x] User can click on a moment to be taken to a detailed view of that moment
   * [x] User can autoplay all moments
-  * [ ] Users can comment on a moment 
 
 ## Stretched Goals
-
-* [ ] User can add a new story
-  * [ ] When adding a new story, user can specify the name, description and people they choose to share their stories with
-  * [ ] User has the option to import photos from their phone
+* [ ] User can search for a particular story
+* [ ] User has a list of friends populated from Facebook
+* [ ] User can change settings of a story by adding/removing collaborators
+* [ ] Users can comment on a moment
 * [ ] Allows the user to include videos in their timeline
 
 
