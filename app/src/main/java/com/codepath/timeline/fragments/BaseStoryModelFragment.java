@@ -1,7 +1,6 @@
 package com.codepath.timeline.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.adapters.StoriesAdapter;
 import com.codepath.timeline.models.Story;
-import com.codepath.timeline.util.view.ItemClickSupport;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +28,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
-    @BindView(R.id.fab) FloatingActionButton toggle;
+    @BindView(R.id.fab) FloatingActionButton add;
     @BindView(R.id.rvStories) RecyclerView rvStories;
     private Unbinder unbinder;
     private boolean clicked = false;
@@ -46,6 +41,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         final LinearLayoutManager layoutManagerList = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        // for switching between layouts (grid -> list)
         final StaggeredGridLayoutManager layoutManagerGrid = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         stories = new ArrayList<>();
@@ -55,36 +51,38 @@ abstract public class BaseStoryModelFragment extends Fragment {
         // abstract method call
         populateList();
 
-        ItemClickSupport
-                .addTo(rvStories)
-                .setOnItemClickListener(
-                        new ItemClickSupport.OnItemClickListener() {
-                            @Override
-                            public void onItemClicked(RecyclerView recyclerView,
-                                                      int position,
-                                                      View v) {
-                                Intent i = new Intent(getContext(), TimelineActivity.class);
-                                Story story = stories.get(position);
-                                i.putExtra("story", Parcels.wrap(story));
-                                startActivity(i);
-                            }
-                        }
-                );
+        // Todo: on click listener is added directly in the adapter, modify it later to include the title of a story as well
+        // Todo: the code below is not needed then
+//        ItemClickSupport
+//                .addTo(rvStories)
+//                .setOnItemClickListener(
+//                        new ItemClickSupport.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClicked(RecyclerView recyclerView,
+//                                                      int position,
+//                                                      View v) {
+//                                Intent i = new Intent(getContext(), TimelineActivity.class);
+//                                Story story = stories.get(position);
+//                                i.putExtra("story", Parcels.wrap(story));
+//                                startActivity(i);
+//                            }
+//                        }
+//                );
 
-        toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!clicked) {
-//                    rvStories.setLayoutManager(layoutManagerGrid);
-                    setupLayout(layoutManagerGrid);
-                    clicked = true;
-                } else {
-//                    rvStories.setLayoutManager(layoutManagerList);
-                    setupLayout(layoutManagerList);
-                    clicked = false;
-                }
-            }
-        });
+
+
+//        toggle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!clicked) {
+//                    setupLayout(layoutManagerGrid);
+//                    clicked = true;
+//                } else {
+//                    setupLayout(layoutManagerList);
+//                    clicked = false;
+//                }
+//            }
+//        });
         return view;
     }
 

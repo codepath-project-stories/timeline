@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -98,7 +99,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Palette.from(myBitmap).generate(paletteListener);
         }
 
-        holder.ivBackgroundImage.setOnClickListener(new View.OnClickListener() {
+        holder.rlMainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, TimelineActivity.class);
@@ -106,7 +107,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 i.putExtra("story", Parcels.wrap(story));
                 i.putExtra("imageUrl", story.getBackgroundImageUrl());
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context, v, "background");
+                        makeSceneTransitionAnimation((Activity) context, holder.ivBackgroundImage, "background");
                 context.startActivity(i, options.toBundle());
             }
         });
@@ -126,6 +127,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public static class ViewHolderSimpleStory extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.rlMainView) RelativeLayout rlMainView;
         @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
         @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
 
