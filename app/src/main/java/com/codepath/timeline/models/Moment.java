@@ -20,7 +20,7 @@ public class Moment {
   private static final String TAG = Moment.class.getSimpleName();
 
   private int id;
-  private String createdAt;
+  private String createdAt;     // DB format: 2016-08-22T19:22:54.695Z
   private String description;
   private String mediaUrl;
   private User user;

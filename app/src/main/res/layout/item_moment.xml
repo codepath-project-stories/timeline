@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="@dimen/activity_vertical_margin"
-    android:layout_marginRight="@dimen/activity_vertical_margin">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
   <View
       android:id="@+id/vLine"
@@ -14,7 +12,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentTop="true"
       android:layout_alignBottom="@+id/cvMoment"
-      android:layout_marginLeft="20dp"
+      android:layout_marginLeft="30dp"
       android:background="@color/colorPrimary"/>
 
   <TextView
@@ -23,6 +21,7 @@
       android:layout_height="40dp"
       android:layout_alignParentStart="true"
       android:layout_alignParentTop="true"
+      android:layout_marginLeft="10dp"
       android:layout_marginRight="@dimen/activity_vertical_margin"
       android:layout_marginTop="@dimen/activity_horizontal_margin"
       android:background="@drawable/circle"
@@ -36,10 +35,10 @@
       android:id="@+id/tvDescription"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/tvDate"
+      android:layout_alignTop="@+id/tvDate"
+      android:layout_marginTop="7dp"
       android:layout_toEndOf="@+id/tvDate"
-      android:text="New Text"
-      android:textSize="@dimen/mediumText"/>
+      android:text="New Text"/>
 
   <android.support.v7.widget.CardView
       android:id="@+id/cvMoment"
@@ -47,14 +46,16 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvDescription"
-      android:layout_marginLeft="@dimen/activity_vertical_margin"
       android:layout_marginTop="@dimen/activity_horizontal_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
       android:layout_toRightOf="@id/vLine">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:background="@color/colorPrimaryLight">
 
       <ImageView
@@ -64,7 +65,7 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true"
           android:layout_alignParentTop="true"
-          android:layout_margin="10dp"
+          android:layout_marginRight="10dp"
           tools:background="@color/colorPrimaryDark"/>
 
       <ImageView
@@ -74,7 +75,7 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true"
           android:layout_below="@+id/ivProfilePhoto"
-          android:layout_margin="10dp"
+          android:layout_marginTop="10dp"
           tools:background="@color/colorPrimary"/>
 
       <TextView

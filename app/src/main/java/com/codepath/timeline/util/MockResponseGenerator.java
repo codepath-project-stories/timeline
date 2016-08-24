@@ -72,8 +72,9 @@ public class MockResponseGenerator {
   private void createMockMomentList() {
     mMomentList = new ArrayList<>();
 
-    for (int i = 0; i < 14; i++) {
-      String dummyDate = "January " + i + ", 2016";
+    for (int i = 10; i < 21; i++) {
+      String dummyDate = "2016-08-" + i + "T19:22:54.695Z";
+
       String mediaUrl = getRandomMedia();
       Moment moment = new Moment(5000 + i, dummyDate, "Moment " + i + ": something, something, something, something",
           mediaUrl, getUser(), "San Francisco, CA");

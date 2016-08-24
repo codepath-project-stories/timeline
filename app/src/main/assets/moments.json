@@ -1,140 +1,63 @@
 [{
-  "createdAt": "January 0, 2016",
-  "description": "Moment 0",
-  "id": 5000,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqLmaWCXgAEbYCY.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 1, 2016",
-  "description": "Moment 1",
-  "id": 5001,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqJ_a9NWYAAfCMX.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 2, 2016",
-  "description": "Moment 2",
-  "id": 5002,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqLmaWCXgAEbYCY.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 3, 2016",
-  "description": "Moment 3",
-  "id": 5003,
-  "location": "San Francisco, CA",
-  "mediaUrl": "http://pbs.twimg.com/media/CqLfimAXgAAIqyD.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 4, 2016",
-  "description": "Moment 4",
-  "id": 5004,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqKUA_TXEAASfa5.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 5, 2016",
-  "description": "Moment 5",
-  "id": 5005,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqKUA_TXEAASfa5.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 6, 2016",
-  "description": "Moment 6",
-  "id": 5006,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqJ_a9NWYAAfCMX.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 7, 2016",
-  "description": "Moment 7",
-  "id": 5007,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqJ_a9NWYAAfCMX.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 8, 2016",
-  "description": "Moment 8",
-  "id": 5008,
-  "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqJ_a9NWYAAfCMX.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 9, 2016",
-  "description": "Moment 9",
-  "id": 5009,
-  "location": "San Francisco, CA",
-  "mediaUrl": "http://pbs.twimg.com/media/CqLfimAXgAAIqyD.jpg",
-  "user": {
-    "id": 5555,
-    "name": "Jane Smith",
-    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
-  }
-}, {
-  "createdAt": "January 10, 2016",
-  "description": "Moment 10",
+  "createdAt": "2016-08-10T19:22:54.695Z",
+  "description": "Moment 10: something, something, something, something",
   "id": 5010,
   "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqJxseQW8AA9bEa.jpg",
+  "mediaUrl": "https://pbs.twimg.com/media/CqLmaWCXgAEbYCY.jpg",
   "user": {
     "id": 5555,
     "name": "Jane Smith",
     "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
   }
 }, {
-  "createdAt": "January 11, 2016",
-  "description": "Moment 11",
+  "createdAt": "2016-08-11T19:22:54.695Z",
+  "description": "Moment 11: something, something, something, something",
   "id": 5011,
   "location": "San Francisco, CA",
-  "mediaUrl": "https://pbs.twimg.com/media/CqJ_a9NWYAAfCMX.jpg",
+  "mediaUrl": "https://pbs.twimg.com/media/CqK2WIdWgAEZIFM.jpg",
   "user": {
     "id": 5555,
     "name": "Jane Smith",
     "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
   }
 }, {
-  "createdAt": "January 12, 2016",
-  "description": "Moment 12",
+  "createdAt": "2016-08-12T19:22:54.695Z",
+  "description": "Moment 12: something, something, something, something",
   "id": 5012,
   "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqJBn4BWEAALVNo.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2016-08-13T19:22:54.695Z",
+  "description": "Moment 13: something, something, something, something",
+  "id": 5013,
+  "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqK2WIdWgAEZIFM.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2016-08-14T19:22:54.695Z",
+  "description": "Moment 14: something, something, something, something",
+  "id": 5014,
+  "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqK2WIdWgAEZIFM.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2015-08-15T19:22:54.695Z",
+  "description": "Moment 15: something, something, something, something",
+  "id": 5015,
+  "location": "San Francisco, CA",
   "mediaUrl": "http://pbs.twimg.com/media/CqLfimAXgAAIqyD.jpg",
   "user": {
     "id": 5555,
@@ -142,11 +65,55 @@
     "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
   }
 }, {
-  "createdAt": "January 13, 2016",
-  "description": "Moment 13",
-  "id": 5013,
+  "createdAt": "2015-08-16T19:22:54.695Z",
+  "description": "Moment 16: something, something, something, something",
+  "id": 5016,
+  "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqJBn4BWEAALVNo.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2015-08-17T19:22:54.695Z",
+  "description": "Moment 17: something, something, something, something",
+  "id": 5017,
+  "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqK2WIdWgAEZIFM.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2015-08-18T19:22:54.695Z",
+  "description": "Moment 18: something, something, something, something",
+  "id": 5018,
+  "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqK2WIdWgAEZIFM.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2014-08-19T19:22:54.695Z",
+  "description": "Moment 19: something, something, something, something",
+  "id": 5019,
   "location": "San Francisco, CA",
   "mediaUrl": "http://pbs.twimg.com/media/CqLfimAXgAAIqyD.jpg",
+  "user": {
+    "id": 5555,
+    "name": "Jane Smith",
+    "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+  }
+}, {
+  "createdAt": "2014-08-20T19:22:54.695Z",
+  "description": "Moment 20: something, something, something, something",
+  "id": 5020,
+  "location": "San Francisco, CA",
+  "mediaUrl": "https://pbs.twimg.com/media/CqJdGVLXgAAnLJl.jpg",
   "user": {
     "id": 5555,
     "name": "Jane Smith",

@@ -24,8 +24,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHolder> {
   private static final String TAG = MomentsAdapter.class.getSimpleName();
 
-  private List<Moment> mMomentList;
-  private Context mContext;
+  protected List<Moment> mMomentList;
+  protected Context mContext;
 
   public MomentsAdapter(Context context, List<Moment> mMomentList) {
     this.mContext = context;

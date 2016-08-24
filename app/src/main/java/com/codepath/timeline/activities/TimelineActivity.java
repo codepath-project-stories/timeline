@@ -12,13 +12,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
-import com.codepath.timeline.adapters.MomentsAdapter;
+import com.codepath.timeline.adapters.MomentsHeaderAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.view.ItemClickSupport;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import org.parceler.Parcels;
 
@@ -40,7 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
     ImageView ivAutoPlay;
 
     private List<Moment> mMomentList;
-    private MomentsAdapter mAdapter;
+    private MomentsHeaderAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +53,21 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void initList() {
         mMomentList = new ArrayList<>();
-        mAdapter = new MomentsAdapter(this, mMomentList);
+        mAdapter = new MomentsHeaderAdapter(this, mMomentList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvMoments.setLayoutManager(linearLayoutManager);
         rvMoments.setAdapter(mAdapter);
+
+        // Add the sticky headers decoration
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+        rvMoments.addItemDecoration(headersDecor);
+
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });
 
         ItemClickSupport.addTo(rvMoments).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
