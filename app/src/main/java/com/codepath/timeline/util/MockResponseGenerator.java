@@ -27,7 +27,7 @@ public class MockResponseGenerator {
   private MockResponseGenerator() {
     gson = new Gson();
     createMediaList();
-//    createMockStoryList();
+    createMockStoryList();
     createMockMomentList();
   }
 
