@@ -17,6 +17,7 @@ import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.view.ItemClickSupport;
 
 import org.parceler.Parcels;
@@ -75,6 +76,7 @@ public class TimelineActivity extends AppCompatActivity {
         String imageUrl = getIntent().getStringExtra("imageUrl");
         Glide.with(this)
                 .load(R.drawable.image_test2)
+                .centerCrop()
                 .into(ivAutoPlay);
 
         getMomentList();

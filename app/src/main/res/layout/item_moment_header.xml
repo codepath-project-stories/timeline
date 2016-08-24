@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content">
 
   <View
-      android:id="@+id/view"
+      android:id="@+id/vLine"
       android:layout_width="1dp"
       android:layout_height="wrap_content"
       android:background="@color/colorPrimaryDark"
