@@ -80,4 +80,8 @@ dependencies {
     // material-dialogs
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'
     compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
+
+    // https://github.com/timehop/sticky-headers-recyclerview
+    // Used for headers in the timeline view
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
 }

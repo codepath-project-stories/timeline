@@ -9,10 +9,9 @@
   <ImageView
       android:id="@+id/ivAutoPlay"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="150dp"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"
-      android:layout_margin="10dp"
       android:text="Auto-Play all Memories"
       android:transitionName="background" />
 
