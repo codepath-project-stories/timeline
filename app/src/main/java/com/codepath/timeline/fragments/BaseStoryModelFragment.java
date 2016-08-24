@@ -28,7 +28,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
-    @BindView(R.id.fab) FloatingActionButton add;
+    @BindView(R.id.addBtn) FloatingActionButton add;
     @BindView(R.id.rvStories) RecyclerView rvStories;
     private Unbinder unbinder;
     private boolean clicked = false;
@@ -69,8 +69,14 @@ abstract public class BaseStoryModelFragment extends Fragment {
 //                        }
 //                );
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Todo: add a new story
+            }
+        });
 
-
+        // Todo: toggle between different layouts, if necessary:
 //        toggle.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -91,7 +97,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public void setupLayout(RecyclerView.LayoutManager layout) {
+    protected void setupLayout(RecyclerView.LayoutManager layout) {
         rvStories.setLayoutManager(layout);
         layout.scrollToPosition(0);
         rvStories.setAdapter(adaptStories);

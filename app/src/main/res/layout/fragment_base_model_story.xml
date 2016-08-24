@@ -13,18 +13,18 @@
         android:clipToPadding="false" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         android:clickable="true"
-        android:src="@drawable/grid"
+        android:src="@drawable/add_btn"
         app:backgroundTint="@android:color/white"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="mini"
         app:layout_anchor="@id/rvStories"
-        app:layout_anchorGravity="top|right|end" />
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
