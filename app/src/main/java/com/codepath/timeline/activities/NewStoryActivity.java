@@ -157,7 +157,7 @@ public class NewStoryActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        NewStoryActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+//        NewStoryActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
