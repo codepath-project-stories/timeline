@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +35,8 @@ public class TimelineActivity extends AppCompatActivity {
     // DetailDialogFragment creates R.layout.fragment_moment_detail and ScreenSlidePagerAdapter
 
     private static final String TAG = TimelineActivity.class.getSimpleName();
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.rvMoments)
     RecyclerView rvMoments;
     @BindView(R.id.ivAutoPlay)
@@ -48,6 +51,8 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initList();
     }
 
