@@ -1,15 +1,29 @@
 <resources>
-  <string name="app_name">Timeline</string>
+    <string name="app_name">Timeline</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="welcome">Welcome to Timeline App</string>
-  <string name="email">Email</string>
-  <string name="password">Password</string>
-  <string name="start">START</string>
-  <string name="something_wrong">Something wrong... Try again later : ></string>
-  <string name="missing">Cannot be missing or blank</string>
-  <string name="logout">Log out?</string>
-  <string name="just_close">Just close the app</string>
-  <string name="loading">LOADING...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">Welcome to Timeline App</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="start">START</string>
+    <string name="something_wrong">Something wrong... Try again later : ></string>
+    <string name="missing">Cannot be missing or blank</string>
+    <string name="logout">Log out?</string>
+    <string name="just_close">Just close the app</string>
+    <string name="loading">LOADING...</string>
+    <string name="permission_camera_rationale">Allow camera access?</string>
+    <string name="permission_access_storage_rationale">Allow photo library access?</string>
+    <string name="permission_write_storage_rationale">Allow saving photo to library?</string>
+    <string name="permission_access_location_rationale">Allow location access?</string>
+    <string name="button_allow">Allow</string>
+    <string name="button_deny">Deny</string>
+    <string name="permission_allowed">Access allowed</string>
+    <string name="permission_denied">Access denied</string>
+    <string name="permission_neverask">Never ask again</string>
+    <string name="add_title">Add story title…</string>
+    <string name="add_people">Add people</string>
+    <string name="add_location">Add location</string>
+    <string name="publish">Publish story</string>
+
 </resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/flStoryPhoto"
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:onClick="addPhoto"
+        android:layout_height="0dp" >
+
+        <ImageView
+            android:id="@+id/ivBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryLight" />
+
+        <ImageView
+            android:id="@+id/ivCameraIcon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/camera_placeholder" />
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/etAddTitle"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="15sp"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:hint="@string/add_title"
+        android:background="@color/colorPrimaryLight" />
+
+    <TextView
+        android:id="@+id/tvAddPeople"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="15sp"
+        android:hint="@string/add_people"
+        android:background="@color/colorPrimaryLight"
+        android:onClick="addPeople"/>
+
+    <TextView
+        android:id="@+id/tvAddLocation"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="15sp"
+        android:hint="@string/add_location"
+        android:background="@color/colorPrimaryLight"
+        android:onClick="addLocation"/>
+
+    <TextView
+        android:id="@+id/tvPublish"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="15sp"
+        android:hint="@string/publish"
+        android:background="@color/colorPrimaryLight"
+        android:onClick="publish"/>
+
+</LinearLayout>

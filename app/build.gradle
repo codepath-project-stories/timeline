@@ -84,4 +84,7 @@ dependencies {
     // https://github.com/timehop/sticky-headers-recyclerview
     // Used for headers in the timeline view
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
+
+    compile 'com.github.hotchemi:permissionsdispatcher:2.0.7'
+    apt 'com.github.hotchemi:permissionsdispatcher-processor:2.0.7'
 }

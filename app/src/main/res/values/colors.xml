@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimaryDark">#0096A6</color>
-  <color name="colorPrimary">#76CCD7</color>
-  <color name="colorPrimaryLight">#E4F3F5</color>
-  <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#0096A6</color>
+    <color name="colorPrimary">#76CCD7</color>
+    <color name="colorPrimaryLight">#E4F3F5</color>
+    <color name="colorAccent">#FF4081</color>
 
-  <color name="secondary">#14171A</color>
-  <color name="dark_gray">#657786</color>
-  <color name="light_gray">#AAB8C2</color>
-  <color name="extra_light_gray">#E1E8ED</color>
-  <color name="extra_extra_light_gray">#F5F8FA</color>
+    <color name="secondary">#14171A</color>
+    <color name="dark_gray">#657786</color>
+    <color name="light_gray">#AAB8C2</color>
+    <color name="extra_light_gray">#E1E8ED</color>
+    <color name="extra_extra_light_gray">#F5F8FA</color>
 
-  <color name="colorPrimaryLoginLight">#4FC3F7</color>
-  <color name="colorPrimaryLogin">#03A9F4</color>
-  <color name="colorPrimaryLoginDark">#0288D1</color>
-  <color name="white">#FFFFFF</color>
-  <color name="whiteTransparent">#80FFFFFF</color>
-  <color name="orange">#ffffa000</color>
-  <color name="greyLightLight">#999999</color>
-  <color name="greyLight">#848484</color>
-  <color name="grey">#757575</color>
-  <color name="greyDark">#666666</color>
-  <color name="greyDarkDark">#333333</color>
-  <color name="aqua">#38eeff</color>
-  <color name="dianne">#96e1e3</color>
+    <color name="colorPrimaryLoginLight">#4FC3F7</color>
+    <color name="colorPrimaryLogin">#03A9F4</color>
+    <color name="colorPrimaryLoginDark">#0288D1</color>
+    <color name="white">#FFFFFF</color>
+    <color name="whiteTransparent">#80FFFFFF</color>
+    <color name="orange">#ffffa000</color>
+    <color name="greyLightLight">#999999</color>
+    <color name="greyLight">#848484</color>
+    <color name="grey">#757575</color>
+    <color name="greyDark">#666666</color>
+    <color name="greyDarkDark">#333333</color>
+    <color name="aqua">#38eeff</color>
+    <color name="dianne">#96e1e3</color>
+    <color name="test">#000035</color>
 </resources>
