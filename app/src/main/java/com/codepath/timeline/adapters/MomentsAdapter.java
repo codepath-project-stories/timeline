@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.User;
+import com.codepath.timeline.util.DateUtil;
 
 import java.util.List;
 
@@ -62,7 +63,9 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
           .into(viewHolder.ivMedia);
     }
 
-//    viewHolder.tvDate.setText(moment.getCreatedAt());
+    String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAt());
+    Log.d(TAG, "formattedDate: " + formattedDate);
+    viewHolder.tvDate.setText(formattedDate);
     viewHolder.tvLocation.setText(moment.getLocation());
     viewHolder.tvDescription.setText(moment.getDescription());
   }
