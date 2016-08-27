@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Comment;
-import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.DateUtil;
 
@@ -25,8 +24,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
   private static final String TAG = MomentsAdapter.class.getSimpleName();
 
-  public static final int TYPE_TWEET = 0;
-  public static final int TYPE_TWEET_MEDIA = 1;
+  public static final int TYPE_COMMENT = 0;
+  public static final int TYPE_COMMENT_MEDIA = 1;
 
   protected List<Comment> mCommentList;
   protected Context mContext;
@@ -40,9 +39,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
   public int getItemViewType(int position) {
     Comment comment = mCommentList.get(position);
     if (comment.getMediaUrl() == null) {
-      return TYPE_TWEET;
+      return TYPE_COMMENT;
     } else {
-      return TYPE_TWEET_MEDIA;
+      return TYPE_COMMENT_MEDIA;
     }
   }
 
@@ -50,7 +49,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
   public CommentsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     ViewHolder viewHolder;
 
-    if (viewType == TYPE_TWEET) {
+    if (viewType == TYPE_COMMENT) {
       View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.item_comment, parent, false);
       viewHolder = new CommentsViewHolder(view);
@@ -68,7 +67,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     Comment comment = mCommentList.get(position);
 
     int type = getItemViewType(position);
-    if (type == TYPE_TWEET_MEDIA) {
+    if (type == TYPE_COMMENT_MEDIA) {
       CommentsMediaViewHolder mediaViewHolder = (CommentsMediaViewHolder) holder;
       if (comment.getMediaUrl() != null) {
         Glide.with(mContext).load(comment.getMediaUrl())
