@@ -23,6 +23,13 @@ public class ParseApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
+		// TODO: Local Store
+		// http://guides.codepath.com/android/Building-Data-driven-Apps-with-Parse
+		// Parse now supports a more powerful form of local data storage out of the box
+		// which can be used to store and retrieve ParseObjects,
+		// even when the network is unavailable.
+		Parse.enableLocalDatastore(this);
+
 		// Register your parse models
 		ParseObject.registerSubclass(UserParse.class);
 		ParseObject.registerSubclass(CommentParse.class);

@@ -35,10 +35,24 @@ public class TimelineClient {
     return instance;
   }
 
+  public List<Story> getMockStoryList(Context context) {
+    JsonArray jsonArray = createMockJsonArray(context, "stories.json");
+    if (jsonArray != null) {
+      List<Story> storyList = Story.fromJsonArray(jsonArray);
+      return storyList;
+    } else {
+      return null;
+    }
+  }
+
   // other class can implement TimelineClientGetStoryListener
   // or, simply new TimelineClient.TimelineClientGetStoryListener() as callback
   public interface TimelineClientGetStoryListener {
     void onGetStoryList(List<Story> itemList); // this is a callback
+  }
+
+  public interface TimelineClientGetUserListener {
+    void onGetUserList(List<ParseUser> itemList); // this is a callback
   }
 
   // query User table
@@ -95,15 +109,32 @@ public class TimelineClient {
     });
   }
 
-  public List<Story> getMockStoryList(Context context) {
-
-    JsonArray jsonArray = createMockJsonArray(context, "stories.json");
-    if (jsonArray != null) {
-      List<Story> storyList = Story.fromJsonArray(jsonArray);
-      return storyList;
-    } else {
-      return null;
-    }
+  // query User table
+  public void getUserList(Story story,
+                           final TimelineClientGetUserListener timelineClientGetUserListener) {
+    ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // http://parseplatform.github.io/docs/android/guide
+    // fetchifneeded() could be an alternative to include()
+    query.include("collaboratorList");
+    query.getInBackground(
+            story.getObjectId(),
+            new GetCallback<Story>() {
+              @Override
+              public void done(Story story, ParseException e) {
+                if (e == null) {
+                  if (story != null) {
+                    Log.d("findInBackground", story.getObjectId());
+                    if (timelineClientGetUserListener != null) {
+                      timelineClientGetUserListener.onGetUserList(
+                              (ArrayList<ParseUser>) story.get("collaboratorList")
+                      ); // use callback
+                    }
+                  }
+                } else {
+                  Log.d("findInBackground", "Error: " + e.getMessage());
+                }
+              }
+            });
   }
 
   public List<Moment> getMomentsList(Context context, int storyId) {
