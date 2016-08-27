@@ -1,74 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.v7.widget.CardView-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:app="http://schemas.android.com/tools"-->
-    <!--app:cardUseCompatPadding="true"-->
-    <!--android:layout_margin="5dp"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:clickable="true"-->
-    <!--android:foreground="?android:attr/selectableItemBackground"-->
-    <!--card_view:cardBackgroundColor="#E6E6E6"-->
-    <!--card_view:cardElevation="5dp" >-->
-
-<RelativeLayout
-    android:id="@+id/rlMainView"
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:background="@android:color/white"
-    android:padding="5dp">
+    android:layout_marginBottom="10dp"
+    card_view:cardElevation="5dp">
+
+  <RelativeLayout
+      android:id="@+id/rlMainView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimaryLight"
+      android:clickable="true"
+      android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/ivBackgroundImage"
-        android:transitionName="background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:background="@drawable/image_test2"
+        android:transitionName="background"/>
 
     <TextView
         android:id="@+id/tvStoryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivBackgroundImage"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="7dp"
         android:fontFamily="sans-serif-light"
-        android:gravity="center_horizontal"
-        android:textColor="@android:color/white"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:text="Fun times in Seattle" />
+        android:text="Fun times in Seattle"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/largeText"
+        android:textStyle="bold"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStoryTitle"
+        android:layout_below="@+id/tvStoryTitle"
+        android:text="By Jane Smith"
+        android:textSize="@dimen/mediumText"/>
+  </RelativeLayout>
 
-<!--</android.support.v7.widget.CardView>-->
+</android.support.v7.widget.CardView>
 
-<!--<TextView-->
-<!--android:id="@+id/tvMomentsCount"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_below="@+id/tvStoryTitle"-->
-<!--android:fontFamily="sans-serif-light"-->
-<!--android:paddingTop="4dp"-->
-<!--android:textStyle="bold"-->
-<!--android:layout_alignParentLeft="true"-->
-<!--android:text="8"-->
-<!--android:textColor="@android:color/black"-->
-<!--android:textSize="11sp" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/tvMomentsCount"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/tvStoryTitle"-->
+    <!--android:fontFamily="sans-serif-light"-->
+    <!--android:paddingTop="4dp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:text="8"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:textSize="11sp" />-->
 
-<!--<TextView-->
-<!--android:id="@+id/tvMomentsText"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_below="@+id/tvStoryTitle"-->
-<!--android:layout_toRightOf="@+id/tvMomentsCount"-->
-<!--android:fontFamily="sans-serif-light"-->
-<!--android:paddingLeft="5dp"-->
-<!--android:paddingTop="4dp"-->
-<!--android:text="MOMENTS"-->
-<!--android:textColor="@android:color/darker_gray"-->
-<!--android:textSize="11sp" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/tvMomentsText"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/tvStoryTitle"-->
+    <!--android:layout_toRightOf="@+id/tvMomentsCount"-->
+    <!--android:fontFamily="sans-serif-light"-->
+    <!--android:paddingLeft="5dp"-->
+    <!--android:paddingTop="4dp"-->
+    <!--android:text="MOMENTS"-->
+    <!--android:textColor="@android:color/darker_gray"-->
+    <!--android:textSize="11sp" />-->

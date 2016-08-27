@@ -1,99 +1,40 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainView"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".activities.TimelineActivity">
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"
-        android:layout_alignParentTop="true"
         style="@style/MyCustomTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMaxWidth="0dp"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        app:tabMode="fixed"/>
+  </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sliding_tabs"
-        android:background="@android:color/white" />
+  <android.support.v4.view.ViewPager
+      android:id="@+id/vpPager"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/sliding_tabs"
+      android:background="@android:color/white"
+      android:padding="10dp"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</RelativeLayout>
-
-<!--<RelativeLayout-->
-<!--android:id="@+id/rlHeader"-->
-<!--android:background="@android:color/white"-->
-<!--android:paddingLeft="10dp"-->
-<!--android:paddingRight="10dp"-->
-<!--android:paddingTop="10dp"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_alignParentTop="true"-->
-<!--android:layout_alignParentLeft="true"-->
-<!--android:layout_alignParentStart="true" >-->
-
-<!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/ivBackgroundImage"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_alignParentRight="true" />-->
-
-<!--<ImageView-->
-    <!--android:layout_width="60dp"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:id="@+id/ivProfileImage"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true" />-->
-
-<!--<TextView-->
-    <!--android:id="@+id/tvUserName"-->
-    <!--android:textColor="@android:color/black"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:paddingTop="5dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textStyle="bold"-->
-    <!--android:fontFamily="sans-serif-light"-->
-    <!--tools:text="Billy"-->
-    <!--android:textSize="13sp"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_below="@+id/ivBackgroundImage" />-->
-
-<!--<TextView-->
-    <!--android:id="@+id/tvStoriesCount"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textColor="@android:color/black"-->
-    <!--tools:text="120"-->
-    <!--android:fontFamily="sans-serif-light"-->
-    <!--android:textSize="11sp"-->
-    <!--android:textStyle="bold"-->
-    <!--android:paddingTop="4dp"-->
-    <!--android:layout_below="@id/tvUserName"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true" />-->
-
-<!--<TextView-->
-    <!--android:id="@+id/tvStoriesText"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textColor="@android:color/darker_gray"-->
-    <!--tools:text="STORIES"-->
-    <!--android:fontFamily="sans-serif-light"-->
-    <!--android:textSize="11sp"-->
-    <!--android:paddingLeft="4dp"-->
-    <!--android:paddingTop="4dp"-->
-    <!--android:layout_alignTop="@+id/tvStoriesCount"-->
-    <!--android:layout_toRightOf="@+id/tvStoriesCount"-->
-    <!--android:layout_toEndOf="@+id/tvStoriesCount" />-->
-
-<!--</RelativeLayout>-->
+</android.support.design.widget.CoordinatorLayout>

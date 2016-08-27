@@ -84,46 +84,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, final int position) {
         final Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
-        if (SOURCE_MODE == 0) {
-            holder.tvStoryTitle.setText("Fun times");
-            Glide.with(context)
-                    .load(R.drawable.image_test2)
-                    .into(holder.ivBackgroundImage);
-
-            Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
-                public void onGenerated(Palette palette) {
-                    // access palette colors here
-                    Palette.Swatch swatch = palette.getVibrantSwatch();
-                    // Gets an appropriate title text color
-                    if (swatch != null) {
-                        // If we have a vibrant color
-                        // update the title TextView
-                        holder.tvStoryTitle.setBackgroundColor(
-                                swatch.getBodyTextColor());
-                    }
-                }
-            };
-
-            final Bitmap myBitmap = BitmapFactory.decodeResource(
-                    context.getResources(),
-                    R.drawable.image_test2
-            );
-            if (myBitmap != null && !myBitmap.isRecycled()) {
-                Palette.from(myBitmap).generate(paletteListener);
-            }
-        }
-        else if (SOURCE_MODE == 1) {
-            holder.tvStoryTitle.setText(story.getTitle());
-            Glide.with(context)
-                    .load(story.getBackgroundImageUrl())
-                    .listener(
-                            GlidePalette.with(story.getBackgroundImageUrl())
-                                    .use(GlidePalette.Profile.VIBRANT_LIGHT)
-                                    .intoBackground(holder.tvStoryTitle)
-                                    .crossfade(true)
-                    )
-                    .into(holder.ivBackgroundImage);
-        }
 
         holder.rlMainView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +101,49 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 context.startActivity(i, options.toBundle());
             }
         });
+    }
+
+    private void initView(final StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
+        if (SOURCE_MODE == 0) {
+            holder.tvStoryTitle.setText("Fun times");
+            Glide.with(context)
+                .load(R.drawable.image_test2)
+                .into(holder.ivBackgroundImage);
+
+            Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
+                public void onGenerated(Palette palette) {
+                    // access palette colors here
+                    Palette.Swatch swatch = palette.getVibrantSwatch();
+                    // Gets an appropriate title text color
+                    if (swatch != null) {
+                        // If we have a vibrant color
+                        // update the title TextView
+                        holder.tvStoryTitle.setBackgroundColor(
+                            swatch.getBodyTextColor());
+                    }
+                }
+            };
+
+            final Bitmap myBitmap = BitmapFactory.decodeResource(
+                context.getResources(),
+                R.drawable.image_test2
+            );
+            if (myBitmap != null && !myBitmap.isRecycled()) {
+                Palette.from(myBitmap).generate(paletteListener);
+            }
+        }
+        else if (SOURCE_MODE == 1) {
+            holder.tvStoryTitle.setText(story.getTitle());
+            Glide.with(context)
+                .load(story.getBackgroundImageUrl())
+                .listener(
+                    GlidePalette.with(story.getBackgroundImageUrl())
+                        .use(GlidePalette.Profile.VIBRANT_LIGHT)
+                        .intoBackground(holder.tvStoryTitle)
+                        .crossfade(true)
+                )
+                .into(holder.ivBackgroundImage);
+        }
     }
 
     // Returns the total count of items in the list
