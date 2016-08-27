@@ -7,8 +7,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvStories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
         android:clipToPadding="false" />
 
@@ -16,13 +16,13 @@
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:clickable="true"
         android:src="@drawable/add_btn"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorAccent"
         app:borderWidth="0dp"
-        app:elevation="6dp"
+        app:elevation="@dimen/fab_elevation"
         app:fabSize="mini"
         app:layout_anchor="@id/rvStories"
         app:layout_anchorGravity="bottom|right|end" />

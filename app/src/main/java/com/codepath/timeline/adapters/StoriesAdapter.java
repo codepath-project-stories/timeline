@@ -28,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -84,46 +86,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, final int position) {
         final Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
-        if (SOURCE_MODE == 0) {
-            holder.tvStoryTitle.setText("Fun times");
-            Glide.with(context)
-                    .load(R.drawable.image_test2)
-                    .into(holder.ivBackgroundImage);
-
-            Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
-                public void onGenerated(Palette palette) {
-                    // access palette colors here
-                    Palette.Swatch swatch = palette.getVibrantSwatch();
-                    // Gets an appropriate title text color
-                    if (swatch != null) {
-                        // If we have a vibrant color
-                        // update the title TextView
-                        holder.tvStoryTitle.setBackgroundColor(
-                                swatch.getBodyTextColor());
-                    }
-                }
-            };
-
-            final Bitmap myBitmap = BitmapFactory.decodeResource(
-                    context.getResources(),
-                    R.drawable.image_test2
-            );
-            if (myBitmap != null && !myBitmap.isRecycled()) {
-                Palette.from(myBitmap).generate(paletteListener);
-            }
-        }
-        else if (SOURCE_MODE == 1) {
-            holder.tvStoryTitle.setText(story.getTitle());
-            Glide.with(context)
-                    .load(story.getBackgroundImageUrl())
-                    .listener(
-                            GlidePalette.with(story.getBackgroundImageUrl())
-                                    .use(GlidePalette.Profile.VIBRANT_LIGHT)
-                                    .intoBackground(holder.tvStoryTitle)
-                                    .crossfade(true)
-                    )
-                    .into(holder.ivBackgroundImage);
-        }
 
         holder.rlMainView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +103,68 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 context.startActivity(i, options.toBundle());
             }
         });
+
+        // TODO: update author's profile photo with the right one
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg")
+            .fitCenter()
+            .bitmapTransform(new CropCircleTransformation(context))
+            .into(holder.ivAuthorProfilePhoto);
+
+        // TODO: read from the List<User> collaborators
+        // TODO: Set view visibility of collaborators to GONE if they don't exist
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
+            .fitCenter()
+            .bitmapTransform(new CropCircleTransformation(context))
+            .into(holder.ivCollaborator1);
+
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
+            .fitCenter()
+            .bitmapTransform(new CropCircleTransformation(context))
+            .into(holder.ivCollaborator2);
+
+    }
+
+    private void initView(final StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
+        if (SOURCE_MODE == 0) {
+            holder.tvStoryTitle.setText("Fun times");
+            Glide.with(context)
+                .load(R.drawable.image_test2)
+                .into(holder.ivBackgroundImage);
+
+            Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
+                public void onGenerated(Palette palette) {
+                    // access palette colors here
+                    Palette.Swatch swatch = palette.getVibrantSwatch();
+                    // Gets an appropriate title text color
+                    if (swatch != null) {
+                        // If we have a vibrant color
+                        // update the title TextView
+                        holder.tvStoryTitle.setBackgroundColor(
+                            swatch.getBodyTextColor());
+                    }
+                }
+            };
+
+            final Bitmap myBitmap = BitmapFactory.decodeResource(
+                context.getResources(),
+                R.drawable.image_test2
+            );
+            if (myBitmap != null && !myBitmap.isRecycled()) {
+                Palette.from(myBitmap).generate(paletteListener);
+            }
+        }
+        else if (SOURCE_MODE == 1) {
+            holder.tvStoryTitle.setText(story.getTitle());
+            Glide.with(context)
+                .load(story.getBackgroundImageUrl())
+                .listener(
+                    GlidePalette.with(story.getBackgroundImageUrl())
+                        .use(GlidePalette.Profile.VIBRANT_LIGHT)
+                        .intoBackground(holder.tvStoryTitle)
+                        .crossfade(true)
+                )
+                .into(holder.ivBackgroundImage);
+        }
     }
 
     // Returns the total count of items in the list
@@ -159,7 +183,12 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.rlMainView) RelativeLayout rlMainView;
         @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
+        @BindView(R.id.ivAuthorProfilePhoto) ImageView ivAuthorProfilePhoto;
         @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
+        @BindView(R.id.tvStoryAuthor) TextView tvStoryAuthor;
+        @BindView(R.id.tvUserCount) TextView tvUserCount;
+        @BindView(R.id.ivCollaborator1) ImageView ivCollaborator1;
+        @BindView(R.id.ivCollaborator2) ImageView ivCollaborator2;
 
         public ViewHolderSimpleStory(View itemView) {
             super(itemView);
