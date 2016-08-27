@@ -26,6 +26,7 @@ public class Moment {
   private User user;
   private String header;  // hack to show header
   private String location;
+  private List<Comment> commentList;
 
   public Moment() {}
 
@@ -107,5 +108,13 @@ public class Moment {
 
   public void setLocation(String location) {
     this.location = location;
+  }
+
+  public List<Comment> getCommentList() {
+    return commentList;
+  }
+
+  public void setCommentList(List<Comment> commentList) {
+    this.commentList = commentList;
   }
 }

@@ -1,4 +1,23 @@
 [{
+  "commentList": [{
+    "body": "Moment 10: Comment 1 -- Looking really, really good",
+    "createdAt": "2016-09-31T19:22:54.695Z",
+    "id": 8010,
+    "user": {
+      "id": 6666,
+      "name": "Kelly Doe",
+      "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+    }
+  }, {
+    "body": "Moment 10: Comment 2 -- Looking really, really good",
+    "createdAt": "2016-09-31T19:22:54.695Z",
+    "id": 8010,
+    "user": {
+      "id": 6666,
+      "name": "Kelly Doe",
+      "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+    }
+  }],
   "createdAt": "2016-08-10T19:22:54.695Z",
   "description": "Moment 10: something, something, something, something",
   "id": 5010,
@@ -54,6 +73,16 @@
     "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
   }
 }, {
+  "commentList": [{
+    "body": "Moment 15: Looking really, really good",
+    "createdAt": "2016-09-31T19:22:54.695Z",
+    "id": 8010,
+    "user": {
+      "id": 6666,
+      "name": "Kelly Doe",
+      "profileImageUrl": "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg"
+    }
+  }],
   "createdAt": "2015-08-15T19:22:54.695Z",
   "description": "Moment 15: something, something, something, something",
   "id": 5015,

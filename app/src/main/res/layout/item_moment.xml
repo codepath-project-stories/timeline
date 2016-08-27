@@ -89,7 +89,7 @@
           tools:text="Jane Doe"/>
 
       <ImageView
-          android:id="@+id/imageView"
+          android:id="@+id/ivMapMarker"
           android:layout_width="20dp"
           android:layout_height="20dp"
           android:layout_below="@+id/tvName"
@@ -103,9 +103,9 @@
           android:id="@+id/tvLocation"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignBottom="@+id/imageView"
-          android:layout_toEndOf="@+id/imageView"
-          android:layout_toRightOf="@+id/imageView"
+          android:layout_alignBottom="@+id/ivMapMarker"
+          android:layout_toEndOf="@+id/ivMapMarker"
+          android:layout_toRightOf="@+id/ivMapMarker"
           tools:text="San Francisco, CA"/>
 
 
