@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -47,6 +48,7 @@ public class NewStoryActivity extends AppCompatActivity {
     @BindView(R.id.tvAddLocation) TextView tvAddLocation;
     @BindView(R.id.tvAddPeople) TextView tvAddPeople;
     @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     public final String APP_TAG = "TimelineApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -58,6 +60,10 @@ public class NewStoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newstory);
         ButterKnife.bind(this);
+
+        toolbar.setTitle("New story");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     // Todo: https://developer.android.com/training/camera/photobasics.html
