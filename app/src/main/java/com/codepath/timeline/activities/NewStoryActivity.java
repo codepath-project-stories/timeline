@@ -14,6 +14,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -67,7 +69,15 @@ public class NewStoryActivity extends AppCompatActivity {
 
     public void publish(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
-        if (etStoryTitle.getText().length() != 0 && ivBackground.getDrawable() != null) {
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        if (etStoryTitle.getText().length() == 0) {
+            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
+            etStoryTitle.startAnimation(shake);
+        }
+        else if (ivBackground.getDrawable() == null) {
+            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
+            ivBackground.startAnimation(shake);
+        } else {
             // create a story
             Story story = new Story();
             story.setBackgroundImageUrl(takenPhotoUri.getPath());
@@ -82,8 +92,6 @@ public class NewStoryActivity extends AppCompatActivity {
             // closes the activity, pass data to parent
             finish();
             // Todo: add collaborators, add location
-        } else {
-            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
         }
     }
 
