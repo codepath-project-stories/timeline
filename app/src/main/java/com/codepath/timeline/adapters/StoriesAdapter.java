@@ -28,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -101,6 +103,19 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 context.startActivity(i, options.toBundle());
             }
         });
+
+        // TODO: read from the List<User> collaborators
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
+            .fitCenter()
+            .bitmapTransform(new CropCircleTransformation(context))
+            .into(holder.ivCollaborator1);
+
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
+            .fitCenter()
+            .bitmapTransform(new CropCircleTransformation(context))
+            .into(holder.ivCollaborator2);
+
+        // TODO: Set view visibility if collaborators don't exist
     }
 
     private void initView(final StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
@@ -163,6 +178,10 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.rlMainView) RelativeLayout rlMainView;
         @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
         @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
+        @BindView(R.id.tvStoryAuthor) TextView tvStoryAuthor;
+        @BindView(R.id.tvUserCount) TextView tvUserCount;
+        @BindView(R.id.ivCollaborator1) ImageView ivCollaborator1;
+        @BindView(R.id.ivCollaborator2) ImageView ivCollaborator2;
 
         public ViewHolderSimpleStory(View itemView) {
             super(itemView);
