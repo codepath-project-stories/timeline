@@ -21,9 +21,9 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.DepthPageTransformer;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -136,8 +136,7 @@ public class DetailDialogFragment extends DialogFragment {
     if (fragment != null) {
       Comment comment = new Comment();
       comment.setBody(etComment.getText().toString());
-      User user = new User(6666, "Jenna Rivers", "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
-      comment.setUser(user);
+      comment.setUser(ParseUser.getCurrentUser());
 
       // TODO: push to the server
       fragment.addComment(comment);

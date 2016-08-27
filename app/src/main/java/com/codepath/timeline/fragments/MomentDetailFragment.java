@@ -9,18 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.CommentsAdapter;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.DateUtil;
-import com.codepath.timeline.util.view.DividerItemDecoration;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -29,8 +24,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MomentDetailFragment extends Fragment {
   private static final String TAG = MomentDetailFragment.class.getSimpleName();
@@ -78,9 +71,21 @@ public class MomentDetailFragment extends Fragment {
 
     // Add the moment photo as the first comment
     Comment momentDetail = new Comment();
-    momentDetail.setUser(mMoment.getUser());
+    // TODO: make sure it is not null here
+    if (mMoment.getUser() != null) {
+      momentDetail.setUser(mMoment.getUser());
+    }
+    else {
+      momentDetail.setUser(ParseUser.getCurrentUser());
+    }
     momentDetail.setLocation(mMoment.getLocation());
-    momentDetail.setCreatedAt(mMoment.getCreatedAt());
+    // TODO: make sure it is not null here
+    if (mMoment.getCreatedAtReal() != null) {
+      momentDetail.setCreatedAtReal(mMoment.getCreatedAtReal());
+    }
+    else {
+      momentDetail.setCreatedAtReal("2016-09-31T19:22:54.695Z");
+    }
     momentDetail.setBody(mMoment.getDescription());
     momentDetail.setMediaUrl(mMoment.getMediaUrl());
     mCommentList.add(momentDetail);

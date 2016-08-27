@@ -2,6 +2,8 @@ package com.codepath.timeline.util;
 
 import android.app.Application;
 
+import com.codepath.timeline.models.Comment;
+import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -27,6 +29,8 @@ public class ParseApplication extends Application {
 		Parse.enableLocalDatastore(this);
 
 		// Register your parse models
+		ParseObject.registerSubclass(Comment.class);
+		ParseObject.registerSubclass(Moment.class);
 		ParseObject.registerSubclass(Story.class);
 
 		// set applicationId, and server server based on the values in the Heroku settings.

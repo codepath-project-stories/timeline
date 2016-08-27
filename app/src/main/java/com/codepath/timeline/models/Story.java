@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-// @Parcel(analyze = {Story.class})
+// remember to register in ParseApplication
 // only fields of Story class will be serialized
 @ParseClassName("Story")
 @Parcel(analyze = {Story.class})

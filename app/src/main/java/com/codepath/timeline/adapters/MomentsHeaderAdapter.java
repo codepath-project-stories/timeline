@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.util.DateUtil;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.HashMap;
@@ -41,7 +40,9 @@ public class MomentsHeaderAdapter extends MomentsAdapter implements StickyRecycl
     long headerPos = -1;
     Moment moment = mMomentList.get(position);
     if (moment != null) {
-      String year = DateUtil.getYear(moment.getCreatedAt());
+      // TODO: use DateUtil.getYear
+      // String year = DateUtil.getYear(moment.getCreatedAtReal());
+      String year = "2016";
       if (mYearHeaderMap.get(year) != null) {
         // we already have it in the map, just grab the header position
         headerPos = mYearHeaderMap.get(year);
@@ -65,7 +66,9 @@ public class MomentsHeaderAdapter extends MomentsAdapter implements StickyRecycl
   public void onBindHeaderViewHolder(MomentsHeaderViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
     if (moment != null) {
-      String year = DateUtil.getYear(moment.getCreatedAt());
+      // TODO: use DateUtil.getYear
+      // String year = DateUtil.getYear(moment.getCreatedAtReal());
+      String year = "2016";
       holder.tvHeader.setText(year);
     }
   }

@@ -1,13 +1,19 @@
 package com.codepath.timeline.models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+
 import org.parceler.Parcel;
 
+// remember to register in ParseApplication
+// only fields of Comment class will be serialized
+@ParseClassName("Comment")
 @Parcel(analyze = {Comment.class})
-public class Comment {
+public class Comment extends ParseObject {
   private int id;
-  private String createdAt;     // DB format: 2016-08-22T19:22:54.695Z
+  private String createdAtRealDoNotUseThis;     // DB format: 2016-08-22T19:22:54.695Z
   private String mediaUrl;
-  private User user;
   private String location;
   private String body;
 
@@ -22,12 +28,18 @@ public class Comment {
     this.id = id;
   }
 
-  public String getCreatedAt() {
-    return createdAt;
+  // the date added into Parse
+  public String getCreatedAtString() {
+    return getCreatedAt().toString();
   }
 
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
+  // the date from photo or user
+  public String getCreatedAtReal() {
+    return (String) get("createdAtReal");
+  }
+
+  public void setCreatedAtReal(String createdAtReal) {
+    put("createdAtReal", createdAtReal);
   }
 
   public String getMediaUrl() {
@@ -38,12 +50,12 @@ public class Comment {
     this.mediaUrl = mediaUrl;
   }
 
-  public User getUser() {
-    return user;
+  public ParseUser getUser() {
+    return (ParseUser) get("user");
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUser(ParseUser user) {
+    put("user", user);
   }
 
   public String getLocation() {

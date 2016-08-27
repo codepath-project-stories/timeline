@@ -46,7 +46,7 @@ public class AutoPlayInfoActivity extends AppCompatActivity {
     Moment moment = Parcels.unwrap(getIntent().getParcelableExtra(AppConstants.MOMENT_EXTRA));
     if (moment != null) {
       if (moment.getUser() != null) {
-        Glide.with(this).load(moment.getUser().getProfileImageUrl())
+        Glide.with(this).load(moment.getUser().get("profileImageUrl"))
             .fitCenter()
             .bitmapTransform(new RoundedCornersTransformation(this, 25, 0))
             .into(ivProfilePhoto);

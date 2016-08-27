@@ -5,10 +5,10 @@ import android.util.Log;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
-import com.codepath.timeline.models.User;
 import com.codepath.timeline.network.TimelineClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -56,10 +56,6 @@ public class MockResponseGenerator {
     mRandomGenerator = new Random();
   }
 
-  private User getUser() {
-    return new User(5555, "Jane Smith", "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
-  }
-
   private void createMockStoryList() {
     mStoryList = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
@@ -84,13 +80,12 @@ public class MockResponseGenerator {
 
       String mediaUrl = getRandomMedia();
       Moment moment = new Moment(5000 + i, dummyDate, "Moment " + i + ": something, something, something, something",
-          mediaUrl, getUser(), "San Francisco, CA");
+          mediaUrl, ParseUser.getCurrentUser(), "San Francisco, CA");
 
       if (i % 5 == 0) {
-        User user = new User(6666, "Kelly Doe", "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
         Comment comment = new Comment();
-        comment.setUser(user);
-        comment.setCreatedAt("2016-09-31T19:22:54.695Z");
+        comment.setUser(ParseUser.getCurrentUser());
+        comment.setCreatedAtReal("2016-09-31T19:22:54.695Z");
         comment.setBody("Looking really, really good");
         comment.setId(8000 + i);
         List<Comment> commentList = new ArrayList<>();

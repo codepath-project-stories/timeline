@@ -12,8 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.models.User;
-import com.codepath.timeline.util.DateUtil;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -46,12 +45,12 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
   public void onBindViewHolder(MomentsAdapter.ViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
     MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
-    User user = moment.getUser();
+    ParseUser user = ParseUser.getCurrentUser();
     if (user != null) {
-      Log.d(TAG, "URL: " + moment.getUser().getProfileImageUrl());
+      Log.d(TAG, "URL: " + (String) user.get("profileImageUrl"));
 
-      viewHolder.tvName.setText(user.getName());
-      Glide.with(mContext).load(user.getProfileImageUrl())
+      viewHolder.tvName.setText((String) user.get("name"));
+      Glide.with(mContext).load((String) user.get("profileImageUrl"))
           .fitCenter()
           .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
           .into(viewHolder.ivProfilePhoto);
@@ -63,8 +62,10 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
           .into(viewHolder.ivMedia);
     }
 
-    String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAt());
-    Log.d(TAG, "formattedDate: " + formattedDate);
+    // TODO: use DateUtil.getFormattedTimelineDate
+    // String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
+    String formattedDate = moment.getCreatedAtReal();
+            Log.d(TAG, "formattedDate: " + formattedDate);
     viewHolder.tvDate.setText(formattedDate);
     viewHolder.tvLocation.setText(moment.getLocation());
     viewHolder.tvDescription.setText(moment.getDescription());

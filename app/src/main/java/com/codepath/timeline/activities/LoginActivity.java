@@ -165,6 +165,12 @@ public class LoginActivity extends AppCompatActivity {
         newUser.setEmail(input_email.getText().toString());
         // Set custom properties
         newUser.put("demoCreated", "false");
+        // TODO: get name and profileImageUrl from EditText
+        if (ParseApplication.DEMO_MODE) {
+            newUser.put("name", "Jenna Rivers");
+            newUser.put("profileImageUrl",
+                    "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
+        }
         // Invoke signUpInBackground
         newUser.signUpInBackground(new SignUpCallback() {
             @Override

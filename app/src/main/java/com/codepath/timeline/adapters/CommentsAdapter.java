@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Comment;
-import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.DateUtil;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -76,18 +76,19 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
       }
     }
 
-    User user = comment.getUser();
+    ParseUser user = comment.getUser();
     if (user != null) {
-      Log.d(TAG, "URL: " + comment.getUser().getProfileImageUrl());
-      holder.tvName.setText(user.getName());
-      Glide.with(mContext).load(user.getProfileImageUrl())
-          .fitCenter()
-          .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
-          .into(holder.ivProfilePhoto);
+      Log.d(TAG, "URL: " + (String) user.get("profileImageUrl"));
+      holder.tvName.setText((String) user.get("name"));
+      Glide.with(mContext)
+              .load((String) user.get("profileImageUrl"))
+              .fitCenter()
+              .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
+              .into(holder.ivProfilePhoto);
     }
 
     if (comment.getCreatedAt() != null) {
-      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAt());
+      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAtReal());
       Log.d(TAG, "formattedDate: " + formattedDate);
       holder.tvDate.setText(formattedDate);
     } else {

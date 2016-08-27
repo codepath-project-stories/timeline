@@ -1,29 +1,30 @@
 package com.codepath.timeline.models;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+// remember to register in ParseApplication
+// only fields of Moment class will be serialized
+@ParseClassName("Moment")
 @Parcel(analyze = {Moment.class})
-public class Moment {
+public class Moment extends ParseObject {
   private static final String TAG = Moment.class.getSimpleName();
 
   private int id;
-  private String createdAt;     // DB format: 2016-08-22T19:22:54.695Z
+  private String createdAtRealDoNotUseThis;     // DB format: 2016-08-22T19:22:54.695Z
   private String description;
   private String mediaUrl;
-  private User user;
   private String header;  // hack to show header
   private String location;
   private List<Comment> commentList;
@@ -45,12 +46,17 @@ public class Moment {
   }
 
   // TEST: for generating mock response purposes
-  public Moment(int id, String createdAt, String description, String mediaUrl, User user, String location) {
+  public Moment(int id,
+                String createdAtRealDoNotUseThis,
+                String description,
+                String mediaUrl,
+                ParseUser user,
+                String location) {
     this.id = id;
-    this.createdAt = createdAt;
+    this.createdAtRealDoNotUseThis = createdAtRealDoNotUseThis;
     this.description = description;
     this.mediaUrl = mediaUrl;
-    this.user = user;
+    this.setUser(user);
     this.location = location;
   }
 
@@ -62,12 +68,18 @@ public class Moment {
     this.id = id;
   }
 
-  public String getCreatedAt() {
-    return createdAt;
+  // the date added into Parse
+  public String getCreatedAtString() {
+    return getCreatedAt().toString();
   }
 
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
+  // the date from photo or user
+  public String getCreatedAtReal() {
+    return (String) get("createdAtReal");
+  }
+
+  public void setCreatedAtReal(String createdAtReal) {
+    put("createdAtReal", createdAtReal);
   }
 
   public String getDescription() {
@@ -86,12 +98,12 @@ public class Moment {
     this.mediaUrl = mediaUrl;
   }
 
-  public User getUser() {
-    return user;
+  public ParseUser getUser() {
+    return (ParseUser) get("user");
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUser(ParseUser user) {
+    put("user", user);
   }
 
   public String getHeader() {
