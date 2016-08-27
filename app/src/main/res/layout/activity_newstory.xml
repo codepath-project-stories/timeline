@@ -13,7 +13,7 @@
         android:id="@+id/flStoryPhoto"
         android:layout_weight="5"
         android:layout_width="match_parent"
-        android:onClick="addPhoto"
+        android:onClick="onLaunchCamera"
         android:layout_height="0dp" >
 
         <ImageView
@@ -71,7 +71,7 @@
         android:background="@color/colorPrimaryLight"
         android:onClick="addLocation"/>
 
-    <TextView
+    <Button
         android:id="@+id/tvPublish"
         android:padding="10dp"
         android:layout_marginTop="8dp"

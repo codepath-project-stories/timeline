@@ -62,11 +62,14 @@ public class NewStoryActivity extends AppCompatActivity {
 
     // Todo: https://developer.android.com/training/camera/photobasics.html
     // https://developer.android.com/training/camera/cameradirect.html
+
+    // on click attached to frame layout id="@+id/flStoryPhoto"
     public void addPhoto(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         onLaunchCamera(view);
     }
 
+    // on click attached to text view id="@+id/tvPublish"
     public void publish(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -96,25 +99,20 @@ public class NewStoryActivity extends AppCompatActivity {
     }
 
     // Todo: retrieve current address https://developer.android.com/training/location/display-address.html
+    // on click attached to text view id="@+id/tvAddLocation"
     public void addLocation(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
     }
 
+    // Todo: add collaborators to the story
+    // on click attached to text view id="@+id/tvAddPeople"
     public void addPeople(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
     }
 
+    // on click attached to text view
     public void onLaunchCamera(View view) {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
-
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }
+        NewStoryActivityPermissionsDispatcher.openCameraWithCheck(this);
     }
 
     @Override
@@ -170,12 +168,23 @@ public class NewStoryActivity extends AppCompatActivity {
 
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     void accessLocation() {
-        // Trigger the calling of a number here
+        // Trigger the access to location here
     }
 
     @NeedsPermission(Manifest.permission.CAMERA)
     void openCamera() {
-        // Trigger the calling of a number here
+        // Trigger the opening of a camera here
+        Snackbar.make(findViewById(android.R.id.content), "here", Snackbar.LENGTH_SHORT).show();
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Start the image capture intent to take photo
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
     }
 
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
