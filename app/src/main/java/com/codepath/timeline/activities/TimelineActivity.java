@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -130,8 +131,8 @@ public class TimelineActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo: add a new story
-                Intent intent = new Intent(getParent(), NewMomentActivity.class);
+                // Todo: add a new moment
+                Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -156,5 +157,17 @@ public class TimelineActivity extends AppCompatActivity {
         intent.putExtra("story", Parcels.wrap(story));
         intent.putExtra("imageUrl", imageUrl);
         startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request it is that we're responding to
+        if (requestCode == REQUEST_CODE && resultCode == 1) {
+            // Get the URI that points to the selected contact
+            Moment moment = Parcels.unwrap(data.getParcelableExtra("moment"));
+            Log.d("DEBUG", moment.toString());
+            Snackbar.make(findViewById(android.R.id.content), moment.toString(), Snackbar.LENGTH_SHORT).show();
+            // Todo: add a moment into the RV
+        }
     }
 }

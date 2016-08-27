@@ -31,7 +31,6 @@ public class NewMomentActivity extends NewItemClass {
     @BindView(R.id.ivBackground) ImageView ivBackground;
     @BindView(R.id.etAddTitle) EditText etMomentTitle;
     @BindView(R.id.tvAddLocation) TextView tvAddLocation;
-    @BindView(R.id.tvAddPeople) TextView tvAddPeople;
     @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
