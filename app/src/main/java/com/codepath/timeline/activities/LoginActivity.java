@@ -217,7 +217,13 @@ public class LoginActivity extends AppCompatActivity {
         if (input_password != null) {
             input_password.setText("");
         }
-        Intent i = new Intent(this, LandingActivity.class);
+        Intent i;
+        if (ParseApplication.TEST_PARSE) {
+            i = new Intent(this, TestParseActivity.class);
+        }
+        else {
+            i = new Intent(this, LandingActivity.class);
+        }
         // int story = stories.get(position);
         // i.putExtra("story", Parcels.wrap(story));
         startActivity(i);

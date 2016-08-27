@@ -2,6 +2,7 @@ package com.codepath.timeline.util;
 
 import android.util.Log;
 
+import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.User;
@@ -27,7 +28,7 @@ public class MockResponseGenerator {
   private MockResponseGenerator() {
     gson = new Gson();
     createMediaList();
-    createMockStoryList();
+//    createMockStoryList();
     createMockMomentList();
   }
 
@@ -62,8 +63,11 @@ public class MockResponseGenerator {
     mStoryList = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
       String dummyDate = "January " + i + ", 2016";
-      Story story = new Story("Story " + i,
-          "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg");
+      Story story = new Story(
+              "Story " + i,
+              "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
+              "January " + i + ", 2016"
+      );
       mStoryList.add(story);
     }
     Story.saveToParse(mStoryList);
@@ -78,6 +82,19 @@ public class MockResponseGenerator {
       String mediaUrl = getRandomMedia();
       Moment moment = new Moment(5000 + i, dummyDate, "Moment " + i + ": something, something, something, something",
           mediaUrl, getUser(), "San Francisco, CA");
+
+      if (i % 5 == 0) {
+        User user = new User(6666, "Kelly Doe", "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
+        Comment comment = new Comment();
+        comment.setUser(user);
+        comment.setCreatedAt("2016-09-31T19:22:54.695Z");
+        comment.setBody("Looking really, really good");
+        comment.setId(8000 + i);
+        List<Comment> commentList = new ArrayList<>();
+        commentList.add(comment);
+        moment.setCommentList(commentList);
+      }
+
       mMomentList.add(moment);
     }
   }

@@ -2,6 +2,7 @@ package com.codepath.timeline.models;
 
 import android.util.Log;
 
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.ParseApplication;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -28,8 +29,9 @@ public class Story extends ParseObject {
   // TODO: ParseUser has an array of  Story
 
   // Gson needs the following
-  String title;
-  String backgroundImageUrl;
+  private String titleDoNotUseThis;
+  private String backgroundImageUrlDoNotUseThis;
+  private String createdAtRealDoNotUseThis;
 
   private List<User> collaboratorList;
   private List<Moment> momentList;
@@ -39,41 +41,57 @@ public class Story extends ParseObject {
   }
 
   // TODO: not used
-  public Story(String title, String backgroundImageUrl) {
+  public Story(String title, String backgroundImageUrl, String createdAtReal) {
     super();
-    this.title = title;
-    this.backgroundImageUrl = backgroundImageUrl;
+    setTitle(title);
+    setBackgroundImageUrl(backgroundImageUrl);
+    setCreatedAtReal(createdAtReal);
+    setOwner(ParseUser.getCurrentUser());
   }
 
-  public void prepareSaveToParse() {
-    if (ParseApplication.TURN_ON_PARSE) {
-      setTitle(title);
-      setBackgroundImageUrl(backgroundImageUrl);
-      setOwner(ParseUser.getCurrentUser());
+  public static void fromGsonToParse(List<Story> storyList) {
+    for (Story theStory : storyList) {
+      theStory.setTitle(theStory.titleDoNotUseThis);
+      theStory.setBackgroundImageUrl(theStory.backgroundImageUrlDoNotUseThis);
+      theStory.setCreatedAtReal(theStory.createdAtRealDoNotUseThis);
+      theStory.setOwner(ParseUser.getCurrentUser());
     }
   }
 
   public static void saveToParse(final List<Story> storyList) {
     if (ParseApplication.TURN_ON_PARSE) {
-      for (Story theStory : storyList) {
-        theStory.prepareSaveToParse();
+      if (storyList.size() > 0) {
+        // addAll() could be an alternative to the following
+        TimelineClient.getInstance().getStoryList(
+                ParseUser.getCurrentUser(),
+                // set up callback
+                new TimelineClient.TimelineClientGetStoryListener() {
+                  @Override
+                  public void onGetStoryList(List<Story> itemList) {
+                    final List<Story> finalStories = new ArrayList<Story>();
+                    if (itemList != null && itemList.size() > 0) {
+                      finalStories.addAll(itemList);
+                    }
+                    finalStories.addAll(storyList);
+                    ParseObject.saveAllInBackground(storyList, new SaveCallback() {
+                      @Override
+                      public void done(ParseException e) {
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        currentUser.put("stories", finalStories);
+                        currentUser.put("demoCreated2", "true");
+                        currentUser.saveInBackground(new SaveCallback() {
+                          @Override
+                          public void done(ParseException e) {
+                            if (e != null) {
+                              Log.d("getMockStoryList", e.toString());
+                            }
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
       }
-      ParseObject.saveAllInBackground(storyList, new SaveCallback() {
-        @Override
-        public void done(ParseException e) {
-          ParseUser currentUser = ParseUser.getCurrentUser();
-          currentUser.put("stories", storyList);
-          currentUser.put("demoCreated2", "true");
-          currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-              if (e != null) {
-                Log.d("getMockStoryList", e.toString());
-              }
-            }
-          });
-        }
-      });
     }
   }
 
@@ -88,6 +106,7 @@ public class Story extends ParseObject {
     Gson gson = new Gson();
     Type type = new TypeToken<List<Story>>(){}.getType();
     ArrayList<Story> list = gson.fromJson(jsonArray, type);
+    Story.fromGsonToParse(list);
     return list;
   }
 
@@ -110,6 +129,14 @@ public class Story extends ParseObject {
 
   public void setBackgroundImageUrl(String backgroundImageUrl) {
     put("backgroundImageUrl", backgroundImageUrl);
+  }
+
+  public String getCreatedAtReal() {
+    return (String) get("createdAtReal");
+  }
+
+  public void setCreatedAtReal(String createdAtReal) {
+    put("createdAtReal", createdAtReal);
   }
 
   public ParseUser getOwner() {

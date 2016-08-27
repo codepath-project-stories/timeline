@@ -8,12 +8,14 @@ import com.codepath.timeline.models.Story;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,8 +41,36 @@ public class TimelineClient {
     void onGetStoryList(List<Story> itemList); // this is a callback
   }
 
-  public void getStoryList(Context context,
-                           ParseUser user,
+  // query User table
+  public void getStoryList(ParseUser user,
+                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+    ParseQuery<ParseUser> query = ParseUser.getQuery();
+    // http://parseplatform.github.io/docs/android/guide
+    // fetchifneeded() could be an alternative to include()
+    query.include("stories");
+    query.getInBackground(
+            user.getObjectId(),
+            new GetCallback<ParseUser>() {
+              @Override
+              public void done(ParseUser user, ParseException e) {
+                if (e == null) {
+                  if (user != null) {
+                    Log.d("findInBackground", user.getObjectId());
+                    if (timelineClientGetStoryListener != null) {
+                      timelineClientGetStoryListener.onGetStoryList(
+                              (ArrayList<Story>) user.get("stories")
+                      ); // use callback
+                    }
+                  }
+                } else {
+                  Log.d("findInBackground", "Error: " + e.getMessage());
+                }
+              }
+            });
+  }
+
+  // query Story table
+  public void getStoryList2(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     // Define the class we would like to query
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
@@ -51,8 +81,8 @@ public class TimelineClient {
       @Override
       public void done(List<Story> itemList, ParseException e) {
         if (e == null) {
-          if (itemList != null && itemList.size() > 0) {
-            Log.d("findInBackground", itemList.get(0).getObjectId());
+          if (itemList != null) {
+            Log.d("findInBackground", Integer.toString(itemList.size()));
             // Access the array of results here
             if (timelineClientGetStoryListener != null) {
               timelineClientGetStoryListener.onGetStoryList(itemList); // use callback
@@ -63,7 +93,6 @@ public class TimelineClient {
         }
       }
     });
-    return;
   }
 
   public List<Story> getMockStoryList(Context context) {
@@ -71,7 +100,6 @@ public class TimelineClient {
     JsonArray jsonArray = createMockJsonArray(context, "stories.json");
     if (jsonArray != null) {
       List<Story> storyList = Story.fromJsonArray(jsonArray);
-      Story.saveToParse(storyList);
       return storyList;
     } else {
       return null;

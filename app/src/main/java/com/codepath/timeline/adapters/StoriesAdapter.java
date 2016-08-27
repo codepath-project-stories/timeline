@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.models.Story;
+import com.github.florent37.glidepalette.GlidePalette;
 
 import org.parceler.Parcels;
 
@@ -29,6 +30,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    static int SOURCE_MODE = 1;
+    // 0: "Fun times" and R.drawable.image_test2
+    // 1: GlidePalette
+    // https://github.com/florent37/GlidePalette
+    // http://jakewharton.com/coercing-picasso-to-play-with-palette/
+    // 2: The "Hard" Way
+    // http://guides.codepath.com/android/Sending-and-Managing-Network-Requests
 
     private List<Story> mStories;
     private Context context;
@@ -75,28 +84,45 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, final int position) {
         final Story story = mStories.get(position);
         Log.d("DEBUG", story.toString());
-        holder.tvStoryTitle.setText("Fun times");
-        Glide.with(context)
-                .load(R.drawable.image_test2)
-                .into(holder.ivBackgroundImage);
+        if (SOURCE_MODE == 0) {
+            holder.tvStoryTitle.setText("Fun times");
+            Glide.with(context)
+                    .load(R.drawable.image_test2)
+                    .into(holder.ivBackgroundImage);
 
-        Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
-            public void onGenerated(Palette palette) {
-                // access palette colors here
-                Palette.Swatch swatch = palette.getVibrantSwatch();
-                // Gets an appropriate title text color
-                if (swatch != null) {
-                    // If we have a vibrant color
-                    // update the title TextView
-                    holder.tvStoryTitle.setBackgroundColor(
-                            swatch.getBodyTextColor());
+            Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
+                public void onGenerated(Palette palette) {
+                    // access palette colors here
+                    Palette.Swatch swatch = palette.getVibrantSwatch();
+                    // Gets an appropriate title text color
+                    if (swatch != null) {
+                        // If we have a vibrant color
+                        // update the title TextView
+                        holder.tvStoryTitle.setBackgroundColor(
+                                swatch.getBodyTextColor());
+                    }
                 }
-            }
-        };
+            };
 
-        final Bitmap myBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_test2);
-        if (myBitmap != null && !myBitmap.isRecycled()) {
-            Palette.from(myBitmap).generate(paletteListener);
+            final Bitmap myBitmap = BitmapFactory.decodeResource(
+                    context.getResources(),
+                    R.drawable.image_test2
+            );
+            if (myBitmap != null && !myBitmap.isRecycled()) {
+                Palette.from(myBitmap).generate(paletteListener);
+            }
+        }
+        else if (SOURCE_MODE == 1) {
+            holder.tvStoryTitle.setText(story.getTitle());
+            Glide.with(context)
+                    .load(story.getBackgroundImageUrl())
+                    .listener(
+                            GlidePalette.with(story.getBackgroundImageUrl())
+                                    .use(GlidePalette.Profile.VIBRANT_LIGHT)
+                                    .intoBackground(holder.tvStoryTitle)
+                                    .crossfade(true)
+                    )
+                    .into(holder.ivBackgroundImage);
         }
 
         holder.rlMainView.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +132,12 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Story story = mStories.get(position);
                 i.putExtra("story", Parcels.wrap(story));
                 i.putExtra("imageUrl", story.getBackgroundImageUrl());
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context, holder.ivBackgroundImage, "background");
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                (Activity) context,
+                                holder.ivBackgroundImage,
+                                "background"
+                        );
                 context.startActivity(i, options.toBundle());
             }
         });
