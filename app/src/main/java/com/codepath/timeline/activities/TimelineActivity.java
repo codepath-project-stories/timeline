@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
@@ -37,6 +36,10 @@ import butterknife.OnClick;
 public class TimelineActivity extends AppCompatActivity {
   // TimelineActivity calls showDetailDialog() to generate DetailDialogFragment
   // DetailDialogFragment creates R.layout.fragment_moment_detail and ScreenSlidePagerAdapter
+
+  static int SOURCE_MODE = 1;
+  // 0: R.drawable.image_test2
+  // 1: getIntent().getStringExtra("imageUrl")
 
   private static final String TAG = TimelineActivity.class.getSimpleName();
   @BindView(R.id.appbar)
@@ -103,12 +106,19 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     // load the image url for the background of the story into the image view
-    // Todo: Change drawable to the image loaded from the intent
-    String imageUrl = getIntent().getStringExtra("imageUrl");
-    Glide.with(this)
-        .load(R.drawable.image_test2)
-        .centerCrop()
-        .into(ivAutoPlay);
+    if (SOURCE_MODE == 0) {
+      Glide.with(this)
+              .load(R.drawable.image_test2)
+              .centerCrop()
+              .into(ivAutoPlay);
+    }
+    else if (SOURCE_MODE == 1) {
+      String imageUrl = getIntent().getStringExtra("imageUrl");
+      Glide.with(this)
+              .load(imageUrl)
+              .centerCrop()
+              .into(ivAutoPlay);
+    }
 
     getMomentList();
   }

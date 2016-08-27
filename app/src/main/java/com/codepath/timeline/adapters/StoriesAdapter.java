@@ -132,8 +132,12 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Story story = mStories.get(position);
                 i.putExtra("story", Parcels.wrap(story));
                 i.putExtra("imageUrl", story.getBackgroundImageUrl());
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context, holder.ivBackgroundImage, "background");
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                (Activity) context,
+                                holder.ivBackgroundImage,
+                                "background"
+                        );
                 context.startActivity(i, options.toBundle());
             }
         });
