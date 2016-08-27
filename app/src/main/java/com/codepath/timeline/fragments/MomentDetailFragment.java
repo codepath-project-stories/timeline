@@ -99,4 +99,12 @@ public class MomentDetailFragment extends Fragment {
     rvComments.setLayoutManager(linearLayoutManager);
     rvComments.setAdapter(mAdapter);
   }
+
+  public void addComment(Comment comment) {
+    mCommentList.add(comment);
+    mAdapter.notifyItemRangeInserted(mCommentList.size()-1, 1);
+
+    // Scroll to the bottom so that the newly added comment is displayed
+    rvComments.smoothScrollToPosition(mCommentList.size());
+  }
 }

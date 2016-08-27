@@ -36,15 +36,16 @@
         android:id="@+id/etComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btBPost"
-        android:layout_alignTop="@+id/btBPost"
+        android:layout_alignBottom="@+id/btPost"
+        android:layout_alignTop="@+id/btPost"
         android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/btBPost"
+        android:layout_toLeftOf="@+id/btPost"
         android:background="@android:color/white"
         android:textSize="@dimen/smallText"/>
 
     <Button
-        android:id="@+id/btBPost"
+        android:id="@+id/btPost"
+        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

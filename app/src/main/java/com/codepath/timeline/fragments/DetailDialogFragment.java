@@ -7,18 +7,22 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
+import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.util.view.DepthPageTransformer;
 
 import org.parceler.Parcels;
@@ -38,13 +42,15 @@ public class DetailDialogFragment extends DialogFragment {
   ViewPager vpMoment;
   @BindView(R.id.ivClose)
   ImageView ivClose;
+  @BindView(R.id.btPost)
+  Button btPost;
+  @BindView(R.id.etComment)
+  EditText etComment;
 
   private ScreenSlidePagerAdapter mPagerAdapter;
   private List<Moment> mMomentList;
   private Moment mMoment;
   private int index;
-
-
 
   public static DetailDialogFragment newInstance(List<Moment> momentList, int index) {
     DetailDialogFragment frag = new DetailDialogFragment();
@@ -62,7 +68,6 @@ public class DetailDialogFragment extends DialogFragment {
     ButterKnife.bind(this, view);
     return view;
   }
-
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -95,13 +100,52 @@ public class DetailDialogFragment extends DialogFragment {
     vpMoment.setAdapter(mPagerAdapter);
     vpMoment.setPageTransformer(true, new DepthPageTransformer());
 
+    etComment.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // do nothing
+      }
 
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        // do nothing
+      }
+
+      @Override
+      public void afterTextChanged(Editable s) {
+        if (s.length() > 0) {
+          btPost.setEnabled(true);
+        } else {
+          btPost.setEnabled(false);
+        }
+      }
+    });
   }
 
   @OnClick(R.id.ivClose)
   public void onCloseButtonClicked() {
     Log.d(TAG, "---------- close ");
     dismiss();
+  }
+
+  @OnClick(R.id.btPost)
+  public void onPostbuttonClicked() {
+    Log.d(TAG, "---------- post");
+
+    MomentDetailFragment fragment = (MomentDetailFragment) mPagerAdapter.getRegisteredFragment(vpMoment.getCurrentItem());
+    if (fragment != null) {
+      Comment comment = new Comment();
+      comment.setBody(etComment.getText().toString());
+      User user = new User(6666, "Jenna Rivers", "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
+      comment.setUser(user);
+
+      // TODO: push to the server
+      fragment.addComment(comment);
+
+      // If successful, clear the text and disable the button
+      etComment.setText("");
+      btPost.setEnabled(false);
+    }
   }
 
   private class ScreenSlidePagerAdapter extends SmartFragmentStatePagerAdapter {
