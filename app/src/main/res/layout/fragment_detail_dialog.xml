@@ -13,7 +13,8 @@
       android:layout_height="30dp"
       android:layout_alignParentRight="true"
       android:layout_alignParentTop="true"
-      android:layout_margin="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_marginTop="10dp"
       android:src="@drawable/close"/>
 
   <android.support.v4.view.ViewPager
@@ -28,13 +29,19 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
-      android:background="@color/colorPrimaryLight">
+      android:background="@color/colorPrimaryLight"
+      android:padding="10dp">
 
     <EditText
         android:id="@+id/etComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/btBPost"/>
+        android:layout_alignBottom="@+id/btBPost"
+        android:layout_alignTop="@+id/btBPost"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/btBPost"
+        android:background="@android:color/white"
+        android:textSize="@dimen/smallText"/>
 
     <Button
         android:id="@+id/btBPost"
@@ -43,6 +50,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="POST"/>
+        android:background="@drawable/primary_dark_button"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="7dp"
+        android:text="POST"
+        android:textColor="@android:color/white"/>
   </RelativeLayout>
 </RelativeLayout>
