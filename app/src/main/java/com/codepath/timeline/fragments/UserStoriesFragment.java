@@ -49,7 +49,6 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             // fetch stories from Parse server
             Log.d("populateList", "getStoryList");
             TimelineClient.getInstance().getStoryList(
-                    getActivity(),
                     currentUser,
                     // set up callback
                     new TimelineClient.TimelineClientGetStoryListener() {
@@ -63,7 +62,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
-            addAll(TimelineClient.getInstance().getMockStoryList(getActivity()));
+            List<Story> storyList = TimelineClient.getInstance().getMockStoryList(getActivity());
+            Story.saveToParse(storyList);
+            addAll(storyList);
             currentUser.put("demoCreated", "true");
             currentUser.saveInBackground(new SaveCallback() {
                 @Override
