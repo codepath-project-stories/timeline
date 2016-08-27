@@ -22,7 +22,7 @@
         android:src="@drawable/add_btn"
         app:backgroundTint="@color/colorAccent"
         app:borderWidth="0dp"
-        app:elevation="6dp"
+        app:elevation="@dimen/fab_elevation"
         app:fabSize="mini"
         app:layout_anchor="@id/rvStories"
         app:layout_anchorGravity="bottom|right|end" />

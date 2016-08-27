@@ -33,7 +33,7 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
-    <style name="BoldPrimaryText">
+    <style name="BoldPrimaryText" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/secondary</item>
@@ -41,27 +41,54 @@
         <item name="android:textSize">@dimen/mediumText</item>
     </style>
 
-    <style name="SecondaryText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/light_gray</item>
-        <item name="android:textSize">@dimen/mediumText</item>
-    </style>
-
-    <style name="InfoText">
+    <style name="InfoText" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">@dimen/smallText</item>
     </style>
 
-    <style name="HeaderText">
+    <style name="HeaderText" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">10dp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/largeText</item>
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StoryTitleText" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">@dimen/largeText</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StoryAuthorText" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">@dimen/mediumText</item>
+    </style>
+
+    <style name="MomentCountText" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/mediumText</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CollaboratorCountText" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/circle_light_primary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">@dimen/extraSmallText</item>
         <item name="android:textStyle">bold</item>
     </style>
 
