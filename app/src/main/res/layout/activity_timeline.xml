@@ -20,19 +20,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        app:expandedTitleMarginEnd="64dp"
-        app:expandedTitleMarginStart="48dp"
+        app:expandedTitleMarginStart="10dp"
+        app:expandedTitleMarginBottom="10dp"
+        app:expandedTitleGravity="bottom|left"
+        app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
       <ImageView
           android:id="@+id/ivAutoPlay"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@color/extra_extra_light_gray"
           android:fitsSystemWindows="true"
           android:scaleType="centerCrop"
           android:transitionName="background"
-          app:layout_collapseMode="parallax"/>
+          app:layout_collapseMode="parallax"
+          tools:background="@color/colorPrimaryDark"/>
+
+      <ImageView
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_gravity="center"
+          android:src="@drawable/auto_play"/>
 
       <android.support.v7.widget.Toolbar
           android:id="@+id/toolbar"

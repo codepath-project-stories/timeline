@@ -29,6 +29,7 @@
     </activity>
     <activity
         android:name=".activities.TimelineActivity"
+        android:launchMode="singleTop"
         android:parentActivityName=".activities.LandingActivity"
         android:theme="@style/AppTheme.NoActionBar">
 
@@ -37,7 +38,16 @@
           android:name="android.support.PARENT_ACTIVITY"
           android:value=".activities.LandingActivity"/>
     </activity>
-    <activity android:name=".activities.AutoPlayActivity">
+    <activity
+        android:name=".activities.AutoPlayActivity"
+        android:launchMode="singleTop"
+        android:parentActivityName=".activities.TimelineActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+
+      <!-- Parent activity meta-data to support 4.0 and lower -->
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".activities.TimelineActivity"/>
     </activity>
     <activity android:name=".activities.AutoPlayInfoActivity">
     </activity>
