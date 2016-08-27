@@ -2,8 +2,10 @@ package com.codepath.timeline.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -11,16 +13,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.AutoPlayFragment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.qslll.library.ExpandingPagerFactory;
 import com.qslll.library.ExpandingViewPagerAdapter;
 import com.qslll.library.fragments.ExpandingFragment;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +43,16 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
       Automatic scroll used for auto-playing list of moments: https://github.com/Trinea/android-auto-scroll-view-pager
  */
 public class AutoPlayActivity extends AppCompatActivity
-        implements ExpandingFragment.OnExpandingClickListener {
+    implements ExpandingFragment.OnExpandingClickListener {
+
   @BindView(R.id.vpMoment)
   AutoScrollViewPager vpMoment;
+  @BindView(R.id.collapsing_toolbar)
+  CollapsingToolbarLayout collapsing_toolbar;
+  @BindView(R.id.toolbar)
+  Toolbar toolbar;
+  @BindView(R.id.ivStoryBackground)
+  ImageView ivStoryBackground;
 
   private List<Moment> mMomentList;
   private Moment mMoment;
@@ -48,11 +64,27 @@ public class AutoPlayActivity extends AppCompatActivity
     setContentView(R.layout.activity_auto_play);
     ButterKnife.bind(this);
 
+    toolbar.setTitle("");
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     getMomentList();
     initView();
   }
 
   private void initView() {
+    // Todo: Use the story extracted from the intent
+    collapsing_toolbar.setTitle("Baby Matthew Smith");
+    collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
+
+    // load the image url for the background of the story into the image view
+    // Todo: Change drawable to the image loaded from the intent
+    String imageUrl = getIntent().getStringExtra("imageUrl");
+    Glide.with(this)
+        .load(R.drawable.image_test2)
+        .centerCrop()
+        .into(ivStoryBackground);
+
     mPagerAdapter = new AutoPlayPagerAdapter(getSupportFragmentManager());
     vpMoment.setAdapter(mPagerAdapter);
 
