@@ -53,6 +53,9 @@ public class TimelineActivity extends AppCompatActivity {
   @BindView(R.id.ivAutoPlay)
   ImageView ivAutoPlay;
 
+  Story story;
+  String imageUrl;
+
   private List<Moment> mMomentList;
   private MomentsHeaderAdapter mAdapter;
 
@@ -95,25 +98,24 @@ public class TimelineActivity extends AppCompatActivity {
           }
         });
 
-    // Todo: Use the story extracted from the intent
     // extract from the intent
-    Story story = (Story) Parcels.unwrap(getIntent().getParcelableExtra("story"));
-    Log.d("DEBUG", story.toString());
-
-    if (story != null) {
-      collapsing_toolbar.setTitle("Baby Matthew Smith");
-      collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-    }
-
     // load the image url for the background of the story into the image view
     if (SOURCE_MODE == 0) {
+      story = null;
+      imageUrl = null;
+      collapsing_toolbar.setTitle("Baby Matthew Smith");
+      collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
       Glide.with(this)
               .load(R.drawable.image_test2)
               .centerCrop()
               .into(ivAutoPlay);
     }
     else if (SOURCE_MODE == 1) {
-      String imageUrl = getIntent().getStringExtra("imageUrl");
+      story = (Story) Parcels.unwrap(getIntent().getParcelableExtra("story"));
+      imageUrl = getIntent().getStringExtra("imageUrl");
+      Log.d("DEBUG", story.toString());
+      collapsing_toolbar.setTitle(story.getTitle());
+      collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
       Glide.with(this)
               .load(imageUrl)
               .centerCrop()
@@ -139,6 +141,8 @@ public class TimelineActivity extends AppCompatActivity {
   public void onAutoPlay(View view) {
     // TEMPORARY PLACEHOLDER
     Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
+    intent.putExtra("story", Parcels.wrap(story));
+    intent.putExtra("imageUrl", imageUrl);
     startActivity(intent);
   }
 }
