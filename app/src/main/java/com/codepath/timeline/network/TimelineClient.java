@@ -71,9 +71,9 @@ public class TimelineClient {
                   if (user != null) {
                     Log.d("findInBackground", user.getObjectId());
                     if (timelineClientGetStoryListener != null) {
-//                      timelineClientGetStoryListener.onGetStoryList(
-//                              (ArrayList<Story>) user.get("stories")
-//                      ); // use callback
+                      timelineClientGetStoryListener.onGetStoryList(
+                              (ArrayList<Story>) user.get("stories")
+                      ); // use callback
                     }
                   }
                 } else {
@@ -83,6 +83,7 @@ public class TimelineClient {
             });
   }
 
+  // TODO: not used
   // query Story table
   public void getStoryList2(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
