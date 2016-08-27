@@ -29,8 +29,9 @@ public class Story extends ParseObject {
   // TODO: ParseUser has an array of  Story
 
   // Gson needs the following
-  String title;
-  String backgroundImageUrl;
+  private String titleDoNotUseThis;
+  private String backgroundImageUrlDoNotUseThis;
+  private String createdAtRealDoNotUseThis;
 
   private List<User> collaboratorList;
   private List<Moment> momentList;
@@ -40,20 +41,20 @@ public class Story extends ParseObject {
   }
 
   // TODO: not used
-  public Story(String title, String backgroundImageUrl) {
+  public Story(String title, String backgroundImageUrl, String createdAtReal) {
     super();
     setTitle(title);
     setBackgroundImageUrl(backgroundImageUrl);
+    setCreatedAtReal(createdAtReal);
     setOwner(ParseUser.getCurrentUser());
   }
 
   public static void fromGsonToParse(List<Story> storyList) {
-    if (ParseApplication.TURN_ON_PARSE) {
-      for (Story theStory : storyList) {
-        theStory.setTitle(theStory.title);
-        theStory.setBackgroundImageUrl(theStory.backgroundImageUrl);
-        theStory.setOwner(ParseUser.getCurrentUser());
-      }
+    for (Story theStory : storyList) {
+      theStory.setTitle(theStory.titleDoNotUseThis);
+      theStory.setBackgroundImageUrl(theStory.backgroundImageUrlDoNotUseThis);
+      theStory.setCreatedAtReal(theStory.createdAtRealDoNotUseThis);
+      theStory.setOwner(ParseUser.getCurrentUser());
     }
   }
 
@@ -128,6 +129,14 @@ public class Story extends ParseObject {
 
   public void setBackgroundImageUrl(String backgroundImageUrl) {
     put("backgroundImageUrl", backgroundImageUrl);
+  }
+
+  public String getCreatedAtReal() {
+    return (String) get("createdAtReal");
+  }
+
+  public void setCreatedAtReal(String createdAtReal) {
+    put("createdAtReal", createdAtReal);
   }
 
   public ParseUser getOwner() {

@@ -63,8 +63,11 @@ public class MockResponseGenerator {
     mStoryList = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
       String dummyDate = "January " + i + ", 2016";
-      Story story = new Story("Story " + i,
-          "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg");
+      Story story = new Story(
+              "Story " + i,
+              "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
+              "January " + i + ", 2016"
+      );
       mStoryList.add(story);
     }
     Story.saveToParse(mStoryList);
