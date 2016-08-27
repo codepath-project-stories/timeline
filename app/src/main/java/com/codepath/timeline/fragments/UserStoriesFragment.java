@@ -54,7 +54,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                     new TimelineClient.TimelineClientGetStoryListener() {
                         @Override
                         public void onGetStoryList(List<Story> itemList) {
-                            addAll(itemList);
+                            if (itemList != null) {
+                                addAll(itemList);
+                            }
                         }
                     });
         }

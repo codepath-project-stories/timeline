@@ -83,6 +83,7 @@ public class TimelineClient {
             });
   }
 
+  // TODO: not used
   // query Story table
   public void getStoryList2(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
