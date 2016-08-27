@@ -6,6 +6,7 @@ import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.User;
+import com.codepath.timeline.network.TimelineClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -70,7 +71,9 @@ public class MockResponseGenerator {
       );
       mStoryList.add(story);
     }
-    Story.saveToParse(mStoryList);
+    if (ParseApplication.TURN_ON_PARSE) {
+      TimelineClient.getInstance().addStoryList(mStoryList, null);
+    }
   }
 
   private void createMockMomentList() {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -39,8 +40,15 @@ public class TestParseActivity extends AppCompatActivity {
 	@OnClick(R.id.getMockStoryList)
 	void generateStories() {
 		List<Story> storyList = TimelineClient.getInstance().getMockStoryList(this);
-		Story.saveToParse(storyList);
-		output.setText("getMockStoryList");
+		if (ParseApplication.TURN_ON_PARSE) {
+			TimelineClient.getInstance().addStoryList(storyList,
+					new TimelineClient.TimelineClientAddStoryListener(){
+						@Override
+						public void onAddStoryList() {
+							output.setText("getMockStoryList");
+						}
+					});
+		}
 	}
 
 	@OnClick(R.id.getStoryList)
@@ -92,24 +100,27 @@ public class TestParseActivity extends AppCompatActivity {
 				new TimelineClient.TimelineClientGetStoryListener() {
 					@Override
 					public void onGetStoryList(List<Story> itemList) {
-						if (itemList != null) {
-							if (itemList.size() > 0) {
-								TimelineClient.getInstance().getUserList(
-										itemList.get(0),
-										new TimelineClient.TimelineClientGetUserListener() {
-											@Override
-											public void onGetUserList(List<ParseUser> itemList) {
-												String buffer = "getUserList\n";
-												if (itemList != null) {
-													for (ParseUser eachUser : itemList) {
-														buffer = buffer + eachUser.getEmail() + "\n";
-													}
+						if (itemList != null && itemList.size() > 0) {
+							TimelineClient.getInstance().getUserList(
+									itemList.get(0),
+									new TimelineClient.TimelineClientGetUserListener() {
+										@Override
+										public void onGetUserList(List<ParseUser> itemList) {
+											String buffer = "getUserList\n";
+											if (itemList != null) {
+												for (ParseUser eachUser : itemList) {
+													buffer = buffer + eachUser.getEmail() + "\n";
 												}
-												output.setText(buffer);
 											}
+											output.setText(buffer);
 										}
-								);
-							}
+									}
+							);
+						}
+						else {
+							String buffer = "getUserList\n";
+							buffer = buffer + "empty stories" + "\n";
+							output.setText(buffer);
 						}
 					}
 				});

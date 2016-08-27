@@ -16,9 +16,12 @@ import com.parse.SaveCallback;
 import com.parse.interceptors.ParseLogInterceptor;
 
 public class ParseApplication extends Application {
+	// http://parseplatform.github.io/docs/android/guide
+
 	public static boolean TURN_ON_PARSE = true;
 	public static boolean DEMO_MODE = true;
-	public static boolean TEST_PARSE = false;
+	public static boolean TEST_PARSE = true;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();

@@ -41,7 +41,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             return;
         }
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        final ParseUser currentUser = ParseUser.getCurrentUser();
         String demoCreatedString = (String) currentUser.get("demoCreated");
         boolean demoCreated = demoCreatedString != null && demoCreatedString.equals("true");
         if (!ParseApplication.DEMO_MODE || (ParseApplication.DEMO_MODE && demoCreated)) {
@@ -65,22 +65,27 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
             List<Story> storyList = TimelineClient.getInstance().getMockStoryList(getActivity());
-            Story.saveToParse(storyList);
             addAll(storyList);
-            currentUser.put("demoCreated", "true");
-            currentUser.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Log.d("demoCreated", "done success");
-                    } else {
-                        // Sign up didn't succeed. Look at the ParseException
-                        // to figure out what went wrong
-                        Log.d("demoCreated", "done failed");
-                        Log.d("demoCreated", e.toString());
-                    }
-                }
-            });
+            TimelineClient.getInstance().addStoryList(storyList,
+                    new TimelineClient.TimelineClientAddStoryListener(){
+                        @Override
+                        public void onAddStoryList() {
+                            currentUser.put("demoCreated", "true");
+                            currentUser.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.d("demoCreated", "done success");
+                                    } else {
+                                        // Sign up didn't succeed. Look at the ParseException
+                                        // to figure out what went wrong
+                                        Log.d("demoCreated", "done failed");
+                                        Log.d("demoCreated", e.toString());
+                                    }
+                                }
+                            });
+                        }
+                    });
         }
     }
 }

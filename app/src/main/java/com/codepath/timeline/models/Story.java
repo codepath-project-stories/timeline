@@ -1,18 +1,12 @@
 package com.codepath.timeline.models;
 
-import android.util.Log;
-
-import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.util.ParseApplication;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.parceler.Parcel;
 
@@ -74,43 +68,6 @@ public class Story extends ParseObject {
       List<ParseUser> collaboratorList = new ArrayList<>();
       collaboratorList.add(ParseUser.getCurrentUser());
       theStory.setCollaboratorList(collaboratorList);
-    }
-  }
-
-  public static void saveToParse(final List<Story> storyList) {
-    if (ParseApplication.TURN_ON_PARSE) {
-      if (storyList.size() > 0) {
-        // addAll() could be an alternative to the following
-        TimelineClient.getInstance().getStoryList(
-                ParseUser.getCurrentUser(),
-                // set up callback
-                new TimelineClient.TimelineClientGetStoryListener() {
-                  @Override
-                  public void onGetStoryList(List<Story> itemList) {
-                    final List<Story> finalStories = new ArrayList<Story>();
-                    if (itemList != null && itemList.size() > 0) {
-                      finalStories.addAll(itemList);
-                    }
-                    finalStories.addAll(storyList);
-                    ParseObject.saveAllInBackground(storyList, new SaveCallback() {
-                      @Override
-                      public void done(ParseException e) {
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        currentUser.put("stories", finalStories);
-                        currentUser.put("demoCreated2", "true");
-                        currentUser.saveInBackground(new SaveCallback() {
-                          @Override
-                          public void done(ParseException e) {
-                            if (e != null) {
-                              Log.d("getMockStoryList", e.toString());
-                            }
-                          }
-                        });
-                      }
-                    });
-                  }
-                });
-      }
     }
   }
 

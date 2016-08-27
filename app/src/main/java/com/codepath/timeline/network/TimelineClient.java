@@ -10,8 +10,10 @@ import com.google.gson.JsonParser;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,14 +47,55 @@ public class TimelineClient {
     }
   }
 
-  // other class can implement TimelineClientGetStoryListener
-  // or, simply new TimelineClient.TimelineClientGetStoryListener() as callback
+  // TODO: use a callback class instead of the following
+  // other class can implement XXXListener
+  // or, simply new TimelineClient.XXXListener() as callback
+
+  public interface TimelineClientAddStoryListener {
+    void onAddStoryList(); // this is a callback
+  }
+
   public interface TimelineClientGetStoryListener {
     void onGetStoryList(List<Story> itemList); // this is a callback
   }
 
   public interface TimelineClientGetUserListener {
     void onGetUserList(List<ParseUser> itemList); // this is a callback
+  }
+
+  public void addStoryList(final List<Story> storyList,
+                           final TimelineClientAddStoryListener timelineClientAddStoryListener) {
+    if (storyList.size() > 0) {
+      Log.d("saveToParse", "storyList.size() > 0");
+      ParseObject.saveAllInBackground(storyList, new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+          Log.d("saveToParse", "saveAllInBackground done");
+          if (e != null) {
+            Log.d("saveToParse", e.toString());
+          }
+          else {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.addAll("stories", storyList);
+            currentUser.saveInBackground(
+                    new SaveCallback() {
+                      @Override
+                      public void done(ParseException e) {
+                        Log.d("saveToParse", "saveInBackground done");
+                        if (e != null) {
+                          Log.d("saveToParse", e.toString());
+                        } else {
+                          if (timelineClientAddStoryListener != null) {
+                            timelineClientAddStoryListener.onAddStoryList(); // use callback
+                          }
+                        }
+                      }
+                    }
+            );
+          }
+        }
+      });
+    }
   }
 
   // query User table
