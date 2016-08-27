@@ -15,7 +15,6 @@ import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,9 +56,9 @@ public class TimelineClient {
                   if (user != null) {
                     Log.d("findInBackground", user.getObjectId());
                     if (timelineClientGetStoryListener != null) {
-                      timelineClientGetStoryListener.onGetStoryList(
-                              (ArrayList<Story>) user.get("stories")
-                      ); // use callback
+//                      timelineClientGetStoryListener.onGetStoryList(
+//                              (ArrayList<Story>) user.get("stories")
+//                      ); // use callback
                     }
                   }
                 } else {

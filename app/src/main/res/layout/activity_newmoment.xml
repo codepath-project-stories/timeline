@@ -58,7 +58,7 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tvAddPeople"
+            android:id="@+id/tvAddDate"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -66,8 +66,22 @@
             android:background="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
-            android:hint="@string/add_people"
-            android:onClick="addPeople"
+            android:hint="@string/add_date"
+            android:onClick="addDate"
+            android:padding="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvAddLocation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryLight"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical"
+            android:hint="@string/add_location"
+            android:onClick="addLocation"
             android:padding="10dp"
             android:textSize="15sp" />
 
@@ -80,7 +94,7 @@
             android:background="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
-            android:hint="@string/publish"
+            android:hint="@string/share"
             android:onClick="publish"
             android:padding="10dp"
             android:textSize="15sp" />
