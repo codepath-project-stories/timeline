@@ -1,12 +1,17 @@
 package com.codepath.timeline.models;
 
+import android.util.Log;
+
+import com.codepath.timeline.util.ParseApplication;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcel;
 
@@ -22,6 +27,10 @@ public class Story extends ParseObject {
   // TODO: Story has an array of ParseUser
   // TODO: ParseUser has an array of  Story
 
+  // Gson needs the following
+  String title;
+  String backgroundImageUrl;
+
   private List<User> collaboratorList;
   private List<Moment> momentList;
 
@@ -29,19 +38,49 @@ public class Story extends ParseObject {
     super();
   }
 
-  // TEST: for generating mock response purposes
-  public Story(String title, String backgroundImageUrl, ParseUser owner) {
+  // TODO: not used
+  public Story(String title, String backgroundImageUrl) {
     super();
-    put("title", title);
-    put("backgroundImageUrl", backgroundImageUrl);
-    put("owner", owner);
+    this.title = title;
+    this.backgroundImageUrl = backgroundImageUrl;
+  }
+
+  public void prepareSaveToParse() {
+    if (ParseApplication.TURN_ON_PARSE) {
+      setTitle(title);
+      setBackgroundImageUrl(backgroundImageUrl);
+      setOwner(ParseUser.getCurrentUser());
+    }
+  }
+
+  public static void saveToParse(final List<Story> storyList) {
+    if (ParseApplication.TURN_ON_PARSE) {
+      for (Story theStory : storyList) {
+        theStory.prepareSaveToParse();
+      }
+      ParseObject.saveAllInBackground(storyList, new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+          ParseUser currentUser = ParseUser.getCurrentUser();
+          currentUser.put("stories", storyList);
+          currentUser.put("demoCreated2", "true");
+          currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+              if (e != null) {
+                Log.d("getMockStoryList", e.toString());
+              }
+            }
+          });
+        }
+      });
+    }
   }
 
   // TODO: not used
   public static Story fromJson(JsonObject jsonObject) {
     Gson gson = new Gson();
     Story story = gson.fromJson(jsonObject.toString(), Story.class);
-
     return story;
   }
 
@@ -49,10 +88,10 @@ public class Story extends ParseObject {
     Gson gson = new Gson();
     Type type = new TypeToken<List<Story>>(){}.getType();
     ArrayList<Story> list = gson.fromJson(jsonArray, type);
-
     return list;
   }
 
+  // TODO
   public String getCreatedAt2() {
     return getCreatedAt().toString();
   }

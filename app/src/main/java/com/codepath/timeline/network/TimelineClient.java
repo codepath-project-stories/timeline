@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
-import com.codepath.timeline.util.ParseApplication;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.parse.FindCallback;
@@ -72,12 +71,7 @@ public class TimelineClient {
     JsonArray jsonArray = createMockJsonArray(context, "stories.json");
     if (jsonArray != null) {
       List<Story> storyList = Story.fromJsonArray(jsonArray);
-      if (ParseApplication.TURN_ON_PARSE) {
-        for (Story theStory : storyList) {
-          theStory.setOwner(ParseUser.getCurrentUser());
-          theStory.saveInBackground();
-        }
-      }
+      Story.saveToParse(storyList);
       return storyList;
     } else {
       return null;
