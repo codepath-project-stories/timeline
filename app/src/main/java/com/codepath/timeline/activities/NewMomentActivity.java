@@ -1,5 +1,6 @@
 package com.codepath.timeline.activities;
 
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.models.Story;
+import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.NewItemClass;
 
 import org.parceler.Parcels;
@@ -25,11 +26,11 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewStoryActivity extends NewItemClass {
+public class NewMomentActivity extends NewItemClass {
 
     @BindView(R.id.ivBackground) ImageView ivBackground;
-    @BindView(R.id.ivCameraIcon) ImageView ivCameraIcon;
-    @BindView(R.id.etAddTitle) EditText etStoryTitle;
+    @BindView(R.id.etAddTitle) EditText etMomentTitle;
+    @BindView(R.id.tvAddLocation) TextView tvAddLocation;
     @BindView(R.id.tvAddPeople) TextView tvAddPeople;
     @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -37,17 +38,17 @@ public class NewStoryActivity extends NewItemClass {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_newstory);
+        setContentView(R.layout.activity_newmoment);
         ButterKnife.bind(this);
 
-        toolbar.setTitle("New story");
+        toolbar.setTitle("New moment");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    // Todo: add collaborators to the story
-    // on click attached to text view id="@+id/tvAddPeople"
-    public void addPeople(View view) {
+    // Todo: add date
+    // on click attached to text view id="@+id/tvAddDate"
+    public void addDate(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
     }
 
@@ -55,23 +56,23 @@ public class NewStoryActivity extends NewItemClass {
     public void publish(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-        if (etStoryTitle.getText().length() == 0) {
+        if (etMomentTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
-            etStoryTitle.startAnimation(shake);
+            etMomentTitle.startAnimation(shake);
         }
         else if (ivBackground.getDrawable() == null) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
-            // create a story
-            Story story = new Story();
-            story.setBackgroundImageUrl(takenPhotoUri.getPath());
-            story.setTitle(etStoryTitle.getText().toString());
-            Log.d("DEBUG", story.toString());
+            // create a moment
+            Moment moment = new Moment();
+            moment.setMediaUrl(takenPhotoUri.getPath());
+            moment.setDescription(etMomentTitle.getText().toString());
+            Log.d("DEBUG", moment.toString());
 
             // send result back
             Intent data = new Intent();
-            data.putExtra("story", Parcels.wrap(story));
+            data.putExtra("moment", Parcels.wrap(moment));
             setResult(1, data);
 
             // closes the activity, pass data to parent

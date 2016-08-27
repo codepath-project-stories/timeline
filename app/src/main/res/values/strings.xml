@@ -21,9 +21,11 @@
     <string name="permission_allowed">Access allowed</string>
     <string name="permission_denied">Access denied</string>
     <string name="permission_neverask">Never ask again</string>
-    <string name="add_title">Add story title…</string>
+    <string name="add_title">Add description…</string>
     <string name="add_people">Add people</string>
-    <string name="add_location">Add location</string>
-    <string name="publish">Publish story</string>
+    <string name="add_date">Set the date</string>
+    <string name="add_location">Set location</string>
+    <string name="share">Share</string>
+    <string name="publish">Create a story</string>
 
 </resources>
