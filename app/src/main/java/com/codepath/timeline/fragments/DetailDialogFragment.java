@@ -7,14 +7,18 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.util.view.DepthPageTransformer;
 
 import org.parceler.Parcels;
@@ -23,13 +27,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class DetailDialogFragment extends DialogFragment
-        implements MomentDetailFragment.MomentDetailListener {
+public class DetailDialogFragment extends DialogFragment {
   // DetailDialogFragment creates R.layout.fragment_moment_detail and ScreenSlidePagerAdapter
+
+  private static final String TAG = DetailDialogFragment.class.getSimpleName();
 
   @BindView(R.id.vpMoment)
   ViewPager vpMoment;
+  @BindView(R.id.ivClose)
+  ImageView ivClose;
 
   private ScreenSlidePagerAdapter mPagerAdapter;
   private List<Moment> mMomentList;
@@ -82,6 +90,7 @@ public class DetailDialogFragment extends DialogFragment
 
   private void initDialog() {
     mMoment = mMomentList.get(index);
+
     mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
     vpMoment.setAdapter(mPagerAdapter);
     vpMoment.setPageTransformer(true, new DepthPageTransformer());
@@ -89,8 +98,9 @@ public class DetailDialogFragment extends DialogFragment
 
   }
 
-  @Override
+  @OnClick(R.id.ivClose)
   public void onCloseButtonClicked() {
+    Log.d(TAG, "---------- close ");
     dismiss();
   }
 

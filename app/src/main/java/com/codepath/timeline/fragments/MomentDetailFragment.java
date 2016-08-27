@@ -3,6 +3,8 @@ package com.codepath.timeline.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
+import com.codepath.timeline.adapters.CommentsAdapter;
+import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
+import com.codepath.timeline.util.view.DividerItemDecoration;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,22 +35,12 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class MomentDetailFragment extends Fragment {
   private static final String TAG = MomentDetailFragment.class.getSimpleName();
 
-  @BindView(R.id.ivProfilePhoto)
-  ImageView ivProfilePhoto;
-  @BindView(R.id.ivMedia)
-  ImageView ivMedia;
-  @BindView(R.id.tvName)
-  TextView tvName;
-  @BindView(R.id.tvLocation)
-  TextView tvLocation;
-  @BindView(R.id.tvDescription)
-  TextView tvDescription;
+  @BindView(R.id.rvComments)
+  RecyclerView rvComments;
 
   private Moment mMoment;
-
-  public interface MomentDetailListener {
-    void onCloseButtonClicked();
-  }
+  private List<Comment> mCommentList;
+  private CommentsAdapter mAdapter;
 
   public MomentDetailFragment() {
     // Empty constructor is required for DialogFragment
@@ -63,6 +62,7 @@ public class MomentDetailFragment extends Fragment {
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_moment_detail, container, false);
     ButterKnife.bind(this, view);
+    initList();
     return view;
   }
 
@@ -76,31 +76,27 @@ public class MomentDetailFragment extends Fragment {
       return;
     }
 
-    tvDescription.setText(mMoment.getDescription());
-    tvLocation.setText(mMoment.getLocation());
+    // Add the moment photo as the first comment
+    Comment momentDetail = new Comment();
+    momentDetail.setUser(mMoment.getUser());
+    momentDetail.setLocation(mMoment.getLocation());
+    momentDetail.setCreatedAt(mMoment.getCreatedAt());
+    momentDetail.setBody(mMoment.getDescription());
+    momentDetail.setMediaUrl(mMoment.getMediaUrl());
+    mCommentList.add(momentDetail);
 
-    User user = mMoment.getUser();
-    if (user != null) {
-      Glide.with(this).load(user.getProfileImageUrl())
-          .fitCenter()
-          .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
-          .into(ivProfilePhoto);
-
-      tvName.setText(user.getName());
-    }
-
-    if (mMoment.getMediaUrl() != null) {
-      Glide.with(this).load(mMoment.getMediaUrl())
-          .centerCrop()
-          .into(ivMedia);
+    List<Comment> commentList = mMoment.getCommentList();
+    if (commentList != null && commentList.size() > 0) {
+      mCommentList.addAll(commentList);
+      mAdapter.notifyItemRangeInserted(0, mCommentList.size());
     }
   }
 
-  @OnClick(R.id.ivClose)
-  public void onCloseButtonClicked() {
-    MomentDetailListener listener = (MomentDetailListener)getParentFragment();
-    if (listener != null) {
-      listener.onCloseButtonClicked();
-    }
+  private void initList() {
+    mCommentList = new ArrayList<>();
+    mAdapter = new CommentsAdapter(getActivity(), mCommentList);
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+    rvComments.setLayoutManager(linearLayoutManager);
+    rvComments.setAdapter(mAdapter);
   }
 }

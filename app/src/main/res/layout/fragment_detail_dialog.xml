@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:background="@color/extra_extra_light_gray">
+
+  <ImageView
+      android:id="@+id/ivClose"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      android:layout_margin="10dp"
+      android:src="@drawable/close"/>
 
   <android.support.v4.view.ViewPager
+      android:id="@+id/vpMoment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:id="@+id/vpMoment"/>
+      android:layout_above="@+id/rlComment"
+      android:layout_below="@+id/ivClose"/>
 
-</LinearLayout>
+  <RelativeLayout
+      android:id="@+id/rlComment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@color/colorPrimaryLight">
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btBPost"/>
+
+    <Button
+        android:id="@+id/btBPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="POST"/>
+  </RelativeLayout>
+</RelativeLayout>
