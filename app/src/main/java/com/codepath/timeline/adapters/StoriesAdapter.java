@@ -104,7 +104,14 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         });
 
+        // TODO: update author's profile photo with the right one
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg")
+            .fitCenter()
+            .bitmapTransform(new CropCircleTransformation(context))
+            .into(holder.ivAuthorProfilePhoto);
+
         // TODO: read from the List<User> collaborators
+        // TODO: Set view visibility of collaborators to GONE if they don't exist
         Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
             .fitCenter()
             .bitmapTransform(new CropCircleTransformation(context))
@@ -115,7 +122,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             .bitmapTransform(new CropCircleTransformation(context))
             .into(holder.ivCollaborator2);
 
-        // TODO: Set view visibility if collaborators don't exist
     }
 
     private void initView(final StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
@@ -177,6 +183,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.rlMainView) RelativeLayout rlMainView;
         @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
+        @BindView(R.id.ivAuthorProfilePhoto) ImageView ivAuthorProfilePhoto;
         @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
         @BindView(R.id.tvStoryAuthor) TextView tvStoryAuthor;
         @BindView(R.id.tvUserCount) TextView tvUserCount;

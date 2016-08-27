@@ -2,9 +2,9 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="7dp"
     card_view:cardElevation="5dp">
 
@@ -14,7 +14,7 @@
       android:layout_height="wrap_content"
       android:background="@color/colorPrimaryLight"
       android:clickable="true"
-      android:paddingBottom="10dp">
+      android:paddingBottom="5dp">
 
     <FrameLayout
         android:id="@+id/flBackground"
@@ -40,78 +40,83 @@
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:layout_gravity="bottom|right">
+          android:layout_gravity="bottom|right"
+          android:layout_margin="10dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
             android:id="@+id/ivCollaborator1"
-            android:layout_marginRight="-10dp"
-            tools:background="@color/colorPrimary"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/ivCollaborator2"/>
-
-        <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/ivCollaborator2"
-            android:layout_marginRight="-10dp"
-            tools:background="@color/colorAccent"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/tvUserCount"/>
+            android:layout_marginRight="-10dp"
+            android:layout_toLeftOf="@+id/ivCollaborator2"
+            tools:background="@color/colorPrimary"/>
+
+        <ImageView
+            android:id="@+id/ivCollaborator2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="-10dp"
+            android:layout_toLeftOf="@+id/tvUserCount"
+            tools:background="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/tvUserCount"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:background="@drawable/circle_light_primary"
             android:gravity="center"
             android:padding="5dp"
+            android:text="+3"
             android:textAllCaps="true"
             android:textColor="@color/dark_gray"
             android:textSize="11sp"
-            android:textStyle="bold"
-            android:text="+3"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvMomentCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvUserCount"
             android:text="30 Moments"
             android:textColor="@android:color/white"
             android:textSize="@dimen/mediumText"
-            android:textStyle="bold"
-            android:layout_below="@+id/tvUserCount"
-            android:layout_alignParentRight="true"/>
+            android:textStyle="bold"/>
       </RelativeLayout>
-
-
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ivAuthorProfilePhoto"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flBackground"
+        android:layout_margin="5dp"
+        tools:background="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/tvStoryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/flBackground"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:fontFamily="sans-serif-light"
+        android:layout_alignTop="@+id/ivAuthorProfilePhoto"
+        android:layout_toRightOf="@+id/ivAuthorProfilePhoto"
         android:text="Fun times in Seattle"
         android:textColor="@color/dark_gray"
         android:textSize="@dimen/largeText"
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/tvStoryAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvStoryTitle"
         android:layout_below="@+id/tvStoryTitle"
         android:text="By Jane Smith"
-        android:textSize="@dimen/mediumText"
-        android:id="@+id/tvStoryAuthor"/>
+        android:textSize="@dimen/mediumText"/>
   </RelativeLayout>
 
 </android.support.v7.widget.CardView>
