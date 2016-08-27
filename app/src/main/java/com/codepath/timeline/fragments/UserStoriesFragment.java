@@ -41,47 +41,51 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             return;
         }
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        final ParseUser currentUser = ParseUser.getCurrentUser();
         String demoCreatedString = (String) currentUser.get("demoCreated");
         boolean demoCreated = demoCreatedString != null && demoCreatedString.equals("true");
         if (!ParseApplication.DEMO_MODE || (ParseApplication.DEMO_MODE && demoCreated)) {
             // demo already created
             // fetch stories from Parse server
             Log.d("populateList", "getStoryList");
-            List<Story> storyList = TimelineClient.getInstance().getMockStoryList(getActivity());
-            addAll(storyList);
-
-//            TimelineClient.getInstance().getStoryList2(
-//                    currentUser,
-//                    // set up callback
-//                    new TimelineClient.TimelineClientGetStoryListener() {
-//                        @Override
-//                        public void onGetStoryList(List<Story> itemList) {
-//                            addAll(itemList);
-//                        }
-//                    });
+            TimelineClient.getInstance().getStoryList(
+                currentUser,
+                // set up callback
+                new TimelineClient.TimelineClientGetStoryListener() {
+                    @Override
+                    public void onGetStoryList(List<Story> itemList) {
+                        if (itemList != null) {
+                            addAll(itemList);
+                        }
+                    }
+                });
         }
         else if (ParseApplication.DEMO_MODE && !demoCreated) {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
             List<Story> storyList = TimelineClient.getInstance().getMockStoryList(getActivity());
-            Story.saveToParse(storyList);
             addAll(storyList);
-            currentUser.put("demoCreated", "true");
-            currentUser.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Log.d("demoCreated", "done success");
-                    } else {
-                        // Sign up didn't succeed. Look at the ParseException
-                        // to figure out what went wrong
-                        Log.d("demoCreated", "done failed");
-                        Log.d("demoCreated", e.toString());
+            TimelineClient.getInstance().addStoryList(storyList,
+                new TimelineClient.TimelineClientAddStoryListener(){
+                    @Override
+                    public void onAddStoryList() {
+                        currentUser.put("demoCreated", "true");
+                        currentUser.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Log.d("demoCreated", "done success");
+                                } else {
+                                    // Sign up didn't succeed. Look at the ParseException
+                                    // to figure out what went wrong
+                                    Log.d("demoCreated", "done failed");
+                                    Log.d("demoCreated", e.toString());
+                                }
+                            }
+                        });
                     }
-                }
-            });
+                });
         }
     }
 }
