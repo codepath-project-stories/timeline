@@ -18,14 +18,16 @@ import butterknife.OnClick;
 
 public class TestParseActivity extends AppCompatActivity {
 
+	@BindView(R.id.output)
+	TextView output;
 	@BindView(R.id.getMockStoryList)
 	Button getMockStoryList;
 	@BindView(R.id.getStoryList)
 	Button getStoryList;
 	@BindView(R.id.getStoryList2)
 	Button getStoryList2;
-	@BindView(R.id.output)
-	TextView output;
+	@BindView(R.id.getUserList)
+	Button getUserList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,38 @@ public class TestParseActivity extends AppCompatActivity {
 							}
 						}
 						output.setText(buffer);
+					}
+				});
+	}
+
+	@OnClick(R.id.getUserList)
+	void getUserList() {
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		TimelineClient.getInstance().getStoryList(
+				currentUser,
+				// set up callback
+				new TimelineClient.TimelineClientGetStoryListener() {
+					@Override
+					public void onGetStoryList(List<Story> itemList) {
+						if (itemList != null) {
+							if (itemList.size() > 0) {
+								TimelineClient.getInstance().getUserList(
+										itemList.get(0),
+										new TimelineClient.TimelineClientGetUserListener() {
+											@Override
+											public void onGetUserList(List<ParseUser> itemList) {
+												String buffer = "getUserList\n";
+												if (itemList != null) {
+													for (ParseUser eachUser : itemList) {
+														buffer = buffer + eachUser.getEmail() + "\n";
+													}
+												}
+												output.setText(buffer);
+											}
+										}
+								);
+							}
+						}
 					}
 				});
 	}

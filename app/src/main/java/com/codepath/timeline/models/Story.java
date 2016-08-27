@@ -25,19 +25,24 @@ import java.util.List;
 @ParseClassName("Story")
 @Parcel(analyze = {Story.class})
 public class Story extends ParseObject {
-  // TODO: Story has an array of ParseUser
-  // TODO: ParseUser has an array of  Story
 
   // Gson needs the following
   private String titleDoNotUseThis;
   private String backgroundImageUrlDoNotUseThis;
   private String createdAtRealDoNotUseThis;
 
-  private List<User> collaboratorList;
+  // TODO
   private List<Moment> momentList;
 
   public Story() {
     super();
+  }
+
+  // TODO: not used
+  public static Story fromJson(JsonObject jsonObject) {
+    Gson gson = new Gson();
+    Story story = gson.fromJson(jsonObject.toString(), Story.class);
+    return story;
   }
 
   // TODO: not used
@@ -47,6 +52,17 @@ public class Story extends ParseObject {
     setBackgroundImageUrl(backgroundImageUrl);
     setCreatedAtReal(createdAtReal);
     setOwner(ParseUser.getCurrentUser());
+    List<ParseUser> collaboratorList = new ArrayList<>();
+    collaboratorList.add(ParseUser.getCurrentUser());
+    setCollaboratorList(collaboratorList);
+  }
+
+  public static List<Story> fromJsonArray(JsonArray jsonArray) {
+    Gson gson = new Gson();
+    Type type = new TypeToken<List<Story>>(){}.getType();
+    ArrayList<Story> list = gson.fromJson(jsonArray, type);
+    Story.fromGsonToParse(list);
+    return list;
   }
 
   public static void fromGsonToParse(List<Story> storyList) {
@@ -55,6 +71,9 @@ public class Story extends ParseObject {
       theStory.setBackgroundImageUrl(theStory.backgroundImageUrlDoNotUseThis);
       theStory.setCreatedAtReal(theStory.createdAtRealDoNotUseThis);
       theStory.setOwner(ParseUser.getCurrentUser());
+      List<ParseUser> collaboratorList = new ArrayList<>();
+      collaboratorList.add(ParseUser.getCurrentUser());
+      theStory.setCollaboratorList(collaboratorList);
     }
   }
 
@@ -95,26 +114,6 @@ public class Story extends ParseObject {
     }
   }
 
-  // TODO: not used
-  public static Story fromJson(JsonObject jsonObject) {
-    Gson gson = new Gson();
-    Story story = gson.fromJson(jsonObject.toString(), Story.class);
-    return story;
-  }
-
-  public static List<Story> fromJsonArray(JsonArray jsonArray) {
-    Gson gson = new Gson();
-    Type type = new TypeToken<List<Story>>(){}.getType();
-    ArrayList<Story> list = gson.fromJson(jsonArray, type);
-    Story.fromGsonToParse(list);
-    return list;
-  }
-
-  // TODO
-  public String getCreatedAt2() {
-    return getCreatedAt().toString();
-  }
-
   public String getTitle() {
     return (String) get("title");
   }
@@ -131,6 +130,12 @@ public class Story extends ParseObject {
     put("backgroundImageUrl", backgroundImageUrl);
   }
 
+  // the date added into Parse
+  public String getCreatedAtString() {
+    return getCreatedAt().toString();
+  }
+
+  // the date from photo or user
   public String getCreatedAtReal() {
     return (String) get("createdAtReal");
   }
@@ -147,14 +152,12 @@ public class Story extends ParseObject {
     put("owner", owner);
   }
 
-  // TODO: work with Parse
-  public List<User> getCollaboratorList() {
-    return collaboratorList;
+  public List<ParseUser> getCollaboratorList() {
+    return (List<ParseUser>) get("collaboratorList");
   }
 
-  // TODO: work with Parse
-  public void setCollaboratorList(List<User> collaboratorList) {
-    this.collaboratorList = collaboratorList;
+  public void setCollaboratorList(List<ParseUser> collaboratorList) {
+    put("collaboratorList", collaboratorList);
   }
 
   // TODO: work with Parse
