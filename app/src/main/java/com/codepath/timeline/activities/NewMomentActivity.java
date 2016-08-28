@@ -26,6 +26,10 @@ import com.codepath.timeline.util.NewItemClass;
 
 import org.parceler.Parcels;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -78,22 +82,25 @@ public class NewMomentActivity extends NewItemClass {
         return super.onOptionsItemSelected(item);
     }
 
-    // Todo: add date
-    // on click attached to text view id="@+id/tvAddDate"
-    public void addDate(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
-    }
-
     // on click attached to text view id="@+id/tvPublish"
     public void publish(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+
+        // add animation to control the required input
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+
+        // set the date
+        // Todo: adjust to db time
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        Snackbar.make(findViewById(android.R.id.content), dateFormat.format(cal.getTime()), Snackbar.LENGTH_SHORT).show();
+
         if (etMomentTitle.getText().length() == 0) {
-            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             etMomentTitle.startAnimation(shake);
         }
         else if (ivBackground.getDrawable() == null) {
-            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
             // create a moment
