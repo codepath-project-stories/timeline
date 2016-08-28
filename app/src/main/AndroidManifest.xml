@@ -54,25 +54,11 @@
         <activity android:name=".activities.AutoPlayInfoActivity">
         </activity>
         <activity android:name=".activities.NewStoryActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.LandingActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.LandingActivity"/>
         </activity>
 
         <activity android:name=".activities.NewMomentActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.TimelineActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.TimelineActivity"/>
         </activity>
 
         <!-- activities and everything are here. meta-data is last inside application tagParse -->
