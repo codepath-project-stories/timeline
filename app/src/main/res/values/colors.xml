@@ -11,6 +11,7 @@
     <color name="extra_light_gray">#E1E8ED</color>
     <color name="extra_extra_light_gray">#F5F8FA</color>
     <color name="light_gray_transparent">#40AAB8C2</color>
+    <color name="red">#FF0000</color>
 
     <color name="colorPrimaryLoginLight">#4FC3F7</color>
     <color name="colorPrimaryLogin">#03A9F4</color>
