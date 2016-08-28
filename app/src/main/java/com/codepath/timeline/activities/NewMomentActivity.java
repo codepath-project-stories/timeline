@@ -67,6 +67,7 @@ public class NewMomentActivity extends NewItemClass {
             Moment moment = new Moment();
             moment.setMediaUrl(takenPhotoUri.getPath());
             moment.setDescription(etMomentTitle.getText().toString());
+
             Log.d("DEBUG", moment.toString());
 
             // send result back

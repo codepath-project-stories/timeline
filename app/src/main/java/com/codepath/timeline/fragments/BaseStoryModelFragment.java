@@ -1,11 +1,8 @@
 package com.codepath.timeline.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.activities.NewStoryActivity;
 import com.codepath.timeline.adapters.StoriesAdapter;
 import com.codepath.timeline.models.Story;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +27,10 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
-    @BindView(R.id.addBtn) FloatingActionButton add;
+
     @BindView(R.id.rvStories) RecyclerView rvStories;
     private Unbinder unbinder;
-    private int REQUEST_CODE = 5;
+
     private boolean clicked = false;
 
     @Override
@@ -76,14 +70,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 //                );
 
         //
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Todo: add a new story
-                Intent intent = new Intent(getActivity(), NewStoryActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
+
 
         // Todo: toggle between different layouts, if necessary:
 //        toggle.setOnClickListener(new View.OnClickListener() {
@@ -123,16 +110,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
         adaptStories.notifyItemRangeInserted(curSize, newStories.size());
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request it is that we're responding to
-        if (requestCode == REQUEST_CODE && resultCode == 1) {
-            // Get the URI that points to the selected contact
-            Story story = Parcels.unwrap(data.getParcelableExtra("story"));
-            Snackbar.make(getView(), story.toString(), Snackbar.LENGTH_SHORT).show();
-            addNew(story);
-        }
-    }
+
 
     protected void addNew(Story story) {
         stories.add(story);

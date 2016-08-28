@@ -1,10 +1,16 @@
 package com.codepath.timeline.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 
+import com.codepath.timeline.R;
+import com.codepath.timeline.activities.NewStoryActivity;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.ParseApplication;
@@ -12,11 +18,19 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import java.util.List;
+
+import butterknife.BindView;
 
 public class UserStoriesFragment extends BaseStoryModelFragment {
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
+
+    @BindView(R.id.addBtn)
+    FloatingActionButton add;
+    private int REQUEST_CODE = 5;
 
     // newInstance constructor for creating fragment with arguments
     public static UserStoriesFragment newInstance(int page) {
@@ -35,6 +49,15 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     // TODO: production needs to remove demo things
     @Override
     protected void populateList() {
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Todo: add a new story
+                Intent intent = new Intent(getActivity(), NewStoryActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
 
         if (!ParseApplication.TURN_ON_PARSE) {
             addAll(TimelineClient.getInstance().getMockStoryList(getContext()));
@@ -86,6 +109,17 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                             });
                         }
                     });
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request it is that we're responding to
+        if (requestCode == REQUEST_CODE && resultCode == 1) {
+            // Get the URI that points to the selected contact
+            Story story = Parcels.unwrap(data.getParcelableExtra("story"));
+            Snackbar.make(getView(), story.toString(), Snackbar.LENGTH_SHORT).show();
+            addNew(story);
         }
     }
 }
