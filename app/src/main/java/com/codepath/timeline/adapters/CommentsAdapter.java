@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -57,9 +58,21 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
       View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.item_comment_media, parent, false);
       viewHolder = new CommentsMediaViewHolder(view);
+      setupClickableView((CommentsMediaViewHolder) viewHolder);
     }
 
     return viewHolder;
+  }
+
+  private void setupClickableView(final CommentsMediaViewHolder holder) {
+    holder.ivMedia.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        int adapterPosition = holder.getAdapterPosition();
+//        feedItems.get(adapterPosition).likesCount++;
+        notifyItemChanged(adapterPosition, "ACTION_LIKE_IMAGE_CLICKED");
+      }
+    });
   }
 
   @Override
@@ -127,7 +140,13 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
   public static class CommentsMediaViewHolder extends ViewHolder {
     @BindView(R.id.ivMedia)
-    ImageView ivMedia;
+    public ImageView ivMedia;
+    @BindView(R.id.ivLike)
+    public ImageView ivLike;
+    @BindView(R.id.vBgLike)
+    public View vBgLike;
+    @BindView(R.id.ivUserLike)
+    public ImageView ivUserLike;
 
     public CommentsMediaViewHolder(View itemView) {
       super(itemView);

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.CommentsAdapter;
+import com.codepath.timeline.adapters.CommentItemAnimator;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
@@ -103,6 +104,7 @@ public class MomentDetailFragment extends Fragment {
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     rvComments.setLayoutManager(linearLayoutManager);
     rvComments.setAdapter(mAdapter);
+    rvComments.setItemAnimator(new CommentItemAnimator());
   }
 
   public void addComment(Comment comment) {

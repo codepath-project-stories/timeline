@@ -30,14 +30,46 @@
       android:textSize="@dimen/mediumText"
       tools:text="Something, something, something"/>
 
-  <ImageView
-      android:id="@+id/ivMedia"
+  <com.codepath.timeline.view.SquaredFrameLayout
       android:layout_width="match_parent"
-      android:layout_height="300dp"
+      android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:layout_below="@+id/tvBody"
-      tools:background="@color/colorPrimary"/>
+      tools:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/ivMedia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <View
+        android:id="@+id/vBgLike"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/like_circle_background"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:layout_gravity="center"
+        android:src="@drawable/white_hollow_heart"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivUserLike"
+        android:scaleType="center"
+        android:layout_margin="5dp"
+        android:src="@drawable/red_fill_heart"
+        android:visibility="gone"
+        android:layout_gravity="bottom|left"/>
+  </com.codepath.timeline.view.SquaredFrameLayout>
 
   <TextView
       android:id="@+id/tvName"
