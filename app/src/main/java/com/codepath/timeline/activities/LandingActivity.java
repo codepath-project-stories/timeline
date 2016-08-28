@@ -47,7 +47,10 @@ public class LandingActivity extends AppCompatActivity {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            getSupportActionBar().setTitle(currentUser.getUsername());
+            String name = currentUser.getString("name");
+            if (name != null) {
+                getSupportActionBar().setTitle(name);
+            }
 
             StringBuilder str = new StringBuilder();
             str.append("\nobjectId=").append(currentUser.getObjectId());

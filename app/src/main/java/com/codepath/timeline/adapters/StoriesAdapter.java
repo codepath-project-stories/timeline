@@ -108,7 +108,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void updateOwnerDetails(final StoriesAdapter.ViewHolderSimpleStory holder, ParseUser owner) {
         String ownerImageUrl = owner.getString("profileImageUrl");
-
         // Update the profile image only if they have one set
         if (ownerImageUrl != null && !ownerImageUrl.isEmpty()) {
             holder.ivAuthorProfilePhoto.setVisibility(View.VISIBLE);
@@ -116,10 +115,13 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .fitCenter()
                     .bitmapTransform(new CropCircleTransformation(context))
                     .into(holder.ivAuthorProfilePhoto);
-
-            holder.tvStoryAuthor.setText("By " + owner.getUsername());
         } else {
             holder.ivAuthorProfilePhoto.setVisibility(View.GONE);
+        }
+
+        String name = owner.getString("name");
+        if (name != null) {
+            holder.tvStoryAuthor.setText("By " + name);
         }
     }
 
@@ -145,7 +147,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder.ivCollaborator2.setVisibility(View.VISIBLE);
                 ParseUser user1 = collaboratorList.get(0);
                 String user1ProfileImageUrl = user1.getString("profileImageUrl");
-                if ( user1ProfileImageUrl != null || !user1ProfileImageUrl.isEmpty()) {
+                if (user1ProfileImageUrl != null || !user1ProfileImageUrl.isEmpty()) {
                     Glide.with(context).load(user1ProfileImageUrl)
                             .fitCenter()
                             .bitmapTransform(new CropCircleTransformation(context))
@@ -157,7 +159,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder.ivCollaborator1.setVisibility(View.VISIBLE);
                 ParseUser user2 = collaboratorList.get(1);
                 String user2ProfileImageUrl = user2.getString("profileImageUrl");
-                if ( user2ProfileImageUrl != null || !user2ProfileImageUrl.isEmpty()) {
+                if (user2ProfileImageUrl != null || !user2ProfileImageUrl.isEmpty()) {
                     Glide.with(context).load(user2ProfileImageUrl)
                             .fitCenter()
                             .bitmapTransform(new CropCircleTransformation(context))
@@ -167,7 +169,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             if (collaboratorList.size() >= 3) {
                 holder.tvUserCount.setVisibility(View.VISIBLE);
-                holder.tvUserCount.setText("+" + String.valueOf(collaboratorList.size()-2));
+                holder.tvUserCount.setText("+" + String.valueOf(collaboratorList.size() - 2));
             }
 
         }
