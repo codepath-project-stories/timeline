@@ -145,8 +145,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     public ImageView ivLike;
     @BindView(R.id.vBgLike)
     public View vBgLike;
-    @BindView(R.id.ivUserLike)
-    public ImageView ivUserLike;
+    @BindView(R.id.llLike)
+    public LinearLayout llLike;
 
     public CommentsMediaViewHolder(View itemView) {
       super(itemView);

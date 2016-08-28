@@ -211,10 +211,10 @@ public class CommentItemAnimator extends DefaultItemAnimator {
     likeAnimationsMap.put(holder, animatorSet);
 
     // Toggle the red heart icon
-    if (holder.ivUserLike.getVisibility() == View.INVISIBLE) {
-      holder.ivUserLike.setVisibility(View.VISIBLE);
+    if (holder.llLike.getVisibility() == View.INVISIBLE) {
+      holder.llLike.setVisibility(View.VISIBLE);
     } else {
-      holder.ivUserLike.setVisibility(View.INVISIBLE);
+      holder.llLike.setVisibility(View.INVISIBLE);
     }
   }
 
