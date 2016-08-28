@@ -18,12 +18,12 @@ Here are some sample stories:
 
 * [x] After logging in, user is taken to their homepage where they see their list of stories and the stories shared by friends
 * [ ] User can add a new story
-  * [ ] When adding a new story, user can specify the title of a story
-  * [ ] User has an option to import photo from their phone or take a picture for the background image of a story
-  * [ ] User can change settings of a story by adding/removing collaborators
+  * [x] When adding a new story, user can specify the title of a story
+  * [x] User has an option to take a picture for the background image of a story
+  * [ ] User can add collaborators to the story
 * [ ] User can add a new moment into a story
-  * [ ] When adding a new moment, user can specify the date, description and
-  * [ ] User can import photos or take a picture
+  * [x] When adding a new moment by specifying the description and
+  * [x] User can take a picture for a moment
 * [x] User can click on any story from their timeline
   * [x] When clicking on a story, user can view all of the moments that were shared for that story
   * [x] User can see a timeline of all the moments that were shared in that story
@@ -34,7 +34,8 @@ Here are some sample stories:
 * [ ] User can search for a particular story
 * [ ] User receives push notification when a new moment is added to the story
 * [ ] User has a list of friends auto populated from Facebook
-* [ ] Users can comment on a moment
+* [x] Users can comment on a moment
+* [x] Users can like particular moment
 * [ ] Allows the user to include videos in their timeline
 
 
