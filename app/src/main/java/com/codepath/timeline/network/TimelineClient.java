@@ -98,7 +98,7 @@ public class TimelineClient {
     }
   }
 
-  // query User table
+  // query User_Temp table
   public void getStoryList(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -155,7 +155,7 @@ public class TimelineClient {
     });
   }
 
-  // query User table
+  // query User_Temp table
   public void getUserList(Story story,
                           final TimelineClientGetUserListener timelineClientGetUserListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.models.User;
+import com.codepath.timeline.models.User_Temp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
 
     // Defines the listener interface with a method passing back data result
     public interface SearchDialogListener {
-        void onFinishSearchDialog(List<User> collabs);
+        void onFinishSearchDialog(List<User_Temp> collabs);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 SearchDialogListener listener = (SearchDialogListener) SearchFriendsDialogFragment.this.getTargetFragment();
                 // Todo: add meaningful data (most likely a list of collaborators)
-                List<User> collabs = new ArrayList<>();
+                List<User_Temp> collabs = new ArrayList<>();
 //                listener.onFinishSearchDialog(collabs);
                 SearchFriendsDialogFragment.this.dismiss();
             }

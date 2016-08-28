@@ -26,7 +26,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
 import com.codepath.timeline.models.Story;
-import com.codepath.timeline.models.User;
+import com.codepath.timeline.models.User_Temp;
 import com.codepath.timeline.util.NewItemClass;
 
 import org.parceler.Parcels;
@@ -233,7 +233,7 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
     }
 
     @Override
-    public void onFinishSearchDialog(List<User> collabs) {
+    public void onFinishSearchDialog(List<User_Temp> collabs) {
 
     }
 }

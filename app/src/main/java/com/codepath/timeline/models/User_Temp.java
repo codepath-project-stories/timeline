@@ -11,31 +11,31 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-@Parcel(analyze = {User.class})
-public class User {
+@Parcel(analyze = {User_Temp.class})
+public class User_Temp {
   private int id;
   private String name;
   private String profileImageUrl;
 
-  public User() {}
+  public User_Temp() {}
 
-  public static User fromJson(JsonObject jsonObject) {
+  public static User_Temp fromJson(JsonObject jsonObject) {
     Gson gson = new Gson();
-    User user = gson.fromJson(jsonObject.toString(), User.class);
+    User_Temp user = gson.fromJson(jsonObject.toString(), User_Temp.class);
 
     return user;
   }
 
-  public static ArrayList<User> fromJson(JsonArray jsonArray) {
+  public static ArrayList<User_Temp> fromJson(JsonArray jsonArray) {
     Gson gson = new Gson();
-    Type type = new TypeToken<List<User>>(){}.getType();
-    ArrayList<User> userList = gson.fromJson(jsonArray, type);
+    Type type = new TypeToken<List<User_Temp>>(){}.getType();
+    ArrayList<User_Temp> userList = gson.fromJson(jsonArray, type);
 
     return userList;
   }
 
   // TEST: for generating mock response purposes
-  public User(int id, String name, String profileImageUrl) {
+  public User_Temp(int id, String name, String profileImageUrl) {
     this.id = id;
     this.name = name;
     this.profileImageUrl = profileImageUrl;
