@@ -126,7 +126,7 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
             view.setBackgroundResource(R.drawable.circle_accent);
             view.setTag(2);
         } else {
-            view.setBackgroundResource(R.drawable.circle);
+            view.setBackgroundResource(R.drawable.circle_collaborators);
             view.setTag(1);
         }
     }

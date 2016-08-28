@@ -33,7 +33,6 @@ public class NewItemClass extends AppCompatActivity {
     public Uri takenPhotoUri;
 
 
-    // Todo: retrieve current address https://developer.android.com/training/location/display-address.html
     // on click attached to text view id="@+id/tvAddLocation"
     public void addLocation(View view) {
         if (Integer.parseInt(view.getTag().toString()) == 1) {
@@ -62,6 +61,7 @@ public class NewItemClass extends AppCompatActivity {
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
     void accessLocation() {
         // Trigger the access to location here
+       // Todo: access location http://guides.codepath.com/android/Retrieving-Location-with-LocationServices-API
     }
 
     // Todo: https://developer.android.com/training/camera/photobasics.html
