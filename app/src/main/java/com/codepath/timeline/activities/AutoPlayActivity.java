@@ -24,6 +24,7 @@ import com.codepath.timeline.fragments.AutoPlayFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.AppConstants;
 import com.qslll.library.ExpandingPagerFactory;
 import com.qslll.library.ExpandingViewPagerAdapter;
 import com.qslll.library.fragments.ExpandingFragment;
@@ -60,9 +61,9 @@ public class AutoPlayActivity extends AppCompatActivity
   private List<Moment> mMomentList;
   private Moment mMoment;
   private AutoPlayPagerAdapter mPagerAdapter;
-
-  Story story;
-  String imageUrl;
+  private String storyObjectId;
+  private String storyTitle;
+  private String storyBackgroundImageUrl;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +75,20 @@ public class AutoPlayActivity extends AppCompatActivity
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    // get story info from intent
+    // NOTE: Can't pass 'Story' since it's not Parcelable/Serializable
+    storyObjectId = getIntent().getStringExtra(AppConstants.STORY_OBJECT_ID);
+    storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
+    storyBackgroundImageUrl = getIntent().getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL);
+
+    updateStoryInfo();
     getMomentList();
     initView();
   }
 
-  private void initView() {
+  private void updateStoryInfo(){
     // load the image url for the background of the story into the image view
     if (SOURCE_MODE == 0) {
-      story = null;
-      imageUrl = null;
       collapsing_toolbar.setTitle("Baby Matthew Smith");
       collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
       Glide.with(this)
@@ -91,16 +97,16 @@ public class AutoPlayActivity extends AppCompatActivity
               .into(ivStoryBackground);
     }
     else if (SOURCE_MODE == 1) {
-      story = (Story) Parcels.unwrap(getIntent().getParcelableExtra("story"));
-      imageUrl = getIntent().getStringExtra("imageUrl");
-      collapsing_toolbar.setTitle(story.getTitle());
+      collapsing_toolbar.setTitle(storyTitle);
       collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
       Glide.with(this)
-              .load(imageUrl)
+              .load(storyBackgroundImageUrl)
               .centerCrop()
               .into(ivStoryBackground);
     }
+  }
 
+  private void initView() {
     mPagerAdapter = new AutoPlayPagerAdapter(getSupportFragmentManager());
     vpMoment.setAdapter(mPagerAdapter);
 

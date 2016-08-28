@@ -71,19 +71,21 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             // demo already created
             // fetch stories from Parse server
             Log.d("populateList", "getStoryList");
-            TimelineClient.getInstance().getStoryList(
-                currentUser,
-                // set up callback
-                new TimelineClient.TimelineClientGetStoryListener() {
-                    @Override
-                    public void onGetStoryList(List<Story> itemList) {
-                        if (itemList != null) {
-                            addAll(itemList);
+            TimelineClient.getInstance().getStoryList2(
+                    currentUser,
+                    // set up callback
+                    new TimelineClient.TimelineClientGetStoryListener() {
+                        @Override
+                        public void onGetStoryList(List<Story> itemList) {
+                            if (itemList != null) {
+                                addAll(itemList);
+                            }
                         }
                     }
-                });
-        }
-        else if (ParseApplication.DEMO_MODE && !demoCreated) {
+            );
+        } else if (ParseApplication.DEMO_MODE && !demoCreated)
+
+        {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");

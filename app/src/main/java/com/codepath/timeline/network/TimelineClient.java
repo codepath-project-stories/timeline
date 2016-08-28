@@ -27,6 +27,7 @@ public class TimelineClient {
   private static final String TAG = TimelineClient.class.getSimpleName();
 
   private static TimelineClient instance;
+
   private TimelineClient() {
   }
 
@@ -73,24 +74,23 @@ public class TimelineClient {
           Log.d("saveToParse", "saveAllInBackground done");
           if (e != null) {
             Log.d("saveToParse", e.toString());
-          }
-          else {
+          } else {
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.addAll("stories", storyList);
             currentUser.saveInBackground(
-                    new SaveCallback() {
-                      @Override
-                      public void done(ParseException e) {
-                        Log.d("saveToParse", "saveInBackground done");
-                        if (e != null) {
-                          Log.d("saveToParse", e.toString());
-                        } else {
-                          if (timelineClientAddStoryListener != null) {
-                            timelineClientAddStoryListener.onAddStoryList(); // use callback
-                          }
-                        }
+                new SaveCallback() {
+                  @Override
+                  public void done(ParseException e) {
+                    Log.d("saveToParse", "saveInBackground done");
+                    if (e != null) {
+                      Log.d("saveToParse", e.toString());
+                    } else {
+                      if (timelineClientAddStoryListener != null) {
+                        timelineClientAddStoryListener.onAddStoryList(); // use callback
                       }
                     }
+                  }
+                }
             );
           }
         }
@@ -98,42 +98,44 @@ public class TimelineClient {
     }
   }
 
-  // query User table
+  // query User_Temp table
   public void getStoryList(ParseUser user,
-                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+                           final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
     // http://parseplatform.github.io/docs/android/guide
     // fetchifneeded() could be an alternative to include()
     query.include("stories");
     query.getInBackground(
-            user.getObjectId(),
-            new GetCallback<ParseUser>() {
-              @Override
-              public void done(ParseUser user, ParseException e) {
-                if (e == null) {
-                  if (user != null) {
-                    Log.d("findInBackground", user.getObjectId());
-                    if (timelineClientGetStoryListener != null) {
-                      timelineClientGetStoryListener.onGetStoryList(
-                              (ArrayList<Story>) user.get("stories")
-                      ); // use callback
-                    }
-                  }
-                } else {
-                  Log.d("findInBackground", "Error: " + e.getMessage());
+        user.getObjectId(),
+        new GetCallback<ParseUser>() {
+          @Override
+          public void done(ParseUser user, ParseException e) {
+            if (e == null) {
+              if (user != null) {
+                Log.d("findInBackground", user.getObjectId());
+                if (timelineClientGetStoryListener != null) {
+                  timelineClientGetStoryListener.onGetStoryList(
+                      (ArrayList<Story>) user.get("stories")
+                  ); // use callback
                 }
               }
-            });
+            } else {
+              Log.d("findInBackground", "Error: " + e.getMessage());
+            }
+          }
+        });
   }
 
   // TODO: not used
   // query Story table
   public void getStoryList2(ParseUser user,
-                           final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     // Define the class we would like to query
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
     // Define our query conditions
     query.whereEqualTo("owner", user);
+    query.include("owner"); // eagerly load the owner -- we need it for updating the story view
+    query.include("collaboratorList");
     // Execute the find asynchronously
     query.findInBackground(new FindCallback<Story>() {
       @Override
@@ -153,32 +155,32 @@ public class TimelineClient {
     });
   }
 
-  // query User table
+  // query User_Temp table
   public void getUserList(Story story,
-                           final TimelineClientGetUserListener timelineClientGetUserListener) {
+                          final TimelineClientGetUserListener timelineClientGetUserListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
     // http://parseplatform.github.io/docs/android/guide
     // fetchifneeded() could be an alternative to include()
     query.include("collaboratorList");
     query.getInBackground(
-            story.getObjectId(),
-            new GetCallback<Story>() {
-              @Override
-              public void done(Story story, ParseException e) {
-                if (e == null) {
-                  if (story != null) {
-                    Log.d("findInBackground", story.getObjectId());
-                    if (timelineClientGetUserListener != null) {
-                      timelineClientGetUserListener.onGetUserList(
-                              (ArrayList<ParseUser>) story.get("collaboratorList")
-                      ); // use callback
-                    }
-                  }
-                } else {
-                  Log.d("findInBackground", "Error: " + e.getMessage());
+        story.getObjectId(),
+        new GetCallback<Story>() {
+          @Override
+          public void done(Story story, ParseException e) {
+            if (e == null) {
+              if (story != null) {
+                Log.d("findInBackground", story.getObjectId());
+                if (timelineClientGetUserListener != null) {
+                  timelineClientGetUserListener.onGetUserList(
+                      (ArrayList<ParseUser>) story.get("collaboratorList")
+                  ); // use callback
                 }
               }
-            });
+            } else {
+              Log.d("findInBackground", "Error: " + e.getMessage());
+            }
+          }
+        });
   }
 
   public List<Moment> getMomentsList(Context context, int storyId) {

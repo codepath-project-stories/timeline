@@ -21,19 +21,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LandingActivity extends AppCompatActivity {
+    private static final String TAG = LandingActivity.class.getSimpleName();
+
     // LandingActivity creates MyPagerAdapter
     // MyPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.vpPager) ViewPager viewPager;
-    @BindView(R.id.sliding_tabs) TabLayout tabBar;
-//    @BindView(R.id.ivBackgroundImage) ImageView backgroundImage;
-//    @BindView(R.id.tvUserName) TextView userName;
-//    @BindView(R.id.tvStoriesCount) TextView storiesCount;
-//    @BindView(R.id.tvStoriesText) TextView storiesCountText;
-//    @BindView(R.id.mainView) RelativeLayout mainView;
+    @BindView(R.id.vpPager)
+    ViewPager viewPager;
+    @BindView(R.id.sliding_tabs)
+    TabLayout tabBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,37 +41,36 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         ButterKnife.bind(this);
 
-        // TODO: Change to user's name
-        toolbar.setTitle("Jane Smith");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        setupViewPager();
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            String name = currentUser.getString("name");
+            if (name != null) {
+                getSupportActionBar().setTitle(name);
+            }
+
+            StringBuilder str = new StringBuilder();
+            str.append("\nobjectId=").append(currentUser.getObjectId());
+            str.append("\ncreatedAt=").append(currentUser.getCreatedAt().toString());
+            str.append("\nuserName=").append(currentUser.getUsername());
+            str.append("\nemail=").append(currentUser.getEmail());
+            Log.d(TAG, "CurrentUser=" + str);
+
+        } else {
+            // show the signup or login screen
+            Log.d("LandingActivity", "getCurrentUser failed");
+        }
+    }
+
+    private void setupViewPager() {
         final MyPagerAdapter viewPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
         // Give the TabLayout the ViewPager
         tabBar.setupWithViewPager(viewPager);
-
-        // setup main views
-//        backgroundImage.setImageResource(0);
-//        Glide.with(getApplicationContext())
-//                .load(R.drawable.background_image)
-//                .into(backgroundImage);
-//        userName.setText("Jane Smith");
-//        storiesCount.setText("20");
-//        storiesCountText.setText("STORIES");
-
-        // TODO: production needs to remove the following
-        if (ParseApplication.TURN_ON_PARSE && ParseApplication.DEMO_MODE) {
-            // test LoginActivity
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            if (currentUser != null) {
-                // do stuff with the user
-                Log.d("LandingActivity", currentUser.toString());
-            } else {
-                // show the signup or login screen
-                Log.d("LandingActivity", "getCurrentUser failed");
-            }
-        }
     }
 
     @Override
@@ -94,15 +93,13 @@ public class LandingActivity extends AppCompatActivity {
                             if (which.equals(DialogAction.POSITIVE)) {
                                 ParseApplication.logout();
                                 finish(); // going to kill the activity
-                            }
-                            else if (which.equals(DialogAction.NEGATIVE)) {
+                            } else if (which.equals(DialogAction.NEGATIVE)) {
                                 moveTaskToBack(true); // Same as if user pressed Home button.
                             }
                         }
                     })
                     .show();
-        }
-        else {
+        } else {
             moveTaskToBack(true); // Same as if user pressed Home button.
         }
     }

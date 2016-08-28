@@ -3,10 +3,7 @@ package com.codepath.timeline.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +17,8 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.models.Story;
-import com.github.florent37.glidepalette.GlidePalette;
+import com.codepath.timeline.util.AppConstants;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -29,17 +27,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    static int SOURCE_MODE = 1;
-    // 0: "Fun times" and R.drawable.image_test2
-    // 1: GlidePalette
-    // https://github.com/florent37/GlidePalette
-    // http://jakewharton.com/coercing-picasso-to-play-with-palette/
-    // 2: The "Hard" Way
-    // http://guides.codepath.com/android/Sending-and-Managing-Network-Requests
+    private static final String TAG = StoriesAdapter.class.getSimpleName();
 
     private List<Story> mStories;
     private Context context;
@@ -71,7 +61,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        switch(viewHolder.getItemViewType()) {
+        switch (viewHolder.getItemViewType()) {
             case SIMPLE:
                 ViewHolderSimpleStory vh1 = (ViewHolderSimpleStory) viewHolder;
                 configureViewHolderSimpleStory(vh1, position);
@@ -85,15 +75,16 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, final int position) {
         final Story story = mStories.get(position);
-        Log.d("DEBUG", story.toString());
+        Log.d(TAG, story.toString());
 
         holder.rlMainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, TimelineActivity.class);
                 Story story = mStories.get(position);
-                i.putExtra("story", Parcels.wrap(story));
-                i.putExtra("imageUrl", story.getBackgroundImageUrl());
+                i.putExtra(AppConstants.STORY_OBJECT_ID, story.getObjectId());
+                i.putExtra(AppConstants.STORY_TITLE, story.getTitle());
+                i.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, story.getBackgroundImageUrl());
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 (Activity) context,
@@ -104,66 +95,83 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         });
 
-        // TODO: update author's profile photo with the right one
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg")
-            .fitCenter()
-            .bitmapTransform(new CropCircleTransformation(context))
-            .into(holder.ivAuthorProfilePhoto);
+        ParseUser owner = story.getOwner();
+        if (owner != null) {
+            updateOwnerDetails(holder, owner);
+        } else {
+            Log.d(TAG, "Story owner is NULL");
+        }
 
-        // TODO: read from the List<User> collaborators
-        // TODO: Set view visibility of collaborators to GONE if they don't exist
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
-            .fitCenter()
-            .bitmapTransform(new CropCircleTransformation(context))
-            .into(holder.ivCollaborator1);
-
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
-            .fitCenter()
-            .bitmapTransform(new CropCircleTransformation(context))
-            .into(holder.ivCollaborator2);
-
+        updateStoryDetails(holder, story);
+        updateCollaboratorDetails(holder, story.getCollaboratorList());
     }
 
-    private void initView(final StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
-        if (SOURCE_MODE == 0) {
-            holder.tvStoryTitle.setText("Fun times");
-            Glide.with(context)
-                .load(R.drawable.image_test2)
-                .into(holder.ivBackgroundImage);
-
-            Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
-                public void onGenerated(Palette palette) {
-                    // access palette colors here
-                    Palette.Swatch swatch = palette.getVibrantSwatch();
-                    // Gets an appropriate title text color
-                    if (swatch != null) {
-                        // If we have a vibrant color
-                        // update the title TextView
-                        holder.tvStoryTitle.setBackgroundColor(
-                            swatch.getBodyTextColor());
-                    }
-                }
-            };
-
-            final Bitmap myBitmap = BitmapFactory.decodeResource(
-                context.getResources(),
-                R.drawable.image_test2
-            );
-            if (myBitmap != null && !myBitmap.isRecycled()) {
-                Palette.from(myBitmap).generate(paletteListener);
-            }
+    private void updateOwnerDetails(final StoriesAdapter.ViewHolderSimpleStory holder, ParseUser owner) {
+        String ownerImageUrl = owner.getString("profileImageUrl");
+        // Update the profile image only if they have one set
+        if (ownerImageUrl != null && !ownerImageUrl.isEmpty()) {
+            holder.ivAuthorProfilePhoto.setVisibility(View.VISIBLE);
+            Glide.with(context).load(ownerImageUrl)
+                    .fitCenter()
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.ivAuthorProfilePhoto);
+        } else {
+            holder.ivAuthorProfilePhoto.setVisibility(View.GONE);
         }
-        else if (SOURCE_MODE == 1) {
-            holder.tvStoryTitle.setText(story.getTitle());
-            Glide.with(context)
+
+        String name = owner.getString("name");
+        if (name != null) {
+            holder.tvStoryAuthor.setText("By " + name);
+        }
+    }
+
+    private void updateStoryDetails(StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
+        holder.tvStoryTitle.setText(story.getTitle());
+        Glide.with(context)
                 .load(story.getBackgroundImageUrl())
-                .listener(
-                    GlidePalette.with(story.getBackgroundImageUrl())
-                        .use(GlidePalette.Profile.VIBRANT_LIGHT)
-                        .intoBackground(holder.tvStoryTitle)
-                        .crossfade(true)
-                )
+                .centerCrop()
                 .into(holder.ivBackgroundImage);
+
+        // TODO: Update the number of moments
+        holder.tvMomentCount.setText("30" + " Moments");
+    }
+
+    private void updateCollaboratorDetails(StoriesAdapter.ViewHolderSimpleStory holder, List<ParseUser> collaboratorList) {
+        // Hide the collaborator list by default
+        holder.ivCollaborator1.setVisibility(View.INVISIBLE);
+        holder.ivCollaborator2.setVisibility(View.INVISIBLE);
+        holder.tvUserCount.setVisibility(View.INVISIBLE);
+
+        if (collaboratorList != null) {
+            if (collaboratorList.size() >= 1) {
+                holder.ivCollaborator2.setVisibility(View.VISIBLE);
+                ParseUser user1 = collaboratorList.get(0);
+                String user1ProfileImageUrl = user1.getString("profileImageUrl");
+                if (user1ProfileImageUrl != null || !user1ProfileImageUrl.isEmpty()) {
+                    Glide.with(context).load(user1ProfileImageUrl)
+                            .fitCenter()
+                            .bitmapTransform(new CropCircleTransformation(context))
+                            .into(holder.ivCollaborator2);
+                }
+            }
+
+            if (collaboratorList.size() >= 2) {
+                holder.ivCollaborator1.setVisibility(View.VISIBLE);
+                ParseUser user2 = collaboratorList.get(1);
+                String user2ProfileImageUrl = user2.getString("profileImageUrl");
+                if (user2ProfileImageUrl != null || !user2ProfileImageUrl.isEmpty()) {
+                    Glide.with(context).load(user2ProfileImageUrl)
+                            .fitCenter()
+                            .bitmapTransform(new CropCircleTransformation(context))
+                            .into(holder.ivCollaborator1);
+                }
+            }
+
+            if (collaboratorList.size() >= 3) {
+                holder.tvUserCount.setVisibility(View.VISIBLE);
+                holder.tvUserCount.setText("+" + String.valueOf(collaboratorList.size() - 2));
+            }
+
         }
     }
 
@@ -181,14 +189,24 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public static class ViewHolderSimpleStory extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.rlMainView) RelativeLayout rlMainView;
-        @BindView(R.id.ivBackgroundImage) ImageView ivBackgroundImage;
-        @BindView(R.id.ivAuthorProfilePhoto) ImageView ivAuthorProfilePhoto;
-        @BindView(R.id.tvStoryTitle) TextView tvStoryTitle;
-        @BindView(R.id.tvStoryAuthor) TextView tvStoryAuthor;
-        @BindView(R.id.tvUserCount) TextView tvUserCount;
-        @BindView(R.id.ivCollaborator1) ImageView ivCollaborator1;
-        @BindView(R.id.ivCollaborator2) ImageView ivCollaborator2;
+        @BindView(R.id.rlMainView)
+        RelativeLayout rlMainView;
+        @BindView(R.id.ivBackgroundImage)
+        ImageView ivBackgroundImage;
+        @BindView(R.id.ivAuthorProfilePhoto)
+        ImageView ivAuthorProfilePhoto;
+        @BindView(R.id.tvStoryTitle)
+        TextView tvStoryTitle;
+        @BindView(R.id.tvMomentCount)
+        TextView tvMomentCount;
+        @BindView(R.id.tvStoryAuthor)
+        TextView tvStoryAuthor;
+        @BindView(R.id.tvUserCount)
+        TextView tvUserCount;
+        @BindView(R.id.ivCollaborator1)
+        ImageView ivCollaborator1;
+        @BindView(R.id.ivCollaborator2)
+        ImageView ivCollaborator2;
 
         public ViewHolderSimpleStory(View itemView) {
             super(itemView);
