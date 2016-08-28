@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,97 +7,100 @@
     android:layout_marginBottom="@dimen/medium_margin"
     card_view:cardElevation="@dimen/card_view_elevation">
 
-  <RelativeLayout
-      android:id="@+id/rlMainView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@color/colorPrimaryLight"
-      android:clickable="true"
-      android:paddingBottom="@dimen/small_padding">
-
-    <FrameLayout
-        android:id="@+id/flBackground"
+    <RelativeLayout
+        android:id="@+id/rlMainView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/story_default_height">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
+        android:clickable="true"
+        android:paddingBottom="@dimen/small_padding">
 
-      <ImageView
-          android:id="@+id/ivBackgroundImage"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentStart="true"
-          android:layout_alignParentTop="true"
-          android:background="@drawable/image_test2"
-          android:transitionName="background"/>
+        <FrameLayout
+            android:id="@+id/flBackground"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/story_default_height">
 
-      <View
-          android:id="@+id/vAlphaOverlay"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/light_gray_transparent"/>
+            <ImageView
+                android:id="@+id/ivBackgroundImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/image_test2"
+                android:transitionName="background" />
 
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="bottom|right"
-          android:layout_margin="@dimen/large_margin">
+            <View
+                android:id="@+id/vAlphaOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray_transparent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="@dimen/large_margin">
+
+                <ImageView
+                    android:id="@+id/ivCollaborator1"
+                    android:layout_width="@dimen/user_default_height"
+                    android:layout_height="@dimen/user_default_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="-10dp"
+                    android:layout_toLeftOf="@+id/ivCollaborator2"
+                    tools:background="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/ivCollaborator2"
+                    android:layout_width="@dimen/user_default_height"
+                    android:layout_height="@dimen/user_default_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="-10dp"
+                    android:layout_toLeftOf="@+id/tvUserCount"
+                    tools:background="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvUserCount"
+                    style="@style/CollaboratorCountText"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:text="+3" />
+
+                <TextView
+                    android:id="@+id/tvMomentCount"
+                    style="@style/MomentCountText"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvUserCount"
+                    android:text="30 Moments" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
 
         <ImageView
-            android:id="@+id/ivCollaborator1"
-            android:layout_width="@dimen/user_default_height"
-            android:layout_height="@dimen/user_default_height"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="-10dp"
-            android:layout_toLeftOf="@+id/ivCollaborator2"
-            tools:background="@color/colorPrimary"/>
-
-        <ImageView
-            android:id="@+id/ivCollaborator2"
-            android:layout_width="@dimen/user_default_height"
-            android:layout_height="@dimen/user_default_height"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="-10dp"
-            android:layout_toLeftOf="@+id/tvUserCount"
-            tools:background="@color/colorAccent"/>
+            android:id="@+id/ivAuthorProfilePhoto"
+            android:layout_width="@dimen/author_profile_default_height"
+            android:layout_height="@dimen/author_profile_default_height"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/flBackground"
+            android:layout_margin="@dimen/small_margin"
+            tools:background="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/tvUserCount"
-            style="@style/CollaboratorCountText"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="+3"/>
+            android:id="@+id/tvStoryTitle"
+            style="@style/StoryTitleText"
+            android:layout_alignTop="@+id/ivAuthorProfilePhoto"
+            android:layout_toRightOf="@+id/ivAuthorProfilePhoto"
+            android:text="Fun times in Seattle" />
 
         <TextView
-            android:id="@+id/tvMomentCount"
-            style="@style/MomentCountText"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/tvUserCount"
-            android:text="30 Moments"/>
-      </RelativeLayout>
-    </FrameLayout>
+            android:id="@+id/tvStoryAuthor"
+            style="@style/StoryAuthorText"
+            android:layout_alignLeft="@+id/tvStoryTitle"
+            android:layout_below="@+id/tvStoryTitle"
+            android:text="By Jane Smith" />
 
-    <ImageView
-        android:id="@+id/ivAuthorProfilePhoto"
-        android:layout_width="@dimen/author_profile_default_height"
-        android:layout_height="@dimen/author_profile_default_height"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/flBackground"
-        android:layout_margin="@dimen/small_margin"
-        tools:background="@color/colorPrimary"/>
-
-    <TextView
-        android:id="@+id/tvStoryTitle"
-        style="@style/StoryTitleText"
-        android:layout_alignTop="@+id/ivAuthorProfilePhoto"
-        android:layout_toRightOf="@+id/ivAuthorProfilePhoto"
-        android:text="Fun times in Seattle"/>
-
-    <TextView
-        android:id="@+id/tvStoryAuthor"
-        style="@style/StoryAuthorText"
-        android:layout_alignLeft="@+id/tvStoryTitle"
-        android:layout_below="@+id/tvStoryTitle"
-        android:text="By Jane Smith"/>
-  </RelativeLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -10,6 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -99,7 +100,16 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.menu_add_function, menu);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miSearch:
+                // Todo: add search functionality
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void setupLayout(RecyclerView.LayoutManager layout) {
@@ -118,8 +128,6 @@ abstract public class BaseStoryModelFragment extends Fragment {
         // curSize should represent the first element that got added, newItems.size() represents the itemCount
         adaptStories.notifyItemRangeInserted(curSize, newStories.size());
     }
-
-
 
     protected void addNew(Story story) {
         stories.add(story);

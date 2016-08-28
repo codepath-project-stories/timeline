@@ -23,6 +23,7 @@
     <dimen name="story_default_height">180dp</dimen>
     <dimen name="author_profile_default_height">40dp</dimen>
     <dimen name="user_default_height">30dp</dimen>
+    <dimen name="user_add_height">60dp</dimen>
 
     <!-- Text sizes-->
     <dimen name="largeText">19sp</dimen>

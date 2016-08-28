@@ -1,11 +1,13 @@
 package com.codepath.timeline.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,16 +22,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
+import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.models.User;
 import com.codepath.timeline.util.NewItemClass;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class NewStoryActivity extends NewItemClass {
+public class NewStoryActivity extends NewItemClass implements SearchFriendsDialogFragment.SearchDialogListener {
 
     @BindView(R.id.ivBackground) ImageView ivBackground;
     @BindView(R.id.ivCameraIcon) ImageView ivCameraIcon;
@@ -37,6 +45,16 @@ public class NewStoryActivity extends NewItemClass {
     @BindView(R.id.tvAddPeople) TextView tvAddPeople;
     @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
     @BindView(R.id.toolbar) Toolbar toolbar;
+
+    @BindView(R.id.ivSearch) ImageView ivSearch;
+    @BindView(R.id.ivCollaborator1) ImageView ivCollaborator1;
+    @BindView(R.id.ivCollaborator2) ImageView ivCollaborator2;
+    @BindView(R.id.ivCollaborator3) ImageView ivCollaborator3;
+    @BindView(R.id.tvCollaborator1) TextView tvCollaborator1;
+    @BindView(R.id.tvCollaborator2) TextView tvCollaborator2;
+    @BindView(R.id.tvCollaborator3) TextView tvCollaborator3;
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +64,47 @@ public class NewStoryActivity extends NewItemClass {
 
         toolbar.setTitle("New story");
         setSupportActionBar(toolbar);
+
+        context = getApplicationContext();
+
+        setupViews();
+    }
+
+    public void setupViews() {
+
+        // TODO: read from the List<User> friends, add names
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
+                .fitCenter()
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(ivCollaborator1);
+
+        tvCollaborator1.setText("Amanda Brown");
+
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
+                .fitCenter()
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(ivCollaborator2);
+
+        tvCollaborator2.setText("Clair White");
+
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
+                .fitCenter()
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(ivCollaborator3);
+
+        tvCollaborator3.setText("Megan Cox");
+
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                SearchFriendsDialogFragment composeDialog = SearchFriendsDialogFragment.newInstance("Choose friends:");
+                Bundle bundle = new Bundle();
+                // Todo: pass meaningful data (probably user's id)
+                composeDialog.setArguments(bundle);
+                composeDialog.show(fm, "fragment_compose_dialog");
+            }
+        });
     }
 
     @Override
@@ -83,6 +142,7 @@ public class NewStoryActivity extends NewItemClass {
     // on click attached to text view id="@+id/tvAddPeople"
     public void addPeople(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+
     }
 
     // on click attached to text view id="@+id/tvPublish"
@@ -128,5 +188,10 @@ public class NewStoryActivity extends NewItemClass {
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onFinishSearchDialog(List<User> collabs) {
+
     }
 }
