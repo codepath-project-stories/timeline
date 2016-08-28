@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LandingActivity"
+                  android:launchMode="singleTop"
                   android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
