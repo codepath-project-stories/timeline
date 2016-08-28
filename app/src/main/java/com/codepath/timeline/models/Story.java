@@ -53,7 +53,8 @@ public class Story extends ParseObject {
 
   public static List<Story> fromJsonArray(JsonArray jsonArray) {
     Gson gson = new Gson();
-    Type type = new TypeToken<List<Story>>(){}.getType();
+    Type type = new TypeToken<List<Story>>() {
+    }.getType();
     ArrayList<Story> list = gson.fromJson(jsonArray, type);
     Story.fromGsonToParse(list);
     return list;
@@ -125,5 +126,25 @@ public class Story extends ParseObject {
   // TODO: work with Parse
   public void setMomentList(List<Moment> momentList) {
     this.momentList = momentList;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    str.append("--------- Story");
+    str.append("\nobjectId=").append(getObjectId());
+    //    str.append("\ncreatedAt=").append(getCreatedAt().toString());
+    str.append("\ncreatedAtReal=").append(getCreatedAtReal());
+    str.append("\ntitle=").append(getTitle());
+    str.append("\nbackgroundImageUrl=").append(getBackgroundImageUrl());
+
+    ParseUser user = getOwner();
+    str.append("\n------- Owner");
+    str.append("\nobjectId=").append(user.getObjectId());
+    str.append("\ncreatedAt=").append(user.getCreatedAt().toString());
+    str.append("\nuserName=").append(user.getUsername());
+    str.append("\nemail=").append(user.getEmail());
+    str.append("\nprofileImageUrl=").append(user.get("profileImageUrl"));
+    return str.toString();
   }
 }
