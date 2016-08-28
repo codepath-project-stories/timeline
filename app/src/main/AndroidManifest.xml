@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LandingActivity">
+        <activity android:name=".activities.LandingActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activities.TimelineActivity"

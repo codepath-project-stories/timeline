@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -24,7 +25,8 @@ public class LandingActivity extends AppCompatActivity {
     // MyPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.vpPager) ViewPager viewPager;
     @BindView(R.id.sliding_tabs) TabLayout tabBar;
 //    @BindView(R.id.ivBackgroundImage) ImageView backgroundImage;
@@ -38,6 +40,10 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         ButterKnife.bind(this);
+
+        // TODO: Change to user's name
+        toolbar.setTitle("Jane Smith");
+        setSupportActionBar(toolbar);
 
         final MyPagerAdapter viewPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
