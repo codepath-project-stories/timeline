@@ -3,10 +3,7 @@ package com.codepath.timeline.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.models.Story;
-import com.github.florent37.glidepalette.GlidePalette;
+import com.codepath.timeline.util.AppConstants;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -30,17 +27,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = StoriesAdapter.class.getSimpleName();
-
-    // 0: "Fun times" and R.drawable.image_test2
-    // 1: GlidePalette
-    // https://github.com/florent37/GlidePalette
-    // http://jakewharton.com/coercing-picasso-to-play-with-palette/
-    // 2: The "Hard" Way
-    // http://guides.codepath.com/android/Sending-and-Managing-Network-Requests
 
     private List<Story> mStories;
     private Context context;
@@ -93,8 +82,9 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View v) {
                 Intent i = new Intent(context, TimelineActivity.class);
                 Story story = mStories.get(position);
-                i.putExtra("story", Parcels.wrap(story));
-                i.putExtra("imageUrl", story.getBackgroundImageUrl());
+                i.putExtra(AppConstants.STORY_OBJECT_ID, story.getObjectId());
+                i.putExtra(AppConstants.STORY_TITLE, story.getTitle());
+                i.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, story.getBackgroundImageUrl());
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 (Activity) context,

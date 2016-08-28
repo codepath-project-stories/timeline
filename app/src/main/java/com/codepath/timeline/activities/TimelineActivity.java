@@ -23,6 +23,7 @@ import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.ItemClickSupport;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
@@ -57,12 +58,12 @@ public class TimelineActivity extends AppCompatActivity {
     @BindView(R.id.addBtn)
     FloatingActionButton add;
 
-    Story story;
-    String imageUrl;
-
     private List<Moment> mMomentList;
     private MomentsHeaderAdapter mAdapter;
-    private int REQUEST_CODE = 6;
+    private int ADD_MOMENT_REQUEST_CODE = 6;
+    private String storyObjectId;
+    private String storyTitle;
+    private String storyBackgroundImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,34 @@ public class TimelineActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // get story info from intent
+        // NOTE: Can't pass 'Story' since it's not Parcelable/Serializable
+        storyObjectId = getIntent().getStringExtra(AppConstants.STORY_OBJECT_ID);
+        storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
+        storyBackgroundImageUrl = getIntent().getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL);
+
+        updateStoryInfo();
         initList();
+    }
+
+    private void updateStoryInfo() {
+        // extract from the intent
+        // load the image url for the background of the story into the image view
+        if (SOURCE_MODE == 0) {
+            collapsing_toolbar.setTitle("Baby Matthew Smith");
+            collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
+            Glide.with(this)
+                    .load(R.drawable.image_test2)
+                    .centerCrop()
+                    .into(ivAutoPlay);
+        } else if (SOURCE_MODE == 1) {
+            collapsing_toolbar.setTitle(storyTitle);
+            collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
+            Glide.with(this)
+                    .load(storyBackgroundImageUrl)
+                    .centerCrop()
+                    .into(ivAutoPlay);
+        }
     }
 
     private void initList() {
@@ -103,29 +131,6 @@ public class TimelineActivity extends AppCompatActivity {
                     }
                 });
 
-        // extract from the intent
-        // load the image url for the background of the story into the image view
-        if (SOURCE_MODE == 0) {
-            story = null;
-            imageUrl = null;
-            collapsing_toolbar.setTitle("Baby Matthew Smith");
-            collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-            Glide.with(this)
-                    .load(R.drawable.image_test2)
-                    .centerCrop()
-                    .into(ivAutoPlay);
-        } else if (SOURCE_MODE == 1) {
-            story = (Story) Parcels.unwrap(getIntent().getParcelableExtra("story"));
-            imageUrl = getIntent().getStringExtra("imageUrl");
-            Log.d("DEBUG", story.toString());
-            collapsing_toolbar.setTitle(story.getTitle());
-            collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-            Glide.with(this)
-                    .load(imageUrl)
-                    .centerCrop()
-                    .into(ivAutoPlay);
-        }
-
         getMomentList();
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -133,12 +138,12 @@ public class TimelineActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Todo: add a new moment
                 Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
             }
         });
     }
 
-    // TODO: Change the momentId when making network request
+    // TODO: Need to make a network request using the `storyObjectId`
     private void getMomentList() {
         mMomentList.addAll(TimelineClient.getInstance().getMomentsList(this, -1));
         mAdapter.notifyItemRangeInserted(0, mMomentList.size());
@@ -154,15 +159,16 @@ public class TimelineActivity extends AppCompatActivity {
     public void onAutoPlay(View view) {
         // TEMPORARY PLACEHOLDER
         Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
-        intent.putExtra("story", Parcels.wrap(story));
-        intent.putExtra("imageUrl", imageUrl);
+        intent.putExtra(AppConstants.STORY_OBJECT_ID, storyObjectId);
+        intent.putExtra(AppConstants.STORY_TITLE, storyTitle);
+        intent.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, storyBackgroundImageUrl);
         startActivity(intent);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request it is that we're responding to
-        if (requestCode == REQUEST_CODE && resultCode == 1) {
+        if (requestCode == ADD_MOMENT_REQUEST_CODE && resultCode == 1) {
             // Get the URI that points to the selected contact
             Moment moment = Parcels.unwrap(data.getParcelableExtra("moment"));
             Log.d("DEBUG", moment.toString());
