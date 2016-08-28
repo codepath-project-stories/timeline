@@ -116,6 +116,16 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
         });
     }
 
+    public void highlight(View view) {
+        if (Integer.parseInt(view.getTag().toString()) == 1) {
+            view.setBackgroundResource(R.drawable.circle_accent);
+            view.setTag(2);
+        } else {
+            view.setBackgroundResource(R.drawable.circle);
+            view.setTag(1);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add_function, menu);

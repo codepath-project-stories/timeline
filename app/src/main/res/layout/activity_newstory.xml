@@ -79,41 +79,112 @@
             android:background="@color/colorPrimaryLight"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/ivSearch"
-                android:paddingLeft="10dp"
-                android:layout_width="@dimen/user_add_height"
+            <FrameLayout
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/search_icon_colored" />
+                android:layout_marginLeft="10dp">
 
-            <ImageView
-                android:id="@+id/ivCollaborator1"
-                android:paddingLeft="10dp"
-                android:layout_width="@dimen/user_add_height"
-                android:layout_height="50dp"
-                tools:background="@color/colorPrimary" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
 
-            <ImageView
-                android:id="@+id/ivCollaborator2"
-                android:paddingLeft="10dp"
-                android:layout_width="@dimen/user_add_height"
-                android:layout_height="50dp"
-                tools:background="@color/colorAccent" />
+                <ImageView
+                    android:id="@+id/ivSearch"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="2dp"
+                    android:src="@drawable/search_icon_colored" />
 
-            <ImageView
-                android:id="@+id/ivCollaborator3"
-                android:paddingLeft="10dp"
-                android:layout_width="@dimen/user_add_height"
-                android:layout_height="50dp"
-                tools:background="@color/colorPrimary" />
+            </FrameLayout>
 
-            <ImageView
-                android:id="@+id/ivCollaborator4"
-                android:paddingLeft="10dp"
-                android:layout_width="@dimen/user_add_height"
+            <FrameLayout
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                tools:background="@color/colorAccent" />
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/ivCircle1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:tag="1"
+                    android:onClick="highlight"/>
+
+                <ImageView
+                    android:id="@+id/ivCollaborator1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="3dp"
+                    android:gravity="center"
+                    tools:background="@color/colorPrimary" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/ivCircle2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:tag="1"
+                    android:onClick="highlight" />
+
+                <ImageView
+                    android:id="@+id/ivCollaborator2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="3dp"
+                    tools:background="@color/colorAccent" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/ivCircle3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:tag="1"
+                    android:onClick="highlight" />
+
+                <ImageView
+                    android:id="@+id/ivCollaborator3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="3dp"
+                    tools:background="@color/colorPrimary" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/ivCircle4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:tag="1"
+                    android:onClick="highlight" />
+
+                <ImageView
+                    android:id="@+id/ivCollaborator4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="3dp"
+                    tools:background="@color/colorAccent" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
