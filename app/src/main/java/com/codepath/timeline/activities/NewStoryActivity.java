@@ -55,6 +55,11 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
     @BindView(R.id.tvCollaborator2) TextView tvCollaborator2;
     @BindView(R.id.tvCollaborator3) TextView tvCollaborator3;
     @BindView(R.id.tvCollaborator4) TextView tvCollaborator4;
+    @BindView(R.id.ivSelected1) ImageView ivSelected1;
+    @BindView(R.id.ivSelected2) ImageView ivSelected2;
+    @BindView(R.id.ivSelected3) ImageView ivSelected3;
+    @BindView(R.id.ivSelected4) ImageView ivSelected4;
+
 
     private Context context;
 
@@ -116,7 +121,7 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
         });
     }
 
-    public void highlight(View view) {
+    public void highlightSelected(View view) {
         if (Integer.parseInt(view.getTag().toString()) == 1) {
             view.setBackgroundResource(R.drawable.circle_accent);
             view.setTag(2);
@@ -176,6 +181,20 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
+            // Todo: check tags on the collaborators images, if 2 then it is selected
+            if (ivSelected1.isSelected()) {
+
+            }
+            if (ivSelected2.isSelected()) {
+
+            }
+            if (ivSelected3.isSelected()) {
+
+            }
+            if (ivSelected4.isSelected()) {
+
+            }
+
             // create a story
             Story story = new Story();
             story.setBackgroundImageUrl(takenPhotoUri.getPath());
@@ -191,6 +210,10 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
             finish();
             // Todo: add collaborators, add location
         }
+    }
+
+    public boolean isSelected(View view) {
+        return (Integer.parseInt(view.getTag().toString()) == 2);
     }
 
     @Override

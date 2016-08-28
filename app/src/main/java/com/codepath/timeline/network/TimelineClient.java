@@ -183,7 +183,7 @@ public class TimelineClient {
 
   public List<Moment> getMomentsList(Context context, int storyId) {
     // TODO: Use storyId to query db; may not need context param anymore
-    JsonArray jsonArray = createMockJsonArray(context, "moments.json");
+    JsonArray jsonArray = createMockJsonArray(context, "moments_backup.json");
     if (jsonArray != null) {
       List<Moment> momentList = Moment.fromJsonArray(jsonArray);
       return momentList;

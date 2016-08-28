@@ -33,17 +33,30 @@ public class NewItemClass extends AppCompatActivity {
     public Uri takenPhotoUri;
 
 
+    // Todo: retrieve current address https://developer.android.com/training/location/display-address.html
+    // on click attached to text view id="@+id/tvAddLocation"
+    public void addLocation(View view) {
+        if (Integer.parseInt(view.getTag().toString()) == 1) {
+            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            view.setTag(2);
+        } else {
+            view.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            view.setTag(1);
+        }
+        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+        NewItemClassPermissionsDispatcher.accessLocationWithCheck(this);
+    }
+
+    // Todo: add collaborators to the story
+    // on click attached to text view id="@+id/tvAddPeople"
+    public void addPeople(View view) {
+        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+    }
+
     // on click attached to frame layout id="@+id/flStoryPhoto"
     public void onLaunchCamera(View view) {
         Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         NewItemClassPermissionsDispatcher.openCameraWithCheck(this);
-    }
-
-    // Todo: retrieve current address https://developer.android.com/training/location/display-address.html
-    // on click attached to text view id="@+id/tvAddLocation"
-    public void addLocation(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
-        NewItemClassPermissionsDispatcher.accessLocationWithCheck(this);
     }
 
     @NeedsPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -106,7 +119,7 @@ public class NewItemClass extends AppCompatActivity {
         return state.equals(Environment.MEDIA_MOUNTED);
     }
 
-    // all these permissions are must for API >= 23
+    // Todo: all these permissions are must for API 23, put in a separate class if reused
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

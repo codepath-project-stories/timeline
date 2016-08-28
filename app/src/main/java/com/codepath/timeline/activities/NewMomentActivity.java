@@ -18,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.timeline.R;
@@ -34,7 +33,7 @@ public class NewMomentActivity extends NewItemClass {
 
     @BindView(R.id.ivBackground) ImageView ivBackground;
     @BindView(R.id.etAddTitle) EditText etMomentTitle;
-    @BindView(R.id.tvAddLocation) TextView tvAddLocation;
+//    @BindView(R.id.tvAddLocation) TextView tvAddLocation;
     @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
     @BindView(R.id.toolbar) Toolbar toolbar;
 

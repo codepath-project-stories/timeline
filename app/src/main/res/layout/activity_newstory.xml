@@ -103,12 +103,12 @@
                 android:layout_marginLeft="10dp">
 
                 <ImageView
-                    android:id="@+id/ivCircle1"
+                    android:id="@+id/ivSelected1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlight"/>
+                    android:onClick="highlightSelected"/>
 
                 <ImageView
                     android:id="@+id/ivCollaborator1"
@@ -126,12 +126,12 @@
                 android:layout_marginLeft="10dp">
 
                 <ImageView
-                    android:id="@+id/ivCircle2"
+                    android:id="@+id/ivSelected2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlight" />
+                    android:onClick="highlightSelected" />
 
                 <ImageView
                     android:id="@+id/ivCollaborator2"
@@ -148,12 +148,12 @@
                 android:layout_marginLeft="10dp">
 
                 <ImageView
-                    android:id="@+id/ivCircle3"
+                    android:id="@+id/ivSelected3"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlight" />
+                    android:onClick="highlightSelected" />
 
                 <ImageView
                     android:id="@+id/ivCollaborator3"
@@ -170,12 +170,12 @@
                 android:layout_marginLeft="10dp">
 
                 <ImageView
-                    android:id="@+id/ivCircle4"
+                    android:id="@+id/ivSelected4"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlight" />
+                    android:onClick="highlightSelected" />
 
                 <ImageView
                     android:id="@+id/ivCollaborator4"
@@ -267,14 +267,13 @@
 
         <Button
             android:id="@+id/tvPublish"
-            android:layout_width="match_parent"
-            android:textColor="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
-            android:gravity="center_vertical"
             android:hint="@string/publish"
             android:onClick="publish"
             android:padding="10dp"
