@@ -50,9 +50,11 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
     @BindView(R.id.ivCollaborator1) ImageView ivCollaborator1;
     @BindView(R.id.ivCollaborator2) ImageView ivCollaborator2;
     @BindView(R.id.ivCollaborator3) ImageView ivCollaborator3;
+    @BindView(R.id.ivCollaborator4) ImageView ivCollaborator4;
     @BindView(R.id.tvCollaborator1) TextView tvCollaborator1;
     @BindView(R.id.tvCollaborator2) TextView tvCollaborator2;
     @BindView(R.id.tvCollaborator3) TextView tvCollaborator3;
+    @BindView(R.id.tvCollaborator4) TextView tvCollaborator4;
 
     private Context context;
 
@@ -93,6 +95,13 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
                 .into(ivCollaborator3);
 
         tvCollaborator3.setText("Megan Cox");
+
+        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
+                .fitCenter()
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(ivCollaborator4);
+
+        tvCollaborator4.setText("Julie Korosteleva Brown");
 
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override

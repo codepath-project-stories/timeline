@@ -83,7 +83,7 @@
                 android:id="@+id/ivSearch"
                 android:paddingLeft="10dp"
                 android:layout_width="@dimen/user_add_height"
-                android:layout_height="@dimen/user_add_height"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/search_icon_colored" />
 
@@ -91,22 +91,29 @@
                 android:id="@+id/ivCollaborator1"
                 android:paddingLeft="10dp"
                 android:layout_width="@dimen/user_add_height"
-                android:layout_height="@dimen/user_add_height"
+                android:layout_height="50dp"
                 tools:background="@color/colorPrimary" />
 
             <ImageView
                 android:id="@+id/ivCollaborator2"
                 android:paddingLeft="10dp"
                 android:layout_width="@dimen/user_add_height"
-                android:layout_height="@dimen/user_add_height"
+                android:layout_height="50dp"
                 tools:background="@color/colorAccent" />
 
             <ImageView
                 android:id="@+id/ivCollaborator3"
                 android:paddingLeft="10dp"
                 android:layout_width="@dimen/user_add_height"
-                android:layout_height="@dimen/user_add_height"
+                android:layout_height="50dp"
                 tools:background="@color/colorPrimary" />
+
+            <ImageView
+                android:id="@+id/ivCollaborator4"
+                android:paddingLeft="10dp"
+                android:layout_width="@dimen/user_add_height"
+                android:layout_height="50dp"
+                tools:background="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -114,6 +121,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryLight"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="5dp"
             android:orientation="horizontal" >
 
             <TextView
@@ -136,7 +145,10 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:textSize="12sp"
-                tools:hint="Megan Fox" />
+                android:lines="2"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:hint="Megan Bradley Fox" />
 
             <TextView
                 android:id="@+id/tvCollaborator2"
@@ -147,6 +159,9 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:textSize="12sp"
+                android:lines="2"
+                android:maxLines="2"
+                android:ellipsize="end"
                 tools:hint="Megan Fox" />
 
             <TextView
@@ -157,6 +172,23 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingLeft="10dp"
+                android:textSize="12sp"
+                android:lines="2"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:hint="Megan Fox" />
+
+            <TextView
+                android:id="@+id/tvCollaborator4"
+                android:layout_width="@dimen/user_add_height"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:lines="2"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textSize="12sp"
                 tools:hint="Megan Fox" />
 
