@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -199,7 +198,7 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
             Story story = new Story();
             story.setBackgroundImageUrl(takenPhotoUri.getPath());
             story.setTitle(etStoryTitle.getText().toString());
-            Log.d("DEBUG", story.toString());
+//            Log.d("DEBUG", story.toString());
 
             // send result back
             Intent data = new Intent();

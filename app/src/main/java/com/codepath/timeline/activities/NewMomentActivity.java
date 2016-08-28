@@ -96,11 +96,11 @@ public class NewMomentActivity extends NewItemClass {
         Snackbar.make(findViewById(android.R.id.content), dateFormat.format(cal.getTime()), Snackbar.LENGTH_SHORT).show();
 
         if (etMomentTitle.getText().length() == 0) {
-//            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             etMomentTitle.startAnimation(shake);
         }
         else if (ivBackground.getDrawable() == null) {
-//            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
             // create a moment

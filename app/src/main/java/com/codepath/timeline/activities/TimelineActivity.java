@@ -21,7 +21,6 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsHeaderAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.ItemClickSupport;
