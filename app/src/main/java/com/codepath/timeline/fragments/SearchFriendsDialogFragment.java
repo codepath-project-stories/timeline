@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.MultiAutoCompleteTextView;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.models.User_Temp;
+import com.codepath.timeline.adapters.DepartmentArrayAdapter;
+import com.codepath.timeline.network.TimelineClient;
+import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,8 +25,11 @@ import butterknife.Unbinder;
 
 public class SearchFriendsDialogFragment extends DialogFragment {
 
-    @BindView(R.id.btnAdd) Button btnAdd;
+    // TODO: do we need this?
     private Unbinder unbinder;
+
+    @BindView(R.id.multiAutoCompleteTextView)
+    MultiAutoCompleteTextView multiAutoCompleteTextView;
 
     public SearchFriendsDialogFragment() {}
 
@@ -35,7 +40,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
 
     // Defines the listener interface with a method passing back data result
     public interface SearchDialogListener {
-        void onFinishSearchDialog(List<User_Temp> collabs);
+        void onFinishSearchDialog(List<ParseUser> collabs);
     }
 
     @Override
@@ -47,6 +52,22 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         }
         View view = inflater.inflate(R.layout.fragment_search_friends, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        // Todo: pass user id to fragment to retrieve friends list
+        TimelineClient.getInstance().getFriendList(
+                null,
+                new TimelineClient.TimelineClientGetFriendListListener() {
+                    @Override
+                    public void onGetFriendList(List<ParseUser> itemList) {
+                        ArrayAdapter adapter = new DepartmentArrayAdapter(
+                                getContext(),
+                                android.R.layout.simple_list_item_1,
+                                itemList);
+                        multiAutoCompleteTextView.setAdapter(adapter);
+                        multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                    }
+                });
+
         return view;
     }
 
@@ -60,16 +81,18 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+        /*
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SearchDialogListener listener = (SearchDialogListener) SearchFriendsDialogFragment.this.getTargetFragment();
                 // Todo: add meaningful data (most likely a list of collaborators)
-                List<User_Temp> collabs = new ArrayList<>();
-//                listener.onFinishSearchDialog(collabs);
+                List<ParseUser> collabs = new ArrayList<>();
+                listener.onFinishSearchDialog(collabs);
                 SearchFriendsDialogFragment.this.dismiss();
             }
         });
+        */
     }
 
     @Override
