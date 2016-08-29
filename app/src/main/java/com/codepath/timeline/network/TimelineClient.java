@@ -153,6 +153,8 @@ public class TimelineClient {
                             final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     // Define the class we would like to query
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     // Define our query conditions
     query.whereEqualTo("owner", user);
     query.include("owner"); // eagerly load the owner -- we need it for updating the story view
@@ -179,6 +181,8 @@ public class TimelineClient {
   // Query the DB for moments associated with this story
   public void getMomentList(String storyObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     query.include("momentList");
     query.getInBackground(storyObjectId, new GetCallback<Story>() {
       @Override
