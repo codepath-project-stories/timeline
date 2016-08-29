@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
 
 import org.parceler.Parcels;
@@ -25,15 +26,15 @@ public class AutoPlayTopFragment extends Fragment {
   @BindView(R.id.ivMedia)
   ImageView ivMedia;
 
-  private Moment mMoment;
+  private String mMomentObjectId;
 
   public AutoPlayTopFragment() {
   }
 
-  public static AutoPlayTopFragment newInstance(Moment moment) {
+  public static AutoPlayTopFragment newInstance(String momentObjectId) {
     AutoPlayTopFragment frag = new AutoPlayTopFragment();
     Bundle args = new Bundle();
-    args.putParcelable(AppConstants.MOMENT_EXTRA, Parcels.wrap(moment));
+    args.putString(AppConstants.OBJECT_ID, momentObjectId);
     frag.setArguments(args);
 
     return frag;
@@ -51,14 +52,24 @@ public class AutoPlayTopFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mMoment = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_EXTRA));
-    if (mMoment == null) {
-      Log.d(TAG, "Moment extra is NULL");
+    mMomentObjectId = getArguments().getString(AppConstants.OBJECT_ID, null);
+    if (mMomentObjectId == null) {
+      Log.e(TAG, "Moment OBJECT_ID is NULL");
+      return;
     }
 
-    if (mMoment.getMediaUrl() != null) {
-      Glide.with(this).load(mMoment.getMediaUrl())
-          .centerCrop()
+    TimelineClient.getInstance().getMoment(mMomentObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+      @Override
+      public void onGetMomentListener(Moment moment) {
+        updateMoment(moment);
+      }
+    });
+  }
+
+  private void updateMoment(Moment moment) {
+    if (moment.getMediaUrl() != null) {
+      Glide.with(this).load(moment.getMediaUrl())
+          .fitCenter()
           .into(ivMedia);
     }
   }

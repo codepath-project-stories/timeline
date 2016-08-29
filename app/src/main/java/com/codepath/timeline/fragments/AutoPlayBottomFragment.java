@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
 
 import org.parceler.Parcels;
@@ -26,15 +27,15 @@ public class AutoPlayBottomFragment extends Fragment {
   @BindView(R.id.ivProfilePhoto)
   ImageView ivProfilePhoto;
 
-  private Moment mMoment;
+  private String mMomentObjectId;
 
   public AutoPlayBottomFragment() {
   }
 
-  public static AutoPlayBottomFragment newInstance(Moment moment) {
+  public static AutoPlayBottomFragment newInstance(String momentObjectId) {
     AutoPlayBottomFragment frag = new AutoPlayBottomFragment();
     Bundle args = new Bundle();
-    args.putParcelable(AppConstants.MOMENT_EXTRA, Parcels.wrap(moment));
+    args.putString(AppConstants.OBJECT_ID, momentObjectId);
     frag.setArguments(args);
 
     return frag;
@@ -52,18 +53,23 @@ public class AutoPlayBottomFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mMoment = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_EXTRA));
-    if (mMoment == null) {
-      Log.d(TAG, "Moment extra is NULL");
+    mMomentObjectId = getArguments().getString(AppConstants.OBJECT_ID, null);
+    if (mMomentObjectId == null) {
+      Log.e(TAG, "Moment OBJECT_ID is NULL");
+      return;
     }
 
-    mMoment = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_EXTRA));
-    if (mMoment == null) {
-      Log.d(TAG, "Moment extra is NULL");
-    }
+    TimelineClient.getInstance().getMoment(mMomentObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+      @Override
+      public void onGetMomentListener(Moment moment) {
+        updateMoment(moment);
+      }
+    });
+  }
 
-    if (mMoment.getAuthor() != null) {
-      Glide.with(this).load(mMoment.getAuthor().get("profileImageUrl"))
+  private void updateMoment(Moment moment) {
+    if (moment.getAuthor() != null) {
+      Glide.with(this).load(moment.getAuthor().get("profileImageUrl"))
           .fitCenter()
           .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
           .into(ivProfilePhoto);

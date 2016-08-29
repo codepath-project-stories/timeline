@@ -3,22 +3,22 @@ package com.codepath.timeline.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
-import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
 import com.qslll.library.fragments.ExpandingFragment;
 
-import org.parceler.Parcels;
-
 public class AutoPlayFragment extends ExpandingFragment {
-  private Moment mMoment;
+  private static final String TAG = AutoPlayFragment.class.getSimpleName();
+  private String mMomentObjectId;
 
 
-  public static AutoPlayFragment newInstance(Moment moment) {
+  public static AutoPlayFragment newInstance(String momentObjectId) {
     AutoPlayFragment fragment = new AutoPlayFragment();
     Bundle args = new Bundle();
-    args.putParcelable(AppConstants.MOMENT_EXTRA, Parcels.wrap(moment));
+    args.putString(AppConstants.OBJECT_ID, momentObjectId);
     fragment.setArguments(args);
+
     return fragment;
   }
 
@@ -27,17 +27,20 @@ public class AutoPlayFragment extends ExpandingFragment {
     super.onCreate(savedInstanceState);
     Bundle args = getArguments();
     if (args != null) {
-      mMoment = Parcels.unwrap(args.getParcelable(AppConstants.MOMENT_EXTRA));
+      mMomentObjectId = args.getString(AppConstants.OBJECT_ID, null);
+      if (mMomentObjectId == null) {
+        Log.e(TAG, "Moment OBJECT_ID is NULL");
+      }
     }
   }
 
   @Override
   public Fragment getFragmentTop() {
-    return AutoPlayTopFragment.newInstance(mMoment);
+    return AutoPlayTopFragment.newInstance(mMomentObjectId);
   }
 
   @Override
   public Fragment getFragmentBottom() {
-    return AutoPlayBottomFragment.newInstance(mMoment);
+    return AutoPlayBottomFragment.newInstance(mMomentObjectId);
   }
 }

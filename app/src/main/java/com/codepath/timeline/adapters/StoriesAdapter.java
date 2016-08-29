@@ -20,8 +20,6 @@ import com.codepath.timeline.models.Story;
 import com.codepath.timeline.util.AppConstants;
 import com.parse.ParseUser;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -82,7 +80,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View v) {
                 Intent i = new Intent(context, TimelineActivity.class);
                 Story story = mStories.get(position);
-                i.putExtra(AppConstants.STORY_OBJECT_ID, story.getObjectId());
+                i.putExtra(AppConstants.OBJECT_ID, story.getObjectId());
                 i.putExtra(AppConstants.STORY_TITLE, story.getTitle());
                 i.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, story.getBackgroundImageUrl());
                 ActivityOptionsCompat options =

@@ -53,19 +53,23 @@ public class TimelineClient {
   // or, simply new TimelineClient.XXXListener() as callback
 
   public interface TimelineClientAddStoryListener {
-    void onAddStoryList(); // this is a callback
+    void onAddStoryList();
   }
 
   public interface TimelineClientGetStoryListener {
-    void onGetStoryList(List<Story> itemList); // this is a callback
+    void onGetStoryList(List<Story> itemList);
   }
 
-  public interface TimelineClientGetMomentListener {
-    void onGetMomentList(List<Moment> itemList); // this is a callback
+  public interface TimelineClientGetMomentListListener {
+    void onGetMomentList(List<Moment> itemList);
   }
 
   public interface TimelineClientGetUserListener {
-    void onGetUserList(List<ParseUser> itemList); // this is a callback
+    void onGetUserList(List<ParseUser> itemList);
+  }
+
+  public interface TimelineClientGetMomentListener {
+    void onGetMomentListener(Moment moment);
   }
 
   public void addStoryList(final List<Story> storyList,
@@ -179,7 +183,7 @@ public class TimelineClient {
   }
 
   // Query the DB for moments associated with this story
-  public void getMomentList(String storyObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+  public void getMomentList(String storyObjectId, final TimelineClientGetMomentListListener timelineClientGetMomentListListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
     // First try to find from the cache and only then go to network
     query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
@@ -191,9 +195,32 @@ public class TimelineClient {
           Log.e(TAG, "Exception from getMomentList: " + e.getMessage());
           return;
         }
+
         if (story != null && story.getMomentList() != null) {
+          if (timelineClientGetMomentListListener != null) {
+            timelineClientGetMomentListListener.onGetMomentList(story.getMomentList());
+          }
+        }
+      }
+    });
+  }
+
+  public void getMoment(String momentObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+    ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+    query.include("author");
+    query.getInBackground(momentObjectId, new GetCallback<Moment>() {
+      @Override
+      public void done(Moment moment, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getMoment: " + e.getMessage());
+          return;
+        }
+
+        if (moment != null) {
           if (timelineClientGetMomentListener != null) {
-            timelineClientGetMomentListener.onGetMomentList(story.getMomentList());
+            timelineClientGetMomentListener.onGetMomentListener(moment);
           }
         }
       }
