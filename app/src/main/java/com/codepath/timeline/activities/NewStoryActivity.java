@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +28,11 @@ import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.User_Temp;
 import com.codepath.timeline.util.NewItemClass;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -180,25 +183,35 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
+            List<ParseUser> collabs = new ArrayList<>();
             // Todo: check tags on the collaborators images, if 2 then it is selected
             if (ivSelected1.isSelected()) {
-
+                ParseUser user = new ParseUser();
+                user.setUsername("Amanda Brown");
+                collabs.add(user);
             }
             if (ivSelected2.isSelected()) {
-
+                ParseUser user = new ParseUser();
+                user.setUsername("Clair White");
+                collabs.add(user);
             }
             if (ivSelected3.isSelected()) {
-
+                ParseUser user = new ParseUser();
+                user.setUsername("Megan Cox");
+                collabs.add(user);
             }
             if (ivSelected4.isSelected()) {
-
+                ParseUser user = new ParseUser();
+                user.setUsername("Julie Korosteleva");
+                collabs.add(user);
             }
 
             // create a story
             Story story = new Story();
             story.setBackgroundImageUrl(takenPhotoUri.getPath());
             story.setTitle(etStoryTitle.getText().toString());
-//            Log.d("DEBUG", story.toString());
+            story.setCollaboratorList(collabs);
+            Log.d("DEBUG", story.toString());
 
             // send result back
             Intent data = new Intent();
@@ -207,7 +220,6 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
 
             // closes the activity, pass data to parent
             finish();
-            // Todo: add collaborators, add location
         }
     }
 
