@@ -25,7 +25,7 @@ public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUse
         super(context, resource, users);
         this.mContext = context;
         this.mLayoutResourceId = resource;
-        this.mUsers = users;
+        this.mUsers = new ArrayList<>(users);
         this.mUsers_All = new ArrayList<>(users);
         this.mUsers_Suggestion = new ArrayList<>();
     }

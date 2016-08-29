@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
@@ -17,6 +18,7 @@ import com.codepath.timeline.adapters.MultiAutoCompleteTextViewArrayAdapter;
 import com.codepath.timeline.network.TimelineClient;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,6 +37,8 @@ public class SearchFriendsDialogFragment extends DialogFragment {
     Button button;
 
     List<ParseUser> mUsers;
+    List<ParseUser> mUsersSelected;
+    ArrayAdapter adapter;
 
     public SearchFriendsDialogFragment() {}
 
@@ -59,6 +63,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         unbinder = ButterKnife.bind(this, view);
 
         mUsers = null;
+        adapter = null;
 
         // Todo: pass user id to fragment to retrieve friends list
         TimelineClient.getInstance().getFriendList(
@@ -67,15 +72,26 @@ public class SearchFriendsDialogFragment extends DialogFragment {
                     @Override
                     public void onGetFriendList(List<ParseUser> itemList) {
                         mUsers = itemList;
-                        ArrayAdapter adapter = new MultiAutoCompleteTextViewArrayAdapter(
+                        adapter = new MultiAutoCompleteTextViewArrayAdapter(
                                 getContext(),
                                 // TODO: use custom layout
                                 android.R.layout.simple_list_item_1,
                                 mUsers);
                         multiAutoCompleteTextView.setAdapter(adapter);
+                        multiAutoCompleteTextView.setThreshold(1);
                         multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                     }
                 });
+
+        // TODO: or setOnItemSelectedListener()
+        // TODO: how if users clean up multiAutoCompleteTextView after selecting some items
+        mUsersSelected = new ArrayList<>();
+        multiAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                mUsersSelected.add((ParseUser) adapter.getItem(position));
+            }
+        });
 
         return view;
     }
@@ -90,20 +106,30 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+        // users can click this button to close this DialogFragment
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchDialogListener listener = (SearchFriendsDialogFragment.SearchDialogListener) getActivity();
-                listener.onFinishSearchDialog(mUsers);
+                notifyOnFinishSearchDialog();
                 SearchFriendsDialogFragment.this.dismiss();
             }
         });
     }
 
+    // users can click somewhere out of this DialogFragment to close this DialogFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        notifyOnFinishSearchDialog();
         unbinder.unbind();
+    }
+
+    void notifyOnFinishSearchDialog() {
+        SearchDialogListener listener =
+                (SearchFriendsDialogFragment.SearchDialogListener) getActivity();
+        if (listener != null) {
+            listener.onFinishSearchDialog(mUsersSelected);
+        }
     }
 
 }
