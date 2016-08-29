@@ -93,7 +93,7 @@ public class NewMomentActivity extends NewItemClass {
         // Todo: adjust to db time
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Calendar cal = Calendar.getInstance();
-        Snackbar.make(findViewById(android.R.id.content), dateFormat.format(cal.getTime()), Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), dateFormat.format(cal.getTime()), Snackbar.LENGTH_SHORT).show();
 
         if (etMomentTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();

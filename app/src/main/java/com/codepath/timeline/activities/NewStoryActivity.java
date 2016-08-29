@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,18 +19,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
-import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.User_Temp;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,13 +163,13 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
     // Todo: add collaborators to the story
     // on click attached to text view id="@+id/tvAddPeople"
     public void addPeople(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
 
     }
 
     // on click attached to text view id="@+id/tvPublish"
     public void publish(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         if (etStoryTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
@@ -234,7 +229,7 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
                 // Load the taken image into a preview
                 ivBackground.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
         }
     }

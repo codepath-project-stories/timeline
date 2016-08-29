@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -171,7 +170,7 @@ public class TimelineActivity extends AppCompatActivity {
             // Get the URI that points to the selected contact
             Moment moment = Parcels.unwrap(data.getParcelableExtra("moment"));
             Log.d("DEBUG", moment.toString());
-            Snackbar.make(findViewById(android.R.id.content), moment.toString(), Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(findViewById(android.R.id.content), moment.toString(), Snackbar.LENGTH_SHORT).show();
             if (moment != null) {
                 addMoment(moment);
             }
