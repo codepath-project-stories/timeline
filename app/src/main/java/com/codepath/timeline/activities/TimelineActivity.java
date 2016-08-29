@@ -75,7 +75,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // get story info from intent
         // NOTE: Can't pass 'Story' since it's not Parcelable/Serializable
-        storyObjectId = getIntent().getStringExtra(AppConstants.STORY_OBJECT_ID);
+        storyObjectId = getIntent().getStringExtra(AppConstants.OBJECT_ID);
         storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
         storyBackgroundImageUrl = getIntent().getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL);
 
@@ -141,15 +141,19 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: Need to make a network request using the `storyObjectId`
     private void getMomentList() {
-        mMomentList.addAll(TimelineClient.getInstance().getMomentsList(this, -1));
-        mAdapter.notifyItemRangeInserted(0, mMomentList.size());
+        TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
+            @Override
+            public void onGetMomentList(List<Moment> itemList) {
+                mMomentList.addAll(itemList);
+                mAdapter.notifyItemRangeInserted(0, mMomentList.size());
+            }
+        });
     }
 
     private void showDetailDialog(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(mMomentList, position);
+        DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(storyObjectId, position);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 
@@ -157,7 +161,7 @@ public class TimelineActivity extends AppCompatActivity {
     public void onAutoPlay(View view) {
         // TEMPORARY PLACEHOLDER
         Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
-        intent.putExtra(AppConstants.STORY_OBJECT_ID, storyObjectId);
+        intent.putExtra(AppConstants.OBJECT_ID, storyObjectId);
         intent.putExtra(AppConstants.STORY_TITLE, storyTitle);
         intent.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, storyBackgroundImageUrl);
         startActivity(intent);

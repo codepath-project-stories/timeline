@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.adapters.CommentsAdapter;
 import com.codepath.timeline.adapters.CommentItemAnimator;
+import com.codepath.timeline.adapters.CommentsAdapter;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,7 @@ public class MomentDetailFragment extends Fragment {
   private Moment mMoment;
   private List<Comment> mCommentList;
   private CommentsAdapter mAdapter;
+  private String mObjectId;
 
   public MomentDetailFragment() {
     // Empty constructor is required for DialogFragment
@@ -42,10 +43,10 @@ public class MomentDetailFragment extends Fragment {
     // Use `newInstance` instead as shown below
   }
 
-  public static MomentDetailFragment newInstance(Moment moment) {
+  public static MomentDetailFragment newInstance(String momentObjectId) {
     MomentDetailFragment frag = new MomentDetailFragment();
     Bundle args = new Bundle();
-    args.putParcelable(AppConstants.MOMENT_EXTRA, Parcels.wrap(moment));
+    args.putString(AppConstants.OBJECT_ID, momentObjectId);
     frag.setArguments(args);
 
     return frag;
@@ -64,38 +65,21 @@ public class MomentDetailFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mMoment = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_EXTRA));
-    if (mMoment == null) {
-      Log.d(TAG, "Moment extra is NULL");
+    mObjectId = getArguments().getString(AppConstants.OBJECT_ID, null);
+    if (mObjectId == null) {
+      Log.e(TAG, "Moment OBJECT_ID is NULL");
       return;
     }
 
-    // Add the moment photo as the first comment
-    Comment momentDetail = new Comment();
-    // TODO: make sure it is not null here
-    if (mMoment.getUser() != null) {
-      momentDetail.setUser(mMoment.getUser());
-    }
-    else {
-      momentDetail.setUser(ParseUser.getCurrentUser());
-    }
-    momentDetail.setLocation(mMoment.getLocation());
-    // TODO: make sure it is not null here
-    if (mMoment.getCreatedAtReal() != null) {
-      momentDetail.setCreatedAtReal(mMoment.getCreatedAtReal());
-    }
-    else {
-      momentDetail.setCreatedAtReal("2016-09-31T19:22:54.695Z");
-    }
-    momentDetail.setBody(mMoment.getDescription());
-    momentDetail.setMediaUrl(mMoment.getMediaUrl());
-    mCommentList.add(momentDetail);
+    TimelineClient.getInstance().getMoment(mObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+      @Override
+      public void onGetMomentListener(Moment moment) {
+        Log.d(TAG, "Moment detail: " + moment);
+        mMoment = moment;
+        updateMoment();
+      }
+    });
 
-    List<Comment> commentList = mMoment.getCommentList();
-    if (commentList != null && commentList.size() > 0) {
-      mCommentList.addAll(commentList);
-      mAdapter.notifyItemRangeInserted(0, mCommentList.size());
-    }
   }
 
   private void initList() {
@@ -105,6 +89,44 @@ public class MomentDetailFragment extends Fragment {
     rvComments.setLayoutManager(linearLayoutManager);
     rvComments.setAdapter(mAdapter);
     rvComments.setItemAnimator(new CommentItemAnimator());
+  }
+
+  private void updateMoment() {
+    Log.d(TAG, "updating moment");
+
+    // Add the moment photo as the first comment
+    Comment momentDetail = new Comment();
+    // TODO: make sure it is not null here
+    if (mMoment.getAuthor() != null) {
+      momentDetail.setUser(mMoment.getAuthor());
+    }
+    else {
+      momentDetail.setUser(ParseUser.getCurrentUser());
+    }
+    momentDetail.setLocation(mMoment.getLocation());
+    // TODO: make sure it is not null here
+    /*
+    TODO: Update date
+    if (mMoment.getCreatedAtReal() != null) {
+      String formattedDate = DateUtil.getFormattedTimelineDate(getActivity(), mMoment.getCreatedAtReal().toString());
+      momentDetail.setCreatedAtReal(formattedDate);
+    }
+    else {
+      momentDetail.setCreatedAtReal("2016-09-31T19:22:54.695Z");
+    }
+    */
+    momentDetail.setBody(mMoment.getDescription());
+    momentDetail.setMediaUrl(mMoment.getMediaUrl());
+    mCommentList.add(momentDetail);
+    mAdapter.notifyItemInserted(0);
+
+    List<Comment> commentList = mMoment.getCommentList();
+    if (commentList != null && commentList.size() > 0) {
+      mCommentList.addAll(commentList);
+      mAdapter.notifyItemRangeInserted(0, mCommentList.size());
+    }
+
+    Log.d(TAG, "FINISHED updating moment");
   }
 
   public void addComment(Comment comment) {

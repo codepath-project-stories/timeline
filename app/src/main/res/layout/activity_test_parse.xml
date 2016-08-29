@@ -50,4 +50,12 @@
         android:id="@+id/getUserList"
         android:layout_above="@+id/getStoryList"
         android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CREATE MOMENTS"
+        android:id="@+id/createMomentList"
+        android:layout_above="@+id/getUserList"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

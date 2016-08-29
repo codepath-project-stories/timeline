@@ -6,8 +6,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.codepath.timeline.R;
+import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseUser;
 
@@ -29,6 +31,8 @@ public class TestParseActivity extends AppCompatActivity {
 	Button getStoryList2;
 	@BindView(R.id.getUserList)
 	Button getUserList;
+	@BindView(R.id.createMomentList)
+	Button createMomentList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,5 +128,17 @@ public class TestParseActivity extends AppCompatActivity {
 						}
 					}
 				});
+	}
+
+	@OnClick(R.id.createMomentList)
+	public void createMomentList() {
+		Story story = new Story(
+				"Dianne Story",
+				"http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
+				"August 27, 2016"
+		);
+		story.setOwner(ParseUser.getCurrentUser());
+		List<Moment> momentList = MockResponseGenerator.getInstance().getMomentList();
+		TimelineClient.getInstance().addMomentList(story, momentList);
 	}
 }

@@ -21,12 +21,12 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.DepthPageTransformer;
 import com.parse.ParseUser;
 
-import org.parceler.Parcels;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,11 +51,12 @@ public class DetailDialogFragment extends DialogFragment {
   private List<Moment> mMomentList;
   private Moment mMoment;
   private int index;
+  private String mStoryObjectId;
 
-  public static DetailDialogFragment newInstance(List<Moment> momentList, int index) {
+  public static DetailDialogFragment newInstance(String storyObjectId, int index) {
     DetailDialogFragment frag = new DetailDialogFragment();
     Bundle args = new Bundle();
-    args.putParcelable(AppConstants.MOMENT_LIST_EXTRA, Parcels.wrap(momentList));
+    args.putString(AppConstants.OBJECT_ID, storyObjectId);
     args.putInt(AppConstants.INDEX, index);
     frag.setArguments(args);
 
@@ -73,11 +74,23 @@ public class DetailDialogFragment extends DialogFragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mMomentList = Parcels.unwrap(getArguments().getParcelable(AppConstants.MOMENT_LIST_EXTRA));
     index = getArguments().getInt(AppConstants.INDEX);
-    if (mMomentList != null && index != -1) {
-      initDialog();
+    mStoryObjectId = getArguments().getString(AppConstants.OBJECT_ID, null);
+    if (mStoryObjectId == null) {
+      Log.e(TAG, "Story OBJECT_ID is NULL");
+      return;
     }
+
+    TimelineClient.getInstance().getMomentList(mStoryObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
+      @Override
+      public void onGetMomentList(List<Moment> itemList) {
+        if (itemList != null) {
+          mMomentList = new ArrayList<Moment>();
+          mMomentList.addAll(itemList);
+          initDialog();
+        }
+      }
+    });
   }
 
   @Override
@@ -155,7 +168,7 @@ public class DetailDialogFragment extends DialogFragment {
     @Override
     public Fragment getItem(int position) {
       mMoment = mMomentList.get(position + index);
-      return MomentDetailFragment.newInstance(mMoment);
+      return MomentDetailFragment.newInstance(mMoment.getObjectId());
     }
 
     @Override

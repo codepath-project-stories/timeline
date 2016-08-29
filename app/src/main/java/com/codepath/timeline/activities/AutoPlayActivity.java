@@ -22,14 +22,11 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.AutoPlayFragment;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
 import com.qslll.library.ExpandingPagerFactory;
 import com.qslll.library.ExpandingViewPagerAdapter;
 import com.qslll.library.fragments.ExpandingFragment;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +41,6 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
  */
 public class AutoPlayActivity extends AppCompatActivity
     implements ExpandingFragment.OnExpandingClickListener {
-
-  static int SOURCE_MODE = 1;
-  // 0: R.drawable.image_test2
-  // 1: getIntent().getStringExtra("imageUrl")
 
   @BindView(R.id.vpMoment)
   AutoScrollViewPager vpMoment;
@@ -77,36 +70,24 @@ public class AutoPlayActivity extends AppCompatActivity
 
     // get story info from intent
     // NOTE: Can't pass 'Story' since it's not Parcelable/Serializable
-    storyObjectId = getIntent().getStringExtra(AppConstants.STORY_OBJECT_ID);
+    storyObjectId = getIntent().getStringExtra(AppConstants.OBJECT_ID);
     storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
     storyBackgroundImageUrl = getIntent().getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL);
 
     updateStoryInfo();
     getMomentList();
-    initView();
   }
 
-  private void updateStoryInfo(){
-    // load the image url for the background of the story into the image view
-    if (SOURCE_MODE == 0) {
-      collapsing_toolbar.setTitle("Baby Matthew Smith");
-      collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-      Glide.with(this)
-              .load(R.drawable.image_test2)
-              .centerCrop()
-              .into(ivStoryBackground);
-    }
-    else if (SOURCE_MODE == 1) {
-      collapsing_toolbar.setTitle(storyTitle);
-      collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-      Glide.with(this)
-              .load(storyBackgroundImageUrl)
-              .centerCrop()
-              .into(ivStoryBackground);
-    }
+  private void updateStoryInfo() {
+    collapsing_toolbar.setTitle(storyTitle);
+    collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
+    Glide.with(this)
+        .load(storyBackgroundImageUrl)
+        .centerCrop()
+        .into(ivStoryBackground);
   }
 
-  private void initView() {
+  private void initList() {
     mPagerAdapter = new AutoPlayPagerAdapter(getSupportFragmentManager());
     vpMoment.setAdapter(mPagerAdapter);
 
@@ -136,8 +117,14 @@ public class AutoPlayActivity extends AppCompatActivity
   }
 
   private void getMomentList() {
-    mMomentList = new ArrayList<>();
-    mMomentList.addAll(TimelineClient.getInstance().getMomentsList(this, -1));
+    TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
+      @Override
+      public void onGetMomentList(List<Moment> itemList) {
+        mMomentList = new ArrayList<Moment>();
+        mMomentList.addAll(itemList);
+        initList();
+      }
+    });
   }
 
   @Override
@@ -181,7 +168,7 @@ public class AutoPlayActivity extends AppCompatActivity
     @Override
     public Fragment getItem(int position) {
       mMoment = mMomentList.get(position);
-      return AutoPlayFragment.newInstance(mMoment);
+      return AutoPlayFragment.newInstance(mMoment.getObjectId());
     }
 
     @Override

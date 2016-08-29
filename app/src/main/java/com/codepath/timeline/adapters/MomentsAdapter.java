@@ -12,12 +12,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
@@ -45,6 +47,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
   public void onBindViewHolder(MomentsAdapter.ViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
     MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
+      // TODO: Don't use current user -- the user for each moment can be different if there's a list of collaborators
     ParseUser user = ParseUser.getCurrentUser();
     if (user != null) {
       Log.d(TAG, "URL: " + (String) user.get("profileImageUrl"));
@@ -52,7 +55,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
       viewHolder.tvName.setText((String) user.get("name"));
       Glide.with(mContext).load((String) user.get("profileImageUrl"))
           .fitCenter()
-          .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
+          .bitmapTransform(new CropCircleTransformation(mContext))
           .into(viewHolder.ivProfilePhoto);
     }
 
@@ -63,12 +66,10 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     }
 
     // TODO: use DateUtil.getFormattedTimelineDate
-    // String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
-    // Comment it out since it's currently empty
+//     String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
 //    String formattedDate = moment.getCreatedAtReal();
 //    Log.d(TAG, "formattedDate: " + formattedDate);
 //    viewHolder.tvDate.setText(formattedDate);
-
     viewHolder.tvLocation.setText(moment.getLocation());
     viewHolder.tvDescription.setText(moment.getDescription());
   }

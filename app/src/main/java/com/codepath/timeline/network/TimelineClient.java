@@ -53,15 +53,23 @@ public class TimelineClient {
   // or, simply new TimelineClient.XXXListener() as callback
 
   public interface TimelineClientAddStoryListener {
-    void onAddStoryList(); // this is a callback
+    void onAddStoryList();
   }
 
   public interface TimelineClientGetStoryListener {
-    void onGetStoryList(List<Story> itemList); // this is a callback
+    void onGetStoryList(List<Story> itemList);
+  }
+
+  public interface TimelineClientGetMomentListListener {
+    void onGetMomentList(List<Moment> itemList);
   }
 
   public interface TimelineClientGetUserListener {
-    void onGetUserList(List<ParseUser> itemList); // this is a callback
+    void onGetUserList(List<ParseUser> itemList);
+  }
+
+  public interface TimelineClientGetMomentListener {
+    void onGetMomentListener(Moment moment);
   }
 
   public void addStoryList(final List<Story> storyList,
@@ -98,6 +106,23 @@ public class TimelineClient {
     }
   }
 
+  // Used for populating mock data
+  public void addMomentList(Story story, List<Moment> momentList) {
+    if (momentList != null && momentList.size() > 0) {
+      story.addAll("momentList", momentList);
+      story.saveInBackground(new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+          if (e != null) {
+            Log.e(TAG, "addMomentList exception: " + e.toString());
+          } else {
+            Log.d(TAG, "addMomentList successful");
+          }
+        }
+      });
+    }
+  }
+
   // query User_Temp table
   public void getStoryList(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
@@ -126,12 +151,14 @@ public class TimelineClient {
         });
   }
 
-  // TODO: not used
-  // query Story table
+  // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
+  // for the story list in the LandingActivity
   public void getStoryList2(ParseUser user,
                             final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     // Define the class we would like to query
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     // Define our query conditions
     query.whereEqualTo("owner", user);
     query.include("owner"); // eagerly load the owner -- we need it for updating the story view
@@ -150,6 +177,52 @@ public class TimelineClient {
           }
         } else {
           Log.d("findInBackground", "Error: " + e.getMessage());
+        }
+      }
+    });
+  }
+
+  // Query the DB for moments associated with this story
+  public void getMomentList(String storyObjectId, final TimelineClientGetMomentListListener timelineClientGetMomentListListener) {
+    ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+    query.include("momentList");
+    query.getInBackground(storyObjectId, new GetCallback<Story>() {
+      @Override
+      public void done(Story story, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getMomentList: " + e.getMessage());
+          return;
+        }
+
+        if (story != null && story.getMomentList() != null) {
+          if (timelineClientGetMomentListListener != null) {
+            timelineClientGetMomentListListener.onGetMomentList(story.getMomentList());
+          }
+        }
+      }
+    });
+  }
+
+  public void getMoment(String momentObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+    ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+    query.include("author");
+    query.getInBackground(momentObjectId, new GetCallback<Moment>() {
+      @Override
+      public void done(Moment moment, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getMoment: " + e.getMessage());
+          return;
+        }
+
+        if (moment != null) {
+          Log.d(TAG, "getMoment successful: " + moment);
+          if (timelineClientGetMomentListener != null) {
+            timelineClientGetMomentListener.onGetMomentListener(moment);
+          }
         }
       }
     });
@@ -181,17 +254,6 @@ public class TimelineClient {
             }
           }
         });
-  }
-
-  public List<Moment> getMomentsList(Context context, int storyId) {
-    // TODO: Use storyId to query db; may not need context param anymore
-    JsonArray jsonArray = createMockJsonArray(context, "moments_backup.json");
-    if (jsonArray != null) {
-      List<Moment> momentList = Moment.fromJsonArray(jsonArray);
-      return momentList;
-    } else {
-      return null;
-    }
   }
 
   // TEST: Create mock response

@@ -17,13 +17,12 @@ import java.util.List;
 // remember to register in ParseApplication
 // only fields of Story class will be serialized
 @ParseClassName("Story")
-@Parcel(analyze = {Story.class})
 public class Story extends ParseObject {
 
   // Gson needs the following
-  private String titleDoNotUseThis;
-  private String backgroundImageUrlDoNotUseThis;
-  private String createdAtRealDoNotUseThis;
+  private String mockTitle;
+  private String mockBackgroundImage;
+  private String mockCreatedAt;
 
   // TODO
   private List<Moment> momentList;
@@ -62,9 +61,9 @@ public class Story extends ParseObject {
 
   public static void fromGsonToParse(List<Story> storyList) {
     for (Story theStory : storyList) {
-      theStory.setTitle(theStory.titleDoNotUseThis);
-      theStory.setBackgroundImageUrl(theStory.backgroundImageUrlDoNotUseThis);
-      theStory.setCreatedAtReal(theStory.createdAtRealDoNotUseThis);
+      theStory.setTitle(theStory.mockTitle);
+      theStory.setBackgroundImageUrl(theStory.mockBackgroundImage);
+      theStory.setCreatedAtReal(theStory.mockCreatedAt);
       theStory.setOwner(ParseUser.getCurrentUser());
       List<ParseUser> collaboratorList = new ArrayList<>();
       collaboratorList.add(ParseUser.getCurrentUser());
@@ -118,14 +117,12 @@ public class Story extends ParseObject {
     put("collaboratorList", collaboratorList);
   }
 
-  // TODO: work with Parse
   public List<Moment> getMomentList() {
-    return momentList;
+    return (List<Moment>) get("momentList");
   }
 
-  // TODO: work with Parse
   public void setMomentList(List<Moment> momentList) {
-    this.momentList = momentList;
+    put("momentList", momentList);
   }
 
   @Override
@@ -139,12 +136,14 @@ public class Story extends ParseObject {
     str.append("\nbackgroundImageUrl=").append(getBackgroundImageUrl());
 
     ParseUser user = getOwner();
-    str.append("\n------- Owner");
-//    str.append("\nobjectId=").append(user.getObjectId());
-//    str.append("\ncreatedAt=").append(user.getCreatedAt().toString());
-//    str.append("\nuserName=").append(user.getUsername());
-//    str.append("\nemail=").append(user.getEmail());
-//    str.append("\nprofileImageUrl=").append(user.get("profileImageUrl"));
+    if (user != null) {
+      str.append("\n------- Owner");
+      str.append("\nobjectId=").append(user.getObjectId());
+      str.append("\ncreatedAt=").append(user.getCreatedAt().toString());
+      str.append("\nuserName=").append(user.getUsername());
+      str.append("\nemail=").append(user.getEmail());
+      str.append("\nprofileImageUrl=").append(user.get("profileImageUrl"));
+    }
     return str.toString();
   }
 }
