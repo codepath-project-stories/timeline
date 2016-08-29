@@ -16,12 +16,12 @@ Here are some sample stories:
 
 ## Required User Stories
 
-* [x] After logging in, user is taken to their homepage where they see their list of stories and the stories shared by friends
-* [ ] User can add a new story
+* [x] After logging in, user is taken to their homepage where they see their list of stories
+* [x] User can add a new story
   * [x] When adding a new story, user can specify the title of a story
   * [x] User has an option to take a picture for the background image of a story
-  * [ ] User can add collaborators to the story
-* [ ] User can add a new moment into a story
+  * [x] User can add collaborators to the story
+* [x] User can add a new moment into a story
   * [x] When adding a new moment by specifying the description and
   * [x] User can take a picture for a moment
 * [x] User can click on any story from their timeline
@@ -31,6 +31,7 @@ Here are some sample stories:
   * [x] User can autoplay all moments
 
 ## Stretched Goals
+* [ ] User can see the stories of friends
 * [ ] User can search for a particular story
 * [ ] User receives push notification when a new moment is added to the story
 * [ ] User has a list of friends auto populated from Facebook
