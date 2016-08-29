@@ -12,11 +12,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -40,26 +43,49 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class NewStoryActivity extends NewItemClass implements SearchFriendsDialogFragment.SearchDialogListener {
 
-    @BindView(R.id.ivBackground) ImageView ivBackground;
-    @BindView(R.id.ivCameraIcon) ImageView ivCameraIcon;
-    @BindView(R.id.etAddTitle) EditText etStoryTitle;
-    @BindView(R.id.tvAddPeople) TextView tvAddPeople;
-    @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.ivBackground)
+    ImageView ivBackground;
+    @BindView(R.id.ivCameraIcon)
+    ImageView ivCameraIcon;
+    @BindView(R.id.etAddTitle)
+    EditText etStoryTitle;
+    @BindView(R.id.tvCount)
+    TextView tvCount;
+    @BindView(R.id.tvAddPeople)
+    TextView tvAddPeople;
+    @BindView(R.id.flStoryPhoto)
+    FrameLayout flStoryPhoto;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.btnPublish)
+    Button btnPublish;
 
-    @BindView(R.id.ivSearch) ImageView ivSearch;
-    @BindView(R.id.ivCollaborator1) ImageView ivCollaborator1;
-    @BindView(R.id.ivCollaborator2) ImageView ivCollaborator2;
-    @BindView(R.id.ivCollaborator3) ImageView ivCollaborator3;
-    @BindView(R.id.ivCollaborator4) ImageView ivCollaborator4;
-    @BindView(R.id.tvCollaborator1) TextView tvCollaborator1;
-    @BindView(R.id.tvCollaborator2) TextView tvCollaborator2;
-    @BindView(R.id.tvCollaborator3) TextView tvCollaborator3;
-    @BindView(R.id.tvCollaborator4) TextView tvCollaborator4;
-    @BindView(R.id.ivSelected1) ImageView ivSelected1;
-    @BindView(R.id.ivSelected2) ImageView ivSelected2;
-    @BindView(R.id.ivSelected3) ImageView ivSelected3;
-    @BindView(R.id.ivSelected4) ImageView ivSelected4;
+    @BindView(R.id.ivSearch)
+    ImageView ivSearch;
+    @BindView(R.id.ivCollaborator1)
+    ImageView ivCollaborator1;
+    @BindView(R.id.ivCollaborator2)
+    ImageView ivCollaborator2;
+    @BindView(R.id.ivCollaborator3)
+    ImageView ivCollaborator3;
+    @BindView(R.id.ivCollaborator4)
+    ImageView ivCollaborator4;
+    @BindView(R.id.tvCollaborator1)
+    TextView tvCollaborator1;
+    @BindView(R.id.tvCollaborator2)
+    TextView tvCollaborator2;
+    @BindView(R.id.tvCollaborator3)
+    TextView tvCollaborator3;
+    @BindView(R.id.tvCollaborator4)
+    TextView tvCollaborator4;
+    @BindView(R.id.ivSelected1)
+    ImageView ivSelected1;
+    @BindView(R.id.ivSelected2)
+    ImageView ivSelected2;
+    @BindView(R.id.ivSelected3)
+    ImageView ivSelected3;
+    @BindView(R.id.ivSelected4)
+    ImageView ivSelected4;
 
 
     private Context context;
@@ -118,6 +144,31 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
                 // Todo: pass meaningful data (probably user's id)
                 composeDialog.setArguments(bundle);
                 composeDialog.show(fm, "fragment_compose_dialog");
+            }
+        });
+
+        etStoryTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int aft) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // this will show characters remaining
+                int num = 35 - s.toString().length();
+                tvCount.setText(num + "");
+                if (num <= 10) {
+                    tvCount.setTextColor(getResources().getColor(R.color.colorAccent));
+                } else {
+                    tvCount.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                boolean limit = etStoryTitle.getText().length() > 0 && etStoryTitle.getText().length() <= 35;
+                // Todo: add better visual for disabled button
+                btnPublish.setEnabled(limit);
             }
         });
     }

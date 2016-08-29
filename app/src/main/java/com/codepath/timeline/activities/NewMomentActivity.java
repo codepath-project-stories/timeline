@@ -9,15 +9,19 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.timeline.R;
@@ -35,11 +39,19 @@ import butterknife.ButterKnife;
 
 public class NewMomentActivity extends NewItemClass {
 
-    @BindView(R.id.ivBackground) ImageView ivBackground;
-    @BindView(R.id.etAddTitle) EditText etMomentTitle;
-//    @BindView(R.id.tvAddLocation) TextView tvAddLocation;
-    @BindView(R.id.flStoryPhoto) FrameLayout flStoryPhoto;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.ivBackground)
+    ImageView ivBackground;
+    @BindView(R.id.etAddTitle)
+    EditText etMomentTitle;
+    //    @BindView(R.id.tvAddLocation) TextView tvAddLocation;
+    @BindView(R.id.flStoryPhoto)
+    FrameLayout flStoryPhoto;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.btnPublish)
+    Button btnPublish;
+    @BindView(R.id.tvCount)
+    TextView tvCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,31 @@ public class NewMomentActivity extends NewItemClass {
 
         toolbar.setTitle("New moment");
         setSupportActionBar(toolbar);
+        etMomentTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int aft) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // this will show characters remaining
+                // Todo: add more characters for the moment
+                int num = 35 - s.toString().length();
+                tvCount.setText(num + "");
+                if (num <= 10) {
+                    tvCount.setTextColor(getResources().getColor(R.color.colorAccent));
+                } else {
+                    tvCount.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                boolean limit = etMomentTitle.getText().length() > 0 && etMomentTitle.getText().length() <= 35;
+                // Todo: add better visual for disabled buton
+                btnPublish.setEnabled(limit);
+            }
+        });
     }
 
     @Override
@@ -120,7 +157,6 @@ public class NewMomentActivity extends NewItemClass {
 
             // closes the activity, pass data to parent
             finish();
-            // Todo: add collaborators, add location
         }
     }
 
