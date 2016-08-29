@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +30,7 @@ import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -227,11 +230,41 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
+                ExifInterface ei = null;
+                try {
+                    ei = new ExifInterface(takenPhotoUri.getPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_UNDEFINED);
+
+                switch(orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        takenImage = rotateImage(takenImage, 90);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        takenImage = rotateImage(takenImage, 180);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        takenImage = rotateImage(takenImage, 270);
+                        break;
+                    case ExifInterface.ORIENTATION_NORMAL:
+                    default:
+                        break;
+                }
                 ivBackground.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix,
+                true);
     }
 
     @Override
