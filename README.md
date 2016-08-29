@@ -43,7 +43,7 @@ Here are some sample stories:
 
 Here's a walkthrough of implemented user stories:
 
-![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/demo1.gif)
+![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
