@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
@@ -324,7 +325,7 @@ public class NewStoryActivity extends NewItemClass
         // TODO: change the corresponding items in R.layout.activity_newstory
         String output = "from MultiAutoCompleteTextView\n";
         for (ParseUser user : collabs) {
-            output = output + (String) user.get("name") + "\n";
+            output = output + UserClient.getName(user) + "\n";
         }
         Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
     }

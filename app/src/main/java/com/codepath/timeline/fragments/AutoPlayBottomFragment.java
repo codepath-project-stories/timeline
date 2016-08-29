@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 
 import butterknife.BindView;
@@ -67,7 +68,7 @@ public class AutoPlayBottomFragment extends Fragment {
 
   private void updateMoment(Moment moment) {
     if (moment.getAuthor() != null) {
-      Glide.with(this).load(moment.getAuthor().get("profileImageUrl"))
+      Glide.with(this).load(UserClient.getProfileImageUrl(moment.getAuthor()))
           .fitCenter()
           .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
           .into(ivProfilePhoto);

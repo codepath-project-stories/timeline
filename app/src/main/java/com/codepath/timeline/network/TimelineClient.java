@@ -88,7 +88,7 @@ public class TimelineClient {
           if (e != null) {
             Log.d("saveToParse", e.toString());
           } else {
-            ParseUser currentUser = ParseUser.getCurrentUser();
+            ParseUser currentUser = UserClient.getCurrentUser();
             currentUser.addAll("stories", storyList);
             currentUser.saveInBackground(
                 new SaveCallback() {

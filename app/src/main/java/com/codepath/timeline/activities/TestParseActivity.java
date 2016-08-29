@@ -9,6 +9,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseUser;
@@ -57,7 +58,7 @@ public class TestParseActivity extends AppCompatActivity {
 
 	@OnClick(R.id.getStoryList)
 	void getStoryList() {
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		ParseUser currentUser = UserClient.getCurrentUser();
 		TimelineClient.getInstance().getStoryList(
 				currentUser,
 				// set up callback
@@ -77,7 +78,7 @@ public class TestParseActivity extends AppCompatActivity {
 
 	@OnClick(R.id.getStoryList2)
 	void getStoryList2() {
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		ParseUser currentUser = UserClient.getCurrentUser();
 		TimelineClient.getInstance().getStoryList2(
 				currentUser,
 				// set up callback
@@ -97,7 +98,7 @@ public class TestParseActivity extends AppCompatActivity {
 
 	@OnClick(R.id.getUserList)
 	void getUserList() {
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		ParseUser currentUser = UserClient.getCurrentUser();
 		TimelineClient.getInstance().getStoryList(
 				currentUser,
 				// set up callback
@@ -137,7 +138,7 @@ public class TestParseActivity extends AppCompatActivity {
 				"http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
 				"August 27, 2016"
 		);
-		story.setOwner(ParseUser.getCurrentUser());
+		story.setOwner(UserClient.getCurrentUser());
 		List<Moment> momentList = MockResponseGenerator.getInstance().getMomentList();
 		TimelineClient.getInstance().addMomentList(story, momentList);
 	}

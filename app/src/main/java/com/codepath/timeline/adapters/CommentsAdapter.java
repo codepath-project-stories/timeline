@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Comment;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
 
@@ -91,10 +92,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
     ParseUser user = comment.getUser();
     if (user != null) {
-      Log.d(TAG, "URL: " + (String) user.get("profileImageUrl"));
-      holder.tvName.setText((String) user.get("name"));
+      Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
+      holder.tvName.setText(UserClient.getName(user));
       Glide.with(mContext)
-              .load((String) user.get("profileImageUrl"))
+              .load(UserClient.getProfileImageUrl(user))
               .fitCenter()
               .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
               .into(holder.ivProfilePhoto);

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import com.codepath.timeline.network.UserClient;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -49,9 +50,9 @@ public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUse
                 LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
                 convertView = inflater.inflate(mLayoutResourceId, parent, false);
             }
-            ParseUser department = getItem(position);
+            ParseUser user = getItem(position);
             TextView name = (TextView) convertView.findViewById(android.R.id.text1);
-            name.setText((String)department.get("name"));
+            name.setText(UserClient.getName(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,17 +64,17 @@ public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUse
         return new Filter() {
             @Override
             public String convertResultToString(Object resultValue) {
-                return (String)(((ParseUser) resultValue).get("name"));
+                return UserClient.getName((ParseUser) resultValue);
             }
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 if (constraint != null) {
                     mUsers_Suggestion.clear();
-                    for (ParseUser department : mUsers_All) {
-                        String name = (String) department.get("name");
+                    for (ParseUser user : mUsers_All) {
+                        String name = UserClient.getName(user);
                         if (name.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
-                            mUsers_Suggestion.add(department);
+                            mUsers_Suggestion.add(user);
                         }
                     }
                     FilterResults filterResults = new FilterResults();
@@ -89,7 +90,7 @@ public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUse
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 mUsers.clear();
                 if (results != null && results.count > 0) {
-                    // avoids unchecked cast warning when using mUsers.addAll((ArrayList<Department>) results.values);
+                    // avoids unchecked cast warning when using mUsers.addAll((ArrayList<user>) results.values);
                     List<?> result = (List<?>) results.values;
                     for (Object object : result) {
                         if (object instanceof ParseUser) {

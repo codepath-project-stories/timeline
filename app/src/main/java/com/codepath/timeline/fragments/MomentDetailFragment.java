@@ -16,9 +16,8 @@ import com.codepath.timeline.adapters.CommentsAdapter;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.DateUtil;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +100,7 @@ public class MomentDetailFragment extends Fragment {
       momentDetail.setUser(mMoment.getAuthor());
     }
     else {
-      momentDetail.setUser(ParseUser.getCurrentUser());
+      momentDetail.setUser(UserClient.getCurrentUser());
     }
     momentDetail.setLocation(mMoment.getLocation());
     // TODO: make sure it is not null here
