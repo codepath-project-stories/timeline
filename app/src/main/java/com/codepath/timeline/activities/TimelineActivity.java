@@ -172,7 +172,20 @@ public class TimelineActivity extends AppCompatActivity {
             Moment moment = Parcels.unwrap(data.getParcelableExtra("moment"));
             Log.d("DEBUG", moment.toString());
             Snackbar.make(findViewById(android.R.id.content), moment.toString(), Snackbar.LENGTH_SHORT).show();
-            // Todo: add a moment into the RV
+            if (moment != null) {
+                addMoment(moment);
+            }
         }
+    }
+
+    private void addMoment(Moment moment){
+        // add to top
+        // mMomentList.add(0, moment);
+
+        mMomentList.add(moment);
+        mAdapter.notifyItemInserted(0);
+
+        // smooth scroll to bottom for now
+        rvMoments.smoothScrollToPosition(mMomentList.size());
     }
 }

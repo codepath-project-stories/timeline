@@ -108,6 +108,9 @@ public class NewMomentActivity extends NewItemClass {
             moment.setMediaUrl(takenPhotoUri.getPath());
             moment.setDescription(etMomentTitle.getText().toString());
 
+            // TODO: v2 change to current location
+            moment.setLocation("San Francisco, CA");
+
             Log.d("DEBUG", moment.toString());
 
             // send result back
