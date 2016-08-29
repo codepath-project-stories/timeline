@@ -42,19 +42,19 @@ public class NewItemClass extends AppCompatActivity {
             view.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
             view.setTag(1);
         }
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         NewItemClassPermissionsDispatcher.accessLocationWithCheck(this);
     }
 
     // Todo: add collaborators to the story
     // on click attached to text view id="@+id/tvAddPeople"
     public void addPeople(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
     }
 
     // on click attached to frame layout id="@+id/flStoryPhoto"
     public void onLaunchCamera(View view) {
-        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         NewItemClassPermissionsDispatcher.openCameraWithCheck(this);
     }
 
@@ -69,7 +69,7 @@ public class NewItemClass extends AppCompatActivity {
     @NeedsPermission(Manifest.permission.CAMERA)
     void openCamera() {
         // Trigger the opening of a camera here
-        Snackbar.make(findViewById(android.R.id.content), "here", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(findViewById(android.R.id.content), "here", Snackbar.LENGTH_SHORT).show();
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
@@ -99,6 +99,7 @@ public class NewItemClass extends AppCompatActivity {
             // Get safe storage directory for photos
             // Use `getExternalFilesDir` on Context to access package-specific directories.
             // This way, we don't need to request external read/write runtime permissions.
+            // Todo: remove permissions for writing/accessing the storage
             File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
 
