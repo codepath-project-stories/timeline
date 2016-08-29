@@ -16,26 +16,26 @@ import java.util.List;
 
 public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUser> {
     private final Context mContext;
-    private final List<ParseUser> musers;
-    private final List<ParseUser> musers_All;
-    private final List<ParseUser> musers_Suggestion;
+    private final List<ParseUser> mUsers;
+    private final List<ParseUser> mUsers_All;
+    private final List<ParseUser> mUsers_Suggestion;
     private final int mLayoutResourceId;
 
     public MultiAutoCompleteTextViewArrayAdapter(Context context, int resource, List<ParseUser> users) {
         super(context, resource, users);
         this.mContext = context;
         this.mLayoutResourceId = resource;
-        this.musers = new ArrayList<>(users);
-        this.musers_All = new ArrayList<>(users);
-        this.musers_Suggestion = new ArrayList<>();
+        this.mUsers = users;
+        this.mUsers_All = new ArrayList<>(users);
+        this.mUsers_Suggestion = new ArrayList<>();
     }
 
     public int getCount() {
-        return musers.size();
+        return mUsers.size();
     }
 
     public ParseUser getItem(int position) {
-        return musers.get(position);
+        return mUsers.get(position);
     }
 
     public long getItemId(int position) {
@@ -69,16 +69,16 @@ public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUse
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 if (constraint != null) {
-                    musers_Suggestion.clear();
-                    for (ParseUser department : musers_All) {
+                    mUsers_Suggestion.clear();
+                    for (ParseUser department : mUsers_All) {
                         String name = (String) department.get("name");
                         if (name.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
-                            musers_Suggestion.add(department);
+                            mUsers_Suggestion.add(department);
                         }
                     }
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = musers_Suggestion;
-                    filterResults.count = musers_Suggestion.size();
+                    filterResults.values = mUsers_Suggestion;
+                    filterResults.count = mUsers_Suggestion.size();
                     return filterResults;
                 } else {
                     return new FilterResults();
@@ -87,18 +87,18 @@ public class MultiAutoCompleteTextViewArrayAdapter extends ArrayAdapter<ParseUse
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                musers.clear();
+                mUsers.clear();
                 if (results != null && results.count > 0) {
-                    // avoids unchecked cast warning when using musers.addAll((ArrayList<Department>) results.values);
+                    // avoids unchecked cast warning when using mUsers.addAll((ArrayList<Department>) results.values);
                     List<?> result = (List<?>) results.values;
                     for (Object object : result) {
                         if (object instanceof ParseUser) {
-                            musers.add((ParseUser) object);
+                            mUsers.add((ParseUser) object);
                         }
                     }
                 } else if (constraint == null) {
                     // no filter, add entire original list back in
-                    musers.addAll(musers_All);
+                    mUsers.addAll(mUsers_All);
                 }
                 notifyDataSetChanged();
             }

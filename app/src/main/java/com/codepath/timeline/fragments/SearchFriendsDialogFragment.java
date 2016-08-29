@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.codepath.timeline.R;
@@ -30,6 +31,10 @@ public class SearchFriendsDialogFragment extends DialogFragment {
 
     @BindView(R.id.multiAutoCompleteTextView)
     MultiAutoCompleteTextView multiAutoCompleteTextView;
+    @BindView(R.id.button)
+    Button button;
+
+    List<ParseUser> mUsers;
 
     public SearchFriendsDialogFragment() {}
 
@@ -53,16 +58,20 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_search_friends, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        mUsers = null;
+
         // Todo: pass user id to fragment to retrieve friends list
         TimelineClient.getInstance().getFriendList(
                 null,
                 new TimelineClient.TimelineClientGetFriendListListener() {
                     @Override
                     public void onGetFriendList(List<ParseUser> itemList) {
+                        mUsers = itemList;
                         ArrayAdapter adapter = new MultiAutoCompleteTextViewArrayAdapter(
                                 getContext(),
+                                // TODO: use custom layout
                                 android.R.layout.simple_list_item_1,
-                                itemList);
+                                mUsers);
                         multiAutoCompleteTextView.setAdapter(adapter);
                         multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                     }
@@ -81,18 +90,14 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        /*
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchDialogListener listener = (SearchDialogListener) SearchFriendsDialogFragment.this.getTargetFragment();
-                // Todo: add meaningful data (most likely a list of collaborators)
-                List<ParseUser> collabs = new ArrayList<>();
-                listener.onFinishSearchDialog(collabs);
+                SearchDialogListener listener = (SearchFriendsDialogFragment.SearchDialogListener) getActivity();
+                listener.onFinishSearchDialog(mUsers);
                 SearchFriendsDialogFragment.this.dismiss();
             }
         });
-        */
     }
 
     @Override

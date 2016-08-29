@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
@@ -40,7 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class NewStoryActivity extends NewItemClass implements SearchFriendsDialogFragment.SearchDialogListener {
+public class NewStoryActivity extends NewItemClass
+        implements SearchFriendsDialogFragment.SearchDialogListener {
 
     @BindView(R.id.ivBackground)
     ImageView ivBackground;
@@ -319,7 +321,11 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
 
     @Override
     public void onFinishSearchDialog(List<ParseUser> collabs) {
-        // TODO: MultiAutoCompleteTextView
-        ;
+        // TODO: change the corresponding items in R.layout.activity_newstory
+        String output = "from MultiAutoCompleteTextView\n";
+        for (ParseUser user : collabs) {
+            output = output + (String) user.get("name") + "\n";
+        }
+        Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
     }
 }

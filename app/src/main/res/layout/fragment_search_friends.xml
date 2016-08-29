@@ -6,10 +6,19 @@
     <MultiAutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New MultiAutoCompleteTextView"
+        android:hint="Try Jenna, Dianne, or Drake"
+        android:text=""
         android:id="@+id/multiAutoCompleteTextView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/button"
+        android:layout_below="@+id/multiAutoCompleteTextView"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
