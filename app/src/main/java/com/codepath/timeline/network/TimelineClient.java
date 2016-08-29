@@ -219,6 +219,7 @@ public class TimelineClient {
         }
 
         if (moment != null) {
+          Log.d(TAG, "getMoment successful: " + moment);
           if (timelineClientGetMomentListener != null) {
             timelineClientGetMomentListener.onGetMomentListener(moment);
           }

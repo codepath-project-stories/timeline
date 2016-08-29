@@ -76,7 +76,6 @@ public class AutoPlayActivity extends AppCompatActivity
 
     updateStoryInfo();
     getMomentList();
-    initView();
   }
 
   private void updateStoryInfo() {
@@ -88,8 +87,7 @@ public class AutoPlayActivity extends AppCompatActivity
         .into(ivStoryBackground);
   }
 
-  private void initView() {
-    mMomentList = new ArrayList<>();
+  private void initList() {
     mPagerAdapter = new AutoPlayPagerAdapter(getSupportFragmentManager());
     vpMoment.setAdapter(mPagerAdapter);
 
@@ -122,8 +120,9 @@ public class AutoPlayActivity extends AppCompatActivity
     TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
       @Override
       public void onGetMomentList(List<Moment> itemList) {
+        mMomentList = new ArrayList<Moment>();
         mMomentList.addAll(itemList);
-        mPagerAdapter.notifyDataSetChanged();
+        initList();
       }
     });
   }

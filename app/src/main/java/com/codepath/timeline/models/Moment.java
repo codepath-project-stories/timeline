@@ -108,4 +108,25 @@ public class Moment extends ParseObject {
   public void setAuthor(ParseUser author) {
     put("author", author);
   }
+
+  @Override
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    str.append("---------- Moment");
+    str.append("\nobjectId=").append(getObjectId());
+    str.append("\ndescription=").append(getDescription());
+    str.append("\nmediaUrl=").append(getMediaUrl());
+    str.append("\nlocation=").append(getLocation());
+
+    ParseUser author = getAuthor();
+    if (author != null) {
+      str.append("\n------- Owner");
+      str.append("\nobjectId=").append(author.getObjectId());
+      str.append("\nuserName=").append(author.getUsername());
+      str.append("\nemail=").append(author.getEmail());
+      str.append("\nprofileImageUrl=").append(author.get("profileImageUrl"));
+    }
+
+    return str.toString();
+  }
 }

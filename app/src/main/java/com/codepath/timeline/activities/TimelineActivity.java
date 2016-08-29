@@ -153,7 +153,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void showDetailDialog(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(mMomentList, position);
+        DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(storyObjectId, position);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 

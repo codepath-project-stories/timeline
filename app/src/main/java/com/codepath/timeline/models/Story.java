@@ -136,12 +136,14 @@ public class Story extends ParseObject {
     str.append("\nbackgroundImageUrl=").append(getBackgroundImageUrl());
 
     ParseUser user = getOwner();
-    str.append("\n------- Owner");
-//    str.append("\nobjectId=").append(user.getObjectId());
-//    str.append("\ncreatedAt=").append(user.getCreatedAt().toString());
-//    str.append("\nuserName=").append(user.getUsername());
-//    str.append("\nemail=").append(user.getEmail());
-//    str.append("\nprofileImageUrl=").append(user.get("profileImageUrl"));
+    if (user != null) {
+      str.append("\n------- Owner");
+      str.append("\nobjectId=").append(user.getObjectId());
+      str.append("\ncreatedAt=").append(user.getCreatedAt().toString());
+      str.append("\nuserName=").append(user.getUsername());
+      str.append("\nemail=").append(user.getEmail());
+      str.append("\nprofileImageUrl=").append(user.get("profileImageUrl"));
+    }
     return str.toString();
   }
 }
