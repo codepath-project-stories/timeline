@@ -13,6 +13,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.activities.NewStoryActivity;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -118,9 +119,11 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request it is that we're responding to
         if (requestCode == REQUEST_CODE && resultCode == 1) {
-            // Get the URI that points to the selected contact
-            Story story = Parcels.unwrap(data.getParcelableExtra("story"));
-            Snackbar.make(getView(), story.toString(), Snackbar.LENGTH_SHORT).show();
+            // TODO: Add a story to the server
+            Story story = new Story();
+            story.setTitle(data.getStringExtra(AppConstants.STORY_TITLE));
+            story.setBackgroundImageUrl(data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL));
+            story.setOwner(ParseUser.getCurrentUser());
             addNew(story);
         }
     }

@@ -27,6 +27,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.models.User_Temp;
+import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
@@ -206,16 +207,11 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
                 collabs.add(user);
             }
 
-            // create a story
-            Story story = new Story();
-            story.setBackgroundImageUrl(takenPhotoUri.getPath());
-            story.setTitle(etStoryTitle.getText().toString());
-            story.setCollaboratorList(collabs);
-            Log.d("DEBUG", story.toString());
-
             // send result back
             Intent data = new Intent();
-            data.putExtra("story", Parcels.wrap(story));
+            data.putExtra(AppConstants.STORY_TITLE, etStoryTitle.getText().toString());
+            data.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, takenPhotoUri.getPath());
+//            data.putExtra(AppConstants.STORY_COLLABORATORS, collabs);
             setResult(1, data);
 
             // closes the activity, pass data to parent
