@@ -79,9 +79,10 @@ public class MockResponseGenerator {
       String dummyDate = "2016-08-" + i + "T19:22:54.695Z";
 
       String mediaUrl = getRandomMedia();
-      Moment moment = new Moment(5000 + i, dummyDate, "Moment " + i + ": something, something, something, something",
+      Moment moment = new Moment(dummyDate, "Moment " + i + ": something, something, something, something",
           mediaUrl, ParseUser.getCurrentUser(), "San Francisco, CA");
 
+      /*
       if (i % 5 == 0) {
         Comment comment = new Comment();
         comment.setUser(ParseUser.getCurrentUser());
@@ -92,9 +93,15 @@ public class MockResponseGenerator {
         commentList.add(comment);
         moment.setCommentList(commentList);
       }
+*/
 
       mMomentList.add(moment);
     }
+  }
+
+  public List<Moment> getMomentList() {
+    createMockMomentList();
+    return mMomentList;
   }
 
   private String getRandomMedia() {

@@ -16,6 +16,7 @@ import com.codepath.timeline.adapters.CommentItemAnimator;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -73,8 +74,8 @@ public class MomentDetailFragment extends Fragment {
     // Add the moment photo as the first comment
     Comment momentDetail = new Comment();
     // TODO: make sure it is not null here
-    if (mMoment.getUser() != null) {
-      momentDetail.setUser(mMoment.getUser());
+    if (mMoment.getAuthor() != null) {
+      momentDetail.setUser(mMoment.getAuthor());
     }
     else {
       momentDetail.setUser(ParseUser.getCurrentUser());
@@ -82,7 +83,8 @@ public class MomentDetailFragment extends Fragment {
     momentDetail.setLocation(mMoment.getLocation());
     // TODO: make sure it is not null here
     if (mMoment.getCreatedAtReal() != null) {
-      momentDetail.setCreatedAtReal(mMoment.getCreatedAtReal());
+      String formattedDate = DateUtil.getFormattedTimelineDate(getActivity(), mMoment.getCreatedAtReal().toString());
+      momentDetail.setCreatedAtReal(formattedDate);
     }
     else {
       momentDetail.setCreatedAtReal("2016-09-31T19:22:54.695Z");

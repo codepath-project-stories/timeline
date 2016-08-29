@@ -1,21 +1,21 @@
 [{
-  "backgroundImageUrlDoNotUseThis": "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
-  "createdAtRealDoNotUseThis": "January 0, 2016",
-  "titleDoNotUseThis": "Story 0"
+  "mockBackgroundImage": "http://pbs.twimg.com/media/CpdUcQcWAAAwgwJ.jpg",
+  "mockCreatedAt": "January 0, 2016",
+  "mockTitle": "Story 0"
 }, {
-  "backgroundImageUrlDoNotUseThis": "https://s-media-cache-ak0.pinimg.com/736x/65/dc/61/65dc612e586e6f1876fe8f256984ac90.jpg",
-  "createdAtRealDoNotUseThis": "January 1, 2016",
-  "titleDoNotUseThis": "Story 1"
+  "mockBackgroundImage": "https://s-media-cache-ak0.pinimg.com/736x/65/dc/61/65dc612e586e6f1876fe8f256984ac90.jpg",
+  "mockCreatedAt": "January 1, 2016",
+  "mockTitle": "Story 1"
 }, {
-  "backgroundImageUrlDoNotUseThis": "https://legendsofwindemere.files.wordpress.com/2014/04/green-tea-cake.jpg",
-  "createdAtRealDoNotUseThis": "January 2, 2016",
-  "titleDoNotUseThis": "Story 2"
+  "mockBackgroundImage": "https://legendsofwindemere.files.wordpress.com/2014/04/green-tea-cake.jpg",
+  "mockCreatedAt": "January 2, 2016",
+  "mockTitle": "Story 2"
 }, {
-  "backgroundImageUrlDoNotUseThis": "https://c1.staticflickr.com/7/6030/5961408599_0cd629a680_b.jpg",
-  "createdAtRealDoNotUseThis": "January 3, 2016",
-  "titleDoNotUseThis": "Story 3"
+  "mockBackgroundImage": "https://c1.staticflickr.com/7/6030/5961408599_0cd629a680_b.jpg",
+  "mockCreatedAt": "January 3, 2016",
+  "mockTitle": "Story 3"
 }, {
-  "backgroundImageUrlDoNotUseThis": "https://www.itsuxtobefat.com/wp-content/uploads/frozen-chocolate-mint-dessert-490x490.jpg",
-  "createdAtRealDoNotUseThis": "January 4, 2016",
-  "titleDoNotUseThis": "Story 4"
+  "mockBackgroundImage": "https://www.itsuxtobefat.com/wp-content/uploads/frozen-chocolate-mint-dessert-490x490.jpg",
+  "mockCreatedAt": "January 4, 2016",
+  "mockTitle": "Story 4"
 }]

@@ -17,13 +17,12 @@ import java.util.List;
 // remember to register in ParseApplication
 // only fields of Story class will be serialized
 @ParseClassName("Story")
-@Parcel(analyze = {Story.class})
 public class Story extends ParseObject {
 
   // Gson needs the following
-  private String titleDoNotUseThis;
-  private String backgroundImageUrlDoNotUseThis;
-  private String createdAtRealDoNotUseThis;
+  private String mockTitle;
+  private String mockBackgroundImage;
+  private String mockCreatedAt;
 
   // TODO
   private List<Moment> momentList;
@@ -62,9 +61,9 @@ public class Story extends ParseObject {
 
   public static void fromGsonToParse(List<Story> storyList) {
     for (Story theStory : storyList) {
-      theStory.setTitle(theStory.titleDoNotUseThis);
-      theStory.setBackgroundImageUrl(theStory.backgroundImageUrlDoNotUseThis);
-      theStory.setCreatedAtReal(theStory.createdAtRealDoNotUseThis);
+      theStory.setTitle(theStory.mockTitle);
+      theStory.setBackgroundImageUrl(theStory.mockBackgroundImage);
+      theStory.setCreatedAtReal(theStory.mockCreatedAt);
       theStory.setOwner(ParseUser.getCurrentUser());
       List<ParseUser> collaboratorList = new ArrayList<>();
       collaboratorList.add(ParseUser.getCurrentUser());

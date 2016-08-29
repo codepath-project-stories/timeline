@@ -98,6 +98,22 @@ public class TimelineClient {
     }
   }
 
+  public void addMomentList(Story story, List<Moment> momentList) {
+    if(momentList != null && momentList.size() > 0) {
+      story.addAll("momentList", momentList);
+      story.saveInBackground(new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+          if (e != null) {
+            Log.e(TAG, "addMomentList exception: " + e.toString());
+          } else {
+            Log.d(TAG, "addMomentList successful");
+          }
+        }
+      });
+    }
+  }
+
   // query User_Temp table
   public void getStoryList(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
@@ -126,8 +142,8 @@ public class TimelineClient {
         });
   }
 
-  // TODO: not used
-  // query Story table
+  // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
+  // for the story list in the LandingActivity
   public void getStoryList2(ParseUser user,
                             final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     // Define the class we would like to query
