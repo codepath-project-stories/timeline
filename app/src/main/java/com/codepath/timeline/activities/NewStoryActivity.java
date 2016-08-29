@@ -185,22 +185,22 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
         } else {
             List<ParseUser> collabs = new ArrayList<>();
             // Todo: check tags on the collaborators images, if 2 then it is selected
-            if (ivSelected1.isSelected()) {
+            if (isViewSelected(ivSelected1)) {
                 ParseUser user = new ParseUser();
                 user.setUsername("Amanda Brown");
                 collabs.add(user);
             }
-            if (ivSelected2.isSelected()) {
+            if (isViewSelected(ivSelected2)) {
                 ParseUser user = new ParseUser();
                 user.setUsername("Clair White");
                 collabs.add(user);
             }
-            if (ivSelected3.isSelected()) {
+            if (isViewSelected(ivSelected3)) {
                 ParseUser user = new ParseUser();
                 user.setUsername("Megan Cox");
                 collabs.add(user);
             }
-            if (ivSelected4.isSelected()) {
+            if (isViewSelected(ivSelected4)) {
                 ParseUser user = new ParseUser();
                 user.setUsername("Julie Korosteleva");
                 collabs.add(user);
@@ -223,7 +223,7 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
         }
     }
 
-    public boolean isSelected(View view) {
+    public boolean isViewSelected(View view) {
         return (Integer.parseInt(view.getTag().toString()) == 2);
     }
 
