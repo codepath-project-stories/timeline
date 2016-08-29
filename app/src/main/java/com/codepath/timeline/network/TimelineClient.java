@@ -60,6 +60,10 @@ public class TimelineClient {
     void onGetStoryList(List<Story> itemList); // this is a callback
   }
 
+  public interface TimelineClientGetMomentListener {
+    void onGetMomentList(List<Moment> itemList); // this is a callback
+  }
+
   public interface TimelineClientGetUserListener {
     void onGetUserList(List<ParseUser> itemList); // this is a callback
   }
@@ -98,8 +102,9 @@ public class TimelineClient {
     }
   }
 
+  // Used for populating mock data
   public void addMomentList(Story story, List<Moment> momentList) {
-    if(momentList != null && momentList.size() > 0) {
+    if (momentList != null && momentList.size() > 0) {
       story.addAll("momentList", momentList);
       story.saveInBackground(new SaveCallback() {
         @Override
@@ -171,6 +176,26 @@ public class TimelineClient {
     });
   }
 
+  // Query the DB for moments associated with this story
+  public void getMomentList(String storyObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+    ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    query.include("momentList");
+    query.getInBackground(storyObjectId, new GetCallback<Story>() {
+      @Override
+      public void done(Story story, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getMomentList: " + e.getMessage());
+          return;
+        }
+        if (story != null && story.getMomentList() != null) {
+          if (timelineClientGetMomentListener != null) {
+            timelineClientGetMomentListener.onGetMomentList(story.getMomentList());
+          }
+        }
+      }
+    });
+  }
+
   // query User_Temp table
   public void getUserList(Story story,
                           final TimelineClientGetUserListener timelineClientGetUserListener) {
@@ -197,17 +222,6 @@ public class TimelineClient {
             }
           }
         });
-  }
-
-  public List<Moment> getMomentsList(Context context, int storyId) {
-    // TODO: Use storyId to query db; may not need context param anymore
-    JsonArray jsonArray = createMockJsonArray(context, "moments_backup.json");
-    if (jsonArray != null) {
-      List<Moment> momentList = Moment.fromJsonArray(jsonArray);
-      return momentList;
-    } else {
-      return null;
-    }
   }
 
   // TEST: Create mock response

@@ -117,14 +117,12 @@ public class Story extends ParseObject {
     put("collaboratorList", collaboratorList);
   }
 
-  // TODO: work with Parse
   public List<Moment> getMomentList() {
-    return momentList;
+    return (List<Moment>) get("momentList");
   }
 
-  // TODO: work with Parse
   public void setMomentList(List<Moment> momentList) {
-    this.momentList = momentList;
+    put("momentList", momentList);
   }
 
   @Override

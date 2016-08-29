@@ -141,10 +141,14 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: Need to make a network request using the `storyObjectId`
     private void getMomentList() {
-        mMomentList.addAll(TimelineClient.getInstance().getMomentsList(this, -1));
-        mAdapter.notifyItemRangeInserted(0, mMomentList.size());
+        TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+            @Override
+            public void onGetMomentList(List<Moment> itemList) {
+                mMomentList.addAll(itemList);
+                mAdapter.notifyItemRangeInserted(0, mMomentList.size());
+            }
+        });
     }
 
     private void showDetailDialog(int position) {

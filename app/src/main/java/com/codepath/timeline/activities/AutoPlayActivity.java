@@ -136,8 +136,12 @@ public class AutoPlayActivity extends AppCompatActivity
   }
 
   private void getMomentList() {
-    mMomentList = new ArrayList<>();
-    mMomentList.addAll(TimelineClient.getInstance().getMomentsList(this, -1));
+    TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+      @Override
+      public void onGetMomentList(List<Moment> itemList) {
+        mMomentList.addAll(itemList);
+      }
+    });
   }
 
   @Override
