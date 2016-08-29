@@ -15,7 +15,7 @@ public class ParseApplication extends Application {
 
 	public static boolean TURN_ON_PARSE = true;
 	public static boolean DEMO_MODE = true;
-	public static boolean TEST_PARSE = true;
+	public static boolean TEST_PARSE = false;
 
 	@Override
 	public void onCreate() {
