@@ -64,9 +64,11 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
 
     // TODO: use DateUtil.getFormattedTimelineDate
     // String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
-    String formattedDate = moment.getCreatedAtReal();
-            Log.d(TAG, "formattedDate: " + formattedDate);
-    viewHolder.tvDate.setText(formattedDate);
+    // Comment it out since it's currently empty
+//    String formattedDate = moment.getCreatedAtReal();
+//    Log.d(TAG, "formattedDate: " + formattedDate);
+//    viewHolder.tvDate.setText(formattedDate);
+
     viewHolder.tvLocation.setText(moment.getLocation());
     viewHolder.tvDescription.setText(moment.getDescription());
   }
