@@ -45,18 +45,37 @@
 
         </FrameLayout>
 
-        <EditText
-            android:id="@+id/etAddTitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="@string/add_title"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:textSize="15sp" />
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/etAddTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:background="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif-condensed"
+                android:hint="@string/add_title"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="10dp"
+                android:gravity="center|end"
+                android:background="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif-condensed"
+                tools:text="30"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvAddPeople"
@@ -266,12 +285,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/tvPublish"
+            android:id="@+id/btnPublish"
             android:layout_width="wrap_content"
-            android:textColor="@color/white"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
+            android:enabled="false"
             android:background="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/publish"

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:titleTextColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/colorPrimary">
+        android:titleTextColor="@color/white">
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/white"
@@ -45,32 +44,51 @@
 
         </FrameLayout>
 
-        <EditText
-            android:id="@+id/etAddTitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="@string/add_title"
-            android:padding="10dp"
-            android:textStyle="bold"
-            android:textSize="15sp" />
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/etAddTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:background="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif-condensed"
+                android:hint="@string/add_title"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="10dp"
+                android:gravity="center|end"
+                android:background="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif-condensed"
+                tools:text="30"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
         <!--<TextView-->
-            <!--android:id="@+id/tvAddDate"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/colorPrimaryLight"-->
-            <!--android:fontFamily="sans-serif-condensed"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:hint="@string/add_date"-->
-            <!--android:onClick="addDate"-->
-            <!--android:padding="10dp"-->
-            <!--android:textSize="15sp" />-->
+        <!--android:id="@+id/tvAddDate"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorPrimaryLight"-->
+        <!--android:fontFamily="sans-serif-condensed"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:hint="@string/add_date"-->
+        <!--android:onClick="addDate"-->
+        <!--android:padding="10dp"-->
+        <!--android:textSize="15sp" />-->
 
         <TextView
             android:id="@+id/tvAddLocation"
@@ -80,16 +98,16 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"
             android:gravity="center_vertical"
             android:hint="@string/add_location"
-            android:tag="1"
             android:onClick="addLocation"
             android:padding="10dp"
-            android:textSize="15sp" />
+            android:tag="1"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/tvPublish"
+            android:id="@+id/btnPublish"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -99,9 +117,10 @@
             android:gravity="center_vertical"
             android:hint="@string/share"
             android:onClick="publish"
-            android:textStyle="bold"
             android:padding="10dp"
-            android:textSize="15sp" />
+            android:enabled="false"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
