@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.adapters.DepartmentArrayAdapter;
+import com.codepath.timeline.adapters.MultiAutoCompleteTextViewArrayAdapter;
 import com.codepath.timeline.network.TimelineClient;
 import com.parse.ParseUser;
 
@@ -59,7 +59,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
                 new TimelineClient.TimelineClientGetFriendListListener() {
                     @Override
                     public void onGetFriendList(List<ParseUser> itemList) {
-                        ArrayAdapter adapter = new DepartmentArrayAdapter(
+                        ArrayAdapter adapter = new MultiAutoCompleteTextViewArrayAdapter(
                                 getContext(),
                                 android.R.layout.simple_list_item_1,
                                 itemList);
