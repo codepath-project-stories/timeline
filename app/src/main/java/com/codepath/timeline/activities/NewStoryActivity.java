@@ -261,11 +261,14 @@ public class NewStoryActivity extends NewItemClass
             // send result back
             Intent data = new Intent();
             data.putExtra(AppConstants.STORY_TITLE, etStoryTitle.getText().toString());
+            // TODO: upload real photo instead of local path
+            // TODO: /storage/emulated/0/Android/data/com.codepath.apps.timeline/files/Pictures/TimelineApp/photo.jpg
             data.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, takenPhotoUri.getPath());
-//            data.putExtra(AppConstants.STORY_COLLABORATORS, collabs);
+            // TODO: upload a list of ParseUser
+            // data.putExtra(AppConstants.STORY_COLLABORATORS, collabs);
             setResult(1, data);
 
-            // closes the activity, pass data to parent
+            // closes the activity, pass data to parent, which is UserStoriesFragment onActivityResult()
             finish();
         }
     }
@@ -307,6 +310,9 @@ public class NewStoryActivity extends NewItemClass
                         break;
                 }
                 ivBackground.setImageBitmap(takenImage);
+                // TODO: CHINGYAO: my device doesn't show any image in ivBackground
+                // TODO: try the following, but doesn't work
+                // ivBackground.invalidate();
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }

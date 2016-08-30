@@ -37,7 +37,6 @@ public class Story extends ParseObject {
     return story;
   }
 
-  // TODO: not used
   public Story(String title, String backgroundImageUrl, String createdAtReal) {
     super();
     setTitle(title);

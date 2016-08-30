@@ -19,6 +19,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -117,11 +120,13 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request it is that we're responding to
         if (requestCode == REQUEST_CODE && resultCode == 1) {
-            // TODO: Add a story to the server
-            Story story = new Story();
-            story.setTitle(data.getStringExtra(AppConstants.STORY_TITLE));
-            story.setBackgroundImageUrl(data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL));
-            story.setOwner(UserClient.getCurrentUser());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Story story = new Story(
+                    data.getStringExtra(AppConstants.STORY_TITLE),
+                    data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL),
+                    dateFormat.format(new Date())
+            );
+            story.saveInBackground();
             addNew(story);
         }
     }
