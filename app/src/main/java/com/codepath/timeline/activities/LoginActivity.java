@@ -29,8 +29,10 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
     // LoginActivity calls LandingActivity
 
-    @BindView(R.id.login_video)
+    static boolean PLAY_VIDEO = true;
+
     VideoView login_video;
+
     @BindView(R.id.input_email)
     EditText input_email;
     @BindView(R.id.input_password)
@@ -61,13 +63,21 @@ public class LoginActivity extends AppCompatActivity {
         }
         // If user is anonymous, ask the user to login or signup
 
-        setContentView(R.layout.activity_login);
+        if (PLAY_VIDEO) {
+            setContentView(R.layout.activity_login);
+            login_video = (VideoView) findViewById(R.id.login_video);
+        }
+        else {
+            setContentView(R.layout.activity_login_no_video);
+        }
         ButterKnife.bind(this);
 
         input_email.setText(mSettings.getString("input_email", ""));
         // input_email.requestFocus();
 
-        setupVideo();
+        if (PLAY_VIDEO) {
+            setupVideo();
+        }
     }
 
     // http://guides.codepath.com/android/Activity-Lifecycle
