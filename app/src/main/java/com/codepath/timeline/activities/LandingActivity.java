@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MyPagerAdapter;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseUser;
 
@@ -46,7 +47,7 @@ public class LandingActivity extends AppCompatActivity {
 
         setupViewPager();
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseUser currentUser = UserClient.getCurrentUser();
         if (currentUser != null) {
             String name = currentUser.getString("name");
             if (name != null) {

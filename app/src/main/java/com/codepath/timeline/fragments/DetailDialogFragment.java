@@ -22,9 +22,9 @@ import com.codepath.timeline.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.view.DepthPageTransformer;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,7 +149,7 @@ public class DetailDialogFragment extends DialogFragment {
     if (fragment != null) {
       Comment comment = new Comment();
       comment.setBody(etComment.getText().toString());
-      comment.setUser(ParseUser.getCurrentUser());
+      comment.setUser(UserClient.getCurrentUser());
 
       // TODO: push to the server
       fragment.addComment(comment);

@@ -12,6 +12,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.activities.NewStoryActivity;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseException;
@@ -62,7 +63,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             return;
         }
 
-        final ParseUser currentUser = ParseUser.getCurrentUser();
+        final ParseUser currentUser = UserClient.getCurrentUser();
         String demoCreatedString = (String) currentUser.get("demoCreated");
         boolean demoCreated = demoCreatedString != null && demoCreatedString.equals("true");
         if (!ParseApplication.DEMO_MODE || (ParseApplication.DEMO_MODE && demoCreated)) {
@@ -118,7 +119,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
             Story story = new Story();
             story.setTitle(data.getStringExtra(AppConstants.STORY_TITLE));
             story.setBackgroundImageUrl(data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL));
-            story.setOwner(ParseUser.getCurrentUser());
+            story.setOwner(UserClient.getCurrentUser());
             addNew(story);
         }
     }

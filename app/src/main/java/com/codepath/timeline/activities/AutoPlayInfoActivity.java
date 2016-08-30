@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 
 import org.parceler.Parcels;
@@ -46,7 +47,7 @@ public class AutoPlayInfoActivity extends AppCompatActivity {
     Moment moment = Parcels.unwrap(getIntent().getParcelableExtra(AppConstants.MOMENT_EXTRA));
     if (moment != null) {
       if (moment.getAuthor() != null) {
-        Glide.with(this).load(moment.getAuthor().get("profileImageUrl"))
+        Glide.with(this).load(UserClient.getProfileImageUrl(moment.getAuthor()))
             .fitCenter()
             .bitmapTransform(new RoundedCornersTransformation(this, 25, 0))
             .into(ivProfilePhoto);

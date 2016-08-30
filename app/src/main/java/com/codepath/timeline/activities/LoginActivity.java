@@ -14,6 +14,7 @@ import android.widget.VideoView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
@@ -53,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Determine whether the current user is an anonymous user
-        if (ParseUser.getCurrentUser() != null) {
-            if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+        if (UserClient.getCurrentUser() != null) {
+            if (!ParseAnonymousUtils.isLinked(UserClient.getCurrentUser())) {
                 onLoginSuccess();
             }
         }
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
-                            ParseUser currentUser = ParseUser.getCurrentUser();
+                            ParseUser currentUser = UserClient.getCurrentUser();
                             if (currentUser != null) {
                                 // do stuff with the user
                                 Log.d("logInInBackground", currentUser.toString());
@@ -177,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Hooray! Let them use the app now.
-                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    ParseUser currentUser = UserClient.getCurrentUser();
                     if (currentUser != null) {
                         // do stuff with the user
                         Log.d("signUpInBackground", currentUser.toString());

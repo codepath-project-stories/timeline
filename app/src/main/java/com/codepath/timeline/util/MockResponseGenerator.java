@@ -2,13 +2,12 @@ package com.codepath.timeline.util;
 
 import android.util.Log;
 
-import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -80,12 +79,12 @@ public class MockResponseGenerator {
 
       String mediaUrl = getRandomMedia();
       Moment moment = new Moment(dummyDate, "Moment " + i + ": something, something, something, something",
-          mediaUrl, ParseUser.getCurrentUser(), "San Francisco, CA");
+          mediaUrl, UserClient.getCurrentUser(), "San Francisco, CA");
 
       /*
       if (i % 5 == 0) {
         Comment comment = new Comment();
-        comment.setUser(ParseUser.getCurrentUser());
+        comment.setUser(UserClient.getCurrentUser());
         comment.setCreatedAtReal("2016-09-31T19:22:54.695Z");
         comment.setBody("Looking really, really good");
         comment.setId(8000 + i);

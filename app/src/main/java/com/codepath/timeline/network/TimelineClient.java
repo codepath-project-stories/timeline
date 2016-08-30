@@ -48,12 +48,17 @@ public class TimelineClient {
     }
   }
 
+  // TODO: CACHE_ELSE_NETWORK
   // TODO: use a callback class instead of the following
   // other class can implement XXXListener
   // or, simply new TimelineClient.XXXListener() as callback
 
   public interface TimelineClientAddStoryListener {
     void onAddStoryList();
+  }
+
+  public interface TimelineClientGetFriendListListener {
+    void onGetFriendList(List<ParseUser> itemList);
   }
 
   public interface TimelineClientGetStoryListener {
@@ -83,7 +88,7 @@ public class TimelineClient {
           if (e != null) {
             Log.d("saveToParse", e.toString());
           } else {
-            ParseUser currentUser = ParseUser.getCurrentUser();
+            ParseUser currentUser = UserClient.getCurrentUser();
             currentUser.addAll("stories", storyList);
             currentUser.saveInBackground(
                 new SaveCallback() {
@@ -123,13 +128,14 @@ public class TimelineClient {
     }
   }
 
-  // query User_Temp table
+  // query User table
   public void getStoryList(ParseUser user,
                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
     // http://parseplatform.github.io/docs/android/guide
     // fetchifneeded() could be an alternative to include()
     query.include("stories");
+    // TODO: debug if this API can get 'owner' and 'collaboratorList' in "stories"
     query.getInBackground(
         user.getObjectId(),
         new GetCallback<ParseUser>() {
@@ -149,6 +155,30 @@ public class TimelineClient {
             }
           }
         });
+  }
+
+  // TODO: now is get all users. need to change to get friend list.
+  public void getFriendList(ParseUser user,
+                           final TimelineClientGetFriendListListener onGetFriendList) {
+    ParseQuery<ParseUser> query = ParseUser.getQuery();
+    // http://parseplatform.github.io/docs/android/guide
+    // fetchifneeded() could be an alternative to include()
+    query.findInBackground(
+            new FindCallback<ParseUser>() {
+              @Override
+              public void done(List<ParseUser> userList, ParseException e) {
+                if (e == null) {
+                  if (userList != null) {
+                    Log.d("findInBackground", "!= null");
+                    if (onGetFriendList != null) {
+                      onGetFriendList.onGetFriendList(userList);
+                    }
+                  }
+                } else {
+                  Log.d("findInBackground", "Error: " + e.getMessage());
+                }
+              }
+            });
   }
 
   // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
@@ -228,7 +258,7 @@ public class TimelineClient {
     });
   }
 
-  // query User_Temp table
+  // query User table
   public void getUserList(Story story,
                           final TimelineClientGetUserListener timelineClientGetUserListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);

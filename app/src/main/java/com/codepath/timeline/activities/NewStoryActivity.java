@@ -24,11 +24,12 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
-import com.codepath.timeline.models.User_Temp;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
@@ -41,7 +42,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class NewStoryActivity extends NewItemClass implements SearchFriendsDialogFragment.SearchDialogListener {
+public class NewStoryActivity extends NewItemClass
+        implements SearchFriendsDialogFragment.SearchDialogListener {
 
     @BindView(R.id.ivBackground)
     ImageView ivBackground;
@@ -319,7 +321,12 @@ public class NewStoryActivity extends NewItemClass implements SearchFriendsDialo
     }
 
     @Override
-    public void onFinishSearchDialog(List<User_Temp> collabs) {
-
+    public void onFinishSearchDialog(List<ParseUser> collabs) {
+        // TODO: change the corresponding items in R.layout.activity_newstory
+        String output = "from MultiAutoCompleteTextView\n";
+        for (ParseUser user : collabs) {
+            output = output + UserClient.getName(user) + "\n";
+        }
+        Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
     }
 }

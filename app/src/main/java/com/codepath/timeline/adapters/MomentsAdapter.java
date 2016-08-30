@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.util.DateUtil;
+import com.codepath.timeline.network.UserClient;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -20,7 +20,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
 public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHolder> {
@@ -48,12 +47,12 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     Moment moment = mMomentList.get(position);
     MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
       // TODO: Don't use current user -- the user for each moment can be different if there's a list of collaborators
-    ParseUser user = ParseUser.getCurrentUser();
+    ParseUser user = UserClient.getCurrentUser();
     if (user != null) {
-      Log.d(TAG, "URL: " + (String) user.get("profileImageUrl"));
+      Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
 
-      viewHolder.tvName.setText((String) user.get("name"));
-      Glide.with(mContext).load((String) user.get("profileImageUrl"))
+      viewHolder.tvName.setText(UserClient.getName(user));
+      Glide.with(mContext).load(UserClient.getProfileImageUrl(user))
           .fitCenter()
           .bitmapTransform(new CropCircleTransformation(mContext))
           .into(viewHolder.ivProfilePhoto);

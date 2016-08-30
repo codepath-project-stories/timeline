@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.activities.TimelineActivity;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.parse.ParseUser;
 
@@ -105,7 +106,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void updateOwnerDetails(final StoriesAdapter.ViewHolderSimpleStory holder, ParseUser owner) {
-        String ownerImageUrl = owner.getString("profileImageUrl");
+        String ownerImageUrl = UserClient.getProfileImageUrl(owner);
         // Update the profile image only if they have one set
         if (ownerImageUrl != null && !ownerImageUrl.isEmpty()) {
             holder.ivAuthorProfilePhoto.setVisibility(View.VISIBLE);
@@ -144,7 +145,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (collaboratorList.size() >= 1) {
                 holder.ivCollaborator2.setVisibility(View.VISIBLE);
                 ParseUser user1 = collaboratorList.get(0);
-                String user1ProfileImageUrl = user1.getString("profileImageUrl");
+                String user1ProfileImageUrl = UserClient.getProfileImageUrl(user1);
                 if (user1ProfileImageUrl != null || !user1ProfileImageUrl.isEmpty()) {
                     Glide.with(context).load(user1ProfileImageUrl)
                             .fitCenter()
@@ -156,7 +157,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (collaboratorList.size() >= 2) {
                 holder.ivCollaborator1.setVisibility(View.VISIBLE);
                 ParseUser user2 = collaboratorList.get(1);
-                String user2ProfileImageUrl = user2.getString("profileImageUrl");
+                String user2ProfileImageUrl = UserClient.getProfileImageUrl(user2);
                 if (user2ProfileImageUrl != null || !user2ProfileImageUrl.isEmpty()) {
                     Glide.with(context).load(user2ProfileImageUrl)
                             .fitCenter()

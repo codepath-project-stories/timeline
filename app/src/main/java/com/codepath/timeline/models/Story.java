@@ -1,5 +1,6 @@
 package com.codepath.timeline.models;
 
+import com.codepath.timeline.network.UserClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -7,8 +8,6 @@ import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import org.parceler.Parcel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -44,9 +43,9 @@ public class Story extends ParseObject {
     setTitle(title);
     setBackgroundImageUrl(backgroundImageUrl);
     setCreatedAtReal(createdAtReal);
-    setOwner(ParseUser.getCurrentUser());
+    setOwner(UserClient.getCurrentUser());
     List<ParseUser> collaboratorList = new ArrayList<>();
-    collaboratorList.add(ParseUser.getCurrentUser());
+    collaboratorList.add(UserClient.getCurrentUser());
     setCollaboratorList(collaboratorList);
   }
 
@@ -64,9 +63,9 @@ public class Story extends ParseObject {
       theStory.setTitle(theStory.mockTitle);
       theStory.setBackgroundImageUrl(theStory.mockBackgroundImage);
       theStory.setCreatedAtReal(theStory.mockCreatedAt);
-      theStory.setOwner(ParseUser.getCurrentUser());
+      theStory.setOwner(UserClient.getCurrentUser());
       List<ParseUser> collaboratorList = new ArrayList<>();
-      collaboratorList.add(ParseUser.getCurrentUser());
+      collaboratorList.add(UserClient.getCurrentUser());
       theStory.setCollaboratorList(collaboratorList);
     }
   }

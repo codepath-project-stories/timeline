@@ -1,14 +1,12 @@
 package com.codepath.timeline.models;
 
+import com.codepath.timeline.network.UserClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import org.parceler.Parcel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -124,7 +122,7 @@ public class Moment extends ParseObject {
       str.append("\nobjectId=").append(author.getObjectId());
       str.append("\nuserName=").append(author.getUsername());
       str.append("\nemail=").append(author.getEmail());
-      str.append("\nprofileImageUrl=").append(author.get("profileImageUrl"));
+      str.append("\nprofileImageUrl=").append(UserClient.getProfileImageUrl(author));
     }
 
     return str.toString();

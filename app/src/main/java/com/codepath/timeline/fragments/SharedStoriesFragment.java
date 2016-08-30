@@ -10,6 +10,7 @@ import android.view.View;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -50,7 +51,7 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
             return;
         }
 
-        final ParseUser currentUser = ParseUser.getCurrentUser();
+        final ParseUser currentUser = UserClient.getCurrentUser();
         String demoCreatedString = (String) currentUser.get("demoCreated");
         boolean demoCreated = demoCreatedString != null && demoCreatedString.equals("true");
         if (!ParseApplication.DEMO_MODE || (ParseApplication.DEMO_MODE && demoCreated)) {
