@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +33,6 @@ import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +59,8 @@ public class NewStoryActivity extends NewItemClass
     Toolbar toolbar;
     @BindView(R.id.btnPublish)
     Button btnPublish;
+    @BindView(R.id.llTitle)
+    LinearLayout llTitle;
 
     @BindView(R.id.ivSearch)
     ImageView ivSearch;
@@ -168,9 +168,8 @@ public class NewStoryActivity extends NewItemClass
                 } else {
                     tvCount.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
-                boolean limit = etStoryTitle.getText().length() > 0 && etStoryTitle.getText().length() <= 35;
                 // Todo: add better visual for disabled button
-                btnPublish.setEnabled(limit);
+                btnPublish.setEnabled(etStoryTitle.getText().length() <= 35);
             }
         });
     }
@@ -229,7 +228,7 @@ public class NewStoryActivity extends NewItemClass
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         if (etStoryTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
-            etStoryTitle.startAnimation(shake);
+            llTitle.startAnimation(shake);
         }
         else if (ivBackground.getDrawable() == null) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
@@ -284,31 +283,6 @@ public class NewStoryActivity extends NewItemClass
                 takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                ExifInterface ei = null;
-                try {
-                    ei = new ExifInterface(takenPhotoUri.getPath());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                        ExifInterface.ORIENTATION_UNDEFINED);
-
-                switch(orientation) {
-                    case ExifInterface.ORIENTATION_ROTATE_90:
-                        takenImage = rotateImage(takenImage, 90);
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_180:
-                        takenImage = rotateImage(takenImage, 180);
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_270:
-                        takenImage = rotateImage(takenImage, 270);
-                        break;
-                    case ExifInterface.ORIENTATION_NORMAL:
-                    default:
-                        break;
-                }
                 ivBackground.setImageBitmap(takenImage);
                 // TODO: CHINGYAO: my device doesn't show any image in ivBackground
                 // TODO: try the following, but doesn't work
@@ -317,13 +291,6 @@ public class NewStoryActivity extends NewItemClass
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
         }
-    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix,
-                true);
     }
 
     @Override

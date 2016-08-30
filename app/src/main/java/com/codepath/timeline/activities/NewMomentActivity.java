@@ -21,8 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
@@ -52,6 +52,8 @@ public class NewMomentActivity extends NewItemClass {
     Button btnPublish;
     @BindView(R.id.tvCount)
     TextView tvCount;
+    @BindView(R.id.llTitle)
+    LinearLayout llTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +83,8 @@ public class NewMomentActivity extends NewItemClass {
                 } else {
                     tvCount.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
-                boolean limit = etMomentTitle.getText().length() > 0 && etMomentTitle.getText().length() <= 35;
-                // Todo: add better visual for disabled buton
-                btnPublish.setEnabled(limit);
+                // Todo: add better visual for disabled button
+                btnPublish.setEnabled(etMomentTitle.getText().length() <= 35);
             }
         });
     }
@@ -122,7 +123,6 @@ public class NewMomentActivity extends NewItemClass {
     // on click attached to text view id="@+id/tvPublish"
     public void publish(View view) {
 //        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
-
         // add animation to control the required input
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 
@@ -134,7 +134,7 @@ public class NewMomentActivity extends NewItemClass {
 
         if (etMomentTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
-            etMomentTitle.startAnimation(shake);
+            llTitle.startAnimation(shake);
         }
         else if (ivBackground.getDrawable() == null) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
@@ -167,11 +167,10 @@ public class NewMomentActivity extends NewItemClass {
                 takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 ivBackground.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
         }
     }

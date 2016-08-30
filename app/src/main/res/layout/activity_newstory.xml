@@ -46,6 +46,7 @@
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/llTitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -290,7 +291,6 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:enabled="false"
             android:background="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/publish"
