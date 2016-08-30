@@ -29,7 +29,7 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
     // LoginActivity calls LandingActivity
 
-    static boolean PLAY_VIDEO = true;
+    static boolean play_video = true;
 
     VideoView login_video;
 
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         // If user is anonymous, ask the user to login or signup
 
-        if (PLAY_VIDEO) {
+        if (play_video) {
             setContentView(R.layout.activity_login);
             login_video = (VideoView) findViewById(R.id.login_video);
         }
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         input_email.setText(mSettings.getString("input_email", ""));
         // input_email.requestFocus();
 
-        if (PLAY_VIDEO) {
+        if (play_video) {
             setupVideo();
         }
     }

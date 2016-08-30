@@ -8,10 +8,13 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -62,6 +65,11 @@ public class TimelineActivity extends AppCompatActivity {
     private String storyObjectId;
     private String storyTitle;
     private String storyBackgroundImageUrl;
+    private ScaleGestureDetector mScaleGestureDetector;
+    private int pinch_zoom_index;
+    GridLayoutManager gridLayoutManagerChat;
+    LinearLayoutManager linearLayoutManagerDefault;
+    GridLayoutManager gridLayoutManagerTwoColumns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +114,14 @@ public class TimelineActivity extends AppCompatActivity {
     private void initList() {
         mMomentList = new ArrayList<>();
         mAdapter = new MomentsHeaderAdapter(this, mMomentList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvMoments.setLayoutManager(linearLayoutManager);
+
+        gridLayoutManagerChat = new GridLayoutManager(this, 1); // 1
+        linearLayoutManagerDefault = new GridLayoutManager(this, 1); // 2
+        gridLayoutManagerTwoColumns = new GridLayoutManager(this, 2); // 3
+
+        rvMoments.setLayoutManager(linearLayoutManagerDefault);
+        pinch_zoom_index = 2;
+
         rvMoments.setAdapter(mAdapter);
 
         // Add the sticky headers decoration
@@ -137,6 +151,47 @@ public class TimelineActivity extends AppCompatActivity {
                 // Todo: add a new moment
                 Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
                 startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
+            }
+        });
+
+        mScaleGestureDetector = new ScaleGestureDetector(
+                this,
+                new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+                // if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
+                if (true) {
+                    if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
+                        if (pinch_zoom_index == 1) {
+                            rvMoments.setLayoutManager(linearLayoutManagerDefault);
+                            pinch_zoom_index = 2;
+                            return true;
+                        } else if (pinch_zoom_index == 2) {
+                            rvMoments.setLayoutManager(gridLayoutManagerTwoColumns);
+                            pinch_zoom_index = 3;
+                            return true;
+                        }
+                    } else if(detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
+                        if (pinch_zoom_index == 3) {
+                            rvMoments.setLayoutManager(linearLayoutManagerDefault);
+                            pinch_zoom_index = 2;
+                            return true;
+                        } else if (pinch_zoom_index == 2) {
+                            rvMoments.setLayoutManager(gridLayoutManagerChat);
+                            pinch_zoom_index = 1;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        rvMoments.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScaleGestureDetector.onTouchEvent(event);
+                return false;
             }
         });
     }
