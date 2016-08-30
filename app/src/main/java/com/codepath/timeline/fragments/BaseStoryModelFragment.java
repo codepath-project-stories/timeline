@@ -1,11 +1,14 @@
 package com.codepath.timeline.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.StoriesAdapter;
@@ -30,9 +34,13 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
+    private Unbinder unbinder;
 
     @BindView(R.id.rvStories) RecyclerView rvStories;
-    private Unbinder unbinder;
+
+    MenuItem miActionProgressItemArticle;
+    SearchView searchView;
+
 
     private boolean clicked = false;
 
@@ -52,7 +60,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
         setupLayout(layoutManagerList);
 
         // abstract method call
+//        showProgressBar();
         populateList();
+//        hideProgressBar();
 
         // Todo: on click listener is added directly in the adapter, modify it later to include the title of a story as well
         // Todo: the code below is not needed then, remove when sure
@@ -101,6 +111,39 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.miSearch);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setFocusable(true);
+        searchView.requestFocus();
+        searchView.setDrawingCacheBackgroundColor(Color.WHITE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+            public boolean onQueryTextSubmit(String searchQuery) {
+                // in some cases text submit fires several times, clear the focus
+                searchView.clearFocus();
+                for (Story story: stories) {
+                    if (story.getTitle().equals(searchQuery)) {
+                        stories.clear();
+                        adaptStories.notifyItemRangeRemoved(0, adaptStories.getItemCount());
+                        addNew(story);
+                    }
+                }
+                return true;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        miActionProgressItemArticle = menu.findItem(R.id.miActionProgress);
+        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItemArticle);
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -110,6 +153,14 @@ abstract public class BaseStoryModelFragment extends Fragment {
                 // Todo: add search functionality
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void showProgressBar() {
+        miActionProgressItemArticle.setVisible(true);
+    }
+
+    protected void hideProgressBar() {
+        miActionProgressItemArticle.setVisible(false);
     }
 
     protected void setupLayout(RecyclerView.LayoutManager layout) {

@@ -28,12 +28,12 @@ public class LandingActivity extends AppCompatActivity {
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.vpPager)
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabBar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class LandingActivity extends AppCompatActivity {
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
         setupViewPager();
 
         ParseUser currentUser = ParseUser.getCurrentUser();

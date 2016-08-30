@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
@@ -18,8 +17,6 @@ import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -84,9 +81,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                         }
                     }
             );
-        } else if (ParseApplication.DEMO_MODE && !demoCreated)
-
-        {
+        } else if (ParseApplication.DEMO_MODE && !demoCreated) {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
