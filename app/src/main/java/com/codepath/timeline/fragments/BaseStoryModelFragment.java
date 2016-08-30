@@ -1,7 +1,6 @@
 package com.codepath.timeline.fragments;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.StoriesAdapter;
@@ -38,11 +36,8 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     @BindView(R.id.rvStories) RecyclerView rvStories;
 
-    MenuItem miActionProgressItemArticle;
+    MenuItem miActionProgress;
     SearchView searchView;
-
-
-    private boolean clicked = false;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup parent, @Nullable Bundle savedInstanceState) {
@@ -60,30 +55,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
         setupLayout(layoutManagerList);
 
         // abstract method call
-//        showProgressBar();
+        showProgressBar();
         populateList();
-//        hideProgressBar();
-
-        // Todo: on click listener is added directly in the adapter, modify it later to include the title of a story as well
-        // Todo: the code below is not needed then, remove when sure
-//        ItemClickSupport
-//                .addTo(rvStories)
-//                .setOnItemClickListener(
-//                        new ItemClickSupport.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClicked(RecyclerView recyclerView,
-//                                                      int position,
-//                                                      View v) {
-//                                Intent i = new Intent(getContext(), TimelineActivity.class);
-//                                Story story = stories.get(position);
-//                                i.putExtra("story", Parcels.wrap(story));
-//                                startActivity(i);
-//                            }
-//                        }
-//                );
-
-        //
-
+        hideProgressBar();
 
         // Todo: toggle between different layouts, if necessary:
 //        toggle.setOnClickListener(new View.OnClickListener() {
@@ -104,18 +78,18 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Todo: in case menu option is needed
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+
+        miActionProgress = menu.findItem(R.id.miActionProgress);
+
         MenuItem searchItem = menu.findItem(R.id.miSearch);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setFocusable(true);
         searchView.requestFocus();
-        searchView.setDrawingCacheBackgroundColor(Color.WHITE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -136,31 +110,19 @@ abstract public class BaseStoryModelFragment extends Fragment {
                 return true;
             }
         });
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        miActionProgressItemArticle = menu.findItem(R.id.miActionProgress);
-        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItemArticle);
-        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.miSearch:
-                // Todo: add search functionality
-        }
         return super.onOptionsItemSelected(item);
     }
 
     protected void showProgressBar() {
-        miActionProgressItemArticle.setVisible(true);
+        miActionProgress.setVisible(true);
     }
 
     protected void hideProgressBar() {
-        miActionProgressItemArticle.setVisible(false);
+        miActionProgress.setVisible(true);
     }
 
     protected void setupLayout(RecyclerView.LayoutManager layout) {
