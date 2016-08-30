@@ -58,7 +58,7 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
             // demo already created
             // fetch stories from Parse server
             Log.d("populateList", "getStoryList");
-            TimelineClient.getInstance().getStoryList2(
+            TimelineClient.getInstance().getSharedStoryList(
                     currentUser,
                     // set up callback
                     new TimelineClient.TimelineClientGetStoryListener() {

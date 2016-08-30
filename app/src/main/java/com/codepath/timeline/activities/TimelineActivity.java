@@ -159,8 +159,9 @@ public class TimelineActivity extends AppCompatActivity {
                 new ScaleGestureDetector.SimpleOnScaleGestureListener() {
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
-                // if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
-                if (true) {
+                // TODO: tune pinch zoom for demo
+                if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
+                // if (true) {
                     if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
                         if (pinch_zoom_index == 1) {
                             rvMoments.setLayoutManager(linearLayoutManagerDefault);
