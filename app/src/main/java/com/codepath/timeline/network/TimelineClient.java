@@ -157,30 +157,6 @@ public class TimelineClient {
         });
   }
 
-  // TODO: now is get all users. need to change to get friend list.
-  public void getFriendList(ParseUser user,
-                           final TimelineClientGetFriendListListener onGetFriendList) {
-    ParseQuery<ParseUser> query = ParseUser.getQuery();
-    // http://parseplatform.github.io/docs/android/guide
-    // fetchifneeded() could be an alternative to include()
-    query.findInBackground(
-            new FindCallback<ParseUser>() {
-              @Override
-              public void done(List<ParseUser> userList, ParseException e) {
-                if (e == null) {
-                  if (userList != null) {
-                    Log.d("findInBackground", "!= null");
-                    if (onGetFriendList != null) {
-                      onGetFriendList.onGetFriendList(userList);
-                    }
-                  }
-                } else {
-                  Log.d("findInBackground", "Error: " + e.getMessage());
-                }
-              }
-            });
-  }
-
   // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
   // for the story list in the LandingActivity
   public void getStoryList2(ParseUser user,
@@ -284,6 +260,57 @@ public class TimelineClient {
             }
           }
         });
+  }
+
+  // TODO: now is get all users. need to change to get friend list.
+  public void getFriendList(ParseUser user,
+                            final TimelineClientGetFriendListListener onGetFriendList) {
+    ParseQuery<ParseUser> query = ParseUser.getQuery();
+    // http://parseplatform.github.io/docs/android/guide
+    // fetchifneeded() could be an alternative to include()
+    query.findInBackground(
+            new FindCallback<ParseUser>() {
+              @Override
+              public void done(List<ParseUser> userList, ParseException e) {
+                if (e == null) {
+                  if (userList != null) {
+                    Log.d("findInBackground", "!= null");
+                    if (onGetFriendList != null) {
+                      onGetFriendList.onGetFriendList(userList);
+                    }
+                  }
+                } else {
+                  Log.d("findInBackground", "Error: " + e.getMessage());
+                }
+              }
+            });
+  }
+
+  public void getSharedStoryList(ParseUser user,
+                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+    ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+    // http://parseplatform.github.io/docs/android/guide
+    // fetchifneeded() could be an alternative to include()
+    query.whereEqualTo("collaboratorList", user);
+    query.include("owner"); // eagerly load the owner -- we need it for updating the story view
+    query.include("collaboratorList");
+    // Execute the find asynchronously
+    query.findInBackground(new FindCallback<Story>() {
+      @Override
+      public void done(List<Story> itemList, ParseException e) {
+        if (e == null) {
+          if (itemList != null) {
+            Log.d("findInBackground", Integer.toString(itemList.size()));
+            // Access the array of results here
+            if (timelineClientGetStoryListener != null) {
+              timelineClientGetStoryListener.onGetStoryList(itemList); // use callback
+            }
+          }
+        } else {
+          Log.d("findInBackground", "Error: " + e.getMessage());
+        }
+      }
+    });
   }
 
   // TEST: Create mock response

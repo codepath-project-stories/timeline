@@ -142,4 +142,24 @@ public class TestParseActivity extends AppCompatActivity {
 		List<Moment> momentList = MockResponseGenerator.getInstance().getMomentList();
 		TimelineClient.getInstance().addMomentList(story, momentList);
 	}
+
+	@OnClick(R.id.getSharedStoryList)
+	public void getSharedStoryList() {
+		ParseUser currentUser = UserClient.getCurrentUser();
+		TimelineClient.getInstance().getSharedStoryList(
+				currentUser,
+				// set up callback
+				new TimelineClient.TimelineClientGetStoryListener() {
+					@Override
+					public void onGetStoryList(List<Story> itemList) {
+						String buffer = "getSharedStoryList\n";
+						if (itemList != null) {
+							for (Story eachStory : itemList) {
+								buffer = buffer + eachStory.getTitle() + "\n";
+							}
+						}
+						output.setText(buffer);
+					}
+				});
+	}
 }
