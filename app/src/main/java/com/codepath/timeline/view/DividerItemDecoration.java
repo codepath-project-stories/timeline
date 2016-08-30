@@ -1,4 +1,4 @@
-package com.codepath.timeline.util.view;
+package com.codepath.timeline.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

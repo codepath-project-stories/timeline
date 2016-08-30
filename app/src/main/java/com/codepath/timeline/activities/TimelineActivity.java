@@ -22,7 +22,7 @@ import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.view.ItemClickSupport;
+import com.codepath.timeline.view.ItemClickSupport;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import org.parceler.Parcels;

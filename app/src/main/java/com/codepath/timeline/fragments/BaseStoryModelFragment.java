@@ -55,9 +55,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
         setupLayout(layoutManagerList);
 
         // abstract method call
-        showProgressBar();
+//        showProgressBar();
         populateList();
-        hideProgressBar();
+//        hideProgressBar();
 
         // Todo: toggle between different layouts, if necessary:
 //        toggle.setOnClickListener(new View.OnClickListener() {

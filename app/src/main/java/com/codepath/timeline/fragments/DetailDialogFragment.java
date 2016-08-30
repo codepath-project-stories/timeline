@@ -24,7 +24,7 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.view.DepthPageTransformer;
+import com.codepath.timeline.view.DepthPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;

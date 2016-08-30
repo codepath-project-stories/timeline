@@ -1,4 +1,4 @@
-package com.codepath.timeline.util.view;
+package com.codepath.timeline.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
