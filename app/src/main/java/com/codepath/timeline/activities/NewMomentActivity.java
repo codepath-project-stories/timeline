@@ -152,6 +152,7 @@ public class NewMomentActivity extends NewItemClass {
 
             // send result back
             Intent data = new Intent();
+            // Todo: app crashes when trying to wrap a moment, when transition to db - fix this
             data.putExtra("moment", Parcels.wrap(moment));
             setResult(1, data);
 
@@ -170,7 +171,7 @@ public class NewMomentActivity extends NewItemClass {
                 // Load the taken image into a preview
                 ivBackground.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Snackbar.make(findViewById(R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
         }
     }
