@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -56,8 +55,8 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvMoments;
     @BindView(R.id.ivAutoPlay)
     ImageView ivAutoPlay;
-    @BindView(R.id.addBtn)
-    FloatingActionButton add;
+    @BindView(R.id.miAdd)
+    com.github.clans.fab.FloatingActionButton miAdd;
 
     private List<Moment> mMomentList;
     private MomentsHeaderAdapter mAdapter;
@@ -145,7 +144,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         getMomentList();
 
-        add.setOnClickListener(new View.OnClickListener() {
+        miAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Todo: add a new moment

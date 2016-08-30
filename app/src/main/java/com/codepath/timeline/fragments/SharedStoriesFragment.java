@@ -3,7 +3,6 @@ package com.codepath.timeline.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 
@@ -23,7 +22,7 @@ import butterknife.BindView;
 public class SharedStoriesFragment extends BaseStoryModelFragment {
 
     @BindView(R.id.addBtn)
-    FloatingActionButton add;
+    com.github.clans.fab.FloatingActionButton add;
 
     // newInstance constructor for creating fragment with arguments
     public static SharedStoriesFragment newInstance(int page) {

@@ -4,7 +4,6 @@ package com.codepath.timeline.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 
@@ -31,7 +30,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     // BaseStoryModelFragment calls TimelineActivity
 
     @BindView(R.id.addBtn)
-    FloatingActionButton add;
+    com.github.clans.fab.FloatingActionButton add;
     private int REQUEST_CODE = 5;
 
     // newInstance constructor for creating fragment with arguments

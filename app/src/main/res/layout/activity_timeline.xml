@@ -60,19 +60,90 @@
         android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addBtn"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
-        android:clickable="true"
-        android:src="@drawable/add_btn"
-        app:backgroundTint="@color/colorAccent"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabSize="mini"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
         app:layout_anchor="@id/rvMoments"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        app:menu_icon="@drawable/add_btn"
+        app:menu_colorNormal="@color/colorAccent"
+        app:menu_colorRipple="@color/colorPrimaryLight"
+        app:menu_colorPressed="@color/colorBrightAccent"
+        app:menu_fab_size="mini"
+        app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        app:menu_labels_paddingTop="4dp"
+        app:menu_labels_paddingRight="8dp"
+        app:menu_labels_paddingBottom="4dp"
+        app:menu_labels_paddingLeft="8dp"
+        app:menu_labels_padding="8dp"
+        app:menu_labels_textColor="@color/colorAccent"
+        app:menu_labels_textSize="12sp"
+        app:menu_labels_cornerRadius="3dp"
+        app:menu_labels_colorNormal="@color/colorPrimaryLight"
+        app:menu_labels_colorPressed="@color/colorBrightAccent"
+        app:menu_labels_colorRipple="@color/colorAccent"
+        app:menu_labels_showShadow="true"
+        app:menu_labels_singleLine="false"
+        app:menu_labels_ellipsize="none"
+        app:menu_labels_maxLines="-1"
+        app:menu_labels_position="left"
+        app:menu_openDirection="up"
+        app:menu_backgroundColor="@android:color/transparent"
+        app:menu_animationDelayPerItem="50">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/miAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimaryLight"
+            app:fab_colorPressed="@color/colorBrightAccent"
+            app:fab_size="mini"
+            app:fab_label="Add moment" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/miMusic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/music_icon"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimaryLight"
+            app:fab_colorPressed="@color/colorBrightAccent"
+            app:fab_size="mini"
+            app:fab_label="Spotify story" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/miShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/share_icon"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimaryLight"
+            app:fab_colorPressed="@color/colorBrightAccent"
+            app:fab_size="mini"
+            app:fab_label="Share story" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <!--Todo: Leave it, if needs just a regular floating button, uncomment and change in the activity-->
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/addBtn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:clickable="true"-->
+        <!--android:src="@drawable/add_btn"-->
+        <!--app:backgroundTint="@color/colorAccent"-->
+        <!--app:borderWidth="0dp"-->
+        <!--app:elevation="6dp"-->
+        <!--app:fabSize="mini"-->
+        <!--app:layout_anchor="@id/rvMoments"-->
+        <!--app:layout_anchorGravity="bottom|right|end" />-->
 
 </android.support.design.widget.CoordinatorLayout>

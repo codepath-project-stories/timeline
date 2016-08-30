@@ -99,4 +99,7 @@ dependencies {
 
     compile 'com.github.hotchemi:permissionsdispatcher:2.0.7'
     apt 'com.github.hotchemi:permissionsdispatcher-processor:2.0.7'
+
+    // fab button with menu
+    compile 'com.github.clans:fab:1.6.4'
 }
