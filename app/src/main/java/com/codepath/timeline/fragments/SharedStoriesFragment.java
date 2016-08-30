@@ -41,8 +41,10 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
 
     @Override
     protected void populateList() {
+
         // remove floating button from this view, only implemented for adding a moment to friend's story
         add.setVisibility(View.GONE);
+
         // Todo: change functionality to quering the list of friends' stories and displaying
         if (!ParseApplication.TURN_ON_PARSE) {
             addAll(TimelineClient.getInstance().getMockStoryList(getContext()));
@@ -68,16 +70,14 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
                         }
                     }
             );
-        } else if (ParseApplication.DEMO_MODE && !demoCreated)
-
-        {
+        } else if (ParseApplication.DEMO_MODE && !demoCreated) {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
             List<Story> storyList = TimelineClient.getInstance().getMockStoryList(getActivity());
             addAll(storyList);
             TimelineClient.getInstance().addStoryList(storyList,
-                    new TimelineClient.TimelineClientAddStoryListener(){
+                    new TimelineClient.TimelineClientAddStoryListener() {
                         @Override
                         public void onAddStoryList() {
                             currentUser.put("demoCreated", "true");

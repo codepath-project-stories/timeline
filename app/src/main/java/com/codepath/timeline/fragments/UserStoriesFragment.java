@@ -85,9 +85,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                         }
                     }
             );
-        } else if (ParseApplication.DEMO_MODE && !demoCreated)
-
-        {
+        } else if (ParseApplication.DEMO_MODE && !demoCreated) {
             // demo not created yet
             // create fake mock stories
             Log.d("populateList", "getMockStoryList");
