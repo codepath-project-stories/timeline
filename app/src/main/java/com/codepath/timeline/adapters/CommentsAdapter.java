@@ -90,7 +90,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
       }
     }
 
-    ParseUser user = comment.getUser();
+    ParseUser user = comment.getAuthor();
     if (user != null) {
       Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
       holder.tvName.setText(UserClient.getName(user));

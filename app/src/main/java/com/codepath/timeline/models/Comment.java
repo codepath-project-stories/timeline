@@ -9,28 +9,11 @@ import org.parceler.Parcel;
 // remember to register in ParseApplication
 // only fields of Comment class will be serialized
 @ParseClassName("Comment")
-@Parcel(analyze = {Comment.class})
 public class Comment extends ParseObject {
-  private int id;
-  private String createdAtRealDoNotUseThis;     // DB format: 2016-08-22T19:22:54.695Z
-  private String mediaUrl;
-  private String location;
-  private String body;
+  private String mediaUrl;                      // DB: Only used for displaying the moment detail
+  private String location;                      // DB: Only used for displaying the moment detail
 
-  public Comment() {}
-
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  // the date added into Parse
-  public String getCreatedAtString() {
-    return getCreatedAt().toString();
+  public Comment() {
   }
 
   // the date from photo or user
@@ -42,22 +25,6 @@ public class Comment extends ParseObject {
     put("createdAtReal", createdAtReal);
   }
 
-  public String getMediaUrl() {
-    return mediaUrl;
-  }
-
-  public void setMediaUrl(String mediaUrl) {
-    this.mediaUrl = mediaUrl;
-  }
-
-  public ParseUser getUser() {
-    return (ParseUser) get("user");
-  }
-
-  public void setUser(ParseUser user) {
-    put("user", user);
-  }
-
   public String getLocation() {
     return location;
   }
@@ -66,11 +33,27 @@ public class Comment extends ParseObject {
     this.location = location;
   }
 
+  public String getMediaUrl() {
+    return mediaUrl;
+  }
+
+  public void setMediaUrl(String mediaUrl) {
+    this.mediaUrl = mediaUrl;
+  }
+
+  public ParseUser getAuthor() {
+    return (ParseUser) get("author");
+  }
+
+  public void setAuthor(ParseUser author) {
+    put("author", author);
+  }
+
   public String getBody() {
-    return body;
+    return getString("body");
   }
 
   public void setBody(String body) {
-    this.body = body;
+    put("body", body);
   }
 }

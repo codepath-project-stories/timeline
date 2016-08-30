@@ -3,6 +3,7 @@ package com.codepath.timeline.network;
 import android.content.Context;
 import android.util.Log;
 
+import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.google.gson.JsonArray;
@@ -75,6 +76,10 @@ public class TimelineClient {
 
   public interface TimelineClientGetMomentListener {
     void onGetMomentListener(Moment moment);
+  }
+
+  public interface TimelineClientGetCommentListListener {
+    void onGetCommentListListener(List<Comment> itemList);
   }
 
   public void addStoryList(final List<Story> storyList,
@@ -230,6 +235,32 @@ public class TimelineClient {
             timelineClientGetMomentListener.onGetMomentListener(moment);
           }
         }
+      }
+    });
+  }
+
+  public void addComment(final Moment moment, Comment comment) {
+    comment.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from saving comment: " + e.getMessage());
+          return;
+        }
+        Log.d(TAG, "Successfully saved comment");
+
+        // Update the moment after saving the comment
+        moment.saveInBackground(new SaveCallback() {
+          @Override
+          public void done(ParseException e) {
+            if (e != null) {
+              Log.e(TAG, "Exception from saving moment: " + e.getMessage());
+              return;
+            }
+
+            Log.d(TAG, "Successfully saved moment");
+          }
+        });
       }
     });
   }

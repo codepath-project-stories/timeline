@@ -18,6 +18,8 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +99,10 @@ public class MomentDetailFragment extends Fragment {
     Comment momentDetail = new Comment();
     // TODO: make sure it is not null here
     if (mMoment.getAuthor() != null) {
-      momentDetail.setUser(mMoment.getAuthor());
+      momentDetail.setAuthor(mMoment.getAuthor());
     }
     else {
-      momentDetail.setUser(UserClient.getCurrentUser());
+      momentDetail.setAuthor(UserClient.getCurrentUser());
     }
     momentDetail.setLocation(mMoment.getLocation());
     // TODO: make sure it is not null here
@@ -129,6 +131,32 @@ public class MomentDetailFragment extends Fragment {
   }
 
   public void addComment(Comment comment) {
+//    List<Comment> commentList = mMoment.getCommentList();
+//    if (commentList == null) {
+//      commentList = new ArrayList<>();
+//    }
+//
+//    commentList.add(comment);
+//    mMoment.setCommentList(commentList);
+//    mMoment.saveInBackground(new SaveCallback() {
+//      @Override
+//      public void done(ParseException e) {
+//        if (e != null) {
+//          Log.e(TAG, "Exception from saving moment: " + e.getMessage());
+//          return;
+//        }
+//
+//        Log.d(TAG, "Successfully saved moment");
+//      }
+//    });
+
+    if (mMoment.getCommentList() == null) {
+      mMoment.setCommentList(new ArrayList<Comment>());
+    }
+
+    mMoment.getCommentList().add(comment);
+    TimelineClient.getInstance().addComment(mMoment, comment);
+
     mCommentList.add(comment);
     mAdapter.notifyItemRangeInserted(mCommentList.size()-1, 1);
 
