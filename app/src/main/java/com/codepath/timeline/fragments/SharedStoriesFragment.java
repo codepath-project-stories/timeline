@@ -41,6 +41,9 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
     @Override
     protected void populateList() {
 
+        // start custom progress bar
+        startAnim();
+
         // remove floating button from this view, only implemented for adding a moment to friend's story
         add.setVisibility(View.GONE);
 
@@ -96,5 +99,8 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
                         }
                     });
         }
+
+        // stop custom progress bar
+        stopAnim();
     }
 }

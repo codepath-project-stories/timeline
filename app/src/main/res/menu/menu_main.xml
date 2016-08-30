@@ -10,12 +10,4 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <item
-        android:id="@+id/miActionProgress"
-        android:title="@string/loading"
-        android:visible="false"
-        android:orderInCategory="50"
-        app:showAsAction="always"
-        app:actionLayout="@layout/action_view_progress" />
-
 </menu>

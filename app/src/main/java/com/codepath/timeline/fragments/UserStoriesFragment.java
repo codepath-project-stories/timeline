@@ -51,6 +51,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     @Override
     protected void populateList() {
 
+        // start custom progress bar
+        startAnim();
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +114,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                     }
                 });
         }
+
+        // stop custom progress bar
+        stopAnim();
     }
 
     @Override

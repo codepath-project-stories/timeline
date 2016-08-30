@@ -28,16 +28,16 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 abstract public class BaseStoryModelFragment extends Fragment {
-    // BaseStoryModelFragment calls TimelineActivity
+    // BaseStoryModelFragment is a parent class for UserStoriesFragment and SharedStoriesFragment
+    // calls TimelineActivity
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
     private Unbinder unbinder;
+    SearchView searchView;
 
     @BindView(R.id.rvStories) RecyclerView rvStories;
-
-    MenuItem miActionProgress;
-    SearchView searchView;
+    @BindView(R.id.avi) com.wang.avi.AVLoadingIndicatorView avi;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup parent, @Nullable Bundle savedInstanceState) {
@@ -55,9 +55,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
         setupLayout(layoutManagerList);
 
         // abstract method call
-//        showProgressBar();
         populateList();
-//        hideProgressBar();
 
         // Todo: toggle between different layouts, if necessary:
 //        toggle.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +82,6 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-
-        miActionProgress = menu.findItem(R.id.miActionProgress);
 
         MenuItem searchItem = menu.findItem(R.id.miSearch);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -117,14 +113,6 @@ abstract public class BaseStoryModelFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void showProgressBar() {
-        miActionProgress.setVisible(true);
-    }
-
-    protected void hideProgressBar() {
-        miActionProgress.setVisible(true);
-    }
-
     protected void setupLayout(RecyclerView.LayoutManager layout) {
         rvStories.setLayoutManager(layout);
         layout.scrollToPosition(0);
@@ -146,6 +134,14 @@ abstract public class BaseStoryModelFragment extends Fragment {
         stories.add(story);
         adaptStories.notifyItemInserted(0);
         rvStories.smoothScrollToPosition(stories.size());
+    }
+
+    void startAnim() {
+        avi.show();
+    }
+
+    void stopAnim() {
+        avi.hide();
     }
 
     @Override

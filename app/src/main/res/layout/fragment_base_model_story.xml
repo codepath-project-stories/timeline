@@ -15,7 +15,6 @@
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:src="@drawable/add_btn"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorRipple="@color/colorPrimaryLight"
@@ -23,5 +22,16 @@
         app:fab_size="mini"
         app:layout_anchor="@id/rvStories"
         app:layout_anchorGravity="bottom|right|end" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        style="@style/AVLoadingIndicatorView.Large"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="170dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
 
 </android.support.design.widget.CoordinatorLayout>
