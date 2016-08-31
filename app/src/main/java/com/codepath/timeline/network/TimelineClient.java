@@ -160,30 +160,6 @@ public class TimelineClient {
         });
   }
 
-  // TODO: now is get all users. need to change to get friend list.
-  public void getFriendList(ParseUser user,
-                            final TimelineClientGetFriendListListener onGetFriendList) {
-    ParseQuery<ParseUser> query = ParseUser.getQuery();
-    // http://parseplatform.github.io/docs/android/guide
-    // fetchifneeded() could be an alternative to include()
-    query.findInBackground(
-        new FindCallback<ParseUser>() {
-          @Override
-          public void done(List<ParseUser> userList, ParseException e) {
-            if (e == null) {
-              if (userList != null) {
-                Log.d("findInBackground", "!= null");
-                if (onGetFriendList != null) {
-                  onGetFriendList.onGetFriendList(userList);
-                }
-              }
-            } else {
-              Log.d("findInBackground", "Error: " + e.getMessage());
-            }
-          }
-        });
-  }
-
   // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
   // for the story list in the LandingActivity
   public void getStoryList2(ParseUser user,
