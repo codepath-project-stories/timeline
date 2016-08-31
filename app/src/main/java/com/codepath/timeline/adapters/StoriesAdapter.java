@@ -111,7 +111,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void updateOwnerDetails(final StoriesAdapter.ViewHolderSimpleStory holder, ParseUser owner) {
         String ownerImageUrl = UserClient.getProfileImageUrl(owner);
-        // Update the profile image only if they have one set
+        // Update the profile_icon image only if they have one set
         if (ownerImageUrl != null && !ownerImageUrl.isEmpty()) {
             holder.ivAuthorProfilePhoto.setVisibility(View.VISIBLE);
             Glide.with(context).load(ownerImageUrl)
