@@ -149,9 +149,8 @@ public class DetailDialogFragment extends DialogFragment {
     if (fragment != null) {
       Comment comment = new Comment();
       comment.setBody(etComment.getText().toString());
-      comment.setUser(UserClient.getCurrentUser());
+      comment.setAuthor(UserClient.getCurrentUser());
 
-      // TODO: push to the server
       fragment.addComment(comment);
 
       // If successful, clear the text and disable the button

@@ -43,6 +43,8 @@ public class MomentDetailFragment extends Fragment {
   }
 
   public static MomentDetailFragment newInstance(String momentObjectId) {
+    Log.d(TAG, "MomentDetailFragment: " + momentObjectId);
+
     MomentDetailFragment frag = new MomentDetailFragment();
     Bundle args = new Bundle();
     args.putString(AppConstants.OBJECT_ID, momentObjectId);
@@ -56,7 +58,6 @@ public class MomentDetailFragment extends Fragment {
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_moment_detail, container, false);
     ButterKnife.bind(this, view);
-    initList();
     return view;
   }
 
@@ -64,17 +65,19 @@ public class MomentDetailFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    Log.d(TAG, "onViewCreated");
     mObjectId = getArguments().getString(AppConstants.OBJECT_ID, null);
     if (mObjectId == null) {
       Log.e(TAG, "Moment OBJECT_ID is NULL");
       return;
     }
 
-    TimelineClient.getInstance().getMoment(mObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+    TimelineClient.getInstance().getMomentDetails(mObjectId, new TimelineClient.TimelineClientGetMomentListener() {
       @Override
       public void onGetMomentListener(Moment moment) {
         Log.d(TAG, "Moment detail: " + moment);
         mMoment = moment;
+        initList();
         updateMoment();
       }
     });
@@ -94,13 +97,13 @@ public class MomentDetailFragment extends Fragment {
     Log.d(TAG, "updating moment");
 
     // Add the moment photo as the first comment
-    Comment momentDetail = new Comment();
+    final Comment momentDetail = new Comment();
     // TODO: make sure it is not null here
     if (mMoment.getAuthor() != null) {
-      momentDetail.setUser(mMoment.getAuthor());
+      momentDetail.setAuthor(mMoment.getAuthor());
     }
     else {
-      momentDetail.setUser(UserClient.getCurrentUser());
+      momentDetail.setAuthor(UserClient.getCurrentUser());
     }
     momentDetail.setLocation(mMoment.getLocation());
     // TODO: make sure it is not null here
@@ -117,20 +120,20 @@ public class MomentDetailFragment extends Fragment {
     momentDetail.setBody(mMoment.getDescription());
     momentDetail.setMediaUrl(mMoment.getMediaUrl());
     mCommentList.add(momentDetail);
-    mAdapter.notifyItemInserted(0);
 
-    List<Comment> commentList = mMoment.getCommentList();
-    if (commentList != null && commentList.size() > 0) {
-      mCommentList.addAll(commentList);
-      mAdapter.notifyItemRangeInserted(0, mCommentList.size());
+    if (mMoment.getCommentList() != null) {
+      mCommentList.addAll(mMoment.getCommentList());
     }
+    mAdapter.notifyDataSetChanged();
 
     Log.d(TAG, "FINISHED updating moment");
   }
 
   public void addComment(Comment comment) {
+    TimelineClient.getInstance().addComment(mMoment, comment);
+
     mCommentList.add(comment);
-    mAdapter.notifyItemRangeInserted(mCommentList.size()-1, 1);
+    mAdapter.notifyDataSetChanged();
 
     // Scroll to the bottom so that the newly added comment is displayed
     rvComments.smoothScrollToPosition(mCommentList.size());

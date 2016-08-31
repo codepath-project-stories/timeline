@@ -90,7 +90,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
       }
     }
 
-    ParseUser user = comment.getUser();
+    ParseUser user = comment.getAuthor();
     if (user != null) {
       Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
       holder.tvName.setText(UserClient.getName(user));
@@ -101,13 +101,13 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
               .into(holder.ivProfilePhoto);
     }
 
-    if (comment.getCreatedAt() != null) {
-      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAtReal());
-      Log.d(TAG, "formattedDate: " + formattedDate);
-      holder.tvDate.setText(formattedDate);
-    } else {
-      holder.tvDate.setText("");
-    }
+//    if (comment.getCreatedAt() != null) {
+//      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAtReal());
+//      Log.d(TAG, "formattedDate: " + formattedDate);
+//      holder.tvDate.setText(formattedDate);
+//    } else {
+//      holder.tvDate.setText("");
+//    }
 
     holder.tvBody.setText(comment.getBody());
   }

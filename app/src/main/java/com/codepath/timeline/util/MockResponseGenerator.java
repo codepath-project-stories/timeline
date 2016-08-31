@@ -84,7 +84,7 @@ public class MockResponseGenerator {
       /*
       if (i % 5 == 0) {
         Comment comment = new Comment();
-        comment.setUser(UserClient.getCurrentUser());
+        comment.setAuthor(UserClient.getCurrentUser());
         comment.setCreatedAtReal("2016-09-31T19:22:54.695Z");
         comment.setBody("Looking really, really good");
         comment.setId(8000 + i);
