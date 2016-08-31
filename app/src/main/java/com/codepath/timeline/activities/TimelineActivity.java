@@ -24,8 +24,10 @@ import com.codepath.timeline.adapters.MomentsHeaderAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.view.ItemClickSupport;
+import com.parse.ParseFile;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -220,36 +222,36 @@ public class TimelineActivity extends AppCompatActivity implements
         mScaleGestureDetector = new ScaleGestureDetector(
                 this,
                 new ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            @Override
-            public boolean onScale(ScaleGestureDetector detector) {
-                // TODO: tune pinch zoom for demo
-                if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
-                // if (true) {
-                    if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
-                        if (pinch_zoom_index == 1) {
-                            rvMoments.setLayoutManager(linearLayoutManagerDefault);
-                            pinch_zoom_index = 2;
-                            return true;
-                        } else if (pinch_zoom_index == 2) {
-                            rvMoments.setLayoutManager(gridLayoutManagerTwoColumns);
-                            pinch_zoom_index = 3;
-                            return true;
+                    @Override
+                    public boolean onScale(ScaleGestureDetector detector) {
+                        // TODO: tune pinch zoom for demo
+                        if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
+                            // if (true) {
+                            if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
+                                if (pinch_zoom_index == 1) {
+                                    rvMoments.setLayoutManager(linearLayoutManagerDefault);
+                                    pinch_zoom_index = 2;
+                                    return true;
+                                } else if (pinch_zoom_index == 2) {
+                                    rvMoments.setLayoutManager(gridLayoutManagerTwoColumns);
+                                    pinch_zoom_index = 3;
+                                    return true;
+                                }
+                            } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
+                                if (pinch_zoom_index == 3) {
+                                    rvMoments.setLayoutManager(linearLayoutManagerDefault);
+                                    pinch_zoom_index = 2;
+                                    return true;
+                                } else if (pinch_zoom_index == 2) {
+                                    rvMoments.setLayoutManager(gridLayoutManagerChat);
+                                    pinch_zoom_index = 1;
+                                    return true;
+                                }
+                            }
                         }
-                    } else if(detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
-                        if (pinch_zoom_index == 3) {
-                            rvMoments.setLayoutManager(linearLayoutManagerDefault);
-                            pinch_zoom_index = 2;
-                            return true;
-                        } else if (pinch_zoom_index == 2) {
-                            rvMoments.setLayoutManager(gridLayoutManagerChat);
-                            pinch_zoom_index = 1;
-                            return true;
-                        }
+                        return false;
                     }
-                }
-                return false;
-            }
-        });
+                });
 
         rvMoments.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -290,13 +292,13 @@ public class TimelineActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request it is that we're responding to
         if (requestCode == ADD_MOMENT_REQUEST_CODE && resultCode == 1) {
-            // Get the URI that points to the selected contact
-            Moment moment = Parcels.unwrap(data.getParcelableExtra("moment"));
-            Log.d("DEBUG", moment.toString());
-//            Snackbar.make(findViewById(android.R.id.content), moment.toString(), Snackbar.LENGTH_SHORT).show();
-            if (moment != null) {
-                addMoment(moment);
-            }
+            Moment moment = new Moment();
+            moment.setDescription(data.getStringExtra(AppConstants.MOMENT_DESCRIPTION));
+            moment.setLocation(data.getStringExtra(AppConstants.MOMENT_LOCATION));
+            moment.setAuthor(UserClient.getCurrentUser());
+            moment.setTempPhotoUri(data.getStringExtra(AppConstants.PHOTO_URI));
+
+            addMoment(moment);
         }
 
         if (requestCode == REQUEST_CODE) {
@@ -365,15 +367,20 @@ public class TimelineActivity extends AppCompatActivity implements
         }
     }
 
-    private void addMoment(Moment moment){
+    private void addMoment(final Moment moment) {
+        TimelineClient.getInstance().uploadFile("photo.jpg", moment.getTempPhotoUri(), new TimelineClient.TimelineClientUploadFileListener() {
+            @Override
+            public void onUploadFileListener(ParseFile file) {
+                moment.setMediaFile(file);
+                TimelineClient.getInstance().addMoment(moment, storyObjectId);
+            }
+        });
+
         // add to top
-        // mMomentList.add(0, moment);
+        mMomentList.add(0, moment);
+        mAdapter.notifyDataSetChanged();
 
-        mMomentList.add(moment);
-        mAdapter.notifyItemInserted(0);
-
-        // smooth scroll to bottom for now
-        rvMoments.smoothScrollToPosition(mMomentList.size());
+        rvMoments.smoothScrollToPosition(0);
     }
 
     @Override

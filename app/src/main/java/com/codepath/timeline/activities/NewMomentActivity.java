@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.timeline.R;
-import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
-
-import org.parceler.Parcels;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -135,25 +132,16 @@ public class NewMomentActivity extends NewItemClass {
         if (etMomentTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             llTitle.startAnimation(shake);
-        }
-        else if (ivBackground.getDrawable() == null) {
+        } else if (ivBackground.getDrawable() == null) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
-            // create a moment
-            Moment moment = new Moment();
-            moment.setMediaUrl(takenPhotoUri.getPath());
-            moment.setDescription(etMomentTitle.getText().toString());
-
-            // TODO: v2 change to current location
-            moment.setLocation("San Francisco, CA");
-
-            Log.d("DEBUG", moment.toString());
-
             // send result back
             Intent data = new Intent();
-            // Todo: app crashes when trying to wrap a moment, when transition to db - fix this
-            data.putExtra("moment", Parcels.wrap(moment));
+            data.putExtra(AppConstants.MOMENT_DESCRIPTION, etMomentTitle.getText().toString());
+            // TODO: v2 change to current location
+            data.putExtra(AppConstants.MOMENT_LOCATION, "San Francisco, CA");
+            data.putExtra(AppConstants.PHOTO_URI, takenPhotoUri.getPath());
             setResult(1, data);
 
             // closes the activity, pass data to parent

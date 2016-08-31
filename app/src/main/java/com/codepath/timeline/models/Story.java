@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -83,6 +84,14 @@ public class Story extends ParseObject {
 
   public void setBackgroundImageUrl(String backgroundImageUrl) {
     put("backgroundImageUrl", backgroundImageUrl);
+  }
+
+  public ParseFile getBackgroundImageMedia() {
+    return getParseFile("backgroundImageMedia");
+  }
+
+  public void setBackgroundImageMedia(ParseFile file) {
+    put("backgroundImageMedia", file);
   }
 
   // the date added into Parse

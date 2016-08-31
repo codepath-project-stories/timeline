@@ -45,24 +45,37 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
   @Override
   public void onBindViewHolder(MomentsAdapter.ViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
-    MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
-      // TODO: Don't use current user -- the user for each moment can be different if there's a list of collaborators
-    ParseUser user = UserClient.getCurrentUser();
-    if (user != null) {
-      Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
+    Log.d(TAG, "Moment: " + moment);
 
-      viewHolder.tvName.setText(UserClient.getName(user));
-      Glide.with(mContext).load(UserClient.getProfileImageUrl(user))
+    MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
+    ParseUser author = moment.getAuthor();
+    if (author != null) {
+      Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(author));
+
+      viewHolder.tvName.setText(UserClient.getName(author));
+      Glide.with(mContext).load(UserClient.getProfileImageUrl(author))
           .fitCenter()
           .bitmapTransform(new CropCircleTransformation(mContext))
           .into(viewHolder.ivProfilePhoto);
     }
 
     if (moment.getMediaUrl() != null) {
+      // Demo data
       Glide.with(mContext).load(moment.getMediaUrl())
           .centerCrop()
           .into(viewHolder.ivMedia);
+    } else if(moment.getTempPhotoUri() != null) {
+      // Image that was just taken from the phone
+      Glide.with(mContext).load(moment.getTempPhotoUri())
+          .centerCrop()
+          .into(viewHolder.ivMedia);
+    } else if(moment.getMediaFile() != null) {
+      // Uploaded image
+      Glide.with(mContext).load(moment.getMediaFile().getUrl())
+          .centerCrop()
+          .into(viewHolder.ivMedia);
     }
+
 
     // TODO: use DateUtil.getFormattedTimelineDate
 //     String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());

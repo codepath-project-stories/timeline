@@ -229,8 +229,7 @@ public class NewStoryActivity extends NewItemClass
         if (etStoryTitle.getText().length() == 0) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             llTitle.startAnimation(shake);
-        }
-        else if (ivBackground.getDrawable() == null) {
+        } else if (ivBackground.getDrawable() == null) {
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
