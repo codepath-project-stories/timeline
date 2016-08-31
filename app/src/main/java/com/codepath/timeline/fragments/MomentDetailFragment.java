@@ -157,16 +157,10 @@ public class MomentDetailFragment extends Fragment {
   }
 
   public void addComment(Comment comment) {
-    if (mMoment.getCommentList() == null) {
-      mMoment.setCommentList(new ArrayList<Comment>());
-    }
-
-    mMoment.getCommentList().add(comment);
     TimelineClient.getInstance().addComment(mMoment, comment);
 
     mCommentList.add(comment);
     mAdapter.notifyDataSetChanged();
-//    mAdapter.notifyItemRangeInserted(mCommentList.size()-1, 1);
 
     // Scroll to the bottom so that the newly added comment is displayed
     rvComments.smoothScrollToPosition(mCommentList.size());

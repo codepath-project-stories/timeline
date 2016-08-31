@@ -266,13 +266,12 @@ public class TimelineClient {
   }
 
   public void getMomentDetails(String momentObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
-    ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
-    // First try to find from the cache and only then go to network
-    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
-    query.include("author");
-    query.include("commentList");
-    query.include("commentList.author");
-    query.getInBackground(momentObjectId, new GetCallback<Moment>() {
+    mMomentDetailQuery = ParseQuery.getQuery(Moment.class);
+    mMomentDetailQuery.include("author");
+    mMomentDetailQuery.include("commentList");
+    mMomentDetailQuery.include("commentList.author");
+    mMomentDetailQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+    mMomentDetailQuery.getInBackground(momentObjectId, new GetCallback<Moment>() {
       @Override
       public void done(Moment moment, ParseException e) {
         if (e != null) {
@@ -290,7 +289,7 @@ public class TimelineClient {
     });
   }
 
-  public void addComment(final Moment moment, Comment comment) {
+  public void addComment(final Moment moment, final Comment comment) {
     comment.saveInBackground(new SaveCallback() {
       @Override
       public void done(ParseException e) {
@@ -301,6 +300,7 @@ public class TimelineClient {
         Log.d(TAG, "Successfully saved comment");
 
         // Update the moment after saving the comment
+        moment.add("commentList", comment);
         moment.saveInBackground(new SaveCallback() {
           @Override
           public void done(ParseException e) {
@@ -310,12 +310,10 @@ public class TimelineClient {
             }
 
             // Clear cached result for the moment list
-            ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
-            query.include("author");
-            query.include("commentList");
-            query.include("commentList.author");
-            query.clearCachedResult();
-
+            if (mMomentDetailQuery.hasCachedResult()) {
+              Log.d(TAG, "Clearing moment detail cache");
+              mMomentDetailQuery.clearCachedResult();
+            }
             Log.d(TAG, "Successfully saved moment");
           }
         });
