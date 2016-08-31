@@ -162,6 +162,30 @@ public class TimelineClient {
         });
   }
 
+  // TODO: now is get all users. need to change to get friend list.
+  public void getFriendList(ParseUser user,
+                           final TimelineClientGetFriendListListener onGetFriendList) {
+    ParseQuery<ParseUser> query = ParseUser.getQuery();
+    // http://parseplatform.github.io/docs/android/guide
+    // fetchifneeded() could be an alternative to include()
+    query.findInBackground(
+            new FindCallback<ParseUser>() {
+              @Override
+              public void done(List<ParseUser> userList, ParseException e) {
+                if (e == null) {
+                  if (userList != null) {
+                    Log.d("findInBackground", "!= null");
+                    if (onGetFriendList != null) {
+                      onGetFriendList.onGetFriendList(userList);
+                    }
+                  }
+                } else {
+                  Log.d("findInBackground", "Error: " + e.getMessage());
+                }
+              }
+            });
+  }
+
   // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
   // for the story list in the LandingActivity
   public void getStoryList2(ParseUser user,
@@ -239,6 +263,31 @@ public class TimelineClient {
     });
   }
 
+  public void getMomentDetails(String momentObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+    ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
+    // First try to find from the cache and only then go to network
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+    query.include("author");
+    query.include("commentList");
+    query.include("commentList.author");
+    query.getInBackground(momentObjectId, new GetCallback<Moment>() {
+      @Override
+      public void done(Moment moment, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getMoment: " + e.getMessage());
+          return;
+        }
+
+        if (moment != null) {
+          Log.d(TAG, "getMoment successful: " + moment);
+          if (timelineClientGetMomentListener != null) {
+            timelineClientGetMomentListener.onGetMomentListener(moment);
+          }
+        }
+      }
+    });
+  }
+
   public void addComment(final Moment moment, Comment comment) {
     comment.saveInBackground(new SaveCallback() {
       @Override
@@ -257,6 +306,11 @@ public class TimelineClient {
               Log.e(TAG, "Exception from saving moment: " + e.getMessage());
               return;
             }
+
+            // Clear cached result for the moment list
+            ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
+            query.include("commentList");
+            query.clearCachedResult();
 
             Log.d(TAG, "Successfully saved moment");
           }

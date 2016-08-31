@@ -45,6 +45,8 @@ public class MomentDetailFragment extends Fragment {
   }
 
   public static MomentDetailFragment newInstance(String momentObjectId) {
+    Log.d(TAG, "MomentDetailFragment: " + momentObjectId);
+
     MomentDetailFragment frag = new MomentDetailFragment();
     Bundle args = new Bundle();
     args.putString(AppConstants.OBJECT_ID, momentObjectId);
@@ -66,13 +68,14 @@ public class MomentDetailFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    Log.d(TAG, "onViewCreated");
     mObjectId = getArguments().getString(AppConstants.OBJECT_ID, null);
     if (mObjectId == null) {
       Log.e(TAG, "Moment OBJECT_ID is NULL");
       return;
     }
 
-    TimelineClient.getInstance().getMoment(mObjectId, new TimelineClient.TimelineClientGetMomentListener() {
+    TimelineClient.getInstance().getMomentDetails(mObjectId, new TimelineClient.TimelineClientGetMomentListener() {
       @Override
       public void onGetMomentListener(Moment moment) {
         Log.d(TAG, "Moment detail: " + moment);
@@ -96,7 +99,7 @@ public class MomentDetailFragment extends Fragment {
     Log.d(TAG, "updating moment");
 
     // Add the moment photo as the first comment
-    Comment momentDetail = new Comment();
+    final Comment momentDetail = new Comment();
     // TODO: make sure it is not null here
     if (mMoment.getAuthor() != null) {
       momentDetail.setAuthor(mMoment.getAuthor());
@@ -119,37 +122,41 @@ public class MomentDetailFragment extends Fragment {
     momentDetail.setBody(mMoment.getDescription());
     momentDetail.setMediaUrl(mMoment.getMediaUrl());
     mCommentList.add(momentDetail);
-    mAdapter.notifyItemInserted(0);
 
-    List<Comment> commentList = mMoment.getCommentList();
-    if (commentList != null && commentList.size() > 0) {
-      mCommentList.addAll(commentList);
-      mAdapter.notifyItemRangeInserted(0, mCommentList.size());
+    if (mMoment.getCommentList() != null) {
+      mCommentList.addAll(mMoment.getCommentList());
     }
+    mAdapter.notifyDataSetChanged();
+
+//    mAdapter.notifyItemRangeInserted(0, mCommentList.size());
+
+//    mAdapter.notifyItemInserted(0);
+
+    /*
+    TimelineClient.getInstance().getCommentList(mMoment.getObjectId(), new TimelineClient.TimelineClientGetCommentListListener() {
+      @Override
+      public void onGetCommentListListener(final List<Comment> itemList) {
+        getActivity().runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            mCommentList.clear();
+            mCommentList.add(momentDetail);
+            if (itemList != null && itemList.size() > 0) {
+              mCommentList.addAll(itemList);
+            }
+
+            mAdapter.notifyItemRangeInserted(0, mCommentList.size());
+            Log.d(TAG, "FINISHED updating comment");
+          }
+        });
+      }
+    });
+*/
 
     Log.d(TAG, "FINISHED updating moment");
   }
 
   public void addComment(Comment comment) {
-//    List<Comment> commentList = mMoment.getCommentList();
-//    if (commentList == null) {
-//      commentList = new ArrayList<>();
-//    }
-//
-//    commentList.add(comment);
-//    mMoment.setCommentList(commentList);
-//    mMoment.saveInBackground(new SaveCallback() {
-//      @Override
-//      public void done(ParseException e) {
-//        if (e != null) {
-//          Log.e(TAG, "Exception from saving moment: " + e.getMessage());
-//          return;
-//        }
-//
-//        Log.d(TAG, "Successfully saved moment");
-//      }
-//    });
-
     if (mMoment.getCommentList() == null) {
       mMoment.setCommentList(new ArrayList<Comment>());
     }
