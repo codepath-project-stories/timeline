@@ -18,8 +18,6 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
-import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,31 +125,6 @@ public class MomentDetailFragment extends Fragment {
       mCommentList.addAll(mMoment.getCommentList());
     }
     mAdapter.notifyDataSetChanged();
-
-//    mAdapter.notifyItemRangeInserted(0, mCommentList.size());
-
-//    mAdapter.notifyItemInserted(0);
-
-    /*
-    TimelineClient.getInstance().getCommentList(mMoment.getObjectId(), new TimelineClient.TimelineClientGetCommentListListener() {
-      @Override
-      public void onGetCommentListListener(final List<Comment> itemList) {
-        getActivity().runOnUiThread(new Runnable() {
-          @Override
-          public void run() {
-            mCommentList.clear();
-            mCommentList.add(momentDetail);
-            if (itemList != null && itemList.size() > 0) {
-              mCommentList.addAll(itemList);
-            }
-
-            mAdapter.notifyItemRangeInserted(0, mCommentList.size());
-            Log.d(TAG, "FINISHED updating comment");
-          }
-        });
-      }
-    });
-*/
 
     Log.d(TAG, "FINISHED updating moment");
   }
