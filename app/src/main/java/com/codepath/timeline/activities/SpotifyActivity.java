@@ -1,6 +1,7 @@
 // TutorialApp
 // Created by Spotify on 25/02/14.
 // Copyright (c) 2014 Spotify. All rights reserved.
+// https://developer.spotify.com/technologies/spotify-android-sdk/tutorial/
 package com.codepath.timeline.activities;
 
 
@@ -20,6 +21,9 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
+
+// Todo: class for the reference of code usage for spotify integration
+// delete when not needed
 public class SpotifyActivity extends Activity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
