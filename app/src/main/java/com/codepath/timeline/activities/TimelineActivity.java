@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -57,6 +58,10 @@ public class TimelineActivity extends AppCompatActivity {
     ImageView ivAutoPlay;
     @BindView(R.id.miAdd)
     com.github.clans.fab.FloatingActionButton miAdd;
+    @BindView(R.id.miMusic)
+    com.github.clans.fab.FloatingActionButton miMusic;
+    @BindView(R.id.miShare)
+    com.github.clans.fab.FloatingActionButton miShare;
 
     private List<Moment> mMomentList;
     private MomentsHeaderAdapter mAdapter;
@@ -147,9 +152,37 @@ public class TimelineActivity extends AppCompatActivity {
         miAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo: add a new moment
                 Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
                 startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
+            }
+        });
+
+        miShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // check if coming from user's stories - enable sharing
+                // if not - alert and disable
+                String code = getIntent().getStringExtra("code");
+                Snackbar.make(findViewById(android.R.id.content),
+                        code,
+                        Snackbar.LENGTH_SHORT).show();
+                // Todo: getting name doesn't quite work
+                if (code.contains("UsersStoriesFragment")) {
+                    // Todo: add sharing functionality
+                } else {
+//                    Snackbar.make(findViewById(android.R.id.content),
+//                            "Bummer, but you can't share your friend's stories!",
+//                            Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        miMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Todo: add spotify integration
+                Intent intent = new Intent(TimelineActivity.this, SpotifyActivity.class);
+                startActivity(intent);
             }
         });
 

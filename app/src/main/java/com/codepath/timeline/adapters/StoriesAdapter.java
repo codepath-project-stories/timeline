@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,9 +34,11 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Story> mStories;
     private Context context;
     private final int SIMPLE = 0;
+    String type;
 
-    public StoriesAdapter(List<Story> stories) {
+    public StoriesAdapter(List<Story> stories, FragmentManager fragMan) {
         this.mStories = stories;
+        type = fragMan.toString();
     }
 
     @Override
@@ -82,6 +85,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Intent i = new Intent(context, TimelineActivity.class);
                 Story story = mStories.get(position);
                 i.putExtra(AppConstants.OBJECT_ID, story.getObjectId());
+                i.putExtra("code", type);
                 i.putExtra(AppConstants.STORY_TITLE, story.getTitle());
                 i.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, story.getBackgroundImageUrl());
                 ActivityOptionsCompat options =

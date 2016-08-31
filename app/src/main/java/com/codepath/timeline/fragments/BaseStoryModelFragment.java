@@ -51,7 +51,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
         final StaggeredGridLayoutManager layoutManagerGrid = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         stories = new ArrayList<>();
-        adaptStories = new StoriesAdapter(stories);
+        adaptStories = new StoriesAdapter(stories, getChildFragmentManager());
         setupLayout(layoutManagerList);
 
         // abstract method call
