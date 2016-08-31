@@ -202,12 +202,18 @@ public class TimelineActivity extends AppCompatActivity implements
         miMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo: add spotify integration
-                AuthenticationRequest.Builder builder =
-                        new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
-                builder.setScopes(new String[]{"user-read-private", "streaming"});
-                AuthenticationRequest request = builder.build();
-                AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
+                if (Integer.parseInt(v.getTag().toString()) == 1) {
+                    v.setTag(2);
+                    // Todo: add spotify integration
+                    AuthenticationRequest.Builder builder =
+                            new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+                    builder.setScopes(new String[]{"user-read-private", "streaming"});
+                    AuthenticationRequest request = builder.build();
+                    AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
+                } else {
+                    v.setTag(1);
+                    mPlayer.pause();
+                }
             }
         });
 
@@ -302,7 +308,6 @@ public class TimelineActivity extends AppCompatActivity implements
                     public void onInitialized(Player player) {
                         mPlayer.addConnectionStateCallback(TimelineActivity.this);
                         mPlayer.addPlayerNotificationCallback(TimelineActivity.this);
-                        mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                     }
 
                     @Override

@@ -108,6 +108,7 @@
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/miMusic"
+            android:tag="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/music_icon"
