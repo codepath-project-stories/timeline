@@ -241,7 +241,7 @@ public class TimelineClient {
       // Configure byte output stream
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
       // Compress the image further
-      resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+      resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
       // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
       String path = photoUri + "_resized";
       Log.d(TAG, "Photo path: " + path);
