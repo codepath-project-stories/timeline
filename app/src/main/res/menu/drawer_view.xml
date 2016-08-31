@@ -20,6 +20,6 @@
             android:id="@+id/miLogout"
             android:icon="@drawable/logout_icon"
             android:fontFamily="sans-serif"
-            android:title="@string/logout" />
+            android:title="@string/logout_header" />
     </group>
 </menu>

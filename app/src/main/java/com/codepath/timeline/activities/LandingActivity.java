@@ -59,6 +59,7 @@ public class LandingActivity extends AppCompatActivity {
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         setupDrawerContent(nvDrawer);
         drawerToggle = setupDrawerToggle();
