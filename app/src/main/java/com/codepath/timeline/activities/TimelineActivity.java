@@ -308,6 +308,7 @@ public class TimelineActivity extends AppCompatActivity implements
                     public void onInitialized(Player player) {
                         mPlayer.addConnectionStateCallback(TimelineActivity.this);
                         mPlayer.addPlayerNotificationCallback(TimelineActivity.this);
+                        mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
                     }
 
                     @Override
