@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewMomentActivity extends NewItemClass {
+    private static final String TAG = "TimelineLog:" + NewMomentActivity.class.getSimpleName();
 
     @BindView(R.id.ivBackground)
     ImageView ivBackground;
@@ -153,7 +154,7 @@ public class NewMomentActivity extends NewItemClass {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                takenPhotoUri = getPhotoFileUri(photoFileName);
+                takenPhotoUri = getPhotoFileUri();
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 // Load the taken image into a preview
