@@ -27,6 +27,8 @@ import java.util.List;
 public class TimelineClient {
   private static final String TAG = TimelineClient.class.getSimpleName();
 
+  private ParseQuery<Moment> mMomentDetailQuery;
+
   private static TimelineClient instance;
 
   private TimelineClient() {
@@ -309,7 +311,9 @@ public class TimelineClient {
 
             // Clear cached result for the moment list
             ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
+            query.include("author");
             query.include("commentList");
+            query.include("commentList.author");
             query.clearCachedResult();
 
             Log.d(TAG, "Successfully saved moment");

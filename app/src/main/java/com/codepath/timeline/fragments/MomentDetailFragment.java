@@ -60,7 +60,6 @@ public class MomentDetailFragment extends Fragment {
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_moment_detail, container, false);
     ButterKnife.bind(this, view);
-    initList();
     return view;
   }
 
@@ -80,6 +79,7 @@ public class MomentDetailFragment extends Fragment {
       public void onGetMomentListener(Moment moment) {
         Log.d(TAG, "Moment detail: " + moment);
         mMoment = moment;
+        initList();
         updateMoment();
       }
     });
@@ -165,7 +165,8 @@ public class MomentDetailFragment extends Fragment {
     TimelineClient.getInstance().addComment(mMoment, comment);
 
     mCommentList.add(comment);
-    mAdapter.notifyItemRangeInserted(mCommentList.size()-1, 1);
+    mAdapter.notifyDataSetChanged();
+//    mAdapter.notifyItemRangeInserted(mCommentList.size()-1, 1);
 
     // Scroll to the bottom so that the newly added comment is displayed
     rvComments.smoothScrollToPosition(mCommentList.size());
