@@ -23,7 +23,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 
 public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHolder> {
-  private static final String TAG = MomentsAdapter.class.getSimpleName();
+  private static final String TAG = "TimelineLog:" + MomentsAdapter.class.getSimpleName();
 
   protected List<Moment> mMomentList;
   protected Context mContext;
@@ -45,7 +45,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
   @Override
   public void onBindViewHolder(MomentsAdapter.ViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
-    Log.d(TAG, "Moment: " + moment);
+    Log.d(TAG, "Binding moment: " + moment);
 
     MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
     ParseUser author = moment.getAuthor();
@@ -60,16 +60,22 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     }
 
     if (moment.getMediaUrl() != null) {
+      Log.d(TAG, "Displaying mediaUrl");
+
       // Demo data
       Glide.with(mContext).load(moment.getMediaUrl())
           .centerCrop()
           .into(viewHolder.ivMedia);
     } else if(moment.getTempPhotoUri() != null) {
+      Log.d(TAG, "Displaying tempPhotoUri");
+
       // Image that was just taken from the phone
       Glide.with(mContext).load(moment.getTempPhotoUri())
           .centerCrop()
           .into(viewHolder.ivMedia);
     } else if(moment.getMediaFile() != null) {
+      Log.d(TAG, "Displaying mediaFile");
+
       // Uploaded image
       Glide.with(mContext).load(moment.getMediaFile().getUrl())
           .centerCrop()
@@ -84,6 +90,8 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
 //    viewHolder.tvDate.setText(formattedDate);
     viewHolder.tvLocation.setText(moment.getLocation());
     viewHolder.tvDescription.setText(moment.getDescription());
+
+    Log.d(TAG, "Finished binding moment");
   }
 
   @Override

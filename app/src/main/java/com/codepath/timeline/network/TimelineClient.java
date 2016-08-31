@@ -3,11 +3,14 @@ package com.codepath.timeline.network;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Looper;
 import android.util.Log;
 
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.view.BitmapScaler;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.parse.FindCallback;
@@ -20,6 +23,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -29,7 +34,7 @@ import java.util.List;
  * Network client for getting response from the server
  */
 public class TimelineClient {
-  private static final String TAG = TimelineClient.class.getSimpleName();
+  private static final String TAG = "TimelineLog:" + TimelineClient.class.getSimpleName();
 
   private ParseQuery<Moment> mMomentDetailQuery;
   private ParseQuery<Story> mStoryListQuery;
@@ -230,28 +235,52 @@ public class TimelineClient {
   }
 
   public void uploadFile(String fileName, String photoUri, final TimelineClientUploadFileListener uploadFileListener) {
-    Bitmap rawTakenImage = BitmapFactory.decodeFile(photoUri);
+    try {
+      Bitmap rawTakenImage = BitmapFactory.decodeFile(photoUri);
+      Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 500);
+      // Configure byte output stream
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      // Compress the image further
+      resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+      // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+      String path = photoUri + "_resized";
+      Log.d(TAG, "Photo path: " + path);
+      File resizedFile = new File(path);
+
+      resizedFile.createNewFile();
+      FileOutputStream fos = new FileOutputStream(resizedFile);
+// Write the bytes of the bitmap to file
+      byte[] imageByte = bytes.toByteArray();
+
+    /*
     // Convert it to byte
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
     // Compress image to lower quality scale 1 - 100
-    rawTakenImage.compress(Bitmap.CompressFormat.PNG, 50, stream);
+    rawTakenImage.compress(Bitmap.CompressFormat.PNG, 40, stream);
     byte[] imageByte = stream.toByteArray();
+*/
 
-    final ParseFile file = new ParseFile(fileName, imageByte);
-    file.saveInBackground(new SaveCallback() {
-      @Override
-      public void done(ParseException e) {
-        if (e != null) {
-          Log.e(TAG, "Exception uploading file: " + e.getMessage());
-          return;
-        }
+      final ParseFile file = new ParseFile(fileName, imageByte);
+      file.saveInBackground(new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+          if (e != null) {
+            Log.e(TAG, "Exception uploading file: " + e.getMessage());
+            return;
+          }
 
-        Log.d(TAG, "Success uploadFile");
-        if (uploadFileListener != null) {
-          uploadFileListener.onUploadFileListener(file);
+          Log.d(TAG, "Success uploadFile");
+          if (uploadFileListener != null) {
+            uploadFileListener.onUploadFileListener(file);
+          }
         }
-      }
-    });
+      });
+
+      fos.write(imageByte);
+      fos.close();
+    } catch (IOException e) {
+      Log.e(TAG, "uploadFile IOException" + e.getMessage());
+    }
   }
 
   // Query the DB for moments associated with this story
@@ -306,12 +335,12 @@ public class TimelineClient {
     mMomentDetailQuery.include("author");
     mMomentDetailQuery.include("commentList");
     mMomentDetailQuery.include("commentList.author");
-    mMomentDetailQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+    mMomentDetailQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     mMomentDetailQuery.getInBackground(momentObjectId, new GetCallback<Moment>() {
       @Override
       public void done(Moment moment, ParseException e) {
         if (e != null) {
-          Log.e(TAG, "Exception from getMoment: " + e.getMessage());
+          Log.e(TAG, "Exception from getMomentDetails: " + e.getMessage());
           return;
         }
 
@@ -358,48 +387,58 @@ public class TimelineClient {
   }
 
   public void addMoment(final Moment moment, final String storyObjectId) {
-    if (moment != null) {
-      moment.saveInBackground(new SaveCallback() {
-        @Override
-        public void done(ParseException e) {
-          if (e != null) {
-            Log.e(TAG, "Exception from adding moment: " + e.getMessage());
-            return;
-          }
-
-          Log.d(TAG, "Successfully added moment");
-          ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
-          query.getInBackground(storyObjectId, new GetCallback<Story>() {
-            @Override
-            public void done(Story story, ParseException e) {
-              if (e != null) {
-                Log.e(TAG, "Exception from fetching story: " + e.getMessage());
-                return;
-              }
-
-              Log.d(TAG, "Successfully fetched story");
-              story.add("momentList", moment);
-              story.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                  if (e != null) {
-                    Log.e(TAG, "Exception from saving moment: " + e.getMessage());
-                    return;
-                  }
-
-                  // Clear cached result for the moment list
-                  if (mMomentListQuery.hasCachedResult()) {
-                    Log.d(TAG, "Clearing moment detail cache");
-                    mMomentListQuery.clearCachedResult();
-                  }
-                  Log.d(TAG, "Successfully saved moment");
-                }
-              });
-            }
-          });
-        }
-      });
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+      Log.d(TAG, "MAIN thread inside addMoment");
     }
+
+    moment.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from adding moment: " + e.getMessage());
+          return;
+        }
+
+        Log.d(TAG, "Successfully added moment");
+        ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
+        query.getInBackground(storyObjectId, new GetCallback<Story>() {
+          @Override
+          public void done(Story story, ParseException e) {
+            if (e != null) {
+              Log.e(TAG, "Exception from fetching story: " + e.getMessage());
+              return;
+            }
+
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+              Log.d(TAG, "MAIN thread inside getStory");
+            }
+
+            Log.d(TAG, "Successfully fetched story");
+            story.add("momentList", moment);
+            story.saveInBackground(new SaveCallback() {
+              @Override
+              public void done(ParseException e) {
+                if (e != null) {
+                  Log.e(TAG, "Exception from saving moment: " + e.getMessage());
+                  return;
+                }
+
+                if (Looper.myLooper() == Looper.getMainLooper()) {
+                  Log.d(TAG, "MAIN thread inside saveStory");
+                }
+
+                // Clear cached result for the moment list
+                if (mMomentListQuery.hasCachedResult()) {
+                  Log.d(TAG, "Clearing moment list query");
+                  mMomentListQuery.clearCachedResult();
+                }
+                Log.d(TAG, "Successfully saved moment");
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   // query User table

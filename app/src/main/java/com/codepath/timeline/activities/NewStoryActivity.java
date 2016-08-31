@@ -279,7 +279,7 @@ public class NewStoryActivity extends NewItemClass
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                takenPhotoUri = getPhotoFileUri(photoFileName);
+                takenPhotoUri = getPhotoFileUri();
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 ivBackground.setImageBitmap(takenImage);

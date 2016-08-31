@@ -3,6 +3,7 @@ package com.codepath.timeline.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -57,7 +58,7 @@ public class TimelineActivity extends AppCompatActivity implements
     // 0: R.drawable.image_test2
     // 1: getIntent().getStringExtra("imageUrl")
 
-    private static final String TAG = TimelineActivity.class.getSimpleName();
+    private static final String TAG = "TimelineLog:" + TimelineActivity.class.getSimpleName();
     @BindView(R.id.appbar)
     AppBarLayout appbar;
     @BindView(R.id.collapsing_toolbar)
@@ -370,16 +371,25 @@ public class TimelineActivity extends AppCompatActivity implements
         TimelineClient.getInstance().uploadFile("photo.jpg", moment.getTempPhotoUri(), new TimelineClient.TimelineClientUploadFileListener() {
             @Override
             public void onUploadFileListener(ParseFile file) {
+                if (Looper.myLooper() == Looper.getMainLooper()) {
+                    Log.d(TAG, "MAIN thread inside onUploadFileListener");
+                }
+
+                moment.setMediaUrl(file.getUrl());
                 moment.setMediaFile(file);
                 TimelineClient.getInstance().addMoment(moment, storyObjectId);
             }
         });
+
+        Log.d(TAG, "Adding to recyclerview");
 
         // add to top
         mMomentList.add(0, moment);
         mAdapter.notifyDataSetChanged();
 
         rvMoments.smoothScrollToPosition(0);
+
+        Log.d(TAG, "Finished adding to recyclerview");
     }
 
     @Override
