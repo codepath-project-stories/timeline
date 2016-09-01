@@ -17,7 +17,7 @@ import java.util.List;
 // remember to register in ParseApplication
 // only fields of Moment class will be serialized
 @ParseClassName("Moment")
-public class Moment extends ParseObject {
+public class Moment extends ParseObject implements Comparable<Moment>{
   private static final String TAG = Moment.class.getSimpleName();
 
   private String mockCreatedAt;     // DB format: 2016-08-22T19:22:54.695Z
@@ -143,5 +143,10 @@ public class Moment extends ParseObject {
     }
 
     return str.toString();
+  }
+
+  @Override
+  public int compareTo(Moment otherMoment) {
+    return otherMoment.getCreatedAtReal().compareTo(getCreatedAtReal());
   }
 }
