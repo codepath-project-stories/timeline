@@ -29,6 +29,7 @@ import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.view.ItemClickSupport;
+import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseFile;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -76,6 +77,8 @@ public class TimelineActivity extends AppCompatActivity implements
     com.github.clans.fab.FloatingActionButton miMusic;
     @BindView(R.id.miShare)
     com.github.clans.fab.FloatingActionButton miShare;
+    @BindView(R.id.menu)
+    com.github.clans.fab.FloatingActionMenu menu;
 
     private List<Moment> mMomentList;
     private MomentsHeaderAdapter mAdapter;
@@ -391,6 +394,9 @@ public class TimelineActivity extends AppCompatActivity implements
         mAdapter.notifyDataSetChanged();
 
         rvMoments.smoothScrollToPosition(0);
+
+        // Close the fab menu
+        menu.close(true);
 
         Log.d(TAG, "Finished adding to recyclerview");
     }
