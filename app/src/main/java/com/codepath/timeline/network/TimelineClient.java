@@ -3,8 +3,6 @@ package com.codepath.timeline.network;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Looper;
 import android.util.Log;
 
 import com.codepath.timeline.models.Comment;
@@ -387,10 +385,6 @@ public class TimelineClient {
   }
 
   public void addMoment(final Moment moment, final String storyObjectId) {
-    if (Looper.myLooper() == Looper.getMainLooper()) {
-      Log.d(TAG, "MAIN thread inside addMoment");
-    }
-
     moment.saveInBackground(new SaveCallback() {
       @Override
       public void done(ParseException e) {
@@ -410,10 +404,6 @@ public class TimelineClient {
               return;
             }
 
-            if (Looper.myLooper() == Looper.getMainLooper()) {
-              Log.d(TAG, "MAIN thread inside getStory");
-            }
-
             Log.d(TAG, "Successfully fetched story");
             story.add("momentList", moment);
             story.saveInBackground(new SaveCallback() {
@@ -422,10 +412,6 @@ public class TimelineClient {
                 if (e != null) {
                   Log.e(TAG, "Exception from saving moment: " + e.getMessage());
                   return;
-                }
-
-                if (Looper.myLooper() == Looper.getMainLooper()) {
-                  Log.d(TAG, "MAIN thread inside saveStory");
                 }
 
                 // Clear cached result for the moment list

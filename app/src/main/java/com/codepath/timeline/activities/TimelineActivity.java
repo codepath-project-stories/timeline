@@ -3,7 +3,6 @@ package com.codepath.timeline.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -29,7 +28,6 @@ import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.view.ItemClickSupport;
-import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseFile;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -41,8 +39,6 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -377,10 +373,6 @@ public class TimelineActivity extends AppCompatActivity implements
         TimelineClient.getInstance().uploadFile("photo.jpg", moment.getTempPhotoUri(), new TimelineClient.TimelineClientUploadFileListener() {
             @Override
             public void onUploadFileListener(ParseFile file) {
-                if (Looper.myLooper() == Looper.getMainLooper()) {
-                    Log.d(TAG, "MAIN thread inside onUploadFileListener");
-                }
-
                 moment.setMediaUrl(file.getUrl());
                 moment.setMediaFile(file);
                 TimelineClient.getInstance().addMoment(moment, storyObjectId);
