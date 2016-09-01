@@ -54,13 +54,7 @@ public class LandingActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(name);
             }
 
-            StringBuilder str = new StringBuilder();
-            str.append("\nobjectId=").append(currentUser.getObjectId());
-            str.append("\ncreatedAt=").append(currentUser.getCreatedAt().toString());
-            str.append("\nuserName=").append(currentUser.getUsername());
-            str.append("\nemail=").append(currentUser.getEmail());
-            Log.d(TAG, "CurrentUser=" + str);
-
+            UserClient.printUser(currentUser);
         } else {
             // show the signup or login screen
             Log.d("LandingActivity", "getCurrentUser failed");
