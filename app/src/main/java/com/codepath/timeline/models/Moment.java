@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -16,7 +17,7 @@ import java.util.List;
 // remember to register in ParseApplication
 // only fields of Moment class will be serialized
 @ParseClassName("Moment")
-public class Moment extends ParseObject {
+public class Moment extends ParseObject implements Comparable<Moment>{
   private static final String TAG = Moment.class.getSimpleName();
 
   private String mockCreatedAt;     // DB format: 2016-08-22T19:22:54.695Z
@@ -25,8 +26,7 @@ public class Moment extends ParseObject {
   private String mockLocation;
   private ParseUser mockAuthor;
 
-  // TODO:
-  private List<Comment> commentList;
+  private String tempPhotoUri;      // DB temporarily store the photo URI
 
   public Moment() {
   }
@@ -83,6 +83,22 @@ public class Moment extends ParseObject {
     put("mediaUrl", mediaUrl);
   }
 
+  public ParseFile getMediaFile() {
+    return getParseFile("mediaFile");
+  }
+
+  public void setMediaFile(ParseFile file) {
+    put("mediaFile", file);
+  }
+
+  public String getTempPhotoUri() {
+    return tempPhotoUri;
+  }
+
+  public void setTempPhotoUri(String tempPhotoUri) {
+    this.tempPhotoUri = tempPhotoUri;
+  }
+
   public String getLocation() {
     return (String) get("location");
   }
@@ -112,6 +128,7 @@ public class Moment extends ParseObject {
     StringBuilder str = new StringBuilder();
     str.append("---------- Moment");
     str.append("\nobjectId=").append(getObjectId());
+    str.append("\ncreatedAtReal=").append(getCreatedAtReal());
     str.append("\ndescription=").append(getDescription());
     str.append("\nmediaUrl=").append(getMediaUrl());
     str.append("\nlocation=").append(getLocation());
@@ -120,11 +137,16 @@ public class Moment extends ParseObject {
     if (author != null) {
       str.append("\n------- Owner");
       str.append("\nobjectId=").append(author.getObjectId());
-      str.append("\nuserName=").append(author.getUsername());
+//      str.append("\nuserName=").append(author.getUsername());
       str.append("\nemail=").append(author.getEmail());
       str.append("\nprofileImageUrl=").append(UserClient.getProfileImageUrl(author));
     }
 
     return str.toString();
+  }
+
+  @Override
+  public int compareTo(Moment otherMoment) {
+    return otherMoment.getCreatedAtReal().compareTo(getCreatedAtReal());
   }
 }

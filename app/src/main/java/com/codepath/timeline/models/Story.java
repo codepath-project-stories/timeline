@@ -6,11 +6,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 // remember to register in ParseApplication
@@ -85,6 +88,14 @@ public class Story extends ParseObject {
     put("backgroundImageUrl", backgroundImageUrl);
   }
 
+  public ParseFile getBackgroundImageMedia() {
+    return getParseFile("backgroundImageMedia");
+  }
+
+  public void setBackgroundImageMedia(ParseFile file) {
+    put("backgroundImageMedia", file);
+  }
+
   // the date added into Parse
   public String getCreatedAtString() {
     return getCreatedAt().toString();
@@ -115,8 +126,11 @@ public class Story extends ParseObject {
     put("collaboratorList", collaboratorList);
   }
 
+  // Ordered by descending date
   public List<Moment> getMomentList() {
-    return (List<Moment>) get("momentList");
+    List<Moment> momentList = (List<Moment>) get("momentList");
+    Collections.sort(momentList);
+    return momentList;
   }
 
   public void setMomentList(List<Moment> momentList) {

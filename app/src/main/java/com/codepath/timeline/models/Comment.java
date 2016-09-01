@@ -6,6 +6,8 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcel;
 
+import java.util.Date;
+
 // remember to register in ParseApplication
 // only fields of Comment class will be serialized
 @ParseClassName("Comment")
@@ -17,11 +19,11 @@ public class Comment extends ParseObject {
   }
 
   // the date from photo or user
-  public String getCreatedAtReal() {
-    return (String) get("createdAtReal");
+  public Date getCreatedAtReal() {
+    return (Date) get("createdAtReal");
   }
 
-  public void setCreatedAtReal(String createdAtReal) {
+  public void setCreatedAtReal(Date createdAtReal) {
     put("createdAtReal", createdAtReal);
   }
 

@@ -13,8 +13,10 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,7 +25,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 
 public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHolder> {
-  private static final String TAG = MomentsAdapter.class.getSimpleName();
+  private static final String TAG = "TimelineLog:" + MomentsAdapter.class.getSimpleName();
 
   protected List<Moment> mMomentList;
   protected Context mContext;
@@ -45,32 +47,54 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
   @Override
   public void onBindViewHolder(MomentsAdapter.ViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
-    MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
-      // TODO: Don't use current user -- the user for each moment can be different if there's a list of collaborators
-    ParseUser user = UserClient.getCurrentUser();
-    if (user != null) {
-      Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
+    Log.d(TAG, "Binding moment: " + moment);
 
-      viewHolder.tvName.setText(UserClient.getName(user));
-      Glide.with(mContext).load(UserClient.getProfileImageUrl(user))
+    MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
+    ParseUser author = moment.getAuthor();
+    if (author != null) {
+      Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(author));
+
+      viewHolder.tvName.setText(UserClient.getName(author));
+      Glide.with(mContext).load(UserClient.getProfileImageUrl(author))
           .fitCenter()
           .bitmapTransform(new CropCircleTransformation(mContext))
           .into(viewHolder.ivProfilePhoto);
     }
 
     if (moment.getMediaUrl() != null) {
+      Log.d(TAG, "Displaying mediaUrl");
+
+      // Demo data
       Glide.with(mContext).load(moment.getMediaUrl())
+          .centerCrop()
+          .into(viewHolder.ivMedia);
+    } else if (moment.getTempPhotoUri() != null) {
+      Log.d(TAG, "Displaying tempPhotoUri");
+
+      // Image that was just taken from the phone
+      Glide.with(mContext).load(moment.getTempPhotoUri())
+          .centerCrop()
+          .into(viewHolder.ivMedia);
+    } else if (moment.getMediaFile() != null) {
+      Log.d(TAG, "Displaying mediaFile");
+
+      // Uploaded image
+      Glide.with(mContext).load(moment.getMediaFile().getUrl())
           .centerCrop()
           .into(viewHolder.ivMedia);
     }
 
-    // TODO: use DateUtil.getFormattedTimelineDate
-//     String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
-//    String formattedDate = moment.getCreatedAtReal();
-//    Log.d(TAG, "formattedDate: " + formattedDate);
-//    viewHolder.tvDate.setText(formattedDate);
+
+    Date momentDate = moment.getCreatedAtReal();
+    if (momentDate != null) {
+      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
+      Log.d(TAG, "formattedDate: " + formattedDate);
+      viewHolder.tvDate.setText(formattedDate);
+    }
     viewHolder.tvLocation.setText(moment.getLocation());
     viewHolder.tvDescription.setText(moment.getDescription());
+
+    Log.d(TAG, "Finished binding moment");
   }
 
   @Override

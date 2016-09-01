@@ -88,6 +88,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             .centerCrop()
             .into(mediaViewHolder.ivMedia);
       }
+
+      if (comment.getLocation() != null) {
+        mediaViewHolder.tvLocation.setText(comment.getLocation());
+      }
     }
 
     ParseUser user = comment.getAuthor();
@@ -95,19 +99,19 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
       Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
       holder.tvName.setText(UserClient.getName(user));
       Glide.with(mContext)
-              .load(UserClient.getProfileImageUrl(user))
-              .fitCenter()
-              .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
-              .into(holder.ivProfilePhoto);
+          .load(UserClient.getProfileImageUrl(user))
+          .fitCenter()
+          .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
+          .into(holder.ivProfilePhoto);
     }
 
-//    if (comment.getCreatedAt() != null) {
-//      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAtReal());
-//      Log.d(TAG, "formattedDate: " + formattedDate);
-//      holder.tvDate.setText(formattedDate);
-//    } else {
-//      holder.tvDate.setText("");
-//    }
+    if (comment.getCreatedAtReal() != null) {
+      String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAtReal());
+      Log.d(TAG, "formattedDate: " + formattedDate);
+      holder.tvDate.setText(formattedDate);
+    } else {
+      holder.tvDate.setText("");
+    }
 
     holder.tvBody.setText(comment.getBody());
   }
@@ -148,6 +152,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     public View vBgLike;
     @BindView(R.id.llLike)
     public LinearLayout llLike;
+    @BindView(R.id.tvLocation)
+    TextView tvLocation;
 
     public CommentsMediaViewHolder(View itemView) {
       super(itemView);
