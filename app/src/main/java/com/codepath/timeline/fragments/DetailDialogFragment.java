@@ -24,6 +24,7 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.view.DepthPageTransformer;
 
 import java.util.ArrayList;
@@ -148,6 +149,7 @@ public class DetailDialogFragment extends DialogFragment {
     MomentDetailFragment fragment = (MomentDetailFragment) mPagerAdapter.getRegisteredFragment(vpMoment.getCurrentItem());
     if (fragment != null) {
       Comment comment = new Comment();
+      comment.setCreatedAtReal(DateUtil.getCurrentDate());
       comment.setBody(etComment.getText().toString());
       comment.setAuthor(UserClient.getCurrentUser());
 

@@ -27,6 +27,7 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.view.ItemClickSupport;
 import com.parse.ParseFile;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
@@ -294,6 +295,7 @@ public class TimelineActivity extends AppCompatActivity implements
         // Check which request it is that we're responding to
         if (requestCode == ADD_MOMENT_REQUEST_CODE && resultCode == 1) {
             Moment moment = new Moment();
+            moment.setCreatedAtReal(DateUtil.getCurrentDate());
             moment.setDescription(data.getStringExtra(AppConstants.MOMENT_DESCRIPTION));
             moment.setLocation(data.getStringExtra(AppConstants.MOMENT_LOCATION));
             moment.setAuthor(UserClient.getCurrentUser());
