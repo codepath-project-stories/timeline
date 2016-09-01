@@ -2,6 +2,7 @@ package com.codepath.timeline.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.util.DateUtil;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import butterknife.ButterKnife;
 
 // Used to bind sticky header used in the timeline
 public class MomentsHeaderAdapter extends MomentsAdapter implements StickyRecyclerHeadersAdapter<MomentsHeaderAdapter.MomentsHeaderViewHolder> {
+
   // Maps a year (i.e. what's going to be used as the header string) to the item's position in the list
   private HashMap<String, Integer> mYearHeaderMap = new HashMap<>();
   private int mCurrentYear = -1;
@@ -40,9 +43,7 @@ public class MomentsHeaderAdapter extends MomentsAdapter implements StickyRecycl
     long headerPos = -1;
     Moment moment = mMomentList.get(position);
     if (moment != null) {
-      // TODO: use DateUtil.getYear
-      // String year = DateUtil.getYear(moment.getCreatedAtReal());
-      String year = "2016";
+      String year = DateUtil.getYear(moment.getCreatedAtReal());
       if (mYearHeaderMap.get(year) != null) {
         // we already have it in the map, just grab the header position
         headerPos = mYearHeaderMap.get(year);
@@ -65,10 +66,8 @@ public class MomentsHeaderAdapter extends MomentsAdapter implements StickyRecycl
   @Override
   public void onBindHeaderViewHolder(MomentsHeaderViewHolder holder, int position) {
     Moment moment = mMomentList.get(position);
-    if (moment != null) {
-      // TODO: use DateUtil.getYear
-      // String year = DateUtil.getYear(moment.getCreatedAtReal());
-      String year = "2016";
+    if (moment != null && moment.getCreatedAtReal() != null) {
+      String year = DateUtil.getYear(moment.getCreatedAtReal());
       holder.tvHeader.setText(year);
     }
   }

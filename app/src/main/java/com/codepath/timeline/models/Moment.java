@@ -128,6 +128,7 @@ public class Moment extends ParseObject {
     StringBuilder str = new StringBuilder();
     str.append("---------- Moment");
     str.append("\nobjectId=").append(getObjectId());
+    str.append("\ncreatedAtReal=").append(getCreatedAtReal());
     str.append("\ndescription=").append(getDescription());
     str.append("\nmediaUrl=").append(getMediaUrl());
     str.append("\nlocation=").append(getLocation());

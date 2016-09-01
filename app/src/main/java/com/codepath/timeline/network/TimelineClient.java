@@ -289,6 +289,7 @@ public class TimelineClient {
     mMomentListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     mMomentListQuery.include("momentList");
     mMomentListQuery.include("momentList.author");
+    mMomentListQuery.orderByDescending("createdAtReal");
     mMomentListQuery.getInBackground(storyObjectId, new GetCallback<Story>() {
       @Override
       public void done(Story story, ParseException e) {
@@ -400,6 +401,7 @@ public class TimelineClient {
         }
 
         Log.d(TAG, "Successfully added moment");
+        Log.d(TAG, "Adding moment to story: " + storyObjectId);
         ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
         query.getInBackground(storyObjectId, new GetCallback<Story>() {
           @Override
