@@ -18,6 +18,7 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,27 +97,16 @@ public class MomentDetailFragment extends Fragment {
   private void updateMoment() {
     Log.d(TAG, "updating moment");
 
+    if(mMoment == null) {
+      Log.d(TAG, "Cannot update moment: moment is NULL");
+      return;
+    }
+
     // Add the moment photo as the first comment
     final Comment momentDetail = new Comment();
-    // TODO: make sure it is not null here
-    if (mMoment.getAuthor() != null) {
-      momentDetail.setAuthor(mMoment.getAuthor());
-    }
-    else {
-      momentDetail.setAuthor(UserClient.getCurrentUser());
-    }
+    momentDetail.setAuthor(mMoment.getAuthor());
     momentDetail.setLocation(mMoment.getLocation());
-    // TODO: make sure it is not null here
-    /*
-    TODO: Update date
-    if (mMoment.getCreatedAtReal() != null) {
-      String formattedDate = DateUtil.getFormattedTimelineDate(getActivity(), mMoment.getCreatedAtReal().toString());
-      momentDetail.setCreatedAtReal(formattedDate);
-    }
-    else {
-      momentDetail.setCreatedAtReal("2016-09-31T19:22:54.695Z");
-    }
-    */
+    momentDetail.setCreatedAtReal(mMoment.getCreatedAtReal());
     momentDetail.setBody(mMoment.getDescription());
     momentDetail.setMediaUrl(mMoment.getMediaUrl());
     mCommentList.add(momentDetail);

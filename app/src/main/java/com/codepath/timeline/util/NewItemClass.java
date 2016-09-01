@@ -16,6 +16,7 @@ import android.view.View;
 import com.codepath.timeline.R;
 
 import java.io.File;
+import java.util.UUID;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -29,9 +30,8 @@ public class NewItemClass extends AppCompatActivity {
 
     public final String APP_TAG = "TimelineApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
-    public String photoFileName = "photo.jpg";
+    public String randomPhotoFileName = "photo.jpg";
     public Uri takenPhotoUri;
-
 
     // on click attached to text view id="@+id/tvAddLocation"
     public void addLocation(View view) {
@@ -68,11 +68,13 @@ public class NewItemClass extends AppCompatActivity {
     // https://developer.android.com/training/camera/cameradirect.html
     @NeedsPermission(Manifest.permission.CAMERA)
     void openCamera() {
+        randomPhotoFileName = UUID.randomUUID().toString();
+
         // Trigger the opening of a camera here
 //        Snackbar.make(findViewById(android.R.id.content), "here", Snackbar.LENGTH_SHORT).show();
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri()); // set the image file name
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
@@ -93,7 +95,7 @@ public class NewItemClass extends AppCompatActivity {
     }
 
     // Returns the Uri for a photo stored on disk given the fileName
-    public Uri getPhotoFileUri(String fileName) {
+    public Uri getPhotoFileUri() {
         // Only continue if the SD Card is mounted
         if (isExternalStorageAvailable()) {
             // Get safe storage directory for photos
@@ -109,7 +111,7 @@ public class NewItemClass extends AppCompatActivity {
             }
 
             // Return the file target for the photo based on filename
-            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + randomPhotoFileName));
         }
         return null;
     }

@@ -4,10 +4,9 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import org.xml.sax.ErrorHandler;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -18,18 +17,18 @@ public class DateUtil {
   private static final String TAG = DateUtil.class.getSimpleName();
   private static final String TIMELINE_DB_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
+  private static SimpleDateFormat dateFormatter = new SimpleDateFormat(TIMELINE_DB_DATE_FORMAT, Locale.ENGLISH);
+
   private static long getDateMillis(String rawJsonDate) throws ParseException {
     long dateMillis = 0;
 
-    SimpleDateFormat sf = new SimpleDateFormat(TIMELINE_DB_DATE_FORMAT, Locale.ENGLISH);
-    sf.setLenient(true);
-    dateMillis = sf.parse(rawJsonDate).getTime();
+    dateFormatter.setLenient(true);
+    dateMillis = dateFormatter.parse(rawJsonDate).getTime();
     return dateMillis;
   }
 
   private static Date getDate(String dateFromDB) throws ParseException {
-    SimpleDateFormat parser = new SimpleDateFormat(TIMELINE_DB_DATE_FORMAT, Locale.US);
-    Date date = parser.parse(dateFromDB);
+    Date date = dateFormatter.parse(dateFromDB);
     return date;
   }
 
@@ -50,16 +49,21 @@ public class DateUtil {
       INPUT: 2016-08-22T19:22:54.695Z
       EXPECTED OUTPUT: AUG 22
    */
-  public static String getFormattedTimelineDate(Context context, String dateFromDB) {
-    String date = "";
-    try {
-      long dateMillis = getDateMillis(dateFromDB);
-      date = DateUtils.formatDateTime(context, dateMillis, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_DATE);
-    } catch (ParseException e) {
-      Log.d(TAG, "Exception from getFormattedDate()");
-    }
+  public static String getFormattedTimelineDate(Context context, Date date) {
+    long dateMillis = date.getTime();
+    String formattedDate = DateUtils.formatDateTime(context, dateMillis, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_DATE);
+
 
     Log.d(TAG, "getFormattedDate: " + date);
-    return date;
+    return formattedDate;
+  }
+
+  public static Date getCurrentDate() {
+    Calendar cal = Calendar.getInstance();
+    String formattedDate = dateFormatter.format(cal.getTime());
+    Log.d(TAG, "getCurrentDate: " + formattedDate);
+
+    Log.d(TAG, "getDate: " + cal.getTime());
+    return cal.getTime();
   }
 }

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -25,8 +26,7 @@ public class Moment extends ParseObject {
   private String mockLocation;
   private ParseUser mockAuthor;
 
-  // TODO:
-  private List<Comment> commentList;
+  private String tempPhotoUri;      // DB temporarily store the photo URI
 
   public Moment() {
   }
@@ -83,6 +83,22 @@ public class Moment extends ParseObject {
     put("mediaUrl", mediaUrl);
   }
 
+  public ParseFile getMediaFile() {
+    return getParseFile("mediaFile");
+  }
+
+  public void setMediaFile(ParseFile file) {
+    put("mediaFile", file);
+  }
+
+  public String getTempPhotoUri() {
+    return tempPhotoUri;
+  }
+
+  public void setTempPhotoUri(String tempPhotoUri) {
+    this.tempPhotoUri = tempPhotoUri;
+  }
+
   public String getLocation() {
     return (String) get("location");
   }
@@ -120,7 +136,7 @@ public class Moment extends ParseObject {
     if (author != null) {
       str.append("\n------- Owner");
       str.append("\nobjectId=").append(author.getObjectId());
-      str.append("\nuserName=").append(author.getUsername());
+//      str.append("\nuserName=").append(author.getUsername());
       str.append("\nemail=").append(author.getEmail());
       str.append("\nprofileImageUrl=").append(UserClient.getProfileImageUrl(author));
     }
