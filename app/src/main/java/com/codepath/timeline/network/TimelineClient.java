@@ -8,6 +8,7 @@ import android.util.Log;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.util.ImageUtil;
 import com.codepath.timeline.view.BitmapScaler;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -233,52 +234,22 @@ public class TimelineClient {
   }
 
   public void uploadFile(String fileName, String photoUri, final TimelineClientUploadFileListener uploadFileListener) {
-    try {
-      Bitmap rawTakenImage = BitmapFactory.decodeFile(photoUri);
-      Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 700);
-      // Configure byte output stream
-      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      // Compress the image further
-      resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-      // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-      String path = photoUri + "_resized";
-      Log.d(TAG, "Photo path: " + path);
-      File resizedFile = new File(path);
-
-      resizedFile.createNewFile();
-      FileOutputStream fos = new FileOutputStream(resizedFile);
-// Write the bytes of the bitmap to file
-      byte[] imageByte = bytes.toByteArray();
-
-    /*
-    // Convert it to byte
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    // Compress image to lower quality scale 1 - 100
-    rawTakenImage.compress(Bitmap.CompressFormat.PNG, 40, stream);
-    byte[] imageByte = stream.toByteArray();
-*/
-
-      final ParseFile file = new ParseFile(fileName, imageByte);
-      file.saveInBackground(new SaveCallback() {
-        @Override
-        public void done(ParseException e) {
-          if (e != null) {
-            Log.e(TAG, "Exception uploading file: " + e.getMessage());
-            return;
-          }
-
-          Log.d(TAG, "Success uploadFile");
-          if (uploadFileListener != null) {
-            uploadFileListener.onUploadFileListener(file);
-          }
+    byte[] imageByte = ImageUtil.getImageData(photoUri);
+    final ParseFile file = new ParseFile(fileName, imageByte);
+    file.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception uploading file: " + e.getMessage());
+          return;
         }
-      });
 
-      fos.write(imageByte);
-      fos.close();
-    } catch (IOException e) {
-      Log.e(TAG, "uploadFile IOException" + e.getMessage());
-    }
+        Log.d(TAG, "Success uploadFile");
+        if (uploadFileListener != null) {
+          uploadFileListener.onUploadFileListener(file);
+        }
+      }
+    });
   }
 
   // Query the DB for moments associated with this story
