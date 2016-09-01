@@ -129,10 +129,6 @@ public class LandingActivity extends AppCompatActivity {
 //        Fragment fragment = null;
 //        Class fragmentClass;
         switch(menuItem.getItemId()) {
-            case R.id.miRecent:
-                // Todo: open recent
-//                fragmentClass = Recent.class;
-                break;
             case R.id.miProfile:
                 // Todo: open profile
 //                fragmentClass = Profile.class;
@@ -142,7 +138,7 @@ public class LandingActivity extends AppCompatActivity {
 //                fragmentClass = Settings.class;
                 break;
             case R.id.miLogout:
-                // Todo: logout
+                onBackPressed();
                 break;
             default:
         }

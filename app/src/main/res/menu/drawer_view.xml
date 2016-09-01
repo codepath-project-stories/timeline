@@ -2,11 +2,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/miRecent"
-            android:icon="@drawable/recent_icon"
-            android:fontFamily="sans-serif"
-            android:title="@string/recent_header" />
-        <item
             android:id="@+id/miProfile"
             android:icon="@drawable/profile_icon"
             android:fontFamily="sans-serif"
