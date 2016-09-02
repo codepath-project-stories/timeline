@@ -19,98 +19,98 @@ import java.util.List;
 import java.util.Map;
 
 public class CommentItemAnimator extends DefaultItemAnimator {
-  private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
-  private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
-  private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
+    private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
+    private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
 
-  Map<RecyclerView.ViewHolder, AnimatorSet> likeAnimationsMap = new HashMap<>();
-  Map<RecyclerView.ViewHolder, AnimatorSet> heartAnimationsMap = new HashMap<>();
+    Map<RecyclerView.ViewHolder, AnimatorSet> likeAnimationsMap = new HashMap<>();
+    Map<RecyclerView.ViewHolder, AnimatorSet> heartAnimationsMap = new HashMap<>();
 
-  private int lastAddAnimatedItem = -2;
+    private int lastAddAnimatedItem = -2;
 
-  @Override
-  public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
-    return true;
-  }
+    @Override
+    public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
+        return true;
+    }
 
-  @NonNull
-  @Override
-  public RecyclerView.ItemAnimator.ItemHolderInfo recordPreLayoutInformation(@NonNull RecyclerView.State state,
-                                                                             @NonNull RecyclerView.ViewHolder viewHolder,
-                                                                             int changeFlags, @NonNull List<Object> payloads) {
-    if (changeFlags == FLAG_CHANGED) {
-      for (Object payload : payloads) {
-        if (payload instanceof String) {
-          return new FeedItemHolderInfo((String) payload);
+    @NonNull
+    @Override
+    public RecyclerView.ItemAnimator.ItemHolderInfo recordPreLayoutInformation(@NonNull RecyclerView.State state,
+                                                                               @NonNull RecyclerView.ViewHolder viewHolder,
+                                                                               int changeFlags, @NonNull List<Object> payloads) {
+        if (changeFlags == FLAG_CHANGED) {
+            for (Object payload : payloads) {
+                if (payload instanceof String) {
+                    return new FeedItemHolderInfo((String) payload);
+                }
+            }
         }
-      }
+
+        return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
     }
 
-    return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
-  }
+    @Override
+    public boolean animateAdd(RecyclerView.ViewHolder viewHolder) {
+        if (viewHolder.getItemViewType() == CommentsAdapter.TYPE_COMMENT_MEDIA) {
+            if (viewHolder.getLayoutPosition() > lastAddAnimatedItem) {
+                lastAddAnimatedItem++;
+                runEnterAnimation((CommentsAdapter.CommentsMediaViewHolder) viewHolder);
+                return false;
+            }
+        }
 
-  @Override
-  public boolean animateAdd(RecyclerView.ViewHolder viewHolder) {
-    if (viewHolder.getItemViewType() == CommentsAdapter.TYPE_COMMENT_MEDIA) {
-      if (viewHolder.getLayoutPosition() > lastAddAnimatedItem) {
-        lastAddAnimatedItem++;
-        runEnterAnimation((CommentsAdapter.CommentsMediaViewHolder) viewHolder);
+        dispatchAddFinished(viewHolder);
         return false;
-      }
     }
 
-    dispatchAddFinished(viewHolder);
-    return false;
-  }
+    private void runEnterAnimation(final CommentsAdapter.CommentsMediaViewHolder holder) {
+        final int screenHeight = ScreenUtil.getScreenHeight(holder.itemView.getContext());
+        holder.itemView.setTranslationY(screenHeight);
+        holder.itemView.animate()
+                .translationY(0)
+                .setInterpolator(new DecelerateInterpolator(3.f))
+                .setDuration(700)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        dispatchAddFinished(holder);
+                    }
+                })
+                .start();
+    }
 
-  private void runEnterAnimation(final CommentsAdapter.CommentsMediaViewHolder holder) {
-    final int screenHeight = ScreenUtil.getScreenHeight(holder.itemView.getContext());
-    holder.itemView.setTranslationY(screenHeight);
-    holder.itemView.animate()
-        .translationY(0)
-        .setInterpolator(new DecelerateInterpolator(3.f))
-        .setDuration(700)
-        .setListener(new AnimatorListenerAdapter() {
-          @Override
-          public void onAnimationEnd(Animator animation) {
-            dispatchAddFinished(holder);
-          }
-        })
-        .start();
-  }
+    @Override
+    public boolean animateChange(@NonNull RecyclerView.ViewHolder oldHolder,
+                                 @NonNull RecyclerView.ViewHolder newHolder,
+                                 @NonNull RecyclerView.ItemAnimator.ItemHolderInfo preInfo,
+                                 @NonNull RecyclerView.ItemAnimator.ItemHolderInfo postInfo) {
+        cancelCurrentAnimationIfExists(newHolder);
 
-  @Override
-  public boolean animateChange(@NonNull RecyclerView.ViewHolder oldHolder,
-                               @NonNull RecyclerView.ViewHolder newHolder,
-                               @NonNull RecyclerView.ItemAnimator.ItemHolderInfo preInfo,
-                               @NonNull RecyclerView.ItemAnimator.ItemHolderInfo postInfo) {
-    cancelCurrentAnimationIfExists(newHolder);
+        if (preInfo instanceof FeedItemHolderInfo) {
+            FeedItemHolderInfo feedItemHolderInfo = (FeedItemHolderInfo) preInfo;
+            CommentsAdapter.CommentsMediaViewHolder holder = (CommentsAdapter.CommentsMediaViewHolder) newHolder;
 
-    if (preInfo instanceof FeedItemHolderInfo) {
-      FeedItemHolderInfo feedItemHolderInfo = (FeedItemHolderInfo) preInfo;
-      CommentsAdapter.CommentsMediaViewHolder holder = (CommentsAdapter.CommentsMediaViewHolder) newHolder;
-
-      animateHeartButton(holder);
+            animateHeartButton(holder);
 //      updateLikesCounter(holder, holder.getFeedItem().likesCount);
-      if ("ACTION_LIKE_IMAGE_CLICKED".equals(feedItemHolderInfo.updateAction)) {
-        animatePhotoLike(holder);
-      }
+            if ("ACTION_LIKE_IMAGE_CLICKED".equals(feedItemHolderInfo.updateAction)) {
+                animatePhotoLike(holder);
+            }
+        }
+
+        return false;
     }
 
-    return false;
-  }
-
-  private void cancelCurrentAnimationIfExists(RecyclerView.ViewHolder item) {
-    if (likeAnimationsMap.containsKey(item)) {
-      likeAnimationsMap.get(item).cancel();
+    private void cancelCurrentAnimationIfExists(RecyclerView.ViewHolder item) {
+        if (likeAnimationsMap.containsKey(item)) {
+            likeAnimationsMap.get(item).cancel();
+        }
+        if (heartAnimationsMap.containsKey(item)) {
+            heartAnimationsMap.get(item).cancel();
+        }
     }
-    if (heartAnimationsMap.containsKey(item)) {
-      heartAnimationsMap.get(item).cancel();
-    }
-  }
 
-  private void animateHeartButton(final CommentsAdapter.CommentsMediaViewHolder holder) {
-    AnimatorSet animatorSet = new AnimatorSet();
+    private void animateHeartButton(final CommentsAdapter.CommentsMediaViewHolder holder) {
+        AnimatorSet animatorSet = new AnimatorSet();
 
     /*
     ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(holder.btnLike, "rotation", 0f, 360f);
@@ -142,9 +142,9 @@ public class CommentItemAnimator extends DefaultItemAnimator {
 
     heartAnimationsMap.put(holder, animatorSet);
     */
-  }
+    }
 
-  private void updateLikesCounter(CommentsAdapter.CommentsMediaViewHolder holder, int toValue) {
+    private void updateLikesCounter(CommentsAdapter.CommentsMediaViewHolder holder, int toValue) {
     /*
     String likesCountTextFrom = holder.tsLikesCounter.getResources().getQuantityString(
         R.plurals.likes_count, toValue - 1, toValue - 1
@@ -156,100 +156,100 @@ public class CommentItemAnimator extends DefaultItemAnimator {
     );
     holder.tsLikesCounter.setText(likesCountTextTo);
     */
-  }
-
-  private void animatePhotoLike(final CommentsAdapter.CommentsMediaViewHolder holder) {
-    holder.vBgLike.setVisibility(View.VISIBLE);
-    holder.ivLike.setVisibility(View.VISIBLE);
-
-    holder.vBgLike.setScaleY(0.1f);
-    holder.vBgLike.setScaleX(0.1f);
-    holder.vBgLike.setAlpha(1f);
-    holder.ivLike.setScaleY(0.1f);
-    holder.ivLike.setScaleX(0.1f);
-
-    AnimatorSet animatorSet = new AnimatorSet();
-
-    ObjectAnimator bgScaleYAnim = ObjectAnimator.ofFloat(holder.vBgLike, "scaleY", 0.1f, 1f);
-    bgScaleYAnim.setDuration(200);
-    bgScaleYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-    ObjectAnimator bgScaleXAnim = ObjectAnimator.ofFloat(holder.vBgLike, "scaleX", 0.1f, 1f);
-    bgScaleXAnim.setDuration(200);
-    bgScaleXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-    ObjectAnimator bgAlphaAnim = ObjectAnimator.ofFloat(holder.vBgLike, "alpha", 1f, 0f);
-    bgAlphaAnim.setDuration(200);
-    bgAlphaAnim.setStartDelay(150);
-    bgAlphaAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-
-    ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleY", 0.1f, 1f);
-    imgScaleUpYAnim.setDuration(300);
-    imgScaleUpYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-    ObjectAnimator imgScaleUpXAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleX", 0.1f, 1f);
-    imgScaleUpXAnim.setDuration(300);
-    imgScaleUpXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
-
-    ObjectAnimator imgScaleDownYAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleY", 1f, 0f);
-    imgScaleDownYAnim.setDuration(300);
-    imgScaleDownYAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
-    ObjectAnimator imgScaleDownXAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleX", 1f, 0f);
-    imgScaleDownXAnim.setDuration(300);
-    imgScaleDownXAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
-
-    animatorSet.playTogether(bgScaleYAnim, bgScaleXAnim, bgAlphaAnim, imgScaleUpYAnim, imgScaleUpXAnim);
-    animatorSet.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);
-
-    animatorSet.addListener(new AnimatorListenerAdapter() {
-      @Override
-      public void onAnimationEnd(Animator animation) {
-        likeAnimationsMap.remove(holder);
-        resetLikeAnimationState(holder);
-        dispatchChangeFinishedIfAllAnimationsEnded(holder);
-      }
-    });
-    animatorSet.start();
-
-    likeAnimationsMap.put(holder, animatorSet);
-
-    // Toggle the red heart icon
-    if (holder.llLike.getVisibility() == View.INVISIBLE) {
-      holder.llLike.setVisibility(View.VISIBLE);
-    } else {
-      holder.llLike.setVisibility(View.INVISIBLE);
-    }
-  }
-
-  private void dispatchChangeFinishedIfAllAnimationsEnded(CommentsAdapter.CommentsMediaViewHolder holder) {
-    if (likeAnimationsMap.containsKey(holder) || heartAnimationsMap.containsKey(holder)) {
-      return;
     }
 
-    dispatchAnimationFinished(holder);
-  }
+    private void animatePhotoLike(final CommentsAdapter.CommentsMediaViewHolder holder) {
+        holder.vBgLike.setVisibility(View.VISIBLE);
+        holder.ivLike.setVisibility(View.VISIBLE);
 
-  private void resetLikeAnimationState(CommentsAdapter.CommentsMediaViewHolder holder) {
-    holder.vBgLike.setVisibility(View.INVISIBLE);
-    holder.ivLike.setVisibility(View.INVISIBLE);
-  }
+        holder.vBgLike.setScaleY(0.1f);
+        holder.vBgLike.setScaleX(0.1f);
+        holder.vBgLike.setAlpha(1f);
+        holder.ivLike.setScaleY(0.1f);
+        holder.ivLike.setScaleX(0.1f);
 
-  @Override
-  public void endAnimation(RecyclerView.ViewHolder item) {
-    super.endAnimation(item);
-    cancelCurrentAnimationIfExists(item);
-  }
+        AnimatorSet animatorSet = new AnimatorSet();
 
-  @Override
-  public void endAnimations() {
-    super.endAnimations();
-    for (AnimatorSet animatorSet : likeAnimationsMap.values()) {
-      animatorSet.cancel();
+        ObjectAnimator bgScaleYAnim = ObjectAnimator.ofFloat(holder.vBgLike, "scaleY", 0.1f, 1f);
+        bgScaleYAnim.setDuration(200);
+        bgScaleYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+        ObjectAnimator bgScaleXAnim = ObjectAnimator.ofFloat(holder.vBgLike, "scaleX", 0.1f, 1f);
+        bgScaleXAnim.setDuration(200);
+        bgScaleXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+        ObjectAnimator bgAlphaAnim = ObjectAnimator.ofFloat(holder.vBgLike, "alpha", 1f, 0f);
+        bgAlphaAnim.setDuration(200);
+        bgAlphaAnim.setStartDelay(150);
+        bgAlphaAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+
+        ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleY", 0.1f, 1f);
+        imgScaleUpYAnim.setDuration(300);
+        imgScaleUpYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+        ObjectAnimator imgScaleUpXAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleX", 0.1f, 1f);
+        imgScaleUpXAnim.setDuration(300);
+        imgScaleUpXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+
+        ObjectAnimator imgScaleDownYAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleY", 1f, 0f);
+        imgScaleDownYAnim.setDuration(300);
+        imgScaleDownYAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+        ObjectAnimator imgScaleDownXAnim = ObjectAnimator.ofFloat(holder.ivLike, "scaleX", 1f, 0f);
+        imgScaleDownXAnim.setDuration(300);
+        imgScaleDownXAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+
+        animatorSet.playTogether(bgScaleYAnim, bgScaleXAnim, bgAlphaAnim, imgScaleUpYAnim, imgScaleUpXAnim);
+        animatorSet.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);
+
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                likeAnimationsMap.remove(holder);
+                resetLikeAnimationState(holder);
+                dispatchChangeFinishedIfAllAnimationsEnded(holder);
+            }
+        });
+        animatorSet.start();
+
+        likeAnimationsMap.put(holder, animatorSet);
+
+        // Toggle the red heart icon
+        if (holder.llLike.getVisibility() == View.INVISIBLE) {
+            holder.llLike.setVisibility(View.VISIBLE);
+        } else {
+            holder.llLike.setVisibility(View.INVISIBLE);
+        }
     }
-  }
 
-  public static class FeedItemHolderInfo extends RecyclerView.ItemAnimator.ItemHolderInfo {
-    public String updateAction;
+    private void dispatchChangeFinishedIfAllAnimationsEnded(CommentsAdapter.CommentsMediaViewHolder holder) {
+        if (likeAnimationsMap.containsKey(holder) || heartAnimationsMap.containsKey(holder)) {
+            return;
+        }
 
-    public FeedItemHolderInfo(String updateAction) {
-      this.updateAction = updateAction;
+        dispatchAnimationFinished(holder);
     }
-  }
+
+    private void resetLikeAnimationState(CommentsAdapter.CommentsMediaViewHolder holder) {
+        holder.vBgLike.setVisibility(View.INVISIBLE);
+        holder.ivLike.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void endAnimation(RecyclerView.ViewHolder item) {
+        super.endAnimation(item);
+        cancelCurrentAnimationIfExists(item);
+    }
+
+    @Override
+    public void endAnimations() {
+        super.endAnimations();
+        for (AnimatorSet animatorSet : likeAnimationsMap.values()) {
+            animatorSet.cancel();
+        }
+    }
+
+    public static class FeedItemHolderInfo extends RecyclerView.ItemAnimator.ItemHolderInfo {
+        public String updateAction;
+
+        public FeedItemHolderInfo(String updateAction) {
+            this.updateAction = updateAction;
+        }
+    }
 }

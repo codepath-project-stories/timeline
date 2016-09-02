@@ -69,9 +69,9 @@ public class AutoPlayBottomFragment extends Fragment {
   private void updateMoment(Moment moment) {
     if (moment.getAuthor() != null) {
       Glide.with(this).load(UserClient.getProfileImageUrl(moment.getAuthor()))
-          .fitCenter()
-          .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
-          .into(ivProfilePhoto);
+              .fitCenter()
+              .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
+              .into(ivProfilePhoto);
     }
   }
 }

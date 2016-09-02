@@ -40,7 +40,8 @@ public class SearchFriendsDialogFragment extends DialogFragment {
     List<ParseUser> mUsersSelected;
     ArrayAdapter adapter;
 
-    public SearchFriendsDialogFragment() {}
+    public SearchFriendsDialogFragment() {
+    }
 
     public static SearchFriendsDialogFragment newInstance(String title) {
         SearchFriendsDialogFragment frag = new SearchFriendsDialogFragment();
@@ -88,7 +89,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         mUsersSelected = new ArrayList<>();
         multiAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mUsersSelected.add((ParseUser) adapter.getItem(position));
             }
         });

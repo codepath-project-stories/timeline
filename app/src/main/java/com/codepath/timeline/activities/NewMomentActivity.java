@@ -27,9 +27,6 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
