@@ -52,34 +52,34 @@
       android:background="@android:color/white"
       app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <View
-        android:id="@+id/vLine"
-        android:layout_width="2dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"/>
+    <!--<View-->
+        <!--android:id="@+id/vLine"-->
+        <!--android:layout_width="2dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@color/colorPrimary"/>-->
 
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/vLine"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="MAR 26"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="13sp"
-        android:textStyle="bold"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tvDate"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_below="@+id/vLine"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/circle"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="5dp"-->
+        <!--android:text="MAR 26"-->
+        <!--android:textAllCaps="true"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textSize="13sp"-->
+        <!--android:textStyle="bold"/>-->
 
     <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
         android:id="@+id/vpMoment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDate"
+
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:clipChildren="false"

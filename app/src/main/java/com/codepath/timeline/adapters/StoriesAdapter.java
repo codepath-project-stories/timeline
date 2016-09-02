@@ -82,7 +82,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.rlMainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo: considered a bad practice to fire intents from the adapter
+                // Todo: considered a bad practice to fire intents from the adapter, change to the custom listener
                 // create a custom listener instead and pass to the activity
                 Intent i = new Intent(context, TimelineActivity.class);
                 Story story = mStories.get(position);

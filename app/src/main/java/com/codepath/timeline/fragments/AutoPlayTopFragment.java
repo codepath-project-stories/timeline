@@ -65,10 +65,14 @@ public class AutoPlayTopFragment extends Fragment {
     }
 
     private void updateMoment(Moment moment) {
-        if (moment.getMediaUrl() != null) {
-            Glide.with(this).load(moment.getMediaUrl())
-                    .fitCenter()
-                    .into(ivMedia);
+        try {
+            if (moment.getMediaUrl() != null) {
+                Glide.with(this).load(moment.getMediaUrl())
+                        .fitCenter()
+                        .into(ivMedia);
+            }
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
         }
     }
 }
