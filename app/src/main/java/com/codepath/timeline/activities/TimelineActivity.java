@@ -422,3 +422,4 @@ public class TimelineActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 }
+
