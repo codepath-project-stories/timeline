@@ -66,7 +66,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
         adapter = null;
 
         // Todo: pass user id to fragment to retrieve friends list
-        TimelineClient.getInstance().getFriendList(
+        TimelineClient.getInstance().getFriendsList(
                 null,
                 new TimelineClient.TimelineClientGetFriendListListener() {
                     @Override

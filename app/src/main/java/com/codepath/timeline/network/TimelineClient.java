@@ -1,15 +1,12 @@
 package com.codepath.timeline.network;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.util.ImageUtil;
-import com.codepath.timeline.view.BitmapScaler;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.parse.FindCallback;
@@ -21,9 +18,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -83,7 +77,11 @@ public class TimelineClient {
   }
 
   public interface TimelineClientGetUserListener {
-    void onGetUserList(List<ParseUser> itemList);
+    void onGetUser(ParseUser user);
+  }
+
+  public interface TimelineClientGetCollaboratorListListener {
+    void onGetCollaboratorList(List<ParseUser> itemList);
   }
 
   public interface TimelineClientGetMomentListener {
@@ -400,8 +398,8 @@ public class TimelineClient {
   }
 
   // query User table
-  public void getUserList(Story story,
-                          final TimelineClientGetUserListener timelineClientGetUserListener) {
+  public void getCollaboratorList(Story story,
+                                  final TimelineClientGetCollaboratorListListener timelineClientGetUserListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
     // http://parseplatform.github.io/docs/android/guide
     // fetchifneeded() could be an alternative to include()
@@ -415,7 +413,7 @@ public class TimelineClient {
               if (story != null) {
                 Log.d("findInBackground", story.getObjectId());
                 if (timelineClientGetUserListener != null) {
-                  timelineClientGetUserListener.onGetUserList(
+                  timelineClientGetUserListener.onGetCollaboratorList(
                       (ArrayList<ParseUser>) story.get("collaboratorList")
                   ); // use callback
                 }
@@ -427,28 +425,64 @@ public class TimelineClient {
         });
   }
 
-  // TODO: now is get all users. need to change to get friend list.
-  public void getFriendList(ParseUser user,
-                            final TimelineClientGetFriendListListener onGetFriendList) {
+  public void addFriendsList(ParseUser user, List<ParseUser> friendsList) {
+    user.put("friendsList", friendsList);
+    user.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from adding addFriendsList: " + e.getMessage());
+          return;
+        }
+
+        Log.d(TAG, "Success addFriendsList");
+      }
+    });
+  }
+
+  public void getFriendsList(ParseUser user,
+                             final TimelineClientGetFriendListListener onGetFriendList) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
-    // http://parseplatform.github.io/docs/android/guide
-    // fetchifneeded() could be an alternative to include()
-    query.findInBackground(
-        new FindCallback<ParseUser>() {
-          @Override
-          public void done(List<ParseUser> userList, ParseException e) {
-            if (e == null) {
-              if (userList != null) {
-                Log.d("findInBackground", "!= null");
-                if (onGetFriendList != null) {
-                  onGetFriendList.onGetFriendList(userList);
-                }
-              }
-            } else {
-              Log.d("findInBackground", "Error: " + e.getMessage());
-            }
+    query.include("friendsList");
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+    query.getInBackground(user.getObjectId(), new GetCallback<ParseUser>() {
+      @Override
+      public void done(ParseUser user, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getFriendsList: " + e.getMessage());
+          return;
+        }
+
+        if (user != null) {
+          Log.d(TAG, "Success getFriendsList");
+          List<ParseUser> friendsList = (List<ParseUser>) user.get("friendsList");
+          if (onGetFriendList != null && friendsList != null) {
+            onGetFriendList.onGetFriendList(friendsList);
           }
-        });
+        }
+      }
+    });
+  }
+
+  public void getUser(final String userObjectId, final TimelineClientGetUserListener timelineClientGetUserListener) {
+    ParseQuery<ParseUser> query = ParseUser.getQuery();
+    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+    query.getInBackground(userObjectId, new GetCallback<ParseUser>() {
+      @Override
+      public void done(ParseUser user, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from getUser(" + userObjectId + "): " + e.getMessage());
+          return;
+        }
+
+        if (user != null) {
+          Log.d(TAG, "Success getUser");
+          if (timelineClientGetUserListener != null) {
+            timelineClientGetUserListener.onGetUser(user);
+          }
+        }
+      }
+    });
   }
 
   public void getSharedStoryList(ParseUser user,
