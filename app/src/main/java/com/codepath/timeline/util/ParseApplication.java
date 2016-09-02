@@ -14,7 +14,7 @@ public class ParseApplication extends Application {
 	// http://parseplatform.github.io/docs/android/guide
 
 	public static boolean TURN_ON_PARSE = true;
-	public static boolean DEMO_MODE = true;
+	public static boolean DEMO_MODE = false;
 	public static boolean TEST_PARSE = false;
 
 	@Override

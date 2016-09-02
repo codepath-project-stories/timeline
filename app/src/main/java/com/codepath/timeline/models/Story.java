@@ -14,17 +14,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 // remember to register in ParseApplication
 // only fields of Story class will be serialized
 @ParseClassName("Story")
-public class Story extends ParseObject {
+public class Story extends ParseObject implements Comparable<Story> {
 
   // Gson needs the following
   private String mockTitle;
   private String mockBackgroundImage;
   private String mockCreatedAt;
+  private String tempPhotoUri;      // temporarily store the photo URI after taking a picture
 
   // TODO
   private List<Moment> momentList;
@@ -44,7 +46,6 @@ public class Story extends ParseObject {
     super();
     setTitle(title);
     setBackgroundImageUrl(backgroundImageUrl);
-    setCreatedAtReal(createdAtReal);
     setOwner(UserClient.getCurrentUser());
     List<ParseUser> collaboratorList = new ArrayList<>();
     collaboratorList.add(UserClient.getCurrentUser());
@@ -64,7 +65,6 @@ public class Story extends ParseObject {
     for (Story theStory : storyList) {
       theStory.setTitle(theStory.mockTitle);
       theStory.setBackgroundImageUrl(theStory.mockBackgroundImage);
-      theStory.setCreatedAtReal(theStory.mockCreatedAt);
       theStory.setOwner(UserClient.getCurrentUser());
       List<ParseUser> collaboratorList = new ArrayList<>();
       collaboratorList.add(UserClient.getCurrentUser());
@@ -102,11 +102,11 @@ public class Story extends ParseObject {
   }
 
   // the date from photo or user
-  public String getCreatedAtReal() {
-    return (String) get("createdAtReal");
+  public Date getCreatedAtReal() {
+    return (Date) get("createdAtReal");
   }
 
-  public void setCreatedAtReal(String createdAtReal) {
+  public void setCreatedAtReal(Date createdAtReal) {
     put("createdAtReal", createdAtReal);
   }
 
@@ -129,12 +129,22 @@ public class Story extends ParseObject {
   // Ordered by descending date
   public List<Moment> getMomentList() {
     List<Moment> momentList = (List<Moment>) get("momentList");
-    Collections.sort(momentList);
+    if (momentList != null) {
+      Collections.sort(momentList);
+    }
     return momentList;
   }
 
   public void setMomentList(List<Moment> momentList) {
     put("momentList", momentList);
+  }
+
+  public String getTempPhotoUri() {
+    return tempPhotoUri;
+  }
+
+  public void setTempPhotoUri(String tempPhotoUri) {
+    this.tempPhotoUri = tempPhotoUri;
   }
 
   @Override
@@ -143,7 +153,7 @@ public class Story extends ParseObject {
     str.append("--------- Story");
     str.append("\nobjectId=").append(getObjectId());
     //    str.append("\ncreatedAt=").append(getCreatedAt().toString());
-    str.append("\ncreatedAtReal=").append(getCreatedAtReal());
+//    str.append("\ncreatedAtReal=").append(getCreatedAtReal());
     str.append("\ntitle=").append(getTitle());
     str.append("\nbackgroundImageUrl=").append(getBackgroundImageUrl());
 
@@ -157,5 +167,10 @@ public class Story extends ParseObject {
       str.append("\nprofileImageUrl=").append(user.get("profileImageUrl"));
     }
     return str.toString();
+  }
+
+  @Override
+  public int compareTo(Story otherStory) {
+    return otherStory.getUpdatedAt().compareTo(getUpdatedAt());
   }
 }

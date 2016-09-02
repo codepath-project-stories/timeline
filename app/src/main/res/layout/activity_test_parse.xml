@@ -66,4 +66,44 @@
         android:id="@+id/getSharedStoryList"
         android:layout_above="@+id/createMomentList"
         android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dianne"
+        android:id="@+id/dButton"
+        android:layout_above="@+id/getSharedStoryList"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="marina"
+        android:id="@+id/mButton"
+        android:layout_alignTop="@+id/dButton"
+        android:layout_toEndOf="@+id/dButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ching-yao"
+        android:id="@+id/cyButton"
+        android:layout_alignTop="@+id/mButton"
+        android:layout_toEndOf="@+id/mButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hugo"
+        android:id="@+id/hButton"
+        android:layout_above="@+id/getSharedStoryList"
+        android:layout_toEndOf="@+id/cyButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add friends list"
+        android:id="@+id/addFriendsButton"
+        android:layout_above="@+id/dButton"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

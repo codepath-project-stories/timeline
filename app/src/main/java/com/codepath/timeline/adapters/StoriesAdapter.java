@@ -132,10 +132,17 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void updateStoryDetails(StoriesAdapter.ViewHolderSimpleStory holder, Story story) {
         holder.tvStoryTitle.setText(story.getTitle());
-        Glide.with(context)
+        if (story.getBackgroundImageUrl() != null) {
+            Glide.with(context)
                 .load(story.getBackgroundImageUrl())
                 .centerCrop()
                 .into(holder.ivBackgroundImage);
+        } else if (story.getTempPhotoUri() != null){
+            Glide.with(context)
+                .load(story.getTempPhotoUri())
+                .centerCrop()
+                .into(holder.ivBackgroundImage);
+        }
 
         // TODO: Update the number of moments
         holder.tvMomentCount.setText("30" + " Moments");

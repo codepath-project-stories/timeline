@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,12 +29,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,6 +45,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class NewStoryActivity extends NewItemClass
         implements SearchFriendsDialogFragment.SearchDialogListener {
+    private static final String TAG = NewStoryActivity.class.getSimpleName();
 
     @BindView(R.id.ivBackground)
     ImageView ivBackground;
@@ -89,7 +93,7 @@ public class NewStoryActivity extends NewItemClass
     @BindView(R.id.ivSelected4)
     ImageView ivSelected4;
 
-
+    private List<ParseUser> mFriendsList;
     private Context context;
 
     @Override
@@ -103,52 +107,11 @@ public class NewStoryActivity extends NewItemClass
 
         context = getApplicationContext();
 
+        getFriendsList();
         setupViews();
     }
 
     public void setupViews() {
-
-        // TODO: read from the List<User> friends, add names
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
-                .fitCenter()
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(ivCollaborator1);
-
-        tvCollaborator1.setText("Amanda Brown");
-
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
-                .fitCenter()
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(ivCollaborator2);
-
-        tvCollaborator2.setText("Clair White");
-
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/1752229650/icontwit.png")
-                .fitCenter()
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(ivCollaborator3);
-
-        tvCollaborator3.setText("Megan Cox");
-
-        Glide.with(context).load("https://pbs.twimg.com/profile_images/740895191003975681/kTD5CP9x.jpg")
-                .fitCenter()
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(ivCollaborator4);
-
-        tvCollaborator4.setText("Julie Korosteleva Brown");
-
-        ivSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getSupportFragmentManager();
-                SearchFriendsDialogFragment composeDialog = SearchFriendsDialogFragment.newInstance("Choose friends:");
-                Bundle bundle = new Bundle();
-                // Todo: pass meaningful data (probably user's id)
-                composeDialog.setArguments(bundle);
-                composeDialog.show(fm, "fragment_compose_dialog");
-            }
-        });
-
         etStoryTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -172,6 +135,75 @@ public class NewStoryActivity extends NewItemClass
                 btnPublish.setEnabled(etStoryTitle.getText().length() <= 35);
             }
         });
+    }
+
+    private void getFriendsList() {
+        ParseUser user = UserClient.getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Error from getting friends list");
+        }
+
+        TimelineClient.getInstance().getFriendsList(user, new TimelineClient.TimelineClientGetFriendListListener() {
+            @Override
+            public void onGetFriendList(List<ParseUser> friendsList) {
+                mFriendsList = friendsList;
+                initFriendsList();
+            }
+        });
+    }
+
+    private void initFriendsList() {
+        CropCircleTransformation profilePhotoTransformation = new CropCircleTransformation(context);
+        // HACKY -- need to convert to horizontal recyclerview and set the adapter once instead of setting each view property individually
+        if(mFriendsList != null) {
+            if (mFriendsList.size() > 0 && mFriendsList.get(0) != null) {
+                ParseUser user1 = mFriendsList.get(0);
+                ivCollaborator1.setVisibility(View.VISIBLE);
+                Glide.with(context).load(UserClient.getProfileImageUrl(user1))
+                    .fitCenter()
+                    .bitmapTransform(profilePhotoTransformation)
+                    .into(ivCollaborator1);
+
+                tvCollaborator1.setVisibility(View.VISIBLE);
+                tvCollaborator1.setText(UserClient.getName(user1));
+            }
+
+            if (mFriendsList.size() > 1 && mFriendsList.get(1) != null) {
+                ParseUser user2 = mFriendsList.get(1);
+                ivCollaborator2.setVisibility(View.VISIBLE);
+                Glide.with(context).load(UserClient.getProfileImageUrl(user2))
+                    .fitCenter()
+                    .bitmapTransform(profilePhotoTransformation)
+                    .into(ivCollaborator2);
+
+                tvCollaborator2.setVisibility(View.VISIBLE);
+                tvCollaborator2.setText(UserClient.getName(user2));
+            }
+
+            if (mFriendsList.size() > 2 && mFriendsList.get(2) != null) {
+                ParseUser user3 = mFriendsList.get(2);
+                ivCollaborator3.setVisibility(View.VISIBLE);
+                Glide.with(context).load(UserClient.getProfileImageUrl(user3))
+                    .fitCenter()
+                    .bitmapTransform(profilePhotoTransformation)
+                    .into(ivCollaborator3);
+
+                tvCollaborator3.setVisibility(View.VISIBLE);
+                tvCollaborator3.setText(UserClient.getName(user3));
+            }
+
+            if (mFriendsList.size() > 3 && mFriendsList.get(3) != null) {
+                ParseUser user4 = mFriendsList.get(3);
+                ivCollaborator4.setVisibility(View.VISIBLE);
+                Glide.with(context).load(UserClient.getProfileImageUrl(user4))
+                    .fitCenter()
+                    .bitmapTransform(profilePhotoTransformation)
+                    .into(ivCollaborator4);
+
+                tvCollaborator4.setVisibility(View.VISIBLE);
+                tvCollaborator4.setText(UserClient.getName(user4));
+            }
+        }
     }
 
     public void highlightSelected(View view) {
@@ -233,37 +265,25 @@ public class NewStoryActivity extends NewItemClass
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
-            List<ParseUser> collabs = new ArrayList<>();
-            // Todo: check tags on the collaborators images, if 2 then it is selected
+            ArrayList<String> collabUserIdList = new ArrayList<>();
             if (isViewSelected(ivSelected1)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Amanda Brown");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(0).getObjectId());
             }
             if (isViewSelected(ivSelected2)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Clair White");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(1).getObjectId());
             }
             if (isViewSelected(ivSelected3)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Megan Cox");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(2).getObjectId());
             }
             if (isViewSelected(ivSelected4)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Julie Korosteleva");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(3).getObjectId());
             }
 
             // send result back
             Intent data = new Intent();
             data.putExtra(AppConstants.STORY_TITLE, etStoryTitle.getText().toString());
-            // TODO: upload real photo instead of local path
-            // TODO: /storage/emulated/0/Android/data/com.codepath.apps.timeline/files/Pictures/TimelineApp/photo.jpg
             data.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, takenPhotoUri.getPath());
-            // TODO: upload a list of ParseUser
-            // data.putExtra(AppConstants.STORY_COLLABORATORS, collabs);
+            data.putExtra(AppConstants.STORY_COLLABORATOR_LIST, collabUserIdList);
             setResult(1, data);
 
             // closes the activity, pass data to parent, which is UserStoriesFragment onActivityResult()
