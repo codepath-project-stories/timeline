@@ -440,7 +440,7 @@ public class TimelineClient {
           return;
         }
 
-        if(userList != null) {
+        if (userList != null) {
           if (timelineClientGetUserListListener != null) {
             timelineClientGetUserListListener.onGetUserList(userList);
           }
@@ -509,11 +509,9 @@ public class TimelineClient {
     });
   }
 
-  public void getSharedStoryList(ParseUser user,
+  public void getSharedStoryList(final ParseUser user,
                                  final TimelineClientGetStoryListener timelineClientGetStoryListener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
-    // http://parseplatform.github.io/docs/android/guide
-    // fetchifneeded() could be an alternative to include()
     query.whereEqualTo("collaboratorList", user);
     query.include("owner"); // eagerly load the owner -- we need it for updating the story view
     query.include("collaboratorList");
@@ -521,16 +519,26 @@ public class TimelineClient {
     query.findInBackground(new FindCallback<Story>() {
       @Override
       public void done(List<Story> itemList, ParseException e) {
-        if (e == null) {
-          if (itemList != null) {
-            Log.d("findInBackground", Integer.toString(itemList.size()));
-            // Access the array of results here
-            if (timelineClientGetStoryListener != null) {
-              timelineClientGetStoryListener.onGetStoryList(itemList); // use callback
+        if (e != null) {
+          Log.e(TAG, "Exception from getSharedStoryList: " + e.getMessage());
+          return;
+        }
+
+        if (itemList != null) {
+          Log.d("findInBackground", Integer.toString(itemList.size()));
+          List<Story> sharedStoryList = new ArrayList<Story>();
+
+          // Remove stories that were created by the current user
+          for(Story story : itemList) {
+            if(!story.getOwner().equals(user)) {
+              sharedStoryList.add(story);
             }
           }
-        } else {
-          Log.d("findInBackground", "Error: " + e.getMessage());
+
+          // Access the array of results here
+          if (timelineClientGetStoryListener != null) {
+            timelineClientGetStoryListener.onGetStoryList(sharedStoryList); // use callback
+          }
         }
       }
     });
