@@ -68,7 +68,7 @@ public class AutoPlayTopFragment extends Fragment {
         try {
             if (moment.getMediaUrl() != null) {
                 Glide.with(this).load(moment.getMediaUrl())
-                        .fitCenter()
+                        .centerCrop()
                         .into(ivMedia);
             }
         } catch (IllegalArgumentException ex) {
