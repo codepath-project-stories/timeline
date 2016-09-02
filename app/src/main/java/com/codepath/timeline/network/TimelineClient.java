@@ -225,7 +225,7 @@ public class TimelineClient {
   // Query the DB for moments associated with this story
   public void getMomentList(String storyObjectId, final TimelineClientGetMomentListListener timelineClientGetMomentListListener) {
     mMomentListQuery = ParseQuery.getQuery(Story.class);
-    mMomentListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+    mMomentListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
     mMomentListQuery.include("momentList");
     mMomentListQuery.include("momentList.author");
     mMomentListQuery.getInBackground(storyObjectId, new GetCallback<Story>() {
