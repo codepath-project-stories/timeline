@@ -80,6 +80,10 @@ public class TimelineClient {
     void onGetUser(ParseUser user);
   }
 
+  public interface TimelineClientGetUserListListener {
+    void onGetUserList(List<ParseUser> userList);
+  }
+
   public interface TimelineClientGetCollaboratorListListener {
     void onGetCollaboratorList(List<ParseUser> itemList);
   }
@@ -423,6 +427,26 @@ public class TimelineClient {
             }
           }
         });
+  }
+
+  public void getUserListByIds(ArrayList<String> objectIds, final TimelineClientGetUserListListener timelineClientGetUserListListener) {
+    ParseQuery<ParseUser> query = ParseUser.getQuery();
+    query.whereContainedIn("objectId", objectIds);
+    query.findInBackground(new FindCallback<ParseUser>() {
+      @Override
+      public void done(List<ParseUser> userList, ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from adding getUserListByIds: " + e.getMessage());
+          return;
+        }
+
+        if(userList != null) {
+          if (timelineClientGetUserListListener != null) {
+            timelineClientGetUserListListener.onGetUserList(userList);
+          }
+        }
+      }
+    });
   }
 
   public void addFriendsList(ParseUser user, List<ParseUser> friendsList) {

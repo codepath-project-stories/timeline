@@ -20,6 +20,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -91,8 +92,22 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
       story.setTitle(data.getStringExtra(AppConstants.STORY_TITLE));
       story.setTempPhotoUri(data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL));
       story.setOwner(UserClient.getCurrentUser());
-      addStory(story);
+
+      ArrayList<String> collabObjectIdList = data.getStringArrayListExtra(AppConstants.STORY_COLLABORATOR_LIST);
+      if(collabObjectIdList != null) {
+        fetchCollabList(collabObjectIdList, story);
+      }
     }
+  }
+
+  private void fetchCollabList(ArrayList<String> collabObjectIdList, final Story story) {
+    TimelineClient.getInstance().getUserListByIds(collabObjectIdList, new TimelineClient.TimelineClientGetUserListListener() {
+      @Override
+      public void onGetUserList(List<ParseUser> userList) {
+        story.setCollaboratorList(userList);
+        addStory(story);
+      }
+    });
   }
 
   private void addStory(final Story story) {

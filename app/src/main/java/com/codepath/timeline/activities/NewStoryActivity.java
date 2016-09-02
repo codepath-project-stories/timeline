@@ -36,6 +36,7 @@ import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -92,7 +93,7 @@ public class NewStoryActivity extends NewItemClass
     @BindView(R.id.ivSelected4)
     ImageView ivSelected4;
 
-
+    private List<ParseUser> mFriendsList;
     private Context context;
 
     @Override
@@ -145,17 +146,18 @@ public class NewStoryActivity extends NewItemClass
         TimelineClient.getInstance().getFriendsList(user, new TimelineClient.TimelineClientGetFriendListListener() {
             @Override
             public void onGetFriendList(List<ParseUser> friendsList) {
-                initFriendsList(friendsList);
+                mFriendsList = friendsList;
+                initFriendsList();
             }
         });
     }
 
-    private void initFriendsList(List<ParseUser> friendsList) {
+    private void initFriendsList() {
         CropCircleTransformation profilePhotoTransformation = new CropCircleTransformation(context);
         // HACKY -- need to convert to horizontal recyclerview and set the adapter once instead of setting each view property individually
-        if(friendsList != null) {
-            if (friendsList.size() > 0 && friendsList.get(0) != null) {
-                ParseUser user1 = friendsList.get(0);
+        if(mFriendsList != null) {
+            if (mFriendsList.size() > 0 && mFriendsList.get(0) != null) {
+                ParseUser user1 = mFriendsList.get(0);
                 ivCollaborator1.setVisibility(View.VISIBLE);
                 Glide.with(context).load(UserClient.getProfileImageUrl(user1))
                     .fitCenter()
@@ -166,8 +168,8 @@ public class NewStoryActivity extends NewItemClass
                 tvCollaborator1.setText(UserClient.getName(user1));
             }
 
-            if (friendsList.size() > 1 && friendsList.get(1) != null) {
-                ParseUser user2 = friendsList.get(1);
+            if (mFriendsList.size() > 1 && mFriendsList.get(1) != null) {
+                ParseUser user2 = mFriendsList.get(1);
                 ivCollaborator2.setVisibility(View.VISIBLE);
                 Glide.with(context).load(UserClient.getProfileImageUrl(user2))
                     .fitCenter()
@@ -178,8 +180,8 @@ public class NewStoryActivity extends NewItemClass
                 tvCollaborator2.setText(UserClient.getName(user2));
             }
 
-            if (friendsList.size() > 2 && friendsList.get(2) != null) {
-                ParseUser user3 = friendsList.get(2);
+            if (mFriendsList.size() > 2 && mFriendsList.get(2) != null) {
+                ParseUser user3 = mFriendsList.get(2);
                 ivCollaborator3.setVisibility(View.VISIBLE);
                 Glide.with(context).load(UserClient.getProfileImageUrl(user3))
                     .fitCenter()
@@ -190,8 +192,8 @@ public class NewStoryActivity extends NewItemClass
                 tvCollaborator3.setText(UserClient.getName(user3));
             }
 
-            if (friendsList.size() > 3 && friendsList.get(3) != null) {
-                ParseUser user4 = friendsList.get(3);
+            if (mFriendsList.size() > 3 && mFriendsList.get(3) != null) {
+                ParseUser user4 = mFriendsList.get(3);
                 ivCollaborator4.setVisibility(View.VISIBLE);
                 Glide.with(context).load(UserClient.getProfileImageUrl(user4))
                     .fitCenter()
@@ -263,35 +265,25 @@ public class NewStoryActivity extends NewItemClass
             Snackbar.make(findViewById(android.R.id.content), "Fill out required fields", Snackbar.LENGTH_SHORT).show();
             ivBackground.startAnimation(shake);
         } else {
-            List<ParseUser> collabs = new ArrayList<>();
-            // Todo: check tags on the collaborators images, if 2 then it is selected
+            ArrayList<String> collabUserIdList = new ArrayList<>();
             if (isViewSelected(ivSelected1)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Amanda Brown");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(0).getObjectId());
             }
             if (isViewSelected(ivSelected2)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Clair White");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(1).getObjectId());
             }
             if (isViewSelected(ivSelected3)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Megan Cox");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(2).getObjectId());
             }
             if (isViewSelected(ivSelected4)) {
-                ParseUser user = new ParseUser();
-                user.setUsername("Julie Korosteleva");
-                collabs.add(user);
+                collabUserIdList.add(mFriendsList.get(3).getObjectId());
             }
 
             // send result back
             Intent data = new Intent();
             data.putExtra(AppConstants.STORY_TITLE, etStoryTitle.getText().toString());
             data.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, takenPhotoUri.getPath());
-            // TODO: upload a list of ParseUser
-            // data.putExtra(AppConstants.STORY_COLLABORATORS, collabs);
+            data.putExtra(AppConstants.STORY_COLLABORATOR_LIST, collabUserIdList);
             setResult(1, data);
 
             // closes the activity, pass data to parent, which is UserStoriesFragment onActivityResult()
