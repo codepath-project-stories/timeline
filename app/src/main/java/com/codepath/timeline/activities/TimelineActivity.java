@@ -213,9 +213,11 @@ public class TimelineActivity extends AppCompatActivity implements
                     builder.setScopes(new String[]{"user-read-private", "streaming"});
                     AuthenticationRequest request = builder.build();
                     AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
+                    miMusic.setLabelText("Unspotify story");
                 } else {
                     v.setTag(1);
                     mPlayer.pause();
+                    miMusic.setLabelText("Spotify story");
                 }
             }
         });

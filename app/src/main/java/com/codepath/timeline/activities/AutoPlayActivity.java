@@ -115,7 +115,7 @@ public class AutoPlayActivity extends AppCompatActivity
         collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
         Glide.with(this)
                 .load(storyBackgroundImageUrl)
-                .centerCrop()
+                .fitCenter()
                 .into(ivStoryBackground);
     }
 
@@ -143,7 +143,7 @@ public class AutoPlayActivity extends AppCompatActivity
         });
 
         // initialize viewpager for automatically scrolling through the list of moments
-        vpMoment.setInterval(2000);
+        vpMoment.setInterval(3000);
         vpMoment.startAutoScroll();
         vpMoment.setCurrentItem(0);
     }
@@ -152,7 +152,7 @@ public class AutoPlayActivity extends AppCompatActivity
         TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
             @Override
             public void onGetMomentList(List<Moment> itemList) {
-                mMomentList = new ArrayList<Moment>();
+                mMomentList = new ArrayList<>();
                 mMomentList.addAll(itemList);
                 initList();
             }
@@ -186,7 +186,7 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @Override
     public void onExpandingClick(View v) {
-        //v is expandingfragment layout
+        //v is expanding fragment layout
         View view = v.findViewById(R.id.ivMedia);
         Moment moment = mMomentList.get(vpMoment.getCurrentItem());
         startInfoActivity(view, moment);

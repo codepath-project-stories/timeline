@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -36,7 +35,6 @@ import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -135,6 +133,15 @@ public class NewStoryActivity extends NewItemClass
                 btnPublish.setEnabled(etStoryTitle.getText().length() <= 35);
             }
         });
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Todo: fix the search according to the API
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                SearchFriendsDialogFragment composeDialogFragment = SearchFriendsDialogFragment.newInstance("Search friends");
+//                composeDialogFragment.show(fragmentManager, "fragment_compose");
+            }
+        });
     }
 
     private void getFriendsList() {
@@ -154,7 +161,7 @@ public class NewStoryActivity extends NewItemClass
 
     private void initFriendsList() {
         CropCircleTransformation profilePhotoTransformation = new CropCircleTransformation(context);
-        // HACKY -- need to convert to horizontal recyclerview and set the adapter once instead of setting each view property individually
+        // Todo: HACKY -- need to convert to horizontal recyclerview and set the adapter once instead of setting each view property individually
         if(mFriendsList != null) {
             if (mFriendsList.size() > 0 && mFriendsList.get(0) != null) {
                 ParseUser user1 = mFriendsList.get(0);
