@@ -13,14 +13,14 @@ import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.util.ParseApplication;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +28,7 @@ import butterknife.BindView;
 public class UserStoriesFragment extends BaseStoryModelFragment {
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
+    private static final String TAG = UserStoriesFragment.class.getSimpleName();
 
     @BindView(R.id.addBtn)
     com.github.clans.fab.FloatingActionButton add;
@@ -57,7 +58,6 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo: add a new story
                 Intent intent = new Intent(getActivity(), NewStoryActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -81,7 +81,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                     new TimelineClient.TimelineClientGetStoryListener() {
                         @Override
                         public void onGetStoryList(List<Story> itemList) {
-                            if (itemList != null) {
+                            if(itemList != null) {
+                                // Sort by newly updated story on top of the list
+                                Collections.sort(itemList);
                                 addAll(itemList);
                             }
                         }
@@ -123,14 +125,26 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request it is that we're responding to
         if (requestCode == REQUEST_CODE && resultCode == 1) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Story story = new Story(
-                    data.getStringExtra(AppConstants.STORY_TITLE),
-                    data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL),
-                    dateFormat.format(new Date())
-            );
-            story.saveInBackground();
-            addNew(story);
+            Story story = new Story();
+            story.setCreatedAtReal(DateUtil.getCurrentDate());
+            story.setTitle(data.getStringExtra(AppConstants.STORY_TITLE));
+            story.setTempPhotoUri(data.getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL));
+            story.setOwner(UserClient.getCurrentUser());
+            addStory(story);
         }
+    }
+
+    private void addStory(final Story story) {
+      TimelineClient.getInstance().uploadFile("photo.jpg", story.getTempPhotoUri(), new TimelineClient.TimelineClientUploadFileListener() {
+        @Override
+        public void onUploadFileListener(ParseFile file) {
+          story.setBackgroundImageMedia(file);
+          story.setBackgroundImageUrl(file.getUrl());
+          TimelineClient.getInstance().addStory(story);
+        }
+      });
+
+      Log.d(TAG, "Adding new story to recyclerview");
+      addNew(story);
     }
 }

@@ -131,9 +131,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
     }
 
     protected void addNew(Story story) {
-        stories.add(story);
-        adaptStories.notifyItemInserted(0);
-        rvStories.smoothScrollToPosition(stories.size());
+        stories.add(0, story);
+        adaptStories.notifyDataSetChanged();
+        rvStories.smoothScrollToPosition(0);
     }
 
     void startAnim() {

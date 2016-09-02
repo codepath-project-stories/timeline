@@ -20,13 +20,13 @@ import java.util.List;
 public class Moment extends ParseObject implements Comparable<Moment>{
   private static final String TAG = Moment.class.getSimpleName();
 
-  private String mockCreatedAt;     // DB format: 2016-08-22T19:22:54.695Z
+  private String mockCreatedAt;     // database format: 2016-08-22T19:22:54.695Z
   private String mockDescription;
   private String mockMediaUrl;
   private String mockLocation;
   private ParseUser mockAuthor;
 
-  private String tempPhotoUri;      // DB temporarily store the photo URI
+  private String tempPhotoUri;      // temporarily store the photo URI after taking a picture
 
   public Moment() {
   }

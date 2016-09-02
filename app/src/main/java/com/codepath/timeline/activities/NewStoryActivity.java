@@ -259,8 +259,6 @@ public class NewStoryActivity extends NewItemClass
             // send result back
             Intent data = new Intent();
             data.putExtra(AppConstants.STORY_TITLE, etStoryTitle.getText().toString());
-            // TODO: upload real photo instead of local path
-            // TODO: /storage/emulated/0/Android/data/com.codepath.apps.timeline/files/Pictures/TimelineApp/photo.jpg
             data.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, takenPhotoUri.getPath());
             // TODO: upload a list of ParseUser
             // data.putExtra(AppConstants.STORY_COLLABORATORS, collabs);

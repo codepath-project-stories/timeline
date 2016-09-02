@@ -201,38 +201,6 @@ public class TimelineClient {
     });
   }
 
-  public void addStory(final Story story, ParseFile file) {
-    story.saveInBackground(new SaveCallback() {
-      @Override
-      public void done(ParseException e) {
-        if (e != null) {
-          Log.e(TAG, "Exception from adding story: " + e.getMessage());
-          return;
-        }
-
-        ParseUser user = UserClient.getCurrentUser();
-        if (user != null) {
-          user.add("stories", story);
-          user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-              if (e != null) {
-                Log.e(TAG, "Exception from saving user story: " + e.getMessage());
-                return;
-              }
-
-              if (mStoryListQuery.hasCachedResult()) {
-                Log.d(TAG, "Clearing user story cache");
-                mStoryListQuery.clearCachedResult();
-              }
-              Log.d(TAG, "Successfully saved story");
-            }
-          });
-        }
-      }
-    });
-  }
-
   public void uploadFile(String fileName, String photoUri, final TimelineClientUploadFileListener uploadFileListener) {
     byte[] imageByte = ImageUtil.getImageData(photoUri);
     final ParseFile file = new ParseFile(fileName, imageByte);
@@ -395,6 +363,38 @@ public class TimelineClient {
             });
           }
         });
+      }
+    });
+  }
+
+  public void addStory(final Story story) {
+    story.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(ParseException e) {
+        if (e != null) {
+          Log.e(TAG, "Exception from adding story: " + e.getMessage());
+          return;
+        }
+
+        ParseUser user = UserClient.getCurrentUser();
+        if (user != null) {
+          user.add("stories", story);
+          user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+              if (e != null) {
+                Log.e(TAG, "Exception from saving user story: " + e.getMessage());
+                return;
+              }
+
+              if (mStoryListQuery.hasCachedResult()) {
+                Log.d(TAG, "Clearing user story cache");
+                mStoryListQuery.clearCachedResult();
+              }
+              Log.d(TAG, "Successfully saved story");
+            }
+          });
+        }
       }
     });
   }
