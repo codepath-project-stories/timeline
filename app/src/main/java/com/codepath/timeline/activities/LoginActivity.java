@@ -6,8 +6,10 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,17 +36,24 @@ public class LoginActivity extends AppCompatActivity {
 
     VideoView login_video;
 
+    @BindView(R.id.input_fullname_layout)
+    TextInputLayout input_fullname_layout;
+    @BindView(R.id.input_fullname)
+    EditText input_fullname;
     @BindView(R.id.input_email)
     EditText input_email;
     @BindView(R.id.input_password)
     EditText input_password;
     @BindView(R.id.button_start)
     Button button_start;
-    @BindView(R.id.button_create_account)
-    TextView button_create;
+    @BindView(R.id.text_switch)
+    TextView text_switch;
 
-    boolean lock;
     SharedPreferences mSettings;
+    boolean lock;
+    boolean state;
+    // false: login_here
+    // true: create_account
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -75,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         ButterKnife.bind(this);
 
-        button_start.setText(getResources().getString(R.string.start));
+        setupState();
+
         input_email.setText(mSettings.getString("input_email", ""));
         // input_email.requestFocus();
 
@@ -88,10 +98,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        setupState();
+
         if (login_video != null) {
             login_video.start();
         }
-        button_start.setText(getResources().getString(R.string.start));
     }
 
     private void setupVideo() {
@@ -128,7 +140,40 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    void setupState() {
+        state = false;
+        input_fullname_layout.setVisibility(View.GONE);
+        button_start.setText(getResources().getString(R.string.start));
+        text_switch.setText(getResources().getString(R.string.create_account));
+    }
+
     @OnClick(R.id.button_start)
+    void start() {
+        if (!state) {
+            login();
+        }
+        else {
+            create_account();
+        }
+    }
+
+    // TODO: need animation here
+    @OnClick(R.id.text_switch)
+    void switch_state() {
+        if (!state) {
+            // switch from login_here to create_account
+            state = true;
+            input_fullname_layout.setVisibility(View.VISIBLE);
+            text_switch.setText(getResources().getString(R.string.login_here));
+        }
+        else {
+            // switch from create_account to login_here
+            state = false;
+            input_fullname_layout.setVisibility(View.GONE);
+            text_switch.setText(getResources().getString(R.string.create_account));
+        }
+    }
+
     void login() {
         Log.d("LoginActivity", "login()");
         if (lock) {
@@ -173,20 +218,18 @@ public class LoginActivity extends AppCompatActivity {
                     }
         });
     }
-
-    @OnClick(R.id.button_create_account)
     void create_account() {
         // Create the ParseUser
         ParseUser newUser = new ParseUser();
         // Set core properties
         newUser.setUsername(input_email.getText().toString());
-        newUser.setPassword(input_password.getText().toString());
         newUser.setEmail(input_email.getText().toString());
+        newUser.setPassword(input_password.getText().toString());
         // Set custom properties
+        newUser.put("name", input_fullname.getText().toString());
         newUser.put("demoCreated", "false");
         // TODO: get name and profileImageUrl from EditText
         if (ParseApplication.DEMO_MODE) {
-            newUser.put("name", "Jenna Rivers");
             newUser.put("profileImageUrl",
                     "https://pbs.twimg.com/profile_images/761636511238516736/k5XbteDD.jpg");
         }
@@ -240,6 +283,9 @@ public class LoginActivity extends AppCompatActivity {
 
     void onLoginSuccess() {
         lock = false;
+        if (input_fullname != null) {
+            input_fullname.setText("");
+        }
         if (input_email != null) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString("input_email", input_email.getText().toString());

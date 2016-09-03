@@ -98,7 +98,7 @@
                 android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/button_create_account"
+                android:id="@+id/text_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -40,5 +40,7 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="create_account">No account yet? Create one!</string>
+    <string name="login_here">Already registered? Login here!</string>
+    <string name="fullname">Full Name</string>
 
 </resources>
