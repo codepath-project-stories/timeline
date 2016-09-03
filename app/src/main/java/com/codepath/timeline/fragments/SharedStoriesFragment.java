@@ -1,6 +1,7 @@
 package com.codepath.timeline.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -24,8 +25,9 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
     com.github.clans.fab.FloatingActionButton add;
 
     // newInstance constructor for creating fragment with arguments
-    public static SharedStoriesFragment newInstance(int page) {
+    public static SharedStoriesFragment newInstance(Context context, int page) {
         SharedStoriesFragment frag = new SharedStoriesFragment();
+        frag.context = context;
         Bundle args = new Bundle();
         args.putInt("page", page);
         frag.setArguments(args);

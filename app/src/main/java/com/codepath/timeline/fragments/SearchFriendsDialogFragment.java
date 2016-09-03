@@ -1,5 +1,6 @@
 package com.codepath.timeline.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -40,12 +41,14 @@ public class SearchFriendsDialogFragment extends DialogFragment {
     List<ParseUser> mUsers;
     List<ParseUser> mUsersSelected;
     ArrayAdapter adapter;
+    Context context;
 
     public SearchFriendsDialogFragment() {
     }
 
-    public static SearchFriendsDialogFragment newInstance(String title) {
+    public static SearchFriendsDialogFragment newInstance(Context context, String title) {
         SearchFriendsDialogFragment frag = new SearchFriendsDialogFragment();
+        frag.context = context;
         return frag;
     }
 
@@ -75,7 +78,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
                     public void onGetFriendList(List<ParseUser> itemList) {
                         mUsers = itemList;
                         adapter = new MultiAutoCompleteTextViewArrayAdapter(
-                                getContext(),
+                                context,
                                 // TODO: use custom layout
                                 android.R.layout.simple_list_item_1,
                                 mUsers);

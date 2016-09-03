@@ -1,6 +1,7 @@
 package com.codepath.timeline.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,8 +34,9 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     private int REQUEST_CODE = 5;
 
     // newInstance constructor for creating fragment with arguments
-    public static UserStoriesFragment newInstance(int page) {
+    public static UserStoriesFragment newInstance(Context context, int page) {
         UserStoriesFragment frag = new UserStoriesFragment();
+        frag.context = context;
         Bundle args = new Bundle();
         args.putInt("page", page);
         frag.setArguments(args);

@@ -1,6 +1,7 @@
 package com.codepath.timeline.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,6 +42,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
     protected StoriesAdapter adaptStories;
     private Unbinder unbinder;
     SearchView searchView;
+    Context context;
 
     @BindView(R.id.rvStories) RecyclerView rvStories;
     @BindView(R.id.avi) com.wang.avi.AVLoadingIndicatorView avi;
@@ -63,9 +65,11 @@ abstract public class BaseStoryModelFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_base_model_story, parent, false);
         unbinder = ButterKnife.bind(this, view);
 
-        final LinearLayoutManager layoutManagerList = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        final LinearLayoutManager layoutManagerList =
+                new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         // for switching between layouts (grid -> list)
-        final StaggeredGridLayoutManager layoutManagerGrid = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        final StaggeredGridLayoutManager layoutManagerGrid =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         stories = new ArrayList<>();
         adaptStories = new StoriesAdapter(stories, getChildFragmentManager());

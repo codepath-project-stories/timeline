@@ -139,7 +139,8 @@ public class NewStoryActivity extends NewItemClass
             public void onClick(View v) {
                 // Todo: fix the search according to the API
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                SearchFriendsDialogFragment composeDialogFragment = SearchFriendsDialogFragment.newInstance("Search friends");
+                SearchFriendsDialogFragment composeDialogFragment =
+                        SearchFriendsDialogFragment.newInstance(context, "Search friends");
                 composeDialogFragment.show(fragmentManager, "fragment_compose");
             }
         });

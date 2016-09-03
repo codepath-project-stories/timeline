@@ -31,9 +31,9 @@ public class LandingPagerAdapter extends SmartFragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return UserStoriesFragment.newInstance(0);
+                return UserStoriesFragment.newInstance(context, 0);
             case 1:
-                return SharedStoriesFragment.newInstance(1);
+                return SharedStoriesFragment.newInstance(context, 1);
             default:
                 return null;
         }
