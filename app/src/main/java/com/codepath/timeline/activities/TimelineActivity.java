@@ -68,8 +68,7 @@ public class TimelineActivity extends AppCompatActivity implements
     // Request code that will be passed together with authentication result to the onAuthenticationResult callback
     // Can be any integer
     private static final int REQUEST_CODE = 1337;
-    private static final int REFRESH_INTERVAL = 5000;       // default to 5s
-
+    private static final int REFRESH_INTERVAL = 5000; // default to 5s
 
     @BindView(R.id.appbar)
     AppBarLayout appbar;
@@ -113,6 +112,7 @@ public class TimelineActivity extends AppCompatActivity implements
 
     private Player mPlayer;
 
+    // TODO: use push notification instead of pulling and auto refresh every 5 seconds
     private Runnable getMomentsRunnable = new Runnable() {
         @Override
         public void run() {

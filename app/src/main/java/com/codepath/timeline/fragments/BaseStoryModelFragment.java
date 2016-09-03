@@ -2,6 +2,8 @@ package com.codepath.timeline.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +41,18 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     @BindView(R.id.rvStories) RecyclerView rvStories;
     @BindView(R.id.avi) com.wang.avi.AVLoadingIndicatorView avi;
+
+    // TODO: use push notification instead of pulling and auto refresh every 5 seconds
+    private static final int REFRESH_INTERVAL = 5000; // default to 5s
+    private Handler mHandler;
+    private Runnable mRunnablePopulateList = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("BaseStoryModelFragment", "mRunnablePopulateList");
+            populateList();
+            mHandler.postDelayed(mRunnablePopulateList, REFRESH_INTERVAL);
+        }
+    };
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup parent, @Nullable Bundle savedInstanceState) {
@@ -70,6 +85,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
 //                }
 //            }
 //        });
+
+        mHandler = new Handler(Looper.getMainLooper());
+        mHandler.postDelayed(mRunnablePopulateList, REFRESH_INTERVAL);
         return view;
     }
 
@@ -143,7 +161,10 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mRunnablePopulateList);
+        }
         unbinder.unbind();
+        super.onDestroyView();
     }
 }
