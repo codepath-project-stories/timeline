@@ -2,10 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/background" />
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/app_icon_re"/>
-    </item>
+    <item android:drawable="@drawable/app_icon"/>
 
 </layer-list>

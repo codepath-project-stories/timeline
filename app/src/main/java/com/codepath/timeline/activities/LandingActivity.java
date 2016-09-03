@@ -88,7 +88,7 @@ public class LandingActivity extends AppCompatActivity {
         TextView tvHeaderUserName = (TextView) headerLayout.findViewById(R.id.tvHeaderUserName);
         TextView tvHeaderUserEmail = (TextView) headerLayout.findViewById(R.id.tvHeaderUserEmail);
 
-        ivHeaderPhoto.setImageResource(R.drawable.app_icon_re);
+        ivHeaderPhoto.setImageResource(R.drawable.app_icon);
         if (currentUser.getUsername() != null && currentUser.getEmail() != null) {
             tvHeaderUserName.setText(UserClient.getName(currentUser));
             tvHeaderUserEmail.setText(currentUser.getEmail());
