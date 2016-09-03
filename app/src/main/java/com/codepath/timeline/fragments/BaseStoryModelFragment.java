@@ -122,12 +122,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
     protected abstract void populateList();
 
     protected void addAll(List<Story> newStories) {
-        int curSize = adaptStories.getItemCount();
         stories.clear();
-        adaptStories.notifyItemRangeRemoved(0, curSize);
         stories.addAll(newStories);
-        // curSize should represent the first element that got added, newItems.size() represents the itemCount
-        adaptStories.notifyItemRangeInserted(curSize, newStories.size());
+        adaptStories.notifyDataSetChanged();
     }
 
     protected void addNew(Story story) {
