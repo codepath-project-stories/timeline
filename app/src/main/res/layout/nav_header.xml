@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:layout_width="@dimen/profile_nav_header_height"
         android:layout_height="@dimen/profile_nav_header_height"
-        tools:src="@drawable/app_icon"/>
+        tools:src="@drawable/app_icon_re"/>
 
     <TextView
         android:id="@+id/tvHeaderUserName"

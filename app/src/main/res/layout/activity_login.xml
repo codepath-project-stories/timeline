@@ -51,8 +51,9 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
+                android:padding="20dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/app_icon"/>
+                android:src="@drawable/app_icon_re"/>
         </LinearLayout>
 
         <LinearLayout
