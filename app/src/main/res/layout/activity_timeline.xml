@@ -140,12 +140,12 @@
             android:id="@+id/miSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/share_icon"
+            android:src="@drawable/sort_icon"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_colorRipple="@color/colorPrimaryLight"
             app:fab_colorPressed="@color/colorBrightAccent"
             app:fab_size="mini"
-            app:fab_label="Switch View" />
+            app:fab_label="Sort moments" />
 
     </com.github.clans.fab.FloatingActionMenu>
 
