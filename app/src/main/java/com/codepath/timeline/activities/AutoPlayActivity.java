@@ -3,10 +3,8 @@ package com.codepath.timeline.activities;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -18,9 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.AutoPlayFragment;
 import com.codepath.timeline.models.Moment;
@@ -30,7 +26,6 @@ import com.qslll.library.ExpandingPagerFactory;
 import com.qslll.library.ExpandingViewPagerAdapter;
 import com.qslll.library.fragments.ExpandingFragment;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
-import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -56,12 +51,12 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @BindView(R.id.vpMoment)
     AutoScrollViewPager vpMoment;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsing_toolbar;
+//    @BindView(R.id.collapsing_toolbar)
+//    CollapsingToolbarLayout collapsing_toolbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ivStoryBackground)
-    ImageView ivStoryBackground;
+//    @BindView(R.id.ivStoryBackground)
+//    ImageView ivStoryBackground;
 
     private List<Moment> mMomentList;
     private Moment mMoment;
@@ -88,20 +83,21 @@ public class AutoPlayActivity extends AppCompatActivity
         setContentView(R.layout.activity_auto_play);
         ButterKnife.bind(this);
 
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         // get story info from intent
         // NOTE: Can't pass 'Story' since it's not Parcelable/Serializable
         storyObjectId = getIntent().getStringExtra(AppConstants.OBJECT_ID);
         storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
         storyBackgroundImageUrl = getIntent().getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL);
 
-        AuthenticationRequest.Builder builder =
-                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private", "streaming"});
-        AuthenticationRequest request = builder.build();
+        toolbar.setTitle(storyTitle);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Todo: remove this if decided to leave spotify in the timeline activity
+//        AuthenticationRequest.Builder builder =
+//                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+//        builder.setScopes(new String[]{"user-read-private", "streaming"});
+//        AuthenticationRequest request = builder.build();
 
         // Todo: two options - either play from inside the timeline activity or during the autoplay
 //        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
@@ -111,12 +107,12 @@ public class AutoPlayActivity extends AppCompatActivity
     }
 
     private void updateStoryInfo() {
-        collapsing_toolbar.setTitle(storyTitle);
-        collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-        Glide.with(this)
-                .load(storyBackgroundImageUrl)
-                .centerCrop()
-                .into(ivStoryBackground);
+//        collapsing_toolbar.setTitle(storyTitle);
+//        collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
+//        Glide.with(this)
+//                .load(storyBackgroundImageUrl)
+//                .fitCenter()
+//                .into(ivStoryBackground);
     }
 
     private void initList() {
@@ -143,7 +139,7 @@ public class AutoPlayActivity extends AppCompatActivity
         });
 
         // initialize viewpager for automatically scrolling through the list of moments
-        vpMoment.setInterval(2000);
+        vpMoment.setInterval(5000);
         vpMoment.startAutoScroll();
         vpMoment.setCurrentItem(0);
     }
@@ -152,7 +148,7 @@ public class AutoPlayActivity extends AppCompatActivity
         TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
             @Override
             public void onGetMomentList(List<Moment> itemList) {
-                mMomentList = new ArrayList<Moment>();
+                mMomentList = new ArrayList<>();
                 mMomentList.addAll(itemList);
                 initList();
             }
@@ -190,7 +186,7 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @Override
     public void onExpandingClick(View v) {
-        //v is expandingfragment layout
+        //v is expanding fragment layout
         View view = v.findViewById(R.id.ivMedia);
         Moment moment = mMomentList.get(vpMoment.getCurrentItem());
         startInfoActivity(view, moment);

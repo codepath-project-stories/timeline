@@ -3,6 +3,8 @@ package com.codepath.timeline.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -59,6 +61,16 @@ public class TimelineActivity extends AppCompatActivity implements
     // 1: getIntent().getStringExtra("imageUrl")
 
     private static final String TAG = "TimelineLog:" + TimelineActivity.class.getSimpleName();
+    // TODO: Replace with your client ID
+    private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
+    // TODO: Replace with your redirect URI
+    private static final String REDIRECT_URI = "timeline-spotify-integration://callback";
+    // Request code that will be passed together with authentication result to the onAuthenticationResult callback
+    // Can be any integer
+    private static final int REQUEST_CODE = 1337;
+    private static final int REFRESH_INTERVAL = 5000;       // default to 5s
+
+
     @BindView(R.id.appbar)
     AppBarLayout appbar;
     @BindView(R.id.collapsing_toolbar)
@@ -90,22 +102,25 @@ public class TimelineActivity extends AppCompatActivity implements
     private String storyObjectId;
     private String storyTitle;
     private String storyBackgroundImageUrl;
+    private Handler mMomentsHandler;
+
+    // Zoom in/out
     private ScaleGestureDetector mScaleGestureDetector;
     private int pinch_zoom_index;
     GridLayoutManager gridLayoutManagerChat;
     LinearLayoutManager gridLayoutManager;
     GridLayoutManager gridLayoutManagerTwoColumns;
 
-    // TODO: Replace with your client ID
-    private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
-    // TODO: Replace with your redirect URI
-    private static final String REDIRECT_URI = "timeline-spotify-integration://callback";
-
-    // Request code that will be passed together with authentication result to the onAuthenticationResult callback
-    // Can be any integer
-    private static final int REQUEST_CODE = 1337;
-
     private Player mPlayer;
+
+    private Runnable getMomentsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.d(TAG, "Checking for new moments");
+            getMomentList();
+            mMomentsHandler.postDelayed(getMomentsRunnable, REFRESH_INTERVAL);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,6 +258,9 @@ public class TimelineActivity extends AppCompatActivity implements
                 return false;
             }
         });
+
+        mMomentsHandler = new Handler(Looper.getMainLooper());
+        mMomentsHandler.postDelayed(getMomentsRunnable, REFRESH_INTERVAL);
     }
 
     private void getMomentList() {
@@ -250,14 +268,17 @@ public class TimelineActivity extends AppCompatActivity implements
                 new TimelineClient.TimelineClientGetMomentListListener() {
             @Override
             public void onGetMomentList(List<Moment> itemList) {
+                mMomentList.clear();
                 mMomentList.addAll(itemList);
-                mAdapter.notifyItemRangeInserted(0, mMomentList.size());
+                // mAdapter.notifyItemRangeInserted(0, mMomentChatList.size());
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onGetMomentChatList(List<Moment> itemList) {
                 mMomentChatList.addAll(itemList);
-                mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
+                // mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
+                mAdapterChat.notifyDataSetChanged();
             }
         });
     }
@@ -389,6 +410,10 @@ public class TimelineActivity extends AppCompatActivity implements
 
     @Override
     protected void onDestroy() {
+        if (mMomentsHandler != null) {
+            mMomentsHandler.removeCallbacks(getMomentsRunnable);
+        }
+
         // VERY IMPORTANT! This must always be called or else you will leak resources
         Spotify.destroyPlayer(this);
         super.onDestroy();
@@ -447,9 +472,11 @@ public class TimelineActivity extends AppCompatActivity implements
                     builder.setScopes(new String[]{"user-read-private", "streaming"});
                     AuthenticationRequest request = builder.build();
                     AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
+                    miMusic.setLabelText("Unspotify story");
                 } else {
                     v.setTag(1);
                     mPlayer.pause();
+                    miMusic.setLabelText("Spotify story");
                 }
             }
         });
