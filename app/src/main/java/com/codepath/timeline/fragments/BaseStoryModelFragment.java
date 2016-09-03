@@ -139,6 +139,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected abstract void populateList();
 
+    // TODO: only need to add new items instead of clear()
     protected void addAll(List<Story> newStories) {
         stories.clear();
         stories.addAll(newStories);

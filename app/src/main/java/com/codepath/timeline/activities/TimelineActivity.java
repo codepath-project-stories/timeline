@@ -268,6 +268,7 @@ public class TimelineActivity extends AppCompatActivity implements
                 new TimelineClient.TimelineClientGetMomentListListener() {
             @Override
             public void onGetMomentList(List<Moment> itemList) {
+                // TODO: only need to add new items instead of clear()
                 mMomentList.clear();
                 mMomentList.addAll(itemList);
                 // mAdapter.notifyItemRangeInserted(0, mMomentChatList.size());
@@ -276,6 +277,8 @@ public class TimelineActivity extends AppCompatActivity implements
 
             @Override
             public void onGetMomentChatList(List<Moment> itemList) {
+                // TODO: only need to add new items instead of clear()
+                mMomentChatList.clear();
                 mMomentChatList.addAll(itemList);
                 // mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
                 mAdapterChat.notifyDataSetChanged();
