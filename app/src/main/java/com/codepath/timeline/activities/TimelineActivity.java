@@ -101,6 +101,7 @@ public class TimelineActivity extends AppCompatActivity implements
     private String storyObjectId;
     private String storyTitle;
     private String storyBackgroundImageUrl;
+    private String storyHtmlSummaryUrl;
     private Handler mMomentsHandler;
 
     // Zoom in/out
@@ -137,6 +138,7 @@ public class TimelineActivity extends AppCompatActivity implements
         storyObjectId = getIntent().getStringExtra(AppConstants.OBJECT_ID);
         storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
         storyBackgroundImageUrl = getIntent().getStringExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL);
+        storyHtmlSummaryUrl = getIntent().getStringExtra(AppConstants.STORY_HTML_SUMMARY_URL);
 
         updateStoryInfo();
 
@@ -496,9 +498,19 @@ public class TimelineActivity extends AppCompatActivity implements
                 Snackbar.make(findViewById(android.R.id.content),
                         code,
                         Snackbar.LENGTH_SHORT).show();
+
+                if (storyHtmlSummaryUrl != null) {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out " + storyTitle + " Story");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, storyHtmlSummaryUrl);
+                    startActivity(Intent.createChooser(shareIntent, "Share story using..."));
+                }
+
                 // Todo: getting name doesn't quite work
                 if (code.contains("UsersStoriesFragment")) {
                     // Todo: add sharing functionality
+
                 } else {
 //                    Snackbar.make(findViewById(android.R.id.content),
 //                            "Bummer, but you can't share your friend's stories!",
