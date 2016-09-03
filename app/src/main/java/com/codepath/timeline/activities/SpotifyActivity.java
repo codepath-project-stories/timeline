@@ -26,6 +26,8 @@ import com.spotify.sdk.android.player.Spotify;
 // delete when not needed
 public class SpotifyActivity extends Activity implements
         PlayerNotificationCallback, ConnectionStateCallback {
+    
+    private static final String TAG = SpotifyActivity.class.getSimpleName();
 
     // TODO: Replace with your client ID
     private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
@@ -79,32 +81,32 @@ public class SpotifyActivity extends Activity implements
 
     @Override
     public void onLoggedIn() {
-        Log.d("MainActivity", "User logged in");
+        Log.d(TAG, "User logged in");
     }
 
     @Override
     public void onLoggedOut() {
-        Log.d("MainActivity", "User logged out");
+        Log.d(TAG, "User logged out");
     }
 
     @Override
     public void onLoginFailed(Throwable error) {
-        Log.d("MainActivity", "Login failed");
+        Log.d(TAG, "Login failed");
     }
 
     @Override
     public void onTemporaryError() {
-        Log.d("MainActivity", "Temporary error occurred");
+        Log.d(TAG, "Temporary error occurred");
     }
 
     @Override
     public void onConnectionMessage(String message) {
-        Log.d("MainActivity", "Received connection message: " + message);
+        Log.d(TAG, "Received connection message: " + message);
     }
 
     @Override
     public void onPlaybackEvent(EventType eventType, PlayerState playerState) {
-        Log.d("MainActivity", "Playback event received: " + eventType.name());
+        Log.d(TAG, "Playback event received: " + eventType.name());
         switch (eventType) {
             // Handle event type as necessary
             default:
@@ -114,7 +116,7 @@ public class SpotifyActivity extends Activity implements
 
     @Override
     public void onPlaybackError(ErrorType errorType, String errorDetails) {
-        Log.d("MainActivity", "Playback error received: " + errorType.name());
+        Log.d(TAG, "Playback error received: " + errorType.name());
         switch (errorType) {
             // Handle error type as necessary
             default:

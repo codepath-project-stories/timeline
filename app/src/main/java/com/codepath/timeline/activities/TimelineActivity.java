@@ -61,7 +61,7 @@ public class TimelineActivity extends AppCompatActivity implements
     // 0: R.drawable.image_test2
     // 1: getIntent().getStringExtra("imageUrl")
 
-    private static final String TAG = "TimelineLog:" + TimelineActivity.class.getSimpleName();
+    private static final String TAG = TimelineActivity.class.getSimpleName();
     // TODO: Replace with your client ID
     private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
     // TODO: Replace with your redirect URI
@@ -342,32 +342,32 @@ public class TimelineActivity extends AppCompatActivity implements
 
     @Override
     public void onLoggedIn() {
-        Log.d("MainActivity", "User logged in");
+        Log.d(TAG, "User logged in");
     }
 
     @Override
     public void onLoggedOut() {
-        Log.d("MainActivity", "User logged out");
+        Log.d(TAG, "User logged out");
     }
 
     @Override
     public void onLoginFailed(Throwable error) {
-        Log.d("MainActivity", "Login failed");
+        Log.d(TAG, "Login failed");
     }
 
     @Override
     public void onTemporaryError() {
-        Log.d("MainActivity", "Temporary error occurred");
+        Log.d(TAG, "Temporary error occurred");
     }
 
     @Override
     public void onConnectionMessage(String message) {
-        Log.d("MainActivity", "Received connection message: " + message);
+        Log.d(TAG, "Received connection message: " + message);
     }
 
     @Override
     public void onPlaybackEvent(EventType eventType, PlayerState playerState) {
-        Log.d("MainActivity", "Playback event received: " + eventType.name());
+        Log.d(TAG, "Playback event received: " + eventType.name());
         switch (eventType) {
             // Handle event type as necessary
             default:
@@ -377,7 +377,7 @@ public class TimelineActivity extends AppCompatActivity implements
 
     @Override
     public void onPlaybackError(ErrorType errorType, String errorDetails) {
-        Log.d("MainActivity", "Playback error received: " + errorType.name());
+        Log.d(TAG, "Playback error received: " + errorType.name());
         switch (errorType) {
             // Handle error type as necessary
             default:

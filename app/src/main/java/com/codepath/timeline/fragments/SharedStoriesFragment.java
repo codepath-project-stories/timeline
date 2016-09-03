@@ -3,6 +3,7 @@ package com.codepath.timeline.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.codepath.timeline.R;
@@ -16,6 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 
 public class SharedStoriesFragment extends BaseStoryModelFragment {
+
+    private static final String TAG = SharedStoriesFragment.class.getSimpleName();
 
     @BindView(R.id.addBtn)
     com.github.clans.fab.FloatingActionButton add;
@@ -51,6 +54,7 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
                     @Override
                     public void onGetStoryList(List<Story> itemList) {
                         if (itemList != null) {
+                            Log.d(TAG, "populateList");
                             addAll(itemList);
                         }
                     }

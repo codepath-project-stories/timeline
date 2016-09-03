@@ -100,13 +100,13 @@ public class TimelineClient {
 	public void addStoryList(final List<Story> storyList,
 							 final TimelineClientAddStoryListener listener) {
 		if (storyList.size() > 0) {
-			Log.d("saveToParse", "storyList.size() > 0");
+			Log.d("addStoryList", "storyList.size() > 0");
 			ParseObject.saveAllInBackground(storyList, new SaveCallback() {
 				@Override
 				public void done(ParseException e) {
-					Log.d("saveToParse", "saveAllInBackground done");
+					Log.d("addStoryList", "saveAllInBackground done");
 					if (e != null) {
-						Log.d("saveToParse", e.toString());
+						Log.d("addStoryList", e.toString());
 					} else {
 						ParseUser currentUser = UserClient.getCurrentUser();
 						currentUser.addAll("stories", storyList);
@@ -114,9 +114,9 @@ public class TimelineClient {
 								new SaveCallback() {
 									@Override
 									public void done(ParseException e) {
-										Log.d("saveToParse", "saveInBackground done");
+										Log.d("addStoryList", "saveInBackground done");
 										if (e != null) {
-											Log.d("saveToParse", e.toString());
+											Log.d("addStoryList", e.toString());
 										} else {
 											if (listener != null) {
 												listener.onAddStoryList(); // use callback
@@ -163,7 +163,7 @@ public class TimelineClient {
 					public void done(ParseUser user, ParseException e) {
 						if (e == null) {
 							if (user != null) {
-								Log.d("findInBackground", user.getObjectId());
+								Log.d("getStoryList", user.getObjectId());
 								if (listener != null) {
 									listener.onGetStoryList(
 											(ArrayList<Story>) user.get("stories")
@@ -171,7 +171,7 @@ public class TimelineClient {
 								}
 							}
 						} else {
-							Log.d("findInBackground", "Error: " + e.getMessage());
+							Log.d("getStoryList", "Error: " + e.getMessage());
 						}
 					}
 				});
@@ -186,6 +186,7 @@ public class TimelineClient {
 		mStoryListQuery.whereEqualTo("owner", user);
 		mStoryListQuery.include("owner"); // eagerly load the owner -- we need it for updating the story view
 		mStoryListQuery.include("collaboratorList");
+		mStoryListQuery.include("momentList");
 		mStoryListQuery.findInBackground(new FindCallback<Story>() {
 			@Override
 			public void done(List<Story> itemList, ParseException e) {
@@ -427,7 +428,7 @@ public class TimelineClient {
 					public void done(Story story, ParseException e) {
 						if (e == null) {
 							if (story != null) {
-								Log.d("findInBackground", story.getObjectId());
+								Log.d("getCollaboratorList", story.getObjectId());
 								if (listener != null) {
 									listener.onGetCollaboratorList(
 											(ArrayList<ParseUser>) story.get("collaboratorList")
@@ -435,7 +436,7 @@ public class TimelineClient {
 								}
 							}
 						} else {
-							Log.d("findInBackground", "Error: " + e.getMessage());
+							Log.d("getCollaboratorList", "Error: " + e.getMessage());
 						}
 					}
 				});
@@ -529,17 +530,18 @@ public class TimelineClient {
 		query.whereEqualTo("collaboratorList", user);
 		query.include("owner"); // eagerly load the owner -- we need it for updating the story view
 		query.include("collaboratorList");
+		query.include("momentList");
 		// Execute the find asynchronously
 		query.findInBackground(new FindCallback<Story>() {
 			@Override
 			public void done(List<Story> itemList, ParseException e) {
 				if (e != null) {
-					Log.e(TAG, "Exception from getSharedStoryList: " + e.getMessage());
+					Log.e("getSharedStoryList", "Exception from getSharedStoryList: " + e.getMessage());
 					return;
 				}
 
 				if (itemList != null) {
-					Log.d("findInBackground", Integer.toString(itemList.size()));
+					Log.d("getSharedStoryList", Integer.toString(itemList.size()));
 					List<Story> sharedStoryList = new ArrayList<Story>();
 
 					// Remove stories that were created by the current user

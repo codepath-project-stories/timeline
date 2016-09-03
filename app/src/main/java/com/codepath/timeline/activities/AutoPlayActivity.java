@@ -49,6 +49,8 @@ public class AutoPlayActivity extends AppCompatActivity
         implements ExpandingFragment.OnExpandingClickListener,
         PlayerNotificationCallback, ConnectionStateCallback {
 
+    private static final String TAG = AutoPlayActivity.class.getSimpleName();
+
     @BindView(R.id.vpMoment)
     AutoScrollViewPager vpMoment;
 //    @BindView(R.id.collapsing_toolbar)
@@ -220,32 +222,32 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @Override
     public void onLoggedIn() {
-        Log.d("MainActivity", "User logged in");
+        Log.d(TAG, "User logged in");
     }
 
     @Override
     public void onLoggedOut() {
-        Log.d("MainActivity", "User logged out");
+        Log.d(TAG, "User logged out");
     }
 
     @Override
     public void onLoginFailed(Throwable error) {
-        Log.d("MainActivity", "Login failed");
+        Log.d(TAG, "Login failed");
     }
 
     @Override
     public void onTemporaryError() {
-        Log.d("MainActivity", "Temporary error occurred");
+        Log.d(TAG, "Temporary error occurred");
     }
 
     @Override
     public void onConnectionMessage(String message) {
-        Log.d("MainActivity", "Received connection message: " + message);
+        Log.d(TAG, "Received connection message: " + message);
     }
 
     @Override
     public void onPlaybackEvent(PlayerNotificationCallback.EventType eventType, PlayerState playerState) {
-        Log.d("MainActivity", "Playback event received: " + eventType.name());
+        Log.d(TAG, "Playback event received: " + eventType.name());
         switch (eventType) {
             // Handle event type as necessary
             default:
@@ -255,7 +257,7 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @Override
     public void onPlaybackError(PlayerNotificationCallback.ErrorType errorType, String errorDetails) {
-        Log.d("MainActivity", "Playback error received: " + errorType.name());
+        Log.d(TAG, "Playback error received: " + errorType.name());
         switch (errorType) {
             // Handle error type as necessary
             default:

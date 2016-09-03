@@ -32,6 +32,8 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
     // LoginActivity calls LandingActivity
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     static boolean play_video = true;
 
     VideoView login_video;
@@ -177,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void login() {
-        Log.d("LoginActivity", "login()");
+        Log.d(TAG, "login()");
         if (lock) {
             return;
         }
@@ -186,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
             showMaterialDialog(getResources().getString(R.string.missing));
             return;
         }
-        Log.d("LoginActivity", "login() starts lock");
+        Log.d(TAG, "login() starts lock");
         lock = true;
         button_start.setText(getResources().getString(R.string.loading));
         ParseUser.logInInBackground(

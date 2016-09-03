@@ -35,6 +35,8 @@ abstract public class BaseStoryModelFragment extends Fragment {
     // BaseStoryModelFragment is a parent class for UserStoriesFragment and SharedStoriesFragment
     // calls TimelineActivity
 
+    private static final String TAG = BaseStoryModelFragment.class.getSimpleName();
+
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
     private Unbinder unbinder;
@@ -48,7 +50,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
     private Runnable mRunnablePopulateList = new Runnable() {
         @Override
         public void run() {
-            Log.d("BaseStoryModelFragment", "mRunnablePopulateList");
+            Log.d(TAG, "mRunnablePopulateList");
             populateList();
             mHandler.postDelayed(mRunnablePopulateList, ParseApplication.REFRESH_INTERVAL);
         }
@@ -141,6 +143,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     // TODO: only need to add new items instead of clear()
     protected void addAll(List<Story> newStories) {
+        Log.d(TAG, "addAll");
         stories.clear();
         stories.addAll(newStories);
         adaptStories.notifyDataSetChanged();
@@ -148,7 +151,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected void addNew(Story story) {
         stories.add(0, story);
-        adaptStories.notifyDataSetChanged();
+        adaptStories.notifyItemInserted(0);
         rvStories.smoothScrollToPosition(0);
     }
 

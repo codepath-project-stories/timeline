@@ -79,7 +79,7 @@ public class LandingActivity extends AppCompatActivity {
             UserClient.printUser(currentUser);
         } else {
             // show the signup or login screen
-            Log.d("LandingActivity", "getCurrentUser failed");
+            Log.d(TAG, "getCurrentUser failed");
         }
 
         // Fill out navigation drawer

@@ -50,6 +50,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         // later here will be different types of tweets (with image/video or simple text)
         switch (viewType) {
             case SIMPLE:
+                // default is here
                 View view1 = inflater.inflate(R.layout.viewholder_simple_story, viewGroup, false);
                 viewHolder = new ViewHolderSimpleStory(view1);
                 break;
@@ -65,6 +66,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
             case SIMPLE:
+                // default is here
                 ViewHolderSimpleStory vh1 = (ViewHolderSimpleStory) viewHolder;
                 configureViewHolderSimpleStory(vh1, position);
                 break;
@@ -75,7 +77,8 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder, final int position) {
+    private void configureViewHolderSimpleStory(final StoriesAdapter.ViewHolderSimpleStory holder,
+                                                final int position) {
         final Story story = mStories.get(position);
         Log.d(TAG, story.toString());
 
@@ -145,7 +148,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         // TODO: Update the number of moments
-        holder.tvMomentCount.setText("30" + " Moments");
+        holder.tvMomentCount.setText(story.getMomentList().size() + " Moments");
     }
 
     private void updateCollaboratorDetails(StoriesAdapter.ViewHolderSimpleStory holder, List<ParseUser> collaboratorList) {
