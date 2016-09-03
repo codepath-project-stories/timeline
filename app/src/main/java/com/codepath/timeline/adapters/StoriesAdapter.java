@@ -93,6 +93,8 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 i.putExtra("code", type);
                 i.putExtra(AppConstants.STORY_TITLE, story.getTitle());
                 i.putExtra(AppConstants.STORY_BACKGROUND_IMAGE_URL, story.getBackgroundImageUrl());
+                i.putExtra(AppConstants.STORY_HTML_SUMMARY_URL, story.getHtmlSummaryUrl());
+
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 (Activity) context,

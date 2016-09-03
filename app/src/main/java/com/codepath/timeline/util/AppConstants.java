@@ -7,6 +7,7 @@ public class AppConstants {
     public static String STORY_TITLE = "STORY_TITLE";
     public static String STORY_BACKGROUND_IMAGE_URL = "STORY_BACKGROUND_IMAGE_URL";
     public static String STORY_COLLABORATOR_LIST = "STORY_COLLABORATOR_LIST";
+    public static String STORY_HTML_SUMMARY_URL = "STORY_HTML_SUMMARY_URL";
 
     public static String MOMENT_EXTRA = "MOMENT_EXTRA";
     public static String MOMENT_DESCRIPTION = "MOMENT_DESCRIPTION";
