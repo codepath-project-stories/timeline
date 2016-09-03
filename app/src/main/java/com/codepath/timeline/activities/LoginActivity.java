@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText input_password;
     @BindView(R.id.button_start)
     Button button_start;
+    @BindView(R.id.button_create_account)
+    TextView button_create;
 
     boolean lock;
     SharedPreferences mSettings;
@@ -72,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         ButterKnife.bind(this);
 
+        button_start.setText(getResources().getString(R.string.start));
         input_email.setText(mSettings.getString("input_email", ""));
         // input_email.requestFocus();
 
@@ -87,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         if (login_video != null) {
             login_video.start();
         }
+        button_start.setText(getResources().getString(R.string.start));
     }
 
     private void setupVideo() {
@@ -154,20 +159,23 @@ public class LoginActivity extends AppCompatActivity {
                                 // something wrong
                                 // show the signup or login screen
                                 Log.d("logInInBackground", "getCurrentUser failed");
-                                signup();
+                                // create();
+                                showMaterialDialog(convertParseExceptionToString(e));
                             }
                         } else {
                             // usually go here
                             // Signup failed. Look at the ParseException to see what happened.
                             Log.d("logInInBackground", "done failed");
                             Log.d("logInInBackground", e.toString());
-                            signup();
+                            // create();
+                            showMaterialDialog(convertParseExceptionToString(e));
                         }
                     }
         });
     }
 
-    void signup() {
+    @OnClick(R.id.button_create_account)
+    void create_account() {
         // Create the ParseUser
         ParseUser newUser = new ParseUser();
         // Set core properties
@@ -203,12 +211,20 @@ public class LoginActivity extends AppCompatActivity {
                     // to figure out what went wrong
                     Log.d("signUpInBackground", "done failed");
                     Log.d("signUpInBackground", e.toString());
-                    showMaterialDialog(e.toString()
-                            .replaceAll("^.*: ", "")
-                            .replaceAll("^Account already exists.*$", "Wrong password."));
+                    showMaterialDialog(convertParseExceptionToString(e));
                 }
             }
         });
+    }
+
+    String convertParseExceptionToString(ParseException e) {
+        /*
+        return e.toString()
+                .replaceAll("^.*: ", "")
+                .replaceAll("^Account already exists.*$", "Wrong password.");
+                */
+        return e.toString()
+                .replaceAll("^.*: ", "");
     }
 
     void showMaterialDialog(String input) {
@@ -217,15 +233,13 @@ public class LoginActivity extends AppCompatActivity {
         new MaterialDialog.Builder(LoginActivity.this)
                 .content(input)
                 .positiveText(android.R.string.ok)
-                .backgroundColorRes(R.color.colorPrimaryLoginDark)
+                // .backgroundColorRes(R.color.colorPrimaryLoginDark)
+                .backgroundColorRes(R.color.colorPrimaryDark)
                 .show();
     }
 
     void onLoginSuccess() {
         lock = false;
-        if (button_start != null) {
-            button_start.setText(getResources().getString(R.string.start));
-        }
         if (input_email != null) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString("input_email", input_email.getText().toString());

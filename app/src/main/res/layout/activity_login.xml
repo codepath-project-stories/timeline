@@ -11,19 +11,17 @@
             android:id="@+id/login_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_gravity="center"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center" />
     </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/login_gradient"/>
+        android:background="@drawable/login_gradient" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -41,10 +39,10 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="100dp"
                 android:text="@string/app_name"
-                android:textColor="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif"
                 android:textSize="28sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="100dp"
@@ -53,7 +51,7 @@
                 android:layout_margin="20dp"
                 android:padding="20dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/app_icon_re"/>
+                android:src="@drawable/app_icon_re" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +76,7 @@
                     android:fontFamily="sans-serif"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:selectAllOnFocus="true"/>
+                    android:selectAllOnFocus="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -95,7 +93,7 @@
                     android:layout_marginRight="20dp"
                     android:fontFamily="sans-serif"
                     android:hint="@string/password"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -112,7 +110,16 @@
                 android:padding="12dp"
                 android:textStyle="bold"
                 android:text="@string/start"
-                android:textColor="@color/colorPrimaryLight"/>
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/button_create_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/create_account"
+                android:textColor="@color/colorPrimaryLight"
+                />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

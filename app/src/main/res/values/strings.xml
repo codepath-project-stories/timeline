@@ -39,5 +39,6 @@
     <string name="recent_header">Recent</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="create_account">No account yet? Create one!</string>
 
 </resources>
