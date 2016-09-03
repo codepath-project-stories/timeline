@@ -31,13 +31,14 @@ Here are some sample stories:
   * [x] User can autoplay all moments
 
 ## Stretched Goals
-* [ ] User can see the stories of friends
+* [x] User can see the stories of friends
+* [x] User can comment on a moment
+* [x] User can like particular moment
 * [ ] User can search for a particular story
-* [ ] User receives push notification when a new moment is added to the story
+* [ ] User can search for a particular friend as a collaborator to the story
+* [ ] User receives push notification when a new moment is added to the story by another user
 * [ ] User has a list of friends auto populated from Facebook
-* [x] Users can comment on a moment
-* [x] Users can like particular moment
-* [ ] Allows the user to include videos in their timeline
+* [ ] User can add a videos in their timeline
 
 
 ## Video Walkthrough
