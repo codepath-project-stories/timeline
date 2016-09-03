@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/header_background"
-    android:gravity="center_vertical"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/ivHeaderImage"
         android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/profile_nav_header_height"
+        android:layout_height="@dimen/profile_nav_header_height"
         tools:src="@drawable/app_icon"/>
 
     <TextView
