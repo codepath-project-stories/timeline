@@ -101,8 +101,10 @@ public class LoginActivity extends AppCompatActivity {
 
         setupState();
 
-        if (login_video != null) {
-            login_video.start();
+        if (play_video) {
+            if (login_video != null) {
+                login_video.start();
+            }
         }
     }
 
