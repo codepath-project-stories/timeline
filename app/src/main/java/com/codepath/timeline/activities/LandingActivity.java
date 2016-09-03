@@ -156,7 +156,8 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        final LandingPagerAdapter viewPagerAdapter = new LandingPagerAdapter(getSupportFragmentManager());
+        final LandingPagerAdapter viewPagerAdapter =
+                new LandingPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(viewPagerAdapter);
 
         // Give the TabLayout the ViewPager

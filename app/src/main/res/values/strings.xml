@@ -42,5 +42,7 @@
     <string name="create_account">No account yet? Create one!</string>
     <string name="login_here">Already registered? Login here!</string>
     <string name="fullname">Full Name</string>
+    <string name="my_stories">My stories</string>
+    <string name="friends_stories">Friends stories</string>
 
 </resources>
