@@ -9,11 +9,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_gravity="center"
         android:id="@+id/ivHeaderImage"
-        android:layout_margin="15dp"
-        android:layout_width="@dimen/profile_nav_header_height"
-        android:layout_height="@dimen/profile_nav_header_height"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:src="@drawable/app_icon"/>
 
     <TextView
