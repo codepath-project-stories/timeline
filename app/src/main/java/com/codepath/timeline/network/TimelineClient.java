@@ -74,7 +74,6 @@ public class TimelineClient {
 
 	public interface TimelineClientGetMomentListListener {
 		void onGetMomentList(List<Moment> itemList);
-
 		void onGetMomentChatList(List<Moment> itemList);
 	}
 
@@ -240,10 +239,17 @@ public class TimelineClient {
 					return;
 				}
 
-				if (story != null && story.getMomentList() != null) {
+				if (story != null) {
 					Log.d(TAG, "Success getMomentList");
 					if (listener != null) {
 						listener.onGetMomentList(story.getMomentList());
+					}
+				}
+
+				if (story != null) {
+					Log.d(TAG, "Success getMomentChatList");
+					if (listener != null) {
+						listener.onGetMomentChatList(story.getMomentChatList());
 					}
 				}
 			}
@@ -472,7 +478,7 @@ public class TimelineClient {
 	}
 
 	public void getFriendsList(ParseUser user,
-							   final TimelineClientGetFriendListListener onGetFriendList) {
+							   final TimelineClientGetFriendListListener listener) {
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
 		query.include("friendsList");
 		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
@@ -487,8 +493,8 @@ public class TimelineClient {
 				if (user != null) {
 					Log.d(TAG, "Success getFriendsList");
 					List<ParseUser> friendsList = (List<ParseUser>) user.get("friendsList");
-					if (onGetFriendList != null && friendsList != null) {
-						onGetFriendList.onGetFriendList(friendsList);
+					if (listener != null && friendsList != null) {
+						listener.onGetFriendList(friendsList);
 					}
 				}
 			}
@@ -496,7 +502,7 @@ public class TimelineClient {
 	}
 
 	public void getUser(final String userObjectId,
-						final TimelineClientGetUserListener timelineClientGetUserListener) {
+						final TimelineClientGetUserListener listener) {
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
 		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 		query.getInBackground(userObjectId, new GetCallback<ParseUser>() {
@@ -509,8 +515,8 @@ public class TimelineClient {
 
 				if (user != null) {
 					Log.d(TAG, "Success getUser");
-					if (timelineClientGetUserListener != null) {
-						timelineClientGetUserListener.onGetUser(user);
+					if (listener != null) {
+						listener.onGetUser(user);
 					}
 				}
 			}
