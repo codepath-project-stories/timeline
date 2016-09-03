@@ -100,7 +100,14 @@ public class Story extends ParseObject implements Comparable<Story> {
     return getCreatedAt().toString();
   }
 
-  // the date from photo or user
+  public String getHtmlSummaryUrl() {
+    return (String) get("htmlSummaryUrl");
+  }
+
+  public void setHtmlSummaryUrl(String htmlSummaryUrl) {
+    put("htmlSummaryUrl", htmlSummaryUrl);
+  }
+
   public Date getCreatedAtReal() {
     return (Date) get("createdAtReal");
   }
