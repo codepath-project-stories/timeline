@@ -13,18 +13,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.AutoPlayFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.qslll.library.ExpandingPagerFactory;
 import com.qslll.library.ExpandingViewPagerAdapter;
 import com.qslll.library.fragments.ExpandingFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,6 +48,8 @@ public class AutoPlayActivity extends AppCompatActivity
     AutoScrollViewPager vpMoment;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tvDate)
+    TextView tvDate;
 
     private List<Moment> mMomentList;
     private Moment mMoment;
@@ -78,6 +84,12 @@ public class AutoPlayActivity extends AppCompatActivity
         vpMoment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Date momentDate = mMomentList.get(position).getCreatedAtReal();
+                if (momentDate != null) {
+                    String formattedDate = DateUtil.getFormattedTimelineDate(getApplicationContext(), momentDate);
+                    Log.d(TAG, "formattedDate: " + formattedDate);
+                    tvDate.setText(formattedDate);
+                }
                 ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(vpMoment);
                 if (expandingFragment != null && expandingFragment.isOpenend()) {
                     expandingFragment.close();
@@ -141,10 +153,17 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @Override
     public void onExpandingClick(View v) {
-        //v is expanding fragment layout
-        View view = v.findViewById(R.id.ivMedia);
-        Moment moment = mMomentList.get(vpMoment.getCurrentItem());
-        startInfoActivity(view, moment);
+
+        // when clicked second time, just close the expanding fragment
+        ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(vpMoment);
+        if (expandingFragment != null && expandingFragment.isOpenend()) {
+            expandingFragment.close();
+        }
+        // Todo: uncomment if need to transition to a detailed view of a moment on the second click,
+        // Todo: otherwise delete this code
+//        View view = v.findViewById(R.id.ivMedia);
+//        Moment moment = mMomentList.get(vpMoment.getCurrentItem());
+//        startInfoActivity(view, moment);
     }
 
     private class AutoPlayPagerAdapter extends ExpandingViewPagerAdapter {

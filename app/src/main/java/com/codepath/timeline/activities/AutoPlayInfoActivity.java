@@ -37,8 +37,13 @@ public class AutoPlayInfoActivity extends AppCompatActivity {
     }
 
     public static Intent newInstance(Activity activity, Moment moment) {
+        String momentObjectId = moment.getObjectId();
+        String momentTitle = moment.getDescription();
+        String momentImageUrl = moment.getMediaUrl();
         Intent intent = new Intent(activity, AutoPlayInfoActivity.class);
-        intent.putExtra(AppConstants.MOMENT_EXTRA, Parcels.wrap(moment));
+        intent.putExtra("moment_id", momentObjectId);
+        intent.putExtra("moment_title", momentTitle);
+        intent.putExtra("moment_imageUrl", momentImageUrl);
         return intent;
     }
 

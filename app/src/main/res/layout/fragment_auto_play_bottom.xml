@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
   <ImageView
       android:id="@+id/ivProfilePhoto"
-      android:layout_width="50dp"
-      android:layout_height="50dp"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_marginLeft="10dp"
       android:layout_alignParentLeft="true"
-      android:layout_alignParentTop="true"
-      android:layout_margin="10dp"/>
+      android:layout_alignParentTop="true" />
 
   <TextView
       android:id="@+id/tvName"
-      style="@style/BoldPrimaryText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="14sp"
+      android:fontFamily="sans-serif"
+      android:textStyle="bold"
       android:layout_alignTop="@+id/ivProfilePhoto"
+      android:layout_marginLeft="5dp"
       android:layout_toEndOf="@+id/ivProfilePhoto"
       android:layout_toRightOf="@+id/ivProfilePhoto"
-      android:text="Dianne Bautista"/>
+      tools:text="Dianne Bautista"/>
 
   <ImageView
       android:id="@+id/imageView"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
+      android:layout_width="15dp"
+      android:layout_height="15dp"
       android:layout_below="@+id/tvName"
       android:layout_toEndOf="@+id/ivProfilePhoto"
       android:layout_toRightOf="@+id/ivProfilePhoto"
       android:adjustViewBounds="true"
+      android:layout_marginLeft="2dp"
       android:scaleType="fitXY"
       android:src="@drawable/map_marker"/>
 
   <TextView
       android:id="@+id/tvLocation"
+      android:textSize="12sp"
+      android:fontFamily="sans-serif"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/imageView"
       android:layout_toEndOf="@+id/imageView"
       android:layout_toRightOf="@+id/imageView"
-      android:text="San Francisco, CA"/>
+      tools:text="San Francisco, CA"/>
 
   <TextView
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Exploring Melbourne"
-      android:layout_marginTop="@dimen/activity_horizontal_margin"
+      android:textSize="12sp"
+      tools:text="Exploring Melbourne"
+      android:layout_marginLeft="10dp"
       android:id="@+id/tvDescription"
+      android:fontFamily="sans-serif"
       android:layout_below="@+id/ivProfilePhoto"
       android:layout_alignParentLeft="true"/>
+
 </RelativeLayout>

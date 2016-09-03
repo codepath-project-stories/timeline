@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
@@ -15,16 +16,23 @@ import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.parse.ParseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class AutoPlayBottomFragment extends Fragment {
   private static final String TAG = AutoPlayBottomFragment.class.getSimpleName();
 
   @BindView(R.id.ivProfilePhoto)
   ImageView ivProfilePhoto;
+  @BindView(R.id.tvName)
+  TextView tvName;
+  @BindView(R.id.tvLocation)
+  TextView tvLocation;
+  @BindView(R.id.tvDescription)
+  TextView tvDescription;
 
   private String mMomentObjectId;
 
@@ -67,12 +75,16 @@ public class AutoPlayBottomFragment extends Fragment {
   }
 
   private void updateMoment(Moment moment) {
+    ParseUser author = moment.getAuthor();
     try {
-      if (moment.getAuthor() != null) {
+      if (author != null) {
         Glide.with(this).load(UserClient.getProfileImageUrl(moment.getAuthor()))
                 .fitCenter()
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 25, 0))
+                .bitmapTransform(new CropCircleTransformation(getContext()))
                 .into(ivProfilePhoto);
+        tvName.setText(UserClient.getName(author));
+        tvLocation.setText(moment.getLocation());
+        tvDescription.setText(moment.getDescription());
       }
     } catch (IllegalArgumentException ex) {
       ex.printStackTrace();
