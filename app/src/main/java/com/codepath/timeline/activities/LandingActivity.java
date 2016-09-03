@@ -22,7 +22,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
-import com.codepath.timeline.adapters.MyPagerAdapter;
+import com.codepath.timeline.adapters.LandingPagerAdapter;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.network.ParseApplication;
 import com.parse.ParseUser;
@@ -34,8 +34,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class LandingActivity extends AppCompatActivity {
     private static final String TAG = LandingActivity.class.getSimpleName();
 
-    // LandingActivity creates MyPagerAdapter
-    // MyPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
+    // LandingActivity creates LandingPagerAdapter
+    // LandingPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
 
@@ -156,7 +156,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        final MyPagerAdapter viewPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        final LandingPagerAdapter viewPagerAdapter = new LandingPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
         // Give the TabLayout the ViewPager

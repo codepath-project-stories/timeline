@@ -7,15 +7,15 @@ import android.support.v4.app.FragmentManager;
 import com.codepath.timeline.fragments.SharedStoriesFragment;
 import com.codepath.timeline.fragments.UserStoriesFragment;
 
-public class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
-    // MyPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
+public class LandingPagerAdapter extends SmartFragmentStatePagerAdapter {
+    // LandingPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
 
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "My stories", "Friends stories" };
 
-    public MyPagerAdapter(FragmentManager fm) {
+    public LandingPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
