@@ -27,6 +27,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MomentsHeaderAdapter;
 import com.codepath.timeline.fragments.DetailDialogFragment;
 import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.network.ParseApplication;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
@@ -68,7 +69,6 @@ public class TimelineActivity extends AppCompatActivity implements
     // Request code that will be passed together with authentication result to the onAuthenticationResult callback
     // Can be any integer
     private static final int REQUEST_CODE = 1337;
-    private static final int REFRESH_INTERVAL = 5000; // default to 5s
 
     @BindView(R.id.appbar)
     AppBarLayout appbar;
@@ -112,13 +112,13 @@ public class TimelineActivity extends AppCompatActivity implements
 
     private Player mPlayer;
 
-    // TODO: use push notification instead of pulling and auto refresh every 5 seconds
+    // TODO: use push notification instead of pulling and auto refresh every a few seconds
     private Runnable getMomentsRunnable = new Runnable() {
         @Override
         public void run() {
             Log.d(TAG, "Checking for new moments");
             getMomentList();
-            mMomentsHandler.postDelayed(getMomentsRunnable, REFRESH_INTERVAL);
+            mMomentsHandler.postDelayed(getMomentsRunnable, ParseApplication.REFRESH_INTERVAL);
         }
     };
 
@@ -260,7 +260,7 @@ public class TimelineActivity extends AppCompatActivity implements
         });
 
         mMomentsHandler = new Handler(Looper.getMainLooper());
-        mMomentsHandler.postDelayed(getMomentsRunnable, REFRESH_INTERVAL);
+        mMomentsHandler.postDelayed(getMomentsRunnable, ParseApplication.REFRESH_INTERVAL);
     }
 
     private void getMomentList() {

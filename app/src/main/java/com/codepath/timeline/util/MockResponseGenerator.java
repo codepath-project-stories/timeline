@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.network.ParseApplication;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.google.gson.Gson;

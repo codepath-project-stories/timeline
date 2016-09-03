@@ -12,7 +12,7 @@ import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.MockResponseGenerator;
-import com.codepath.timeline.util.ParseApplication;
+import com.codepath.timeline.network.ParseApplication;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;

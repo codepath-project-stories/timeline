@@ -1,4 +1,4 @@
-package com.codepath.timeline.util;
+package com.codepath.timeline.network;
 
 import android.app.Application;
 
@@ -16,6 +16,10 @@ public class ParseApplication extends Application {
 	public static boolean TURN_ON_PARSE = true;
 	public static boolean DEMO_MODE = false;
 	public static boolean TEST_PARSE = false;
+
+	// TODO: use push notification instead of pulling and auto refresh every a few seconds
+	public static int REFRESH_INTERVAL = 60000; // default to 60s to avoid server overhead
+	// public static int REFRESH_INTERVAL = 5000; // default to 5s for the demo/production
 
 	@Override
 	public void onCreate() {

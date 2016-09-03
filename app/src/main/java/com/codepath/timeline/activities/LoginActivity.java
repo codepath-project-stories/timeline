@@ -18,7 +18,7 @@ import android.widget.VideoView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
 import com.codepath.timeline.network.UserClient;
-import com.codepath.timeline.util.ParseApplication;
+import com.codepath.timeline.network.ParseApplication;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;

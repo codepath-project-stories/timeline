@@ -4,9 +4,7 @@ import android.util.Log;
 
 import com.parse.ParseUser;
 
-/**
- * Network client for getting response from the server
- */
+// TODO: try to extends ParseUser and move it to models
 public class UserClient {
 	private static final String TAG = UserClient.class.getSimpleName();
 

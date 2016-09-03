@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.StoriesAdapter;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.network.ParseApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +43,14 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @BindView(R.id.rvStories) RecyclerView rvStories;
     @BindView(R.id.avi) com.wang.avi.AVLoadingIndicatorView avi;
 
-    // TODO: use push notification instead of pulling and auto refresh every 5 seconds
-    private static final int REFRESH_INTERVAL = 5000; // default to 5s
+    // TODO: use push notification instead of pulling and auto refresh every a few seconds
     private Handler mHandler;
     private Runnable mRunnablePopulateList = new Runnable() {
         @Override
         public void run() {
             Log.d("BaseStoryModelFragment", "mRunnablePopulateList");
             populateList();
-            mHandler.postDelayed(mRunnablePopulateList, REFRESH_INTERVAL);
+            mHandler.postDelayed(mRunnablePopulateList, ParseApplication.REFRESH_INTERVAL);
         }
     };
 
@@ -87,7 +87,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 //        });
 
         mHandler = new Handler(Looper.getMainLooper());
-        mHandler.postDelayed(mRunnablePopulateList, REFRESH_INTERVAL);
+        mHandler.postDelayed(mRunnablePopulateList, ParseApplication.REFRESH_INTERVAL);
         return view;
     }
 
