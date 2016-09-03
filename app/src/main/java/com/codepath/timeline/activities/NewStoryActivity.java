@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -137,9 +138,9 @@ public class NewStoryActivity extends NewItemClass
             @Override
             public void onClick(View v) {
                 // Todo: fix the search according to the API
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                SearchFriendsDialogFragment composeDialogFragment = SearchFriendsDialogFragment.newInstance("Search friends");
-//                composeDialogFragment.show(fragmentManager, "fragment_compose");
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                SearchFriendsDialogFragment composeDialogFragment = SearchFriendsDialogFragment.newInstance("Search friends");
+                composeDialogFragment.show(fragmentManager, "fragment_compose");
             }
         });
     }

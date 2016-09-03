@@ -62,7 +62,9 @@
                 android:fontFamily="sans-serif-condensed"
                 android:hint="@string/add_title"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:maxLines="1"
+                />
 
             <TextView
                 android:id="@+id/tvCount"
@@ -293,14 +295,23 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimaryLight"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/publish"
             android:onClick="publish"
             android:padding="10dp"
             android:textStyle="bold"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
     </LinearLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="right"/>
 
 </LinearLayout>

@@ -16,6 +16,7 @@ import android.widget.MultiAutoCompleteTextView;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MultiAutoCompleteTextViewArrayAdapter;
 import com.codepath.timeline.network.TimelineClient;
+import com.codepath.timeline.network.UserClient;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class SearchFriendsDialogFragment extends DialogFragment {
 
         // Todo: pass user id to fragment to retrieve friends list
         TimelineClient.getInstance().getFriendsList(
-                null,
+                UserClient.getCurrentUser(),
                 new TimelineClient.TimelineClientGetFriendListListener() {
                     @Override
                     public void onGetFriendList(List<ParseUser> itemList) {
