@@ -42,6 +42,7 @@
                 android:layout_marginTop="100dp"
                 android:text="@string/app_name"
                 android:textColor="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif"
                 android:textSize="28sp"
                 android:textStyle="bold"/>
 
@@ -73,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:fontFamily="sans-serif"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:selectAllOnFocus="true"/>
@@ -90,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:fontFamily="sans-serif"
                     android:hint="@string/password"
                     android:inputType="textPassword"/>
             </android.support.design.widget.TextInputLayout>
@@ -102,9 +105,11 @@
                 android:layout_marginBottom="24dp"
                 android:layout_marginLeft="64dp"
                 android:layout_marginRight="64dp"
+                android:fontFamily="sans-serif"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/login_button"
                 android:padding="12dp"
+                android:textStyle="bold"
                 android:text="@string/start"
                 android:textColor="@color/colorPrimaryLight"/>
         </LinearLayout>
