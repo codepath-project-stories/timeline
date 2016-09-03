@@ -115,6 +115,18 @@ public class Moment extends ParseObject implements Comparable<Moment>{
     put("commentList", commentList);
   }
 
+  public boolean isChat() {
+    Boolean isChat = (Boolean) get("isChat");
+    if (isChat == null) {
+      return false;
+    }
+    return isChat;
+  }
+
+  public void setChat(boolean isChat) {
+    put("isChat", isChat);
+  }
+
   public ParseUser getAuthor() {
     return (ParseUser) get("author");
   }

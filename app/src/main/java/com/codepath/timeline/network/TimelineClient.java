@@ -74,6 +74,7 @@ public class TimelineClient {
 
   public interface TimelineClientGetMomentListListener {
     void onGetMomentList(List<Moment> itemList);
+    void onGetMomentChatList(List<Moment> itemList);
   }
 
   public interface TimelineClientGetUserListener {
@@ -97,7 +98,7 @@ public class TimelineClient {
   }
 
   public void addStoryList(final List<Story> storyList,
-                           final TimelineClientAddStoryListener timelineClientAddStoryListener) {
+                           final TimelineClientAddStoryListener listener) {
     if (storyList.size() > 0) {
       Log.d("saveToParse", "storyList.size() > 0");
       ParseObject.saveAllInBackground(storyList, new SaveCallback() {
@@ -117,8 +118,8 @@ public class TimelineClient {
                     if (e != null) {
                       Log.d("saveToParse", e.toString());
                     } else {
-                      if (timelineClientAddStoryListener != null) {
-                        timelineClientAddStoryListener.onAddStoryList(); // use callback
+                      if (listener != null) {
+                        listener.onAddStoryList(); // use callback
                       }
                     }
                   }
@@ -149,7 +150,7 @@ public class TimelineClient {
 
   // query User table
   public void getStoryList(ParseUser user,
-                           final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+                           final TimelineClientGetStoryListener listener) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
     // http://parseplatform.github.io/docs/android/guide
     // fetchifneeded() could be an alternative to include()
@@ -163,8 +164,8 @@ public class TimelineClient {
             if (e == null) {
               if (user != null) {
                 Log.d("findInBackground", user.getObjectId());
-                if (timelineClientGetStoryListener != null) {
-                  timelineClientGetStoryListener.onGetStoryList(
+                if (listener != null) {
+                  listener.onGetStoryList(
                       (ArrayList<Story>) user.get("stories")
                   ); // use callback
                 }
@@ -179,7 +180,7 @@ public class TimelineClient {
   // DIANNE: Decided to use this API instead so I can include the 'owner' and 'collaboratorList'
   // for the story list in the LandingActivity
   public void getStoryList2(ParseUser user,
-                            final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+                            final TimelineClientGetStoryListener listener) {
     mStoryListQuery = ParseQuery.getQuery(Story.class);
     mStoryListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     mStoryListQuery.whereEqualTo("owner", user);
@@ -195,15 +196,16 @@ public class TimelineClient {
 
         if (itemList != null) {
           Log.d(TAG, "Success getStoryList2");
-          if (timelineClientGetStoryListener != null) {
-            timelineClientGetStoryListener.onGetStoryList(itemList); // use callback
+          if (listener != null) {
+            listener.onGetStoryList(itemList); // use callback
           }
         }
       }
     });
   }
 
-  public void uploadFile(String fileName, String photoUri, final TimelineClientUploadFileListener uploadFileListener) {
+  public void uploadFile(String fileName, String photoUri,
+                         final TimelineClientUploadFileListener listener) {
     byte[] imageByte = ImageUtil.getImageData(photoUri);
     final ParseFile file = new ParseFile(fileName, imageByte);
     file.saveInBackground(new SaveCallback() {
@@ -215,15 +217,16 @@ public class TimelineClient {
         }
 
         Log.d(TAG, "Success uploadFile");
-        if (uploadFileListener != null) {
-          uploadFileListener.onUploadFileListener(file);
+        if (listener != null) {
+          listener.onUploadFileListener(file);
         }
       }
     });
   }
 
   // Query the DB for moments associated with this story
-  public void getMomentList(String storyObjectId, final TimelineClientGetMomentListListener timelineClientGetMomentListListener) {
+  public void getMomentList(String storyObjectId,
+                            final TimelineClientGetMomentListListener listener) {
     mMomentListQuery = ParseQuery.getQuery(Story.class);
     mMomentListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     mMomentListQuery.include("momentList");
@@ -236,17 +239,25 @@ public class TimelineClient {
           return;
         }
 
-        if (story != null && story.getMomentList() != null) {
+        if (story != null) {
           Log.d(TAG, "Success getMomentList");
-          if (timelineClientGetMomentListListener != null) {
-            timelineClientGetMomentListListener.onGetMomentList(story.getMomentList());
+          if (listener != null) {
+            listener.onGetMomentList(story.getMomentList());
+          }
+        }
+
+        if (story != null) {
+          Log.d(TAG, "Success getMomentChatList");
+          if (listener != null) {
+            listener.onGetMomentChatList(story.getMomentChatList());
           }
         }
       }
     });
   }
 
-  public void getMoment(String momentObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+  public void getMoment(String momentObjectId,
+                        final TimelineClientGetMomentListener listener) {
     ParseQuery<Moment> query = ParseQuery.getQuery(Moment.class);
     query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     query.include("author");
@@ -260,8 +271,8 @@ public class TimelineClient {
 
         if (moment != null) {
           Log.d(TAG, "Success getMoment: " + moment);
-          if (timelineClientGetMomentListener != null) {
-            timelineClientGetMomentListener.onGetMomentListener(moment);
+          if (listener != null) {
+            listener.onGetMomentListener(moment);
           }
         }
       }
@@ -269,7 +280,8 @@ public class TimelineClient {
   }
 
   // Includes moment details + commentList
-  public void getMomentDetails(String momentObjectId, final TimelineClientGetMomentListener timelineClientGetMomentListener) {
+  public void getMomentDetails(String momentObjectId,
+                               final TimelineClientGetMomentListener listener) {
     mMomentDetailQuery = ParseQuery.getQuery(Moment.class);
     mMomentDetailQuery.include("author");
     mMomentDetailQuery.include("commentList");
@@ -285,8 +297,8 @@ public class TimelineClient {
 
         if (moment != null) {
           Log.d(TAG, "Success getMomentDetails: " + moment);
-          if (timelineClientGetMomentListener != null) {
-            timelineClientGetMomentListener.onGetMomentListener(moment);
+          if (listener != null) {
+            listener.onGetMomentListener(moment);
           }
         }
       }
@@ -403,7 +415,7 @@ public class TimelineClient {
 
   // query User table
   public void getCollaboratorList(Story story,
-                                  final TimelineClientGetCollaboratorListListener timelineClientGetUserListener) {
+                                  final TimelineClientGetCollaboratorListListener listener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
     // http://parseplatform.github.io/docs/android/guide
     // fetchifneeded() could be an alternative to include()
@@ -416,8 +428,8 @@ public class TimelineClient {
             if (e == null) {
               if (story != null) {
                 Log.d("findInBackground", story.getObjectId());
-                if (timelineClientGetUserListener != null) {
-                  timelineClientGetUserListener.onGetCollaboratorList(
+                if (listener != null) {
+                  listener.onGetCollaboratorList(
                       (ArrayList<ParseUser>) story.get("collaboratorList")
                   ); // use callback
                 }
@@ -429,7 +441,8 @@ public class TimelineClient {
         });
   }
 
-  public void getUserListByIds(ArrayList<String> objectIds, final TimelineClientGetUserListListener timelineClientGetUserListListener) {
+  public void getUserListByIds(ArrayList<String> objectIds,
+                               final TimelineClientGetUserListListener listener) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
     query.whereContainedIn("objectId", objectIds);
     query.findInBackground(new FindCallback<ParseUser>() {
@@ -441,8 +454,8 @@ public class TimelineClient {
         }
 
         if (userList != null) {
-          if (timelineClientGetUserListListener != null) {
-            timelineClientGetUserListListener.onGetUserList(userList);
+          if (listener != null) {
+            listener.onGetUserList(userList);
           }
         }
       }
@@ -488,7 +501,8 @@ public class TimelineClient {
     });
   }
 
-  public void getUser(final String userObjectId, final TimelineClientGetUserListener timelineClientGetUserListener) {
+  public void getUser(final String userObjectId,
+                      final TimelineClientGetUserListener listener) {
     ParseQuery<ParseUser> query = ParseUser.getQuery();
     query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
     query.getInBackground(userObjectId, new GetCallback<ParseUser>() {
@@ -501,8 +515,8 @@ public class TimelineClient {
 
         if (user != null) {
           Log.d(TAG, "Success getUser");
-          if (timelineClientGetUserListener != null) {
-            timelineClientGetUserListener.onGetUser(user);
+          if (listener != null) {
+            listener.onGetUser(user);
           }
         }
       }
@@ -510,7 +524,7 @@ public class TimelineClient {
   }
 
   public void getSharedStoryList(final ParseUser user,
-                                 final TimelineClientGetStoryListener timelineClientGetStoryListener) {
+                                 final TimelineClientGetStoryListener listener) {
     ParseQuery<Story> query = ParseQuery.getQuery(Story.class);
     query.whereEqualTo("collaboratorList", user);
     query.include("owner"); // eagerly load the owner -- we need it for updating the story view
@@ -536,8 +550,8 @@ public class TimelineClient {
           }
 
           // Access the array of results here
-          if (timelineClientGetStoryListener != null) {
-            timelineClientGetStoryListener.onGetStoryList(sharedStoryList); // use callback
+          if (listener != null) {
+            listener.onGetStoryList(sharedStoryList); // use callback
           }
         }
       }

@@ -156,6 +156,10 @@ public class AutoPlayActivity extends AppCompatActivity
                 mMomentList.addAll(itemList);
                 initList();
             }
+
+            @Override
+            public void onGetMomentChatList(List<Moment> itemList) {
+            }
         });
     }
 

@@ -54,6 +54,13 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvMomentsChat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMoments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -128,6 +135,17 @@
             app:fab_colorPressed="@color/colorBrightAccent"
             app:fab_size="mini"
             app:fab_label="Share story" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/miSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/share_icon"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimaryLight"
+            app:fab_colorPressed="@color/colorBrightAccent"
+            app:fab_size="mini"
+            app:fab_label="Switch View" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

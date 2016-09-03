@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -65,6 +67,8 @@ public class TimelineActivity extends AppCompatActivity implements
     Toolbar toolbar;
     @BindView(R.id.rvMoments)
     RecyclerView rvMoments;
+    @BindView(R.id.rvMomentsChat)
+    RecyclerView rvMomentsChat;
     @BindView(R.id.ivAutoPlay)
     ImageView ivAutoPlay;
     @BindView(R.id.miAdd)
@@ -73,11 +77,15 @@ public class TimelineActivity extends AppCompatActivity implements
     com.github.clans.fab.FloatingActionButton miMusic;
     @BindView(R.id.miShare)
     com.github.clans.fab.FloatingActionButton miShare;
+    @BindView(R.id.miSwitch)
+    com.github.clans.fab.FloatingActionButton miSwitch;
     @BindView(R.id.menu)
     com.github.clans.fab.FloatingActionMenu menu;
 
     private List<Moment> mMomentList;
+    private List<Moment> mMomentChatList;
     private MomentsHeaderAdapter mAdapter;
+    private MomentsHeaderAdapter mAdapterChat;
     private int ADD_MOMENT_REQUEST_CODE = 6;
     private String storyObjectId;
     private String storyTitle;
@@ -85,7 +93,7 @@ public class TimelineActivity extends AppCompatActivity implements
     private ScaleGestureDetector mScaleGestureDetector;
     private int pinch_zoom_index;
     GridLayoutManager gridLayoutManagerChat;
-    LinearLayoutManager linearLayoutManagerDefault;
+    LinearLayoutManager gridLayoutManager;
     GridLayoutManager gridLayoutManagerTwoColumns;
 
     // TODO: Replace with your client ID
@@ -141,22 +149,33 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void initList() {
-        mMomentList = new ArrayList<>();
-        mAdapter = new MomentsHeaderAdapter(this, mMomentList);
-
         gridLayoutManagerChat = new GridLayoutManager(this, 1); // 1
-        linearLayoutManagerDefault = new GridLayoutManager(this, 1); // 2
+        gridLayoutManager = new GridLayoutManager(this, 1); // 2
         gridLayoutManagerTwoColumns = new GridLayoutManager(this, 2); // 3
 
-        rvMoments.setLayoutManager(linearLayoutManagerDefault);
         pinch_zoom_index = 2;
 
-        rvMoments.setAdapter(mAdapter);
+        mMomentChatList = new ArrayList<>();
+        mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList);
+        rvMomentsChat.setLayoutManager(gridLayoutManagerChat);
+        rvMomentsChat.setAdapter(mAdapterChat);
+        // Add the sticky headers decoration
+        final StickyRecyclerHeadersDecoration headersDecorChat = new StickyRecyclerHeadersDecoration(mAdapterChat);
+        rvMomentsChat.addItemDecoration(headersDecorChat);
+        mAdapterChat.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecorChat.invalidateHeaders();
+            }
+        });
 
+        mMomentList = new ArrayList<>();
+        mAdapter = new MomentsHeaderAdapter(this, mMomentList);
+        rvMoments.setLayoutManager(gridLayoutManager);
+        rvMoments.setAdapter(mAdapter);
         // Add the sticky headers decoration
         final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
         rvMoments.addItemDecoration(headersDecor);
-
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -164,61 +183,9 @@ public class TimelineActivity extends AppCompatActivity implements
             }
         });
 
-        ItemClickSupport.addTo(rvMoments).setOnItemClickListener(
-                new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        showDetailDialog(position);
-                    }
-                });
-
         getMomentList();
 
-        miAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
-                startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
-            }
-        });
-
-        miShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // check if coming from user's stories - enable sharing
-                // if not - alert and disable
-                String code = getIntent().getStringExtra("code");
-                Snackbar.make(findViewById(android.R.id.content),
-                        code,
-                        Snackbar.LENGTH_SHORT).show();
-                // Todo: getting name doesn't quite work
-                if (code.contains("UsersStoriesFragment")) {
-                    // Todo: add sharing functionality
-                } else {
-//                    Snackbar.make(findViewById(android.R.id.content),
-//                            "Bummer, but you can't share your friend's stories!",
-//                            Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        miMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Integer.parseInt(v.getTag().toString()) == 1) {
-                    v.setTag(2);
-                    // Todo: add spotify integration
-                    AuthenticationRequest.Builder builder =
-                            new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
-                    builder.setScopes(new String[]{"user-read-private", "streaming"});
-                    AuthenticationRequest request = builder.build();
-                    AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
-                } else {
-                    v.setTag(1);
-                    mPlayer.pause();
-                }
-            }
-        });
+        setupFAB();
 
         mScaleGestureDetector = new ScaleGestureDetector(
                 this,
@@ -230,7 +197,7 @@ public class TimelineActivity extends AppCompatActivity implements
                             // if (true) {
                             if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
                                 if (pinch_zoom_index == 1) {
-                                    rvMoments.setLayoutManager(linearLayoutManagerDefault);
+                                    rvMoments.setLayoutManager(gridLayoutManager);
                                     pinch_zoom_index = 2;
                                     return true;
                                 } else if (pinch_zoom_index == 2) {
@@ -240,7 +207,7 @@ public class TimelineActivity extends AppCompatActivity implements
                                 }
                             } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
                                 if (pinch_zoom_index == 3) {
-                                    rvMoments.setLayoutManager(linearLayoutManagerDefault);
+                                    rvMoments.setLayoutManager(gridLayoutManager);
                                     pinch_zoom_index = 2;
                                     return true;
                                 } else if (pinch_zoom_index == 2) {
@@ -254,7 +221,22 @@ public class TimelineActivity extends AppCompatActivity implements
                     }
                 });
 
+        ItemClickSupport.addTo(rvMoments).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        showDetailDialog(position);
+                    }
+                });
         rvMoments.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScaleGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
+
+        rvMomentsChat.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mScaleGestureDetector.onTouchEvent(event);
@@ -264,11 +246,18 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void getMomentList() {
-        TimelineClient.getInstance().getMomentList(storyObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
+        TimelineClient.getInstance().getMomentList(storyObjectId,
+                new TimelineClient.TimelineClientGetMomentListListener() {
             @Override
             public void onGetMomentList(List<Moment> itemList) {
                 mMomentList.addAll(itemList);
                 mAdapter.notifyItemRangeInserted(0, mMomentList.size());
+            }
+
+            @Override
+            public void onGetMomentChatList(List<Moment> itemList) {
+                mMomentChatList.addAll(itemList);
+                mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
             }
         });
     }
@@ -278,6 +267,9 @@ public class TimelineActivity extends AppCompatActivity implements
         DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(storyObjectId, position);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
+
+    // TODO
+    boolean onTwoColumn = true;
 
     @OnClick(R.id.ivAutoPlay)
     public void onAutoPlay(View view) {
@@ -370,7 +362,8 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void addMoment(final Moment moment) {
-        TimelineClient.getInstance().uploadFile("photo.jpg", moment.getTempPhotoUri(), new TimelineClient.TimelineClientUploadFileListener() {
+        TimelineClient.getInstance().uploadFile("photo.jpg", moment.getTempPhotoUri(),
+                new TimelineClient.TimelineClientUploadFileListener() {
             @Override
             public void onUploadFileListener(ParseFile file) {
                 moment.setMediaUrl(file.getUrl());
@@ -387,6 +380,7 @@ public class TimelineActivity extends AppCompatActivity implements
 
         rvMoments.smoothScrollToPosition(0);
 
+        // TODO: do we need this?
         // Close the fab menu
         menu.close(true);
 
@@ -398,5 +392,100 @@ public class TimelineActivity extends AppCompatActivity implements
         // VERY IMPORTANT! This must always be called or else you will leak resources
         Spotify.destroyPlayer(this);
         super.onDestroy();
+    }
+
+    private void alphaAnimationCreator(final View view, final boolean isfadeIn) {
+        final float alpha = isfadeIn?0.0f:1.0f;
+
+        view.setVisibility(View.VISIBLE);
+        AlphaAnimation fade = new AlphaAnimation(alpha, 1-alpha);
+        fade.setAnimationListener(
+                new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        view.setVisibility(isfadeIn?View.VISIBLE:View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                }
+        );
+        fade.setDuration(1000);
+        view.startAnimation(fade);
+    }
+
+    void setupFAB() {
+        menu.setClosedOnTouchOutside(true);
+
+        miAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the fab menu
+                menu.close(true);
+
+                Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
+                startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
+            }
+        });
+
+        miMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the fab menu
+                menu.close(true);
+
+                if (Integer.parseInt(v.getTag().toString()) == 1) {
+                    v.setTag(2);
+                    // Todo: add spotify integration
+                    AuthenticationRequest.Builder builder =
+                            new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+                    builder.setScopes(new String[]{"user-read-private", "streaming"});
+                    AuthenticationRequest request = builder.build();
+                    AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
+                } else {
+                    v.setTag(1);
+                    mPlayer.pause();
+                }
+            }
+        });
+
+        miShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the fab menu
+                menu.close(true);
+
+                // check if coming from user's stories - enable sharing
+                // if not - alert and disable
+                String code = getIntent().getStringExtra("code");
+                Snackbar.make(findViewById(android.R.id.content),
+                        code,
+                        Snackbar.LENGTH_SHORT).show();
+                // Todo: getting name doesn't quite work
+                if (code.contains("UsersStoriesFragment")) {
+                    // Todo: add sharing functionality
+                } else {
+//                    Snackbar.make(findViewById(android.R.id.content),
+//                            "Bummer, but you can't share your friend's stories!",
+//                            Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        miSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the fab menu
+                menu.close(true);
+
+                onTwoColumn = !onTwoColumn;
+                alphaAnimationCreator(rvMoments, onTwoColumn);
+            }
+        });
     }
 }

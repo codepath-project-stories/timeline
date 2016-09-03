@@ -91,6 +91,9 @@ public class DetailDialogFragment extends DialogFragment {
           initDialog();
         }
       }
+      @Override
+      public void onGetMomentChatList(List<Moment> itemList) {
+      }
     });
   }
 

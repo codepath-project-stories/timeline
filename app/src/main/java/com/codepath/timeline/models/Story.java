@@ -13,7 +13,6 @@ import com.parse.ParseUser;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -129,10 +128,30 @@ public class Story extends ParseObject implements Comparable<Story> {
   // Ordered by descending date
   public List<Moment> getMomentList() {
     List<Moment> momentList = (List<Moment>) get("momentList");
+    List<Moment> output = new ArrayList<>();
     if (momentList != null) {
-      Collections.sort(momentList);
+      for (Moment each : momentList) {
+        if (!each.isChat()) {
+          output.add(each);
+        }
+      }
+      Collections.sort(output);
     }
-    return momentList;
+    return output;
+  }
+
+  // Ordered by ascending date
+  public List<Moment> getMomentChatList() {
+    List<Moment> momentList = (List<Moment>) get("momentList");
+    List<Moment> output = new ArrayList<>();
+    if (momentList != null) {
+      for (Moment each : momentList) {
+        output.add(each);
+      }
+      Collections.sort(output);
+      Collections.reverse(output);
+    }
+    return output;
   }
 
   public void setMomentList(List<Moment> momentList) {
