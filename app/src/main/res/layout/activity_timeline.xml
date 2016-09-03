@@ -75,7 +75,7 @@
         android:layout_marginRight="10dp"
         app:layout_anchor="@id/rvMoments"
         app:layout_anchorGravity="bottom|right|end"
-        app:menu_icon="@drawable/add_btn"
+        app:menu_icon="@drawable/fab_add"
         app:menu_colorNormal="@color/colorAccent"
         app:menu_colorRipple="@color/colorPrimaryLight"
         app:menu_colorPressed="@color/colorBrightAccent"

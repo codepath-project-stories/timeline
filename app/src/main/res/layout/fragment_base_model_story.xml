@@ -15,7 +15,7 @@
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add_btn"
+        android:src="@drawable/fab_add"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorRipple="@color/colorPrimaryLight"
         app:fab_colorPressed="@color/colorBrightAccent"
