@@ -10,8 +10,8 @@
 
   <ImageView
       android:id="@+id/ivProfilePhoto"
-      android:layout_width="40dp"
-      android:layout_height="40dp"
+      android:layout_width="@dimen/author_profile_default_height"
+      android:layout_height="@dimen/author_profile_default_height"
       android:layout_alignParentLeft="true"
       android:layout_alignParentTop="true"
       android:layout_marginLeft="@dimen/large_margin"/>
@@ -55,7 +55,7 @@
       android:layout_height="wrap_content"
       android:layout_alignLeft="@+id/ivProfilePhoto"
       android:layout_below="@+id/ivProfilePhoto"
-      android:layout_marginTop="@dimen/medium_margin"
+      android:layout_marginTop="@dimen/large_margin"
       android:fontFamily="sans-serif"
       android:textSize="@dimen/mediumText"
       tools:text="Exploring Melbourne"/>
