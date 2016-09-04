@@ -46,10 +46,6 @@ public class AutoPlayActivity extends AppCompatActivity
 
     @BindView(R.id.vpMoment)
     AutoScrollViewPager vpMoment;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.tvDate)
-    TextView tvDate;
 
     private List<Moment> mMomentList;
     private Moment mMoment;
@@ -69,10 +65,8 @@ public class AutoPlayActivity extends AppCompatActivity
         storyObjectId = getIntent().getStringExtra(AppConstants.OBJECT_ID);
         storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
 
-        toolbar.setTitle(storyTitle);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle(storyTitle);
         getMomentList();
     }
 
@@ -84,12 +78,6 @@ public class AutoPlayActivity extends AppCompatActivity
         vpMoment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Date momentDate = mMomentList.get(position).getCreatedAtReal();
-                if (momentDate != null) {
-                    String formattedDate = DateUtil.getFormattedTimelineDate(getApplicationContext(), momentDate);
-                    Log.d(TAG, "formattedDate: " + formattedDate);
-                    tvDate.setText(formattedDate);
-                }
                 ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(vpMoment);
                 if (expandingFragment != null && expandingFragment.isOpenend()) {
                     expandingFragment.close();
