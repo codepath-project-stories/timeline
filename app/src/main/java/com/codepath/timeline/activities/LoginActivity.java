@@ -1,5 +1,6 @@
 package com.codepath.timeline.activities;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -8,17 +9,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
-import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.network.ParseApplication;
+import com.codepath.timeline.network.UserClient;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
@@ -38,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
     VideoView login_video;
 
+    @BindView(R.id.root)
+    FrameLayout root;
     @BindView(R.id.input_fullname_layout)
     TextInputLayout input_fullname_layout;
     @BindView(R.id.input_fullname)
@@ -56,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     boolean state;
     // false: login_here
     // true: create_account
+
+    private Transition.TransitionListener mEnterTransitionListener;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -94,6 +102,8 @@ public class LoginActivity extends AppCompatActivity {
         if (play_video) {
             setupVideo();
         }
+
+        setupAnimation();
     }
 
     // http://guides.codepath.com/android/Activity-Lifecycle
@@ -309,4 +319,80 @@ public class LoginActivity extends AppCompatActivity {
         // i.putExtra("story", Parcels.wrap(story));
         startActivity(i);
     }
+
+    void enterReveal(final View myView) {
+        // previously invisible view
+        // final View myView = findViewById(R.id.my_view);
+
+        // get the center for the clipping circle
+        int cx = myView.getMeasuredWidth() / 2;
+        int cy = myView.getMeasuredHeight() / 2;
+
+        // get the final radius for the clipping circle
+        int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
+        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+        myView.setVisibility(View.VISIBLE);
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
+    }
+
+    void setupAnimation() {
+        root.setVisibility(View.INVISIBLE);
+        root.post(new Runnable() {
+            @Override
+            public void run() {
+                //create your anim here
+                enterReveal(root);
+            }
+        });
+        mEnterTransitionListener = new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                Log.d("TransitionListener", "onTransitionStart");
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                Log.d("TransitionListener", "onTransitionEnd");
+                enterReveal(root);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+                Log.d("TransitionListener", "onTransitionCancel");
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+                Log.d("TransitionListener", "onTransitionPause");
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+                Log.d("TransitionListener", "onTransitionResume");
+            }
+        };
+        getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+    }
+
 }

@@ -2,8 +2,24 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/background" />
+
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/app_icon_72"/>
+    </item>
+
+<!--
+http://stackoverflow.com/questions/10706853/android-how-to-change-item-width-and-height
+-->
+<!--
     <item
+        android:top="150dp"
+        android:bottom="150dp"
+        android:right="150dp"
+        android:left="150dp"
         android:gravity="center"
         android:drawable="@drawable/app_icon" />
+    -->
 
 </layer-list>
