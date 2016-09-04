@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -362,7 +363,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //create your anim here
-                enterReveal(root);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // Actions to do after 10 seconds
+                        enterReveal(root);
+                    }
+                }, 1000);
             }
         });
         mEnterTransitionListener = new Transition.TransitionListener() {
