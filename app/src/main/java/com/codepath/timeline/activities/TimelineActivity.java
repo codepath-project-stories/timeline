@@ -1,7 +1,6 @@
 package com.codepath.timeline.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -32,6 +32,7 @@ import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.view.ItemClickSupport;
+import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseFile;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -227,7 +228,7 @@ public class TimelineActivity extends AppCompatActivity implements
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        showDetailDialog(position);
+                        showDetailDialogWithAnimation(position);
                     }
                 });
         rvMoments.setOnTouchListener(new View.OnTouchListener() {
@@ -273,10 +274,28 @@ public class TimelineActivity extends AppCompatActivity implements
         });
     }
 
+    private void showDetailDialogWithAnimation(final int position) {
+        if (menu.isOpened()) {
+            menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+                @Override
+                public void onMenuToggle(boolean opened) {
+                    menu.setOnMenuToggleListener(null);
+                    if (!opened) {
+                        showDetailDialog(position);
+                    }
+                }
+            });
+            menu.close(true);
+        }
+        else {
+            showDetailDialog(position);
+        }
+    }
+
     private void showDetailDialog(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DetailDialogFragment composeDialogFragment =
-                DetailDialogFragment.newInstance(this, storyObjectId, position);
+                DetailDialogFragment.newInstance(TimelineActivity.this, storyObjectId, position);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 
@@ -284,6 +303,24 @@ public class TimelineActivity extends AppCompatActivity implements
     boolean onTwoColumn = true;
 
     @OnClick(R.id.ivAutoPlay)
+    public void onAutoPlayWithAnimation(final View view) {
+        if (menu.isOpened()) {
+            menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+                @Override
+                public void onMenuToggle(boolean opened) {
+                    menu.setOnMenuToggleListener(null);
+                    if (!opened) {
+                        onAutoPlay(view);
+                    }
+                }
+            });
+            menu.close(true);
+        }
+        else {
+            onAutoPlay(view);
+        }
+    }
+
     public void onAutoPlay(View view) {
         // TEMPORARY PLACEHOLDER
         Intent intent = new Intent(TimelineActivity.this, AutoPlayActivity.class);
@@ -392,10 +429,6 @@ public class TimelineActivity extends AppCompatActivity implements
 
         rvMoments.smoothScrollToPosition(0);
 
-        // TODO: do we need this?
-        // Close the fab menu
-        menu.close(true);
-
         Log.d(TAG, "Finished adding to recyclerview");
     }
 
@@ -441,70 +474,90 @@ public class TimelineActivity extends AppCompatActivity implements
         miAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Close the fab menu
+                menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+                    @Override
+                    public void onMenuToggle(boolean opened) {
+                        menu.setOnMenuToggleListener(null);
+                        if (!opened) {
+                            Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
+                            startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
+                        }
+                    }
+                });
                 menu.close(true);
-
-                Intent intent = new Intent(TimelineActivity.this, NewMomentActivity.class);
-                startActivityForResult(intent, ADD_MOMENT_REQUEST_CODE);
             }
         });
 
         miMusic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Close the fab menu
+            public void onClick(final View v) {
+                menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+                    @Override
+                    public void onMenuToggle(boolean opened) {
+                        menu.setOnMenuToggleListener(null);
+                        if (!opened) {
+                            if (Integer.parseInt(v.getTag().toString()) == 1) {
+                                v.setTag(2);
+                                // Todo: add spotify integration
+                                AuthenticationRequest.Builder builder =
+                                        new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+                                builder.setScopes(new String[]{"user-read-private", "streaming"});
+                                AuthenticationRequest request = builder.build();
+                                AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
+                                miMusic.setLabelText("Unspotify story");
+                            } else {
+                                v.setTag(1);
+                                if (mPlayer != null) {
+                                    mPlayer.pause();
+                                }
+                                miMusic.setLabelText("Spotify story");
+                            }
+                        }
+                    }
+                });
                 menu.close(true);
-
-                if (Integer.parseInt(v.getTag().toString()) == 1) {
-                    v.setTag(2);
-                    // Todo: add spotify integration
-                    AuthenticationRequest.Builder builder =
-                            new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
-                    builder.setScopes(new String[]{"user-read-private", "streaming"});
-                    AuthenticationRequest request = builder.build();
-                    AuthenticationClient.openLoginActivity(TimelineActivity.this, REQUEST_CODE, request);
-                    miMusic.setLabelText("Unspotify story");
-                } else {
-                    v.setTag(1);
-                    mPlayer.pause();
-                    miMusic.setLabelText("Spotify story");
-                }
             }
         });
 
         miShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Close the fab menu
-                menu.close(true);
-
-                // check if coming from user's stories - enable sharing
-                // if not - alert and disable
-                String code = getIntent().getStringExtra("code");
+                menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+                    @Override
+                    public void onMenuToggle(boolean opened) {
+                        menu.setOnMenuToggleListener(null);
+                        if (!opened) {
+                            // check if coming from user's stories - enable sharing
+                            // if not - alert and disable
+                            String code = getIntent().getStringExtra("code");
 //                Snackbar.make(findViewById(android.R.id.content),
 //                        code,
 //                        Snackbar.LENGTH_SHORT).show();
 
-                if (storyHtmlSummaryUrl != null) {
-                    Intent intent = new Intent(TimelineActivity.this, ShareStoryActivity.class);
-                    intent.putExtra("storyHTML", storyHtmlSummaryUrl);
-                    startActivity(intent);
+                            if (storyHtmlSummaryUrl != null) {
+                                Intent intent = new Intent(TimelineActivity.this, ShareStoryActivity.class);
+                                intent.putExtra("storyHTML", storyHtmlSummaryUrl);
+                                startActivity(intent);
 //                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
 //                    shareIntent.setType("text/plain");
 //                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out " + storyTitle + " Story");
 //                    shareIntent.putExtra(Intent.EXTRA_TEXT, storyHtmlSummaryUrl);
 //                    startActivity(Intent.createChooser(shareIntent, "Share story using..."));
-                }
+                            }
 
-                // Todo: getting name doesn't quite work
-                if (code.contains("UsersStoriesFragment")) {
-                    // Todo: add sharing functionality
+                            // Todo: getting name doesn't quite work
+                            if (code.contains("UsersStoriesFragment")) {
+                                // Todo: add sharing functionality
 
-                } else {
+                            } else {
 //                    Snackbar.make(findViewById(android.R.id.content),
 //                            "Bummer, but you can't share your friend's stories!",
 //                            Snackbar.LENGTH_SHORT).show();
-                }
+                            }
+                        }
+                    }
+                });
+                menu.close(true);
             }
         });
 
@@ -518,5 +571,45 @@ public class TimelineActivity extends AppCompatActivity implements
                 alphaAnimationCreator(rvMoments, onTwoColumn);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                exitAnimation();
+                return true; // instead of super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitAnimation();
+    }
+
+    private void exitAnimation() {
+        if (menu.isOpened()) {
+            // Log.d("exitAnimation", "isOpened()");
+            menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+                @Override
+                public void onMenuToggle(boolean opened) {
+                    // Log.d("exitAnimation", "onMenuToggle()");
+                    menu.setOnMenuToggleListener(null);
+                    if (!opened) {
+                        // Log.d("exitAnimation", "!opened");
+                        // Finish the activity after the exit transition completes.
+                        supportFinishAfterTransition();
+                    }
+                }
+            });
+            menu.close(true);
+        }
+        else {
+            // Log.d("exitAnimation", "!isOpened()");
+            // Finish the activity after the exit transition completes.
+            supportFinishAfterTransition();
+        }
     }
 }
