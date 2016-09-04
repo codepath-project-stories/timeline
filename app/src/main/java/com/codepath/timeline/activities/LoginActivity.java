@@ -366,7 +366,7 @@ public class LoginActivity extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        // Actions to do after 10 seconds
+                        // Actions to do after 1 second
                         enterReveal(root);
                     }
                 }, 1000);
