@@ -71,6 +71,12 @@
         <activity android:name=".activities.TestParseActivity">
         </activity>
 
+        <activity android:name=".activities.ShareStoryActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.TimelineActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity android:name=".activities.SpotifyActivity"/>
 
         <!-- Needed for spotify integration to work -->
