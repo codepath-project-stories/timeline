@@ -7,7 +7,8 @@
     android:layout_below="@+id/tvDescription"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    >
+  <!--android:paddingTop="10dp"-->
 
   <ImageView
       android:id="@+id/ivProfilePhoto"
@@ -18,6 +19,42 @@
       android:layout_alignParentTop="true"
       android:layout_marginRight="10dp"
       tools:background="@color/colorPrimaryDark"/>
+
+  <TextView
+      android:id="@+id/tvName"
+      style="@style/BoldPrimaryText"
+      android:layout_alignTop="@+id/ivProfilePhoto"
+      android:layout_toEndOf="@+id/ivProfilePhoto"
+      android:layout_toRightOf="@+id/ivProfilePhoto"
+      tools:text="Jane Doe"/>
+
+  <ImageView
+      android:id="@+id/ivMapMarker"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_below="@+id/tvName"
+      android:layout_toEndOf="@+id/ivProfilePhoto"
+      android:layout_toRightOf="@+id/ivProfilePhoto"
+      android:adjustViewBounds="true"
+      android:scaleType="fitXY"
+      android:src="@drawable/map_marker"/>
+
+  <TextView
+      android:id="@+id/tvLocation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/ivMapMarker"
+      android:layout_toEndOf="@+id/ivMapMarker"
+      android:layout_toRightOf="@+id/ivMapMarker"
+      tools:text="San Francisco, CA"/>
+
+  <TextView
+      android:id="@+id/tvDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      tools:text="7h ago"/>
 
   <TextView
       android:id="@+id/tvBody"
@@ -80,41 +117,5 @@
 
 
   </com.codepath.timeline.view.SquaredFrameLayout>
-
-  <TextView
-      android:id="@+id/tvName"
-      style="@style/BoldPrimaryText"
-      android:layout_alignTop="@+id/ivProfilePhoto"
-      android:layout_toEndOf="@+id/ivProfilePhoto"
-      android:layout_toRightOf="@+id/ivProfilePhoto"
-      tools:text="Jane Doe"/>
-
-  <ImageView
-      android:id="@+id/ivMapMarker"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_below="@+id/tvName"
-      android:layout_toEndOf="@+id/ivProfilePhoto"
-      android:layout_toRightOf="@+id/ivProfilePhoto"
-      android:adjustViewBounds="true"
-      android:scaleType="fitXY"
-      android:src="@drawable/map_marker"/>
-
-  <TextView
-      android:id="@+id/tvLocation"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/ivMapMarker"
-      android:layout_toEndOf="@+id/ivMapMarker"
-      android:layout_toRightOf="@+id/ivMapMarker"
-      tools:text="San Francisco, CA"/>
-
-  <TextView
-      android:id="@+id/tvDate"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentTop="true"
-      tools:text="7h ago"/>
 
 </RelativeLayout>

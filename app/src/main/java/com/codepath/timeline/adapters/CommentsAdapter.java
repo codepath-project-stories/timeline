@@ -17,6 +17,7 @@ import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -89,28 +90,38 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
                         .into(mediaViewHolder.ivMedia);
             }
 
+            /*
             if (comment.getLocation() != null) {
                 mediaViewHolder.tvLocation.setText(comment.getLocation());
             }
-        }
+            */
 
-        ParseUser user = comment.getAuthor();
-        if (user != null) {
-            Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
-            holder.tvName.setText(UserClient.getName(user));
-            Glide.with(mContext)
-                    .load(UserClient.getProfileImageUrl(user))
-                    .fitCenter()
-                    .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
-                    .into(holder.ivProfilePhoto);
+            holder.ivProfilePhoto.setVisibility(View.GONE);
+            holder.tvName.setVisibility(View.GONE);
+            mediaViewHolder.ivMapMarker.setVisibility(View.GONE);
+            mediaViewHolder.tvLocation.setVisibility(View.GONE);
+            holder.tvDate.setVisibility(View.GONE);
         }
+        else {
+            ParseUser user = comment.getAuthor();
+            if (user != null) {
+                Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(user));
+                holder.tvName.setText(UserClient.getName(user));
+                Glide.with(mContext)
+                        .load(UserClient.getProfileImageUrl(user))
+                        .fitCenter()
+                        .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
+                        .into(holder.ivProfilePhoto);
+            }
 
-        if (comment.getCreatedAtReal() != null) {
-            String formattedDate = DateUtil.getFormattedTimelineDate(mContext, comment.getCreatedAtReal());
-            Log.d(TAG, "formattedDate: " + formattedDate);
-            holder.tvDate.setText(formattedDate);
-        } else {
-            holder.tvDate.setText("");
+            Date createdAtReal = comment.getCreatedAtReal();
+            if (createdAtReal != null) {
+                String formattedDate = DateUtil.getFormattedTimelineDate(mContext, createdAtReal);
+                Log.d(TAG, "formattedDate: " + formattedDate);
+                holder.tvDate.setText(formattedDate);
+            } else {
+                holder.tvDate.setText("");
+            }
         }
 
         holder.tvBody.setText(comment.getBody());
@@ -154,6 +165,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         public LinearLayout llLike;
         @BindView(R.id.tvLocation)
         TextView tvLocation;
+        @BindView(R.id.ivMapMarker)
+        ImageView ivMapMarker;
 
         public CommentsMediaViewHolder(View itemView) {
             super(itemView);

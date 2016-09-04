@@ -238,6 +238,7 @@ public class TimelineActivity extends AppCompatActivity implements
                     }
                 });
 
+        // onClicked != onItemClicked
         ItemClickSupport.addTo(rvMoments).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
@@ -290,7 +291,8 @@ public class TimelineActivity extends AppCompatActivity implements
 
     private void showDetailDialog(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        DetailDialogFragment composeDialogFragment = DetailDialogFragment.newInstance(storyObjectId, position);
+        DetailDialogFragment composeDialogFragment =
+                DetailDialogFragment.newInstance(this, storyObjectId, position);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 

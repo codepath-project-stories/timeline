@@ -8,13 +8,64 @@
     tools:background="@color/extra_extra_light_gray">
 
   <ImageView
+      android:id="@+id/ivProfilePhoto"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_margin="10dp"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      tools:background="@color/colorPrimaryDark"/>
+
+  <TextView
+      android:id="@+id/tvName"
+      style="@style/BoldPrimaryText"
+      android:layout_alignTop="@+id/ivProfilePhoto"
+      android:layout_toEndOf="@+id/ivProfilePhoto"
+      android:layout_toRightOf="@+id/ivProfilePhoto"
+      tools:text="Jane Doe"/>
+
+  <ImageView
+      android:id="@+id/ivMapMarker"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_below="@+id/tvName"
+      android:layout_toEndOf="@+id/ivProfilePhoto"
+      android:layout_toRightOf="@+id/ivProfilePhoto"
+      android:adjustViewBounds="true"
+      android:scaleType="fitXY"
+      android:src="@drawable/map_marker"/>
+
+  <TextView
+      tools:text="San Francisco, CA"
+      android:id="@+id/tvLocation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/ivMapMarker"
+      android:layout_toEndOf="@+id/ivMapMarker"
+      android:layout_marginStart="10dp"
+      />
+
+  <TextView
+      tools:text="7h ago"
+      android:id="@+id/tvDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/ivMapMarker"
+      android:layout_toEndOf="@+id/tvLocation"
+      android:layout_marginStart="10dp"
+      />
+  <!--android:layout_toStartOf="@+id/ivClose"-->
+  <!--  android:layout_marginEnd="30dp"-->
+
+  <ImageView
       android:id="@+id/ivClose"
       android:layout_width="30dp"
       android:layout_height="30dp"
       android:layout_alignParentRight="true"
       android:layout_alignParentTop="true"
-      android:layout_marginRight="10dp"
-      android:layout_marginTop="10dp"
+      android:layout_marginRight="5dp"
+      android:layout_marginTop="5dp"
       android:src="@drawable/close"/>
 
   <android.support.v4.view.ViewPager
@@ -22,7 +73,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_above="@+id/rlComment"
-      android:layout_below="@+id/ivClose"/>
+      android:layout_below="@+id/ivProfilePhoto"/>
 
   <RelativeLayout
       android:id="@+id/rlComment"
