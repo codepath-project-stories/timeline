@@ -113,4 +113,26 @@
         <item name="android:textStyle">bold</item>
         <item name="textAllCaps">true</item>
     </style>
+
+    <!-- Timeline moment styles -->
+    <style name="TimelineVerticalLine">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">33dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="TimelineCircularDate" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">46dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:layout_marginLeft">@dimen/large_margin</item>
+        <item name="android:layout_marginRight">@dimen/extra_large_margin</item>
+        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:background">@drawable/circle</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/smallText</item>
+    </style>
 </resources>

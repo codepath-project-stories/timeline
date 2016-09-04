@@ -21,12 +21,14 @@
 
     <!-- ImageView sizes -->
     <dimen name="profile_nav_header_height">120dp</dimen>
-    <dimen name="story_default_height">180dp</dimen>
+    <dimen name="story_default_height">200dp</dimen>
+    <dimen name="moment_default_height">200dp</dimen>
     <dimen name="author_profile_default_height">40dp</dimen>
     <dimen name="user_default_height">30dp</dimen>
     <dimen name="user_add_height">60dp</dimen>
 
     <!-- Text sizes-->
+    <dimen name="extraLargeText">22sp</dimen>
     <dimen name="largeText">19sp</dimen>
     <dimen name="mediumText">16sp</dimen>
     <dimen name="smallText">14sp</dimen>
