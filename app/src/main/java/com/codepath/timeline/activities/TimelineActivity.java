@@ -142,23 +142,11 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void updateStoryInfo() {
-        // extract from the intent
-        // load the image url for the background of the story into the image view
-        if (SOURCE_MODE == 0) {
-            collapsing_toolbar.setTitle("Baby Matthew Smith");
-            collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-            Glide.with(this)
-                    .load(R.drawable.image_test2)
-                    .centerCrop()
-                    .into(ivAutoPlay);
-        } else if (SOURCE_MODE == 1) {
-            collapsing_toolbar.setTitle(storyTitle);
-            collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE);
-            Glide.with(this)
-                    .load(storyBackgroundImageUrl)
-                    .centerCrop()
-                    .into(ivAutoPlay);
-        }
+        collapsing_toolbar.setTitle(storyTitle);
+        Glide.with(this)
+                .load(storyBackgroundImageUrl)
+                .centerCrop()
+                .into(ivAutoPlay);
     }
 
     private void initList() {
