@@ -75,12 +75,13 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                                 Collections.sort(itemList);
                                 addAll(itemList);
                             }
+
+                            // stop custom progress bar
+                            stopAnim();
                         }
                     }
             );
         }
-        // stop custom progress bar
-        stopAnim();
     }
 
     @Override

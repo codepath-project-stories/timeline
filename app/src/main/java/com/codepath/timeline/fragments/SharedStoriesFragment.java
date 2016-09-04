@@ -59,11 +59,11 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
                             Log.d(TAG, "populateList");
                             addAll(itemList);
                         }
+
+                        // stop custom progress bar
+                        stopAnim();
                     }
                 }
         );
-
-        // stop custom progress bar
-        stopAnim();
     }
 }
