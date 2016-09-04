@@ -68,7 +68,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                     // set up callback
                     new TimelineClient.TimelineClientGetStoryListener() {
                         @Override
-                        public void onGetStoryList(List<Story> itemList) {
+                        public void onGetStoryListSuccess(List<Story> itemList) {
                             if (itemList != null) {
                                 Log.d(TAG, "populateList");
                                 // Sort by newly updated story on top of the list
@@ -77,6 +77,11 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                             }
 
                             // stop custom progress bar
+                            stopAnim();
+                        }
+
+                        @Override
+                        public void onGetStoryListFailed(String message) {
                             stopAnim();
                         }
                     }
