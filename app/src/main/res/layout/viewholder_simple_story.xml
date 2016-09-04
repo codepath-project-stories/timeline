@@ -30,12 +30,6 @@
                 tools:background="@drawable/image_test2"
                 android:transitionName="background" />
 
-            <View
-                android:id="@+id/vAlphaOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/light_gray_transparent" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,6 +66,9 @@
                     style="@style/MomentCountText"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tvUserCount"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="-5"
+                    android:shadowRadius="5"
                     tools:text="30 Moments" />
 
             </RelativeLayout>

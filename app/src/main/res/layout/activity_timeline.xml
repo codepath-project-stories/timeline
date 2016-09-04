@@ -23,7 +23,7 @@
             app:expandedTitleGravity="bottom|left"
             app:expandedTitleMarginBottom="10dp"
             app:expandedTitleMarginStart="10dp"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:expandedTitleTextAppearance="@style/Toolbar.TitleText"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
