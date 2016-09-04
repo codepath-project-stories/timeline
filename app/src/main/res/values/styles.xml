@@ -58,6 +58,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="DescriptionText" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/medium_margin</item>
+    </style>
+
     <style name="StoryTitleText" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
