@@ -33,6 +33,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     com.github.clans.fab.FloatingActionButton add;
     private int REQUEST_CODE = 5;
 
+
     // newInstance constructor for creating fragment with arguments
     public static UserStoriesFragment newInstance(Context context, int page) {
         UserStoriesFragment frag = new UserStoriesFragment();
@@ -51,8 +52,13 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     @Override
     protected void populateList() {
         // start custom progress bar
-        startAnim();
 
+        startAnim();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

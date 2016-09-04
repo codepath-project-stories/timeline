@@ -41,6 +41,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewStoryActivity extends NewItemClass
         implements SearchFriendsDialogFragment.SearchDialogListener {
@@ -94,6 +95,11 @@ public class NewStoryActivity extends NewItemClass
 
     private List<ParseUser> mFriendsList;
     private Context context;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

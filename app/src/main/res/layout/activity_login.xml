@@ -42,9 +42,8 @@
                 android:layout_marginTop="80dp"
                 android:text="@string/app_name"
                 android:textColor="@color/colorPrimary"
-                android:fontFamily="sans-serif"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                fontPath="fonts/Roboto-Bold.ttf"
+                android:textSize="28sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -78,7 +77,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="sans-serif"
                     android:hint="@string/fullname"
                     android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
@@ -94,7 +92,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="sans-serif"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:selectAllOnFocus="true" />
@@ -112,7 +109,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:fontFamily="sans-serif"
                     android:hint="@string/password"
                     android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
@@ -125,11 +121,10 @@
                 android:layout_marginBottom="24dp"
                 android:layout_marginLeft="64dp"
                 android:layout_marginRight="64dp"
-                android:fontFamily="sans-serif"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/login_button"
                 android:padding="12dp"
-                android:textStyle="bold"
+                fontPath="fonts/Roboto-Bold.ttf"
                 android:text="@string/start"
                 android:textColor="@color/colorPrimary" />
 
@@ -139,8 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/create_account"
-                android:textColor="@color/colorPrimaryLight"
-                />
+                android:textColor="@color/colorPrimaryLight" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

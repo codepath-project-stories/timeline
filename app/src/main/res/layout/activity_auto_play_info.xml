@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:padding="@dimen/activity_horizontal_margin">
@@ -21,7 +21,7 @@
       android:layout_alignTop="@+id/ivProfilePhoto"
       android:layout_toEndOf="@+id/ivProfilePhoto"
       android:layout_toRightOf="@+id/ivProfilePhoto"
-      android:text="Dianne Bautista"/>
+      tools:text="Dianne Bautista"/>
 
   <ImageView
       android:id="@+id/imageView"
@@ -41,7 +41,7 @@
       android:layout_alignBottom="@+id/imageView"
       android:layout_toEndOf="@+id/imageView"
       android:layout_toRightOf="@+id/imageView"
-      android:text="San Francisco, CA"/>
+      tools:text="San Francisco, CA"/>
 
   <ImageView
       android:id="@+id/ivMedia"
@@ -58,5 +58,5 @@
       android:layout_alignParentBottom="true"
       android:layout_alignParentLeft="true"
       android:layout_marginTop="@dimen/activity_horizontal_margin"
-      android:text="Exploring Melbourne"/>
+      tools:text="Exploring Melbourne"/>
 </RelativeLayout>

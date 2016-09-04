@@ -1,6 +1,7 @@
 package com.codepath.timeline.activities;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -33,6 +34,7 @@ import com.parse.SignUpCallback;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
     // LoginActivity calls LandingActivity
@@ -65,6 +67,11 @@ public class LoginActivity extends AppCompatActivity {
     // true: create_account
 
     private Transition.TransitionListener mEnterTransitionListener;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle bundle) {

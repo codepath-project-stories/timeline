@@ -159,11 +159,11 @@ abstract public class BaseStoryModelFragment extends Fragment {
         rvStories.smoothScrollToPosition(0);
     }
 
-    void startAnim() {
+    protected void startAnim() {
         avi.show();
     }
 
-    void stopAnim() {
+    protected void stopAnim() {
         avi.hide();
     }
 

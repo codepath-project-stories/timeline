@@ -115,4 +115,7 @@ dependencies {
 
     // This library handles music playback
     compile 'com.spotify.sdk:spotify-player:1.0.0-beta13@aar'
+
+    // Roboto font (fontPath)
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }

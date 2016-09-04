@@ -1,6 +1,7 @@
 package com.codepath.timeline.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /*
     Displays moment details when the item is clicked while scrolling automatically
@@ -26,6 +28,11 @@ public class AutoPlayInfoActivity extends AppCompatActivity {
     ImageView ivProfilePhoto;
     @BindView(R.id.ivMedia)
     ImageView ivMedia;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.codepath.timeline.activities;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +31,7 @@ import com.codepath.timeline.util.NewItemClass;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewMomentActivity extends NewItemClass {
     private static final String TAG = "TimelineLog:" + NewMomentActivity.class.getSimpleName();
@@ -49,6 +51,11 @@ public class NewMomentActivity extends NewItemClass {
     TextView tvCount;
     @BindView(R.id.llTitle)
     LinearLayout llTitle;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

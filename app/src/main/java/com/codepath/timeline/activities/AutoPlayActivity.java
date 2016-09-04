@@ -2,6 +2,7 @@ package com.codepath.timeline.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -11,29 +12,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.AutoPlayFragment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
-import com.codepath.timeline.util.DateUtil;
 import com.qslll.library.ExpandingPagerFactory;
 import com.qslll.library.ExpandingViewPagerAdapter;
 import com.qslll.library.fragments.ExpandingFragment;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /*
       Expanding view for displaying list of moments: https://github.com/qs-lll/ExpandingPager
@@ -53,6 +50,11 @@ public class AutoPlayActivity extends AppCompatActivity
     private String storyObjectId;
     private String storyTitle;
 
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

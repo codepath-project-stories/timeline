@@ -1,6 +1,7 @@
 package com.codepath.timeline.activities;
 
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,13 +24,14 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.LandingPagerAdapter;
-import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.network.ParseApplication;
+import com.codepath.timeline.network.UserClient;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LandingActivity extends AppCompatActivity {
     private static final String TAG = LandingActivity.class.getSimpleName();
@@ -50,6 +52,11 @@ public class LandingActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
 
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

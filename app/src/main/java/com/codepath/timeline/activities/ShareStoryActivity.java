@@ -1,5 +1,6 @@
 package com.codepath.timeline.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.codepath.timeline.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ShareStoryActivity extends AppCompatActivity {
 
@@ -25,6 +27,12 @@ public class ShareStoryActivity extends AppCompatActivity {
     com.wang.avi.AVLoadingIndicatorView avi;
     boolean loadingFinished = true;
     boolean redirect = false;
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,12 @@ public class ShareStoryActivity extends AppCompatActivity {
 
         String storyHTML = getIntent().getStringExtra("storyHTML");
 
-//        startAnim();
+        startAnim();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

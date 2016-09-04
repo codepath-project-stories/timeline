@@ -297,11 +297,10 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColorHint="@color/colorPrimaryLight"
-            android:fontFamily="sans-serif-condensed"
             android:hint="@string/publish"
             android:onClick="publish"
             android:padding="10dp"
-            android:textStyle="bold"
+            fontPath="fonts/Roboto-Bold.ttf"
             android:textSize="15sp"
             />
 

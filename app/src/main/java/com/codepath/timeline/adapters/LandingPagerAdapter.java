@@ -17,6 +17,7 @@ public class LandingPagerAdapter extends SmartFragmentStatePagerAdapter {
     final int PAGE_COUNT = 2;
     private final Context context;
 
+
     public LandingPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
