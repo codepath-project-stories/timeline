@@ -8,39 +8,27 @@
 
   <View
       android:id="@+id/vLine"
-      android:layout_width="1dp"
-      android:layout_height="wrap_content"
+      style="@style/TimelineVerticalLine"
       android:layout_alignBottom="@+id/cvMoment"
-      android:layout_alignParentTop="true"
-      android:layout_marginLeft="32dp"
-      android:background="@color/colorPrimary"/>
+      android:layout_alignParentTop="true"/>
 
   <TextView
       android:id="@+id/tvDate"
-      android:layout_width="44dp"
-      android:layout_height="44dp"
+      style="@style/TimelineCircularDate"
       android:layout_alignParentStart="true"
       android:layout_alignParentTop="true"
-      android:layout_marginLeft="10dp"
-      android:layout_marginRight="@dimen/activity_vertical_margin"
-      android:layout_marginTop="22dp"
-      android:background="@drawable/circle"
-      android:gravity="center"
-      android:padding="5dp"
-      android:text="JAN 23"
-      android:textAllCaps="true"
-      android:textColor="@android:color/white"
-      android:textSize="@dimen/smallText"/>
+      tools:text="JAN 23"/>
 
   <TextView
       android:id="@+id/tvDescription"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignTop="@+id/tvDate"
-      android:layout_marginTop="7dp"
+      android:layout_marginTop="@dimen/medium_margin"
+      android:layout_marginRight="@dimen/large_margin"
       android:layout_toEndOf="@+id/tvDate"
-      android:text="New Text"
-      android:textSize="@dimen/mediumText"/>
+      android:textSize="@dimen/mediumText"
+      tools:text="New Text"/>
 
   <android.support.v7.widget.CardView
       android:id="@+id/cvMoment"
@@ -51,34 +39,33 @@
       android:layout_marginRight="@dimen/activity_horizontal_margin"
       android:layout_marginTop="@dimen/activity_horizontal_margin"
       android:layout_toRightOf="@id/vLine"
-      card_view:cardElevation="7dp">
+      card_view:cardElevation="@dimen/card_view_elevation">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryLight"
-        android:paddingTop="10dp">
+        android:padding="@dimen/large_padding">
 
       <ImageView
           android:id="@+id/ivProfilePhoto"
-          android:layout_width="40dp"
-          android:layout_height="40dp"
+          android:layout_width="@dimen/author_profile_default_height"
+          android:layout_height="@dimen/author_profile_default_height"
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true"
           android:layout_alignParentTop="true"
-          android:layout_marginLeft="@dimen/activity_vertical_margin"
-          android:layout_marginRight="10dp"
+          android:layout_marginRight="@dimen/medium_margin"
           tools:background="@color/colorPrimaryDark"/>
 
       <ImageView
           android:id="@+id/ivMedia"
           android:layout_width="match_parent"
-          android:layout_height="180dp"
+          android:layout_height="@dimen/moment_default_height"
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true"
           android:layout_below="@+id/ivProfilePhoto"
-          android:layout_marginTop="10dp"
+          android:layout_marginTop="@dimen/large_margin"
           tools:background="@color/colorPrimary"/>
 
       <TextView
@@ -107,9 +94,8 @@
           android:layout_alignBottom="@+id/ivMapMarker"
           android:layout_toEndOf="@+id/ivMapMarker"
           android:layout_toRightOf="@+id/ivMapMarker"
-          android:textSize="@dimen/smallText"
+          android:textSize="@dimen/mediumText"
           tools:text="San Francisco, CA"/>
-
 
     </RelativeLayout>
   </android.support.v7.widget.CardView>
