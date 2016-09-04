@@ -12,26 +12,25 @@
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/cvMoment"
       android:layout_alignParentTop="true"
-      android:layout_marginLeft="30dp"
+      android:layout_marginLeft="32dp"
       android:background="@color/colorPrimary"/>
 
   <TextView
       android:id="@+id/tvDate"
-      android:layout_width="40dp"
-      android:layout_height="40dp"
+      android:layout_width="44dp"
+      android:layout_height="44dp"
       android:layout_alignParentStart="true"
       android:layout_alignParentTop="true"
       android:layout_marginLeft="10dp"
       android:layout_marginRight="@dimen/activity_vertical_margin"
-      android:layout_marginTop="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="22dp"
       android:background="@drawable/circle"
       android:gravity="center"
       android:padding="5dp"
+      android:text="JAN 23"
       android:textAllCaps="true"
       android:textColor="@android:color/white"
-      android:textSize="11sp"
-      android:textStyle="bold"
-      android:text="JAN 23"/>
+      android:textSize="@dimen/smallText"/>
 
   <TextView
       android:id="@+id/tvDescription"
@@ -40,7 +39,8 @@
       android:layout_alignTop="@+id/tvDate"
       android:layout_marginTop="7dp"
       android:layout_toEndOf="@+id/tvDate"
-      android:text="New Text"/>
+      android:text="New Text"
+      android:textSize="@dimen/mediumText"/>
 
   <android.support.v7.widget.CardView
       android:id="@+id/cvMoment"
@@ -51,14 +51,14 @@
       android:layout_marginRight="@dimen/activity_horizontal_margin"
       android:layout_marginTop="@dimen/activity_horizontal_margin"
       android:layout_toRightOf="@id/vLine"
-      card_view:cardElevation="5dp">
+      card_view:cardElevation="7dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryLight"
-        android:padding="10dp">
+        android:paddingTop="10dp">
 
       <ImageView
           android:id="@+id/ivProfilePhoto"
@@ -67,13 +67,14 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true"
           android:layout_alignParentTop="true"
+          android:layout_marginLeft="@dimen/activity_vertical_margin"
           android:layout_marginRight="10dp"
           tools:background="@color/colorPrimaryDark"/>
 
       <ImageView
           android:id="@+id/ivMedia"
           android:layout_width="match_parent"
-          android:layout_height="150dp"
+          android:layout_height="180dp"
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true"
           android:layout_below="@+id/ivProfilePhoto"
@@ -93,10 +94,10 @@
           android:layout_width="20dp"
           android:layout_height="20dp"
           android:layout_below="@+id/tvName"
+          android:layout_marginLeft="-5dp"
           android:layout_toEndOf="@+id/ivProfilePhoto"
           android:layout_toRightOf="@+id/ivProfilePhoto"
           android:adjustViewBounds="true"
-          android:scaleType="fitXY"
           android:src="@drawable/map_marker"/>
 
       <TextView
@@ -106,6 +107,7 @@
           android:layout_alignBottom="@+id/ivMapMarker"
           android:layout_toEndOf="@+id/ivMapMarker"
           android:layout_toRightOf="@+id/ivMapMarker"
+          android:textSize="@dimen/smallText"
           tools:text="San Francisco, CA"/>
 
 
