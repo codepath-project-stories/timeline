@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -62,12 +61,9 @@ public class TimelineActivity extends AppCompatActivity implements
     // 1: getIntent().getStringExtra("imageUrl")
 
     private static final String TAG = TimelineActivity.class.getSimpleName();
-    // TODO: Replace with your client ID
     private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
-    // TODO: Replace with your redirect URI
     private static final String REDIRECT_URI = "timeline-spotify-integration://callback";
     // Request code that will be passed together with authentication result to the onAuthenticationResult callback
-    // Can be any integer
     private static final int REQUEST_CODE = 1337;
 
     @BindView(R.id.appbar)
@@ -497,16 +493,19 @@ public class TimelineActivity extends AppCompatActivity implements
                 // check if coming from user's stories - enable sharing
                 // if not - alert and disable
                 String code = getIntent().getStringExtra("code");
-                Snackbar.make(findViewById(android.R.id.content),
-                        code,
-                        Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(findViewById(android.R.id.content),
+//                        code,
+//                        Snackbar.LENGTH_SHORT).show();
 
                 if (storyHtmlSummaryUrl != null) {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out " + storyTitle + " Story");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, storyHtmlSummaryUrl);
-                    startActivity(Intent.createChooser(shareIntent, "Share story using..."));
+                    Intent intent = new Intent(TimelineActivity.this, ShareStoryActivity.class);
+                    intent.putExtra("storyHTML", storyHtmlSummaryUrl);
+                    startActivity(intent);
+//                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//                    shareIntent.setType("text/plain");
+//                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out " + storyTitle + " Story");
+//                    shareIntent.putExtra(Intent.EXTRA_TEXT, storyHtmlSummaryUrl);
+//                    startActivity(Intent.createChooser(shareIntent, "Share story using..."));
                 }
 
                 // Todo: getting name doesn't quite work
