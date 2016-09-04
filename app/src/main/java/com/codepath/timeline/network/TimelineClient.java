@@ -69,7 +69,8 @@ public class TimelineClient {
 	}
 
 	public interface TimelineClientGetStoryListener {
-		void onGetStoryList(List<Story> itemList);
+		void onGetStoryListSuccess(List<Story> itemList);
+		void onGetStoryListFailed(String message);
 	}
 
 	public interface TimelineClientGetMomentListListener {
@@ -165,7 +166,7 @@ public class TimelineClient {
 							if (user != null) {
 								Log.d("getStoryList", user.getObjectId());
 								if (listener != null) {
-									listener.onGetStoryList(
+									listener.onGetStoryListSuccess(
 											(ArrayList<Story>) user.get("stories")
 									); // use callback
 								}
@@ -190,16 +191,15 @@ public class TimelineClient {
 		mStoryListQuery.findInBackground(new FindCallback<Story>() {
 			@Override
 			public void done(List<Story> itemList, ParseException e) {
-				if (e != null) {
-					Log.e(TAG, "Exception from getStoryList2: " + e.getMessage());
+				if (e != null || itemList == null) {
+					String message = "Exception from getStoryList2: " + e.getMessage();
+					onGetStoryListFailed(listener, message);
 					return;
 				}
 
-				if (itemList != null) {
-					Log.d(TAG, "Success getStoryList2");
-					if (listener != null) {
-						listener.onGetStoryList(itemList); // use callback
-					}
+				Log.d(TAG, "Success getStoryList2");
+				if (listener != null) {
+					listener.onGetStoryListSuccess(itemList); // use callback
 				}
 			}
 		});
@@ -535,30 +535,38 @@ public class TimelineClient {
 		query.findInBackground(new FindCallback<Story>() {
 			@Override
 			public void done(List<Story> itemList, ParseException e) {
-				if (e != null) {
-					Log.e("getSharedStoryList", "Exception from getSharedStoryList: " + e.getMessage());
+				if (e != null || itemList == null) {
+					String message = "Exception from getSharedStoryList: " + e.getMessage();
+					onGetStoryListFailed(listener, message);
 					return;
 				}
 
-				if (itemList != null) {
-					Log.d("getSharedStoryList", Integer.toString(itemList.size()));
-					List<Story> sharedStoryList = new ArrayList<Story>();
+				Log.d("getSharedStoryList", Integer.toString(itemList.size()));
+				List<Story> sharedStoryList = new ArrayList<Story>();
 
-					// Remove stories that were created by the current user
-					for (Story story : itemList) {
-						if (!story.getOwner().equals(user)) {
-							sharedStoryList.add(story);
-						}
+				// Remove stories that were created by the current user
+				for (Story story : itemList) {
+					if (!story.getOwner().equals(user)) {
+						sharedStoryList.add(story);
 					}
+				}
 
-					// Access the array of results here
-					if (listener != null) {
-						listener.onGetStoryList(sharedStoryList); // use callback
-					}
+				// Access the array of results here
+				if (listener != null) {
+					listener.onGetStoryListSuccess(sharedStoryList); // use callback
 				}
 			}
 		});
 	}
+
+
+	private void onGetStoryListFailed(TimelineClientGetStoryListener listener, String message) {
+		Log.e(TAG, message);
+		if (listener != null) {
+			listener.onGetStoryListFailed(message);
+		}
+	}
+
 
 	// TEST: Create mock response
 	protected JsonArray createMockJsonArray(Context context, String jsonFileName) {
