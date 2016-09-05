@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<head>
+  <meta name = "viewport" content = "user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <style type="text/css">
+    body {
+    margin: 0px;
+    font-family: "arial"
+    }
+
+    #wrapper {
+    width: 100%;
+    }
+
+    #story_header {
+    position: relative;
+    }
+
+    #story_image {
+    width: 100%;
+    display: block;
+    }
+
+    #story_image_shadow {
+    position: absolute;
+    width: 100%;
+    -moz-box-shadow:    0px -24px 30px 20px #333;
+    -webkit-box-shadow: 0px -24px 30px 20px #333;
+    box-shadow:         0px -24px 30px 20px #333;
+    opacity: 0.5;
+    }
+
+    #story_title {
+    color: white;
+    font-size: 30px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-weight: bold;
+    z-index: 999;
+    }
+
+    .story_year_wrapper {
+    background-color: #76CCD7;
+    height: 60px;
+    }
+
+    .story_year {
+    color: white;
+    font-size: 26px;
+    line-height: 60px;
+    margin-left: 10px;
+    }
+
+    .moments_list {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    max-width: 100%;
+    }
+
+    .moments_list li {
+    position: relative;
+    }
+
+    .li_padding_top {
+    height: 20px;
+    }
+
+    .li_padding_bottom {
+    height: 10px;
+    }
+
+    .vertical_line {
+    background-color: #76CCD7;
+    height: 100%;
+    position: absolute;
+    left: 34px;
+    width: 2px;
+    }
+
+    .date_caption_wrapper {
+    position: relative;
+    overflow: auto;
+    }
+
+    .moment_date_circle {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    background-color: #76CCD7;
+    z-index: 2;
+    }
+
+    .moment_date {
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    }
+
+    .moment_date_month {
+    padding-top: 10px;
+    }
+
+    .moment_caption {
+    color: #657786;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 50px;
+    padding-left: 10px;
+    margin: 0px;
+    line-height: 50px;			/* Only set if only need single-line caption */
+    }
+
+    .moment_wrapper {
+    background-color: #E4F3F5;
+    margin-left: 50px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    }
+
+    .collaborator {
+    overflow: auto;
+    }
+
+    .collaborator_image {
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    float: left;
+    }
+
+    .collaborator_name {
+    float: left;
+    margin-left: 10px;
+    margin-top: 3px;
+    font-weight: bold;
+    }
+
+    .collaborator_location_icon {
+    width: 20px;
+    margin-left: 10px;
+    float: left;
+    }
+
+    .collaborator_location {
+    color: #657786;
+    float: left;
+    line-height: 20px;
+    }
+
+    .moment_image {
+    margin-top: 10px;
+    width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="wrapper">
+  <div id="story_header">
+    <img id="story_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e15/10245916_104761543199976_247574464_n.jpg" />
+    <span id="story_title">Avery Daune Askew</span>
+    <div id="story_image_shadow"></div>
+  </div>
+  <div class="story_year_wrapper">
+    <span class="story_year">2016</span>
+  </div>
+  <ul class="moments_list">
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">SEP</span>
+          <span class="moment_date">04</span>
+        </div>
+        <p class="moment_caption">I'm a big girl now!</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/13651918_1174823029248031_1900087963_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">AUG</span>
+          <span class="moment_date">08</span>
+        </div>
+        <p class="moment_caption">Ready to visit Nana</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/13126763_1720849474846242_1413564387_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">JUL</span>
+          <span class="moment_date">04</span>
+        </div>
+        <p class="moment_caption">Celebrating 4th of July with Hadley</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/13525493_1577197489241492_345262391_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">JUN</span>
+          <span class="moment_date">07</span>
+        </div>
+        <p class="moment_caption">Play date with Hadley</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/s640x640/sh0.08/e35/13561553_1806225782939385_1876334403_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">APR</span>
+          <span class="moment_date">09</span>
+        </div>
+        <p class="moment_caption">Happy 1st birthday, Avery!</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/12940897_474626119410420_1861223413_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">APR</span>
+          <span class="moment_date">05</span>
+        </div>
+        <p class="moment_caption">Cousins at play</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/12816898_1604972056418165_1220852939_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">MAR</span>
+          <span class="moment_date">27</span>
+        </div>
+        <p class="moment_caption">Happy Easter!</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/12930912_1193529003990970_1496319705_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">MAR</span>
+          <span class="moment_date">08</span>
+        </div>
+        <p class="moment_caption">Happy birthday, daddy!</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/12912662_217922358566799_1233247559_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+  </ul>
+  <div class="story_year_wrapper">
+    <span class="story_year">2015</span>
+  </div>
+  <ul class="moments_list">
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">DEC</span>
+          <span class="moment_date">25</span>
+        </div>
+        <p class="moment_caption">First Christmas as a family of three</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/12357309_111189872590624_913031484_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">NOV</span>
+          <span class="moment_date">08</span>
+        </div>
+        <p class="moment_caption">Happy 7 months, little lady!</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/11939497_980539398654387_101074239_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">OCT</span>
+          <span class="moment_date">31</span>
+        </div>
+        <p class="moment_caption">Avery's first halloween with Auntie Lo</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/s480x480/e35/12105229_1511211809203641_1934065834_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">OCT</span>
+          <span class="moment_date">01</span>
+        </div>
+        <p class="moment_caption">Friday morning with Nana</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/12141946_537579649734184_942635252_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">SEP</span>
+          <span class="moment_date">09</span>
+        </div>
+        <p class="moment_caption">Avery is 5 months old today.</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e35/11910486_1651984655040842_41321260_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">AUG</span>
+          <span class="moment_date">27</span>
+        </div>
+        <p class="moment_caption">Happy first father's day, daddy!</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e15/11378313_1588473761402478_1697639948_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+    <li>
+      <div class="vertical_line"></div>
+      <div class="li_padding_top"></div>
+      <div class="date_caption_wrapper">
+        <div class="moment_date_circle">
+          <span class="moment_date moment_date_month">APR</span>
+          <span class="moment_date">14</span>
+        </div>
+        <p class="moment_caption">Five days ago, we welcomed Avery</p>
+      </div>
+      <div class="moment_wrapper">
+        <div class="collaborator">
+          <img class="collaborator_image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/095/392/0cd9103.jpg"/>
+          <div style="overflow: auto;">
+            <span class="collaborator_name">Lindsay Askew</span>
+          </div>
+          <div>
+            <img class="collaborator_location_icon" src="http://timeline-app.herokuapp.com/parse/files/timeline-app/98f6e8117f5617aa678d35cb8269b6ad_marker.png" />
+            <span class="collaborator_location">San Francisco, CA</span>
+          </div>
+        </div>
+        <div>
+          <img class="moment_image" src="https://instagram.fsnc1-3.fna.fbcdn.net/t51.2885-15/e15/11138034_899618476761229_738828435_n.jpg" />
+        </div>
+      </div>
+      <div class="li_padding_bottom"></div>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
