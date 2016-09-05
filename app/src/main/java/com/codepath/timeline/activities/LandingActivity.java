@@ -39,7 +39,9 @@ public class LandingActivity extends AppCompatActivity {
     // LandingActivity creates LandingPagerAdapter
     // LandingPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
     // UserStoriesFragment extends BaseStoryModelFragment
-    // BaseStoryModelFragment calls TimelineActivity
+    // BaseStoryModelFragment has StoriesAdapter to call TimelineActivity
+    // ActivityOptionsCompat.makeSceneTransitionAnimation
+    // (Context).startActivity
 
     @BindView(R.id.vpPager)
     ViewPager viewPager;
