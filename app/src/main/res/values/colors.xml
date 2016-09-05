@@ -20,6 +20,7 @@
     <color name="colorPrimaryLoginDark">#0288D1</color>
     <color name="white">#FFFFFF</color>
     <color name="whiteTransparent">#80FFFFFF</color>
+    <color name="fullTransparent">#00000000</color>
     <color name="orange">#ffffa000</color>
     <color name="greyLightLight">#999999</color>
     <color name="greyLight">#848484</color>

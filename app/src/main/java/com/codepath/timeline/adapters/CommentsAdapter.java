@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Comment;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseUser;
 
@@ -23,7 +23,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     private static final String TAG = MomentsAdapter.class.getSimpleName();

@@ -17,7 +17,7 @@ import android.widget.MultiAutoCompleteTextView;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.MultiAutoCompleteTextViewArrayAdapter;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;

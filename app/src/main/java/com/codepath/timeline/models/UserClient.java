@@ -1,4 +1,4 @@
-package com.codepath.timeline.network;
+package com.codepath.timeline.models;
 
 import android.util.Log;
 

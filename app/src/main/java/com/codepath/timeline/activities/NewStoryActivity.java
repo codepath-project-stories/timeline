@@ -3,8 +3,6 @@ package com.codepath.timeline.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -29,9 +27,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
+import com.codepath.timeline.fragments.SearchFriendsDialogFragmentToken;
+import com.codepath.timeline.models.Moment;
+import com.codepath.timeline.models.Person;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
@@ -40,11 +42,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewStoryActivity extends NewItemClass
-        implements SearchFriendsDialogFragment.SearchDialogListener {
+        implements SearchFriendsDialogFragment.SearchDialogListener,
+        SearchFriendsDialogFragmentToken.SearchDialogListenerToken {
     private static final String TAG = NewStoryActivity.class.getSimpleName();
 
     @BindView(R.id.ivBackground)
@@ -96,6 +100,8 @@ public class NewStoryActivity extends NewItemClass
     private List<ParseUser> mFriendsList;
     private Context context;
 
+    private int TokenActivity_REQUEST_CODE = 55666;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -117,6 +123,14 @@ public class NewStoryActivity extends NewItemClass
     }
 
     public void setupViews() {
+
+        // TODO: maybe use a small button instead of the following?
+        // TODO: most apps in the market do not have this kind of things.
+        // R.drawable.camera_background_1
+        // R.drawable.camera_background_2
+        // R.drawable.camera_background_3
+        Glide.with(this).load(R.drawable.camera_background_1).centerCrop().into(ivBackground);
+
         etStoryTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -140,6 +154,7 @@ public class NewStoryActivity extends NewItemClass
                 btnPublish.setEnabled(etStoryTitle.getText().length() <= 35);
             }
         });
+        /*
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +165,19 @@ public class NewStoryActivity extends NewItemClass
                 composeDialogFragment.show(fragmentManager, "fragment_compose");
             }
         });
+        */
+    }
+
+    @OnClick(R.id.ivSearch)
+    void onSearch() {
+        // Intent intent = new Intent(NewStoryActivity.this, TokenActivity.class);
+        // startActivityForResult(intent, TokenActivity_REQUEST_CODE);
+
+        // Todo: fix the search according to the API
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SearchFriendsDialogFragmentToken composeDialogFragment =
+                SearchFriendsDialogFragmentToken.newInstance(context, "Search friends");
+        composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 
     private void getFriendsList() {
@@ -221,6 +249,10 @@ public class NewStoryActivity extends NewItemClass
         }
     }
 
+    // http://stackoverflow.com/questions/29390695/onclick-array-with-optional-ids-butterknife
+    // @Nullable
+    // @Optional
+    @OnClick({R.id.ivSelected1, R.id.ivSelected2, R.id.ivSelected3, R.id.ivSelected4})
     public void highlightSelected(View view) {
         if (Integer.parseInt(view.getTag().toString()) == 1) {
             view.setBackgroundResource(R.drawable.circle_accent);
@@ -264,12 +296,14 @@ public class NewStoryActivity extends NewItemClass
 
     // Todo: add collaborators to the story
     // on click attached to text view id="@+id/tvAddPeople"
+    @OnClick(R.id.tvAddPeople)
     public void addPeople(View view) {
 //        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
 
     }
 
     // on click attached to text view id="@+id/tvPublish"
+    @OnClick(R.id.btnPublish)
     public void publish(View view) {
 //        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -314,16 +348,30 @@ public class NewStoryActivity extends NewItemClass
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                takenPhotoUri = getPhotoFileUri();
+                takenPhotoUri = getPhotoFileUri(); // extends NewItemClass
+                Log.d("onActivityResult", takenPhotoUri.toString());
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                ivBackground.setImageBitmap(takenImage);
-                // TODO: CHINGYAO: my device doesn't show any image in ivBackground
-                // TODO: try the following, but doesn't work
-                // ivBackground.invalidate();
+
+                // works for sdk 23 only
+                // Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                // ivBackground.setImageBitmap(takenImage);
+
+                // backward compatible
+                Glide.with(this).load(takenPhotoUri).centerCrop().into(ivBackground);
+                ivCameraIcon.setVisibility(View.INVISIBLE);
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
+        }
+        if (requestCode == TokenActivity_REQUEST_CODE && resultCode == 1) {
+            Moment moment = new Moment();
+            moment.setCreatedAtReal(DateUtil.getCurrentDate());
+            moment.setDescription(data.getStringExtra(AppConstants.MOMENT_DESCRIPTION));
+            moment.setLocation(data.getStringExtra(AppConstants.MOMENT_LOCATION));
+            moment.setAuthor(UserClient.getCurrentUser());
+            moment.setTempPhotoUri(data.getStringExtra(AppConstants.PHOTO_URI));
+
+            // addMoment(moment);
         }
     }
 
@@ -333,6 +381,26 @@ public class NewStoryActivity extends NewItemClass
         String output = "from MultiAutoCompleteTextView\n";
         for (ParseUser user : collabs) {
             output = output + UserClient.getName(user) + "\n";
+        }
+        Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    @OnClick(R.id.flStoryPhoto)
+    public void onLaunchCamera(View view) {
+        super.onLaunchCamera(view);
+    }
+
+    @Override
+    public void onFinishSearchDialogToken(List<Person> collabs) {
+        // TODO: change the corresponding items in R.layout.activity_newstory
+        String output = "from SearchFriendsDialogFragmentToken\n";
+        for (Person user : collabs) {
+            for (ParseUser each : mFriendsList) {
+                if (each.getEmail().equals(user.getEmail())) {
+                    output = output + UserClient.getName(each) + "\n";
+                }
+            }
         }
         Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
     }

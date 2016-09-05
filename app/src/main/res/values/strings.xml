@@ -45,5 +45,6 @@
     <string name="my_stories">My stories</string>
     <string name="friends_stories">Friends stories</string>
     <string name="post">post</string>
+    <string name="done">Done</string>
 
 </resources>

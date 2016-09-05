@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.AppConstants;
 
 import org.parceler.Parcels;
@@ -18,7 +18,6 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /*

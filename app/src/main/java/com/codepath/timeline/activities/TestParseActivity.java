@@ -10,7 +10,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.MockResponseGenerator;
 import com.codepath.timeline.network.ParseApplication;
 import com.parse.ParseUser;

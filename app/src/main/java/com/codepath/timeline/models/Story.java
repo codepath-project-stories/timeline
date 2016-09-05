@@ -1,6 +1,5 @@
 package com.codepath.timeline.models;
 
-import com.codepath.timeline.network.UserClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

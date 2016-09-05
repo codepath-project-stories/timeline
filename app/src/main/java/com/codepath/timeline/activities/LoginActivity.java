@@ -24,7 +24,7 @@ import android.widget.VideoView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
 import com.codepath.timeline.network.ParseApplication;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
@@ -319,6 +319,12 @@ public class LoginActivity extends AppCompatActivity {
         Intent i;
         if (ParseApplication.TEST_PARSE) {
             i = new Intent(this, TestParseActivity.class);
+        }
+        else if (ParseApplication.TEST_SPOTIFY) {
+            i = new Intent(this, SpotifyActivity.class);
+        }
+        else if (ParseApplication.TEST_TokenAutoComplete) {
+            i = new Intent(this, TokenActivity.class);
         }
         else {
             i = new Intent(this, LandingActivity.class);

@@ -10,7 +10,7 @@ import android.view.View;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.parse.ParseUser;
 
 import java.util.List;

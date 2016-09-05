@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.parse.ParseUser;
 

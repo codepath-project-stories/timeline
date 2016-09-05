@@ -12,7 +12,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.activities.NewStoryActivity;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.DateUtil;
 import com.parse.ParseFile;
