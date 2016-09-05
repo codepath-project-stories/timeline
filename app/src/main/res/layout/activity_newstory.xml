@@ -293,12 +293,15 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimaryLight"
+            android:layout_gravity="right"
+            android:background="@drawable/primary_dark_button"
+            android:textColorHint="@color/white"
             android:hint="@string/publish"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:textSize="15sp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:textAllCaps="true"
             />
 
     </LinearLayout>
