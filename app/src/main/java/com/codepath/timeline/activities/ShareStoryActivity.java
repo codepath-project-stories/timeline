@@ -46,12 +46,8 @@ public class ShareStoryActivity extends AppCompatActivity {
 
         String storyHTML = getIntent().getStringExtra("storyHTML");
 
-        startAnim();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        startAnim();
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
