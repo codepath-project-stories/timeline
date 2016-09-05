@@ -92,16 +92,17 @@
 
         <Button
             android:id="@+id/btnPublish"
+            android:layout_gravity="right"
+            android:background="@drawable/primary_dark_button"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimaryLight"
-            android:gravity="center_vertical"
+            android:textColorHint="@color/white"
+            android:gravity="center"
             android:hint="@string/share"
             android:onClick="publish"
-            android:paddingLeft="10dp"
+            android:textAllCaps="true"
             android:textSize="15sp" />
 
     </LinearLayout>
