@@ -29,7 +29,7 @@ public class ParseApplication extends Application {
 		super.onCreate();
 
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-				.setDefaultFontPath("fonts/Roboto-Regular.ttf")
+				.setDefaultFontPath("fonts/HelveticaNeue-Regular.ttf")
 				.setFontAttrId(R.attr.fontPath)
 				.build()
 		);

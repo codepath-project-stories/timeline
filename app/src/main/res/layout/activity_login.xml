@@ -42,7 +42,7 @@
                 android:layout_marginTop="80dp"
                 android:text="@string/app_name"
                 android:textColor="@color/colorPrimary"
-                fontPath="fonts/Roboto-Bold.ttf"
+                fontPath="fonts/HelveticaNeue-Bold.ttf"
                 android:textSize="28sp" />
 
             <ImageView
@@ -124,7 +124,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/login_button"
                 android:padding="12dp"
-                fontPath="fonts/Roboto-Bold.ttf"
+                fontPath="fonts/HelveticaNeue-Bold.ttf"
                 android:text="@string/start"
                 android:textColor="@color/colorPrimary" />
 

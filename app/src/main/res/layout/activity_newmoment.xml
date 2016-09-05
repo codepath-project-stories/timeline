@@ -118,7 +118,7 @@
             android:onClick="publish"
             android:padding="10dp"
             android:textSize="15sp"
-            fontPath="fonts/Roboto-Bold.ttf" />
+            fontPath="fonts/HelveticaNeue-Bold.ttf" />
 
     </LinearLayout>
 

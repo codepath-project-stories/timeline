@@ -22,7 +22,7 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="5dp"
         tools:text="User User"
-        fontPath="fonts/Roboto-Bold.ttf"
+        fontPath="fonts/HelveticaNeue-Bold.ttf"
         android:textSize="16sp"
         android:textColor="@color/colorPrimaryLight" />
 
@@ -33,7 +33,7 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="5dp"
         tools:text="user@user.com"
-        fontPath="fonts/Roboto-Bold.ttf"
+        fontPath="fonts/HelveticaNeue-Bold.ttf"
         android:textSize="16sp"
         android:textColor="@color/colorPrimaryLight" />
 
