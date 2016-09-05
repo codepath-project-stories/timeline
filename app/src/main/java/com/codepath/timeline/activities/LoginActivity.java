@@ -320,6 +320,9 @@ public class LoginActivity extends AppCompatActivity {
         if (ParseApplication.TEST_PARSE) {
             i = new Intent(this, TestParseActivity.class);
         }
+        else if (ParseApplication.TEST_SPOTIFY) {
+            i = new Intent(this, SpotifyActivity.class);
+        }
         else {
             i = new Intent(this, LandingActivity.class);
         }

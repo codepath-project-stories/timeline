@@ -76,7 +76,8 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".activities.SpotifyActivity"/>
+        <activity android:name=".activities.SpotifyActivity"
+                  android:theme="@style/SpoptifyTheme" />
 
         <!-- Needed for spotify integration to work -->
         <activity
