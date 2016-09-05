@@ -61,12 +61,6 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <!-- activities and everything are here. meta-data is last inside application tagParse -->
-        <!-- TODO: it seems we don't need this -->
-        <meta-data
-            android:name="com.parse.APPLICATION_ID"
-            android:value="timeline-app"/>
-
         <activity android:name=".activities.TestParseActivity">
         </activity>
 
@@ -77,7 +71,17 @@
         </activity>
 
         <activity android:name=".activities.SpotifyActivity"
-                  android:theme="@style/SpoptifyTheme" />
+                  android:theme="@style/SpoptifyTheme">
+        </activity>
+
+        <activity android:name=".activities.TokenActivity">
+        </activity>
+
+        <!-- activities and everything are here. meta-data is last inside application tagParse -->
+        <!-- TODO: it seems we don't need this -->
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="timeline-app"/>
 
         <!-- Needed for spotify integration to work -->
         <activity
