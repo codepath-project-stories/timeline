@@ -27,9 +27,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
+import com.codepath.timeline.fragments.SearchFriendsDialogFragmentToken;
+import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
+import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.util.NewItemClass;
 import com.parse.ParseUser;
 
@@ -43,7 +46,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewStoryActivity extends NewItemClass
-        implements SearchFriendsDialogFragment.SearchDialogListener {
+        implements SearchFriendsDialogFragment.SearchDialogListener,
+        SearchFriendsDialogFragmentToken.SearchDialogListenerToken {
     private static final String TAG = NewStoryActivity.class.getSimpleName();
 
     @BindView(R.id.ivBackground)
@@ -94,6 +98,8 @@ public class NewStoryActivity extends NewItemClass
 
     private List<ParseUser> mFriendsList;
     private Context context;
+
+    private int TokenActivity_REQUEST_CODE = 55666;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -147,6 +153,7 @@ public class NewStoryActivity extends NewItemClass
                 btnPublish.setEnabled(etStoryTitle.getText().length() <= 35);
             }
         });
+        /*
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +164,19 @@ public class NewStoryActivity extends NewItemClass
                 composeDialogFragment.show(fragmentManager, "fragment_compose");
             }
         });
+        */
+    }
+
+    @OnClick(R.id.ivSearch)
+    void onSearch() {
+        // Intent intent = new Intent(NewStoryActivity.this, TokenActivity.class);
+        // startActivityForResult(intent, TokenActivity_REQUEST_CODE);
+
+        // Todo: fix the search according to the API
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SearchFriendsDialogFragmentToken composeDialogFragment =
+                SearchFriendsDialogFragmentToken.newInstance(context, "Search friends");
+        composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 
     private void getFriendsList() {
@@ -342,6 +362,16 @@ public class NewStoryActivity extends NewItemClass
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
         }
+        if (requestCode == TokenActivity_REQUEST_CODE && resultCode == 1) {
+            Moment moment = new Moment();
+            moment.setCreatedAtReal(DateUtil.getCurrentDate());
+            moment.setDescription(data.getStringExtra(AppConstants.MOMENT_DESCRIPTION));
+            moment.setLocation(data.getStringExtra(AppConstants.MOMENT_LOCATION));
+            moment.setAuthor(UserClient.getCurrentUser());
+            moment.setTempPhotoUri(data.getStringExtra(AppConstants.PHOTO_URI));
+
+            // addMoment(moment);
+        }
     }
 
     @Override
@@ -358,5 +388,19 @@ public class NewStoryActivity extends NewItemClass
     @OnClick(R.id.flStoryPhoto)
     public void onLaunchCamera(View view) {
         super.onLaunchCamera(view);
+    }
+
+    @Override
+    public void onFinishSearchDialogToken(List<Person> collabs) {
+        // TODO: change the corresponding items in R.layout.activity_newstory
+        String output = "from SearchFriendsDialogFragmentToken\n";
+        for (Person user : collabs) {
+            for (ParseUser each : mFriendsList) {
+                if (each.getEmail().equals(user.getEmail())) {
+                    output = output + UserClient.getName(each) + "\n";
+                }
+            }
+        }
+        Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
     }
 }

@@ -1,13 +1,31 @@
-<com.codepath.timeline.activities.TokenTextView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/token_background"
-    android:textColor="@android:color/white"
-    android:textSize="14sp"
-    android:maxLines="1"
-    android:ellipsize="end"
-    android:padding="4dp"
-    tools:text="Glenda Jönsson" />
+    android:background="@drawable/bg_msg_you"
+    >
+    <!--android:background="@drawable/bg_msg_you"-->
+    <!--android:background="@drawable/token_background"-->
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/author_profile_default_height"
+        android:layout_height="@dimen/author_profile_default_height"
+        android:layout_margin="@dimen/small_margin"
+        tools:src="@drawable/debug_profile"
+        />
+    <com.codepath.timeline.activities.TokenTextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:padding="4dp"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/image"
+        tools:text="Glenda Jönsson" />
+</RelativeLayout>
