@@ -27,6 +27,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHolder> {
     private static final String TAG = "TimelineLog:" + MomentsAdapter.class.getSimpleName();
+    private static int ivProfilePhotoMode = 0;
+    // 0: keep the author's profile photo visible at all times
+    // 1: something like google/hangout
 
     protected List<Moment> mMomentList;
     protected Context mContext;
@@ -110,10 +113,13 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
             viewHolder.tvName.setText(UserClient.getName(author));
 
             boolean show_ivProfilePhoto = true;
-            if (mode == 1) {
-                if (position < getItemCount() - 1) {
-                    if (author.getEmail().equals(mMomentList.get(position + 1).getAuthor().getEmail())) {
-                        show_ivProfilePhoto = false;
+
+            if (ivProfilePhotoMode == 1) {
+                if (mode == 1) {
+                    if (position < getItemCount() - 1) {
+                        if (author.getEmail().equals(mMomentList.get(position + 1).getAuthor().getEmail())) {
+                            show_ivProfilePhoto = false;
+                        }
                     }
                 }
             }
