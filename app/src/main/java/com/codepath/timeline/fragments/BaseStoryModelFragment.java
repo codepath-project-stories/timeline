@@ -25,6 +25,7 @@ import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.StoriesAdapter;
 import com.codepath.timeline.models.Story;
 import com.codepath.timeline.network.ParseApplication;
+import com.codepath.timeline.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,11 @@ abstract public class BaseStoryModelFragment extends Fragment {
     protected StoriesAdapter adaptStories;
     private Unbinder unbinder;
     SearchView searchView;
+    MenuItem searchItem;
     Context context;
+    boolean pendingIntroAnimation;
+    private static final int ANIM_DURATION_TOOLBAR = 300;
+    boolean searched = false;
 
     @BindView(R.id.rvStories) RecyclerView rvStories;
     @BindView(R.id.avi) com.wang.avi.AVLoadingIndicatorView avi;
@@ -62,6 +67,9 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup parent, @Nullable Bundle savedInstanceState) {
 
+        if (savedInstanceState == null) {
+            pendingIntroAnimation = true;
+        }
         // setup layout manager
         final View view = inflater.inflate(R.layout.fragment_base_model_story, parent, false);
         unbinder = ButterKnife.bind(this, view);
@@ -107,10 +115,13 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.miSearch);
+        searchItem = menu.findItem(R.id.miSearch);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.requestFocus();
+        if (pendingIntroAnimation) {
+            pendingIntroAnimation = false;
+            startIntroAnimation();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -120,6 +131,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
             public boolean onQueryTextSubmit(String searchQuery) {
                 // in some cases text submit fires several times, clear the focus
+                searched = true;
                 searchView.clearFocus();
                 for (int i = 0; i < stories.size(); i++) {
                     Story story = stories.get(i);
@@ -145,10 +157,24 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                populateList();
+                if (searched) {
+                    populateList();
+                    searched = false;
+                }
                 return true;
             }
         });
+    }
+
+    private void startIntroAnimation() {
+
+        searchItem.getActionView().setTranslationY(-ScreenUtil.dpToPx(56));
+
+        searchItem.getActionView().animate()
+                .translationY(0)
+                .setDuration(ANIM_DURATION_TOOLBAR)
+                .setStartDelay(500)
+                .start();
     }
 
     @Override
