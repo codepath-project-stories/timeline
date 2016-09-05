@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -76,20 +75,6 @@
 
         </LinearLayout>
 
-        <!--<TextView-->
-        <!--android:id="@+id/tvAddDate"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@color/colorPrimaryLight"-->
-        <!--android:fontFamily="sans-serif-condensed"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:hint="@string/add_date"-->
-        <!--android:onClick="addDate"-->
-        <!--android:padding="10dp"-->
-        <!--android:textSize="15sp" />-->
-
         <TextView
             android:id="@+id/tvAddLocation"
             android:layout_width="match_parent"
@@ -116,9 +101,8 @@
             android:gravity="center_vertical"
             android:hint="@string/share"
             android:onClick="publish"
-            android:padding="10dp"
-            android:textSize="15sp"
-            fontPath="fonts/HelveticaNeue-Bold.ttf" />
+            android:paddingLeft="10dp"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

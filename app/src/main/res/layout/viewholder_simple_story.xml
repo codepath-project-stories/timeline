@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/medium_margin"
+    android:layout_marginLeft="@dimen/large_margin"
+    android:layout_marginTop="@dimen/large_margin"
+    android:layout_marginRight="@dimen/large_margin"
     card_view:cardElevation="@dimen/card_view_elevation">
 
     <RelativeLayout
