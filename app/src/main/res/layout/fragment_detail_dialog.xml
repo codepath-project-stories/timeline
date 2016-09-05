@@ -9,9 +9,9 @@
 
   <ImageView
       android:id="@+id/ivProfilePhoto"
-      android:layout_width="40dp"
-      android:layout_height="40dp"
-      android:layout_margin="10dp"
+      android:layout_width="@dimen/author_profile_default_height"
+      android:layout_height="@dimen/author_profile_default_height"
+      android:layout_margin="@dimen/large_margin"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:layout_alignParentTop="true"
@@ -33,6 +33,7 @@
       android:layout_toEndOf="@+id/ivProfilePhoto"
       android:layout_toRightOf="@+id/ivProfilePhoto"
       android:adjustViewBounds="true"
+      android:layout_marginLeft="-5dp"
       android:scaleType="fitXY"
       android:src="@drawable/map_marker"/>
 
@@ -42,9 +43,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/ivMapMarker"
-      android:layout_toEndOf="@+id/ivMapMarker"
-      android:layout_marginStart="2dp"
-      />
+      android:layout_toEndOf="@+id/ivMapMarker"/>
 
   <TextView
       tools:text="7h ago"
@@ -53,7 +52,7 @@
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/ivMapMarker"
       android:layout_alignParentEnd="true"
-      android:layout_marginEnd="10dp"
+      android:layout_marginEnd="@dimen/large_margin"
       />
 
   <ImageView
@@ -62,9 +61,9 @@
       android:layout_height="30dp"
       android:layout_alignParentEnd="true"
       android:layout_alignParentTop="true"
-      android:layout_marginEnd="5dp"
+      android:layout_marginEnd="@dimen/small_margin"
       android:src="@drawable/close"
-      android:layout_marginTop="3dp"/>
+      android:layout_marginTop="@dimen/extra_small_margin"/>
 
   <android.support.v4.view.ViewPager
       android:id="@+id/vpMoment"
@@ -79,7 +78,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:background="@color/colorPrimaryLight"
-      android:padding="10dp">
+      android:padding="@dimen/large_padding">
 
     <EditText
         android:id="@+id/etComment"
@@ -87,9 +86,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/btPost"
         android:layout_alignTop="@+id/btPost"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/large_margin"
         android:layout_toLeftOf="@+id/btPost"
         android:background="@android:color/white"
+        android:paddingLeft="@dimen/large_padding"
         android:textSize="@dimen/smallText"/>
 
     <Button
@@ -103,11 +103,12 @@
         android:background="@drawable/primary_dark_button"
         android:minHeight="0dp"
         android:minWidth="0dp"
-        android:paddingBottom="7dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="7dp"
-        android:text="POST"
+        android:paddingBottom="@dimen/medium_padding"
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding"
+        android:paddingTop="@dimen/medium_padding"
+        android:text="@string/post"
+        android:textAllCaps="true"
         android:textColor="@android:color/white"/>
   </RelativeLayout>
 </RelativeLayout>

@@ -33,6 +33,7 @@
       android:layout_height="15dp"
       android:layout_alignLeft="@+id/tvName"
       android:layout_below="@+id/tvName"
+      android:layout_marginLeft="-5dp"
       android:adjustViewBounds="true"
       android:scaleType="fitXY"
       android:src="@drawable/map_marker"/>
@@ -42,7 +43,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/imageView"
-      android:layout_marginTop="2dp"
       android:layout_toRightOf="@+id/imageView"
       android:textSize="@dimen/smallText"
       tools:text="San Francisco, CA"/>
@@ -54,7 +54,9 @@
       android:layout_alignLeft="@+id/ivProfilePhoto"
       android:layout_below="@+id/ivProfilePhoto"
       android:layout_marginTop="@dimen/medium_margin"
-      android:textSize="@dimen/smallText"
+      android:ellipsize="end"
+      android:maxLines="3"
+      android:textSize="@dimen/mediumText"
       tools:text="Exploring Melbourne"/>
 
 </RelativeLayout>

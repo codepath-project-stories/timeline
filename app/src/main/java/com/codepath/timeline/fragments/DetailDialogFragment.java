@@ -39,6 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class DetailDialogFragment extends DialogFragment {
@@ -148,7 +149,7 @@ public class DetailDialogFragment extends DialogFragment {
             Glide.with(context)
                     .load(UserClient.getProfileImageUrl(user))
                     .fitCenter()
-                    .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
+                    .bitmapTransform(new CropCircleTransformation(context))
                     .into(ivProfilePhoto);
         }
 

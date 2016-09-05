@@ -17,6 +17,7 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -61,7 +62,7 @@ public class AutoPlayInfoActivity extends AppCompatActivity {
             if (moment.getAuthor() != null) {
                 Glide.with(this).load(UserClient.getProfileImageUrl(moment.getAuthor()))
                         .fitCenter()
-                        .bitmapTransform(new RoundedCornersTransformation(this, 25, 0))
+                        .bitmapTransform(new CropCircleTransformation(this))
                         .into(ivProfilePhoto);
             }
 
