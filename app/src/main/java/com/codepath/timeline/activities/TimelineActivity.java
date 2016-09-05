@@ -75,6 +75,8 @@ public class TimelineActivity extends AppCompatActivity implements
     CollapsingToolbarLayout collapsing_toolbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.rvMomentsTwoColumns)
+    RecyclerView rvMomentsTwoColumns;
     @BindView(R.id.rvMoments)
     RecyclerView rvMoments;
     @BindView(R.id.rvMomentsChat)
@@ -96,6 +98,7 @@ public class TimelineActivity extends AppCompatActivity implements
     private List<Moment> mMomentChatList;
     private MomentsHeaderAdapter mAdapter;
     private MomentsHeaderAdapter mAdapterChat;
+    private MomentsHeaderAdapter mAdapterTwoColumns;
     private int ADD_MOMENT_REQUEST_CODE = 6;
     private String storyObjectId;
     private String storyTitle;
@@ -109,10 +112,12 @@ public class TimelineActivity extends AppCompatActivity implements
     LinearLayoutManager layoutManagerChat;
     GridLayoutManager layoutManager;
     GridLayoutManager layoutManagerTwoColumns;
+    boolean showDefaultView = true;
+    boolean showTwoColumns = true;
+    boolean lock;
 
     private Player mPlayer;
 
-    boolean lock;
 
     // TODO: use push notification instead of pulling and auto refresh every few seconds
     private Runnable getMomentsRunnable = new Runnable() {
@@ -161,11 +166,13 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void initList() {
-        layoutManagerChat = new LinearLayoutManager(this); // 1
-        layoutManager = new GridLayoutManager(this, 1); // 2
-        layoutManagerTwoColumns = new GridLayoutManager(this, 2); // 3
+        layoutManagerChat = new LinearLayoutManager(this); // pinch_zoom_index 1
+        layoutManager = new GridLayoutManager(this, 1); // pinch_zoom_index 2
+        layoutManagerTwoColumns = new GridLayoutManager(this, 2); // pinch_zoom_index 3
 
         pinch_zoom_index = 2;
+        showDefaultView = true;
+        showTwoColumns = false;
         lock = false;
 
         mMomentChatList = new ArrayList<>();
@@ -173,7 +180,8 @@ public class TimelineActivity extends AppCompatActivity implements
         rvMomentsChat.setLayoutManager(layoutManagerChat);
         rvMomentsChat.setAdapter(mAdapterChat);
         // Add the sticky headers decoration
-        final StickyRecyclerHeadersDecoration headersDecorChat = new StickyRecyclerHeadersDecoration(mAdapterChat);
+        final StickyRecyclerHeadersDecoration headersDecorChat =
+                new StickyRecyclerHeadersDecoration(mAdapterChat);
         rvMomentsChat.addItemDecoration(headersDecorChat);
         mAdapterChat.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -187,12 +195,27 @@ public class TimelineActivity extends AppCompatActivity implements
         rvMoments.setLayoutManager(layoutManager);
         rvMoments.setAdapter(mAdapter);
         // Add the sticky headers decoration
-        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+        final StickyRecyclerHeadersDecoration headersDecor =
+                new StickyRecyclerHeadersDecoration(mAdapter);
         rvMoments.addItemDecoration(headersDecor);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 headersDecor.invalidateHeaders();
+            }
+        });
+
+        mAdapterTwoColumns = new MomentsHeaderAdapter(this, mMomentList, 2);
+        rvMomentsTwoColumns.setLayoutManager(layoutManagerTwoColumns);
+        rvMomentsTwoColumns.setAdapter(mAdapterTwoColumns);
+        // Add the sticky headers decoration
+        final StickyRecyclerHeadersDecoration headersDecorTwoColumns =
+                new StickyRecyclerHeadersDecoration(mAdapterTwoColumns);
+        rvMomentsTwoColumns.addItemDecoration(headersDecorTwoColumns);
+        mAdapterTwoColumns.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecorTwoColumns.invalidateHeaders();
             }
         });
 
@@ -213,8 +236,8 @@ public class TimelineActivity extends AppCompatActivity implements
                                     if (pinch_zoom_index == 1) {
                                         lock = true;
                                         pinch_zoom_index = 2;
-                                        onTwoColumn = !onTwoColumn;
-                                        alphaAnimationCreator(rvMoments, onTwoColumn);
+                                        showDefaultView = !showDefaultView;
+                                        alphaAnimationCreator(rvMoments, showDefaultView);
                                         return true;
                                     } else if (pinch_zoom_index == 2) {
                                         // lock = true;
@@ -229,8 +252,8 @@ public class TimelineActivity extends AppCompatActivity implements
                                     } else if (pinch_zoom_index == 2) {
                                         lock = true;
                                         pinch_zoom_index = 1;
-                                        onTwoColumn = !onTwoColumn;
-                                        alphaAnimationCreator(rvMoments, onTwoColumn);
+                                        showDefaultView = !showDefaultView;
+                                        alphaAnimationCreator(rvMoments, showDefaultView);
                                         return true;
                                     }
                                 }
@@ -255,7 +278,6 @@ public class TimelineActivity extends AppCompatActivity implements
                 return false;
             }
         });
-
         rvMomentsChat.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -278,6 +300,7 @@ public class TimelineActivity extends AppCompatActivity implements
                 mMomentList.addAll(itemList);
                 // mAdapter.notifyItemRangeInserted(0, mMomentChatList.size());
                 mAdapter.notifyDataSetChanged();
+                mAdapterTwoColumns.notifyDataSetChanged();
             }
 
             @Override
@@ -315,9 +338,6 @@ public class TimelineActivity extends AppCompatActivity implements
                 DetailDialogFragment.newInstance(TimelineActivity.this, storyObjectId, position);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
-
-    // TODO
-    boolean onTwoColumn = true;
 
     @OnClick(R.id.ivAutoPlay)
     public void onAutoPlayWithAnimation(final View view) {
@@ -460,8 +480,8 @@ public class TimelineActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
-    private void alphaAnimationCreator(final View view, final boolean isfadeIn) {
-        final float alpha = isfadeIn?0.0f:1.0f;
+    private void alphaAnimationCreator(final View view, final boolean visible) {
+        final float alpha = visible?0.0f:1.0f;
 
         view.setVisibility(View.VISIBLE);
         AlphaAnimation fade = new AlphaAnimation(alpha, 1-alpha);
@@ -474,7 +494,7 @@ public class TimelineActivity extends AppCompatActivity implements
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         lock = false;
-                        view.setVisibility(isfadeIn?View.VISIBLE:View.INVISIBLE);
+                        view.setVisibility(visible?View.VISIBLE:View.INVISIBLE);
                     }
 
                     @Override
@@ -585,8 +605,8 @@ public class TimelineActivity extends AppCompatActivity implements
                 // Close the fab menu
                 menu.close(true);
 
-                onTwoColumn = !onTwoColumn;
-                alphaAnimationCreator(rvMoments, onTwoColumn);
+                showTwoColumns = !showTwoColumns;
+                alphaAnimationCreator(rvMomentsTwoColumns, showTwoColumns);
             }
         });
     }
