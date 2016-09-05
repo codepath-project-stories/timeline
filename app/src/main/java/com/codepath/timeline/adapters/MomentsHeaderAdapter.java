@@ -25,8 +25,8 @@ public class MomentsHeaderAdapter extends MomentsAdapter implements StickyRecycl
     private HashMap<String, Integer> mYearHeaderMap = new HashMap<>();
     private int mCurrentYear = -1;
 
-    public MomentsHeaderAdapter(Context context, List<Moment> mMomentList) {
-        super(context, mMomentList);
+    public MomentsHeaderAdapter(Context context, List<Moment> mMomentList, int mode) {
+        super(context, mMomentList, mode);
     }
 
     /**

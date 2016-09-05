@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.codepath.timeline.R;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.network.UserClient;
@@ -29,17 +30,56 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
 
     protected List<Moment> mMomentList;
     protected Context mContext;
+    protected int mode;
 
-    public MomentsAdapter(Context context, List<Moment> mMomentList) {
+    public MomentsAdapter(Context context, List<Moment> mMomentList, int mode) {
         this.mContext = context;
         this.mMomentList = mMomentList;
+        this.mode = mode;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mode == 1) {
+            Moment moment = mMomentList.get(position);
+            int result = 1;
+            if (!moment.getAuthor().getEmail().equals(UserClient.getCurrentUser().getEmail())) {
+                // from others
+                result = result + 2;
+            }
+            if (moment.getMediaUrl() != null) {
+                result = result + 4;
+            } else if (moment.getTempPhotoUri() != null) {
+                result = result + 4;
+            } else if (moment.getMediaFile() != null) {
+                result = result + 4;
+            }
+            return result;
+        }
+        return 0;
     }
 
     @Override
     public MomentsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_moment, parent, false);
-        mContext = view.getContext();
-
+        View view;
+        if (mode == 1) {
+            if ((viewType & 2) == 2) {
+                // from others
+                view = LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(R.layout.list_item_message_left, parent, false);
+            }
+            else {
+                view = LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(R.layout.list_item_message_right, parent, false);
+            }
+            mContext = view.getContext();
+        }
+        else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_moment, parent, false);
+            mContext = view.getContext();
+        }
         ViewHolder viewHolder = new MomentsViewHolder(view);
         return viewHolder;
     }
@@ -47,7 +87,10 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     @Override
     public void onBindViewHolder(MomentsAdapter.ViewHolder holder, int position) {
         Moment moment = mMomentList.get(position);
+        int viewType = holder.getItemViewType();
+
         Log.d(TAG, "Binding moment: " + moment);
+        Log.d(TAG, "getItemViewType(): " + viewType);
 
         MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
         ParseUser author = moment.getAuthor();
@@ -55,18 +98,45 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
             Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(author));
 
             viewHolder.tvName.setText(UserClient.getName(author));
-            Glide.with(mContext).load(UserClient.getProfileImageUrl(author))
-                    .fitCenter()
-                    .bitmapTransform(new CropCircleTransformation(mContext))
-                    .into(viewHolder.ivProfilePhoto);
+
+            boolean show_ivProfilePhoto = true;
+            if (mode == 1) {
+                if (position < getItemCount() - 1) {
+                    if (author.getEmail().equals(mMomentList.get(position + 1).getAuthor().getEmail())) {
+                        show_ivProfilePhoto = false;
+                    }
+                }
+            }
+
+            if (show_ivProfilePhoto) {
+                viewHolder.ivProfilePhoto.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(UserClient.getProfileImageUrl(author))
+                        .fitCenter()
+                        .bitmapTransform(new CropCircleTransformation(mContext))
+                        .into(viewHolder.ivProfilePhoto);
+            }
+            else {
+                viewHolder.ivProfilePhoto.setVisibility(View.INVISIBLE);
+            }
         }
 
+        if (mode == 1) {
+            if ((viewType & 4) != 4) {
+                viewHolder.ivMedia.setVisibility(View.GONE);
+            }
+        }
         if (moment.getMediaUrl() != null) {
             Log.d(TAG, "Displaying mediaUrl");
 
+            // speed up the performance
+            // http://stackoverflow.com/questions/29776075/recyclerview-oncreateviewholder-called-excessively-when-scrolling-fast-with-dpad
+            // recyclerView.getRecycledViewPool.setMaxRecycledViews(50);
+            // .centerCrop()
+            // .diskCacheStrategy(DiskCacheStrategy.ALL)
             // Demo data
             Glide.with(mContext).load(moment.getMediaUrl())
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(viewHolder.ivMedia);
         } else if (moment.getTempPhotoUri() != null) {
             Log.d(TAG, "Displaying tempPhotoUri");

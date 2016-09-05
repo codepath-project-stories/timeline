@@ -104,9 +104,9 @@ public class TimelineActivity extends AppCompatActivity implements
     // Zoom in/out
     private ScaleGestureDetector mScaleGestureDetector;
     private int pinch_zoom_index;
-    GridLayoutManager gridLayoutManagerChat;
-    LinearLayoutManager gridLayoutManager;
-    GridLayoutManager gridLayoutManagerTwoColumns;
+    LinearLayoutManager layoutManagerChat;
+    GridLayoutManager layoutManager;
+    GridLayoutManager layoutManagerTwoColumns;
 
     private Player mPlayer;
 
@@ -151,15 +151,15 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void initList() {
-        gridLayoutManagerChat = new GridLayoutManager(this, 1); // 1
-        gridLayoutManager = new GridLayoutManager(this, 1); // 2
-        gridLayoutManagerTwoColumns = new GridLayoutManager(this, 2); // 3
+        layoutManagerChat = new LinearLayoutManager(this); // 1
+        layoutManager = new GridLayoutManager(this, 1); // 2
+        layoutManagerTwoColumns = new GridLayoutManager(this, 2); // 3
 
         pinch_zoom_index = 2;
 
         mMomentChatList = new ArrayList<>();
-        mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList);
-        rvMomentsChat.setLayoutManager(gridLayoutManagerChat);
+        mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList, 1);
+        rvMomentsChat.setLayoutManager(layoutManagerChat);
         rvMomentsChat.setAdapter(mAdapterChat);
         // Add the sticky headers decoration
         final StickyRecyclerHeadersDecoration headersDecorChat = new StickyRecyclerHeadersDecoration(mAdapterChat);
@@ -172,8 +172,8 @@ public class TimelineActivity extends AppCompatActivity implements
         });
 
         mMomentList = new ArrayList<>();
-        mAdapter = new MomentsHeaderAdapter(this, mMomentList);
-        rvMoments.setLayoutManager(gridLayoutManager);
+        mAdapter = new MomentsHeaderAdapter(this, mMomentList, 2);
+        rvMoments.setLayoutManager(layoutManager);
         rvMoments.setAdapter(mAdapter);
         // Add the sticky headers decoration
         final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
@@ -199,21 +199,21 @@ public class TimelineActivity extends AppCompatActivity implements
                             // if (true) {
                             if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
                                 if (pinch_zoom_index == 1) {
-                                    rvMoments.setLayoutManager(gridLayoutManager);
+                                    rvMoments.setLayoutManager(layoutManager);
                                     pinch_zoom_index = 2;
                                     return true;
                                 } else if (pinch_zoom_index == 2) {
-                                    rvMoments.setLayoutManager(gridLayoutManagerTwoColumns);
+                                    rvMoments.setLayoutManager(layoutManagerTwoColumns);
                                     pinch_zoom_index = 3;
                                     return true;
                                 }
                             } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
                                 if (pinch_zoom_index == 3) {
-                                    rvMoments.setLayoutManager(gridLayoutManager);
+                                    rvMoments.setLayoutManager(layoutManager);
                                     pinch_zoom_index = 2;
                                     return true;
                                 } else if (pinch_zoom_index == 2) {
-                                    rvMoments.setLayoutManager(gridLayoutManagerChat);
+                                    rvMoments.setLayoutManager(layoutManagerChat);
                                     pinch_zoom_index = 1;
                                     return true;
                                 }
