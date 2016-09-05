@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/fab_add"
         android:layout_margin="@dimen/large_margin"
+        app:fab_showAnimation="@anim/fab_scale_up"
+        app:fab_hideAnimation="@anim/fab_scale_down"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorRipple="@color/colorPrimaryLight"
         app:fab_colorPressed="@color/colorBrightAccent"
@@ -27,12 +29,12 @@
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi"
         style="@style/AVLoadingIndicatorView.Large"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="190dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:indicatorColor="@color/colorAccent"
+        app:indicatorColor="@color/colorPrimary"
         app:indicatorName="BallSpinFadeLoaderIndicator" />
 
 </android.support.design.widget.CoordinatorLayout>
