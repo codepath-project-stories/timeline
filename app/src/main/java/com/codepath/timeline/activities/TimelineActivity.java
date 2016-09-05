@@ -112,6 +112,8 @@ public class TimelineActivity extends AppCompatActivity implements
 
     private Player mPlayer;
 
+    boolean lock;
+
     // TODO: use push notification instead of pulling and auto refresh every few seconds
     private Runnable getMomentsRunnable = new Runnable() {
         @Override
@@ -164,6 +166,7 @@ public class TimelineActivity extends AppCompatActivity implements
         layoutManagerTwoColumns = new GridLayoutManager(this, 2); // 3
 
         pinch_zoom_index = 2;
+        lock = false;
 
         mMomentChatList = new ArrayList<>();
         mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList, 1);
@@ -202,28 +205,34 @@ public class TimelineActivity extends AppCompatActivity implements
                 new ScaleGestureDetector.SimpleOnScaleGestureListener() {
                     @Override
                     public boolean onScale(ScaleGestureDetector detector) {
-                        // TODO: tune pinch zoom for demo
-                        if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
-                            // if (true) {
-                            if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
-                                if (pinch_zoom_index == 1) {
-                                    rvMoments.setLayoutManager(layoutManager);
-                                    pinch_zoom_index = 2;
-                                    return true;
-                                } else if (pinch_zoom_index == 2) {
-                                    rvMoments.setLayoutManager(layoutManagerTwoColumns);
-                                    pinch_zoom_index = 3;
-                                    return true;
-                                }
-                            } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
-                                if (pinch_zoom_index == 3) {
-                                    rvMoments.setLayoutManager(layoutManager);
-                                    pinch_zoom_index = 2;
-                                    return true;
-                                } else if (pinch_zoom_index == 2) {
-                                    rvMoments.setLayoutManager(layoutManagerChat);
-                                    pinch_zoom_index = 1;
-                                    return true;
+                        if (!lock) {
+                            // TODO: tune pinch zoom for demo
+                            if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
+                                if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
+                                    // pinch close
+                                    if (pinch_zoom_index == 1) {
+                                        lock = true;
+                                        pinch_zoom_index = 2;
+                                        onTwoColumn = !onTwoColumn;
+                                        alphaAnimationCreator(rvMoments, onTwoColumn);
+                                        return true;
+                                    } else if (pinch_zoom_index == 2) {
+                                        // lock = true;
+                                        // rvMoments.setLayoutManager(layoutManagerTwoColumns);
+                                        // pinch_zoom_index = 3;
+                                        return true;
+                                    }
+                                } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
+                                    // pinch away
+                                    if (pinch_zoom_index == 3) {
+                                        return true;
+                                    } else if (pinch_zoom_index == 2) {
+                                        lock = true;
+                                        pinch_zoom_index = 1;
+                                        onTwoColumn = !onTwoColumn;
+                                        alphaAnimationCreator(rvMoments, onTwoColumn);
+                                        return true;
+                                    }
                                 }
                             }
                         }
@@ -464,6 +473,7 @@ public class TimelineActivity extends AppCompatActivity implements
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
+                        lock = false;
                         view.setVisibility(isfadeIn?View.VISIBLE:View.INVISIBLE);
                     }
 
