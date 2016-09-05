@@ -40,7 +40,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class DetailDialogFragment extends DialogFragment {
     // DetailDialogFragment
@@ -79,16 +78,18 @@ public class DetailDialogFragment extends DialogFragment {
     private int index;
     private String mStoryObjectId;
     private Context context;
+    private boolean isChat;
 
     public static DetailDialogFragment newInstance(Context context,
                                                    String storyObjectId,
-                                                   int index) {
+                                                   int index, boolean isChat) {
         DetailDialogFragment frag = new DetailDialogFragment();
         Bundle args = new Bundle();
         args.putString(AppConstants.OBJECT_ID, storyObjectId);
         args.putInt(AppConstants.INDEX, index);
         frag.setArguments(args);
         frag.context = context;
+        frag.isChat = isChat;
 
         return frag;
     }
@@ -114,19 +115,31 @@ public class DetailDialogFragment extends DialogFragment {
             return;
         }
 
-    TimelineClient.getInstance().getMomentList(mStoryObjectId, new TimelineClient.TimelineClientGetMomentListListener() {
-      @Override
-      public void onGetMomentList(List<Moment> itemList) {
-        if (itemList != null) {
-          mMomentList = new ArrayList<Moment>();
-          mMomentList.addAll(itemList);
-          initDialog();
-        }
-      }
-      @Override
-      public void onGetMomentChatList(List<Moment> itemList) {
-      }
-    });
+        // TODO: no need to query
+        // TODO: let caller pass data into DetailDialogFragment
+        TimelineClient.getInstance().getMomentList(mStoryObjectId,
+                new TimelineClient.TimelineClientGetMomentListListener() {
+                    @Override
+                    public void onGetMomentList(List<Moment> itemList) {
+                        if (!isChat) {
+                            if (itemList != null) {
+                                mMomentList = new ArrayList<Moment>();
+                                mMomentList.addAll(itemList);
+                                initDialog();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onGetMomentChatList(List<Moment> itemList) {
+                        if (isChat) {
+                            if (itemList != null) {
+                                mMomentList = new ArrayList<Moment>();
+                                mMomentList.addAll(itemList);;
+                                initDialog();
+                            }
+                        }
+                    }
+        });
   }
 
     @Override

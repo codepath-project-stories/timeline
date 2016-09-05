@@ -63,6 +63,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
     public MomentsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (mode == 1) {
+            // TODO: need to implement a input text box for chat
             if ((viewType & 2) == 2) {
                 // from others
                 view = LayoutInflater

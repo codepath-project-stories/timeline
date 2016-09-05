@@ -167,6 +167,22 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void initList() {
+
+        // the order of the following is very important
+
+        setupRecyclerView();
+
+        getMomentList();
+
+        setupFAB();
+
+        setupGesture();
+
+        mMomentsHandler = new Handler(Looper.getMainLooper());
+        mMomentsHandler.postDelayed(getMomentsRunnable, ParseApplication.REFRESH_INTERVAL);
+    }
+
+    private void setupRecyclerView() {
         layoutManagerChat = new LinearLayoutManager(this); // pinch_zoom_index 1
         layoutManager = new GridLayoutManager(this, 1); // pinch_zoom_index 2
         layoutManagerTwoColumns = new GridLayoutManager(this, 2); // pinch_zoom_index 3
@@ -176,6 +192,7 @@ public class TimelineActivity extends AppCompatActivity implements
         showTwoColumns = false;
         lock = false;
 
+        // TODO: need to implement a input text box for chat
         mMomentChatList = new ArrayList<>();
         mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList, 1);
         rvMomentsChat.setLayoutManager(layoutManagerChat);
@@ -229,15 +246,6 @@ public class TimelineActivity extends AppCompatActivity implements
         //         )
         // );
         rvMomentsTwoColumns.addItemDecoration(new SpacesItemDecoration(20));
-
-        getMomentList();
-
-        setupFAB();
-
-        setupGesture();
-
-        mMomentsHandler = new Handler(Looper.getMainLooper());
-        mMomentsHandler.postDelayed(getMomentsRunnable, ParseApplication.REFRESH_INTERVAL);
     }
 
     private void setupGesture() {
@@ -291,18 +299,18 @@ public class TimelineActivity extends AppCompatActivity implements
                     }
                 });
 
-        setupGestureOnView(rvMomentsChat);
-        setupGestureOnView(rvMoments);
-        setupGestureOnView(rvMomentsTwoColumns);
+        setupGestureOnRecyclerView(rvMomentsChat, true);
+        setupGestureOnRecyclerView(rvMoments, false);
+        setupGestureOnRecyclerView(rvMomentsTwoColumns, false);
     }
 
-    private void setupGestureOnView(RecyclerView rv) {
+    private void setupGestureOnRecyclerView(RecyclerView rv, final boolean isChat) {
         // onClicked != onItemClicked
         ItemClickSupport.addTo(rv).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        showDetailDialogWithAnimation(position);
+                        showDetailDialogWithAnimation(position, isChat);
                     }
                 });
 
@@ -335,32 +343,33 @@ public class TimelineActivity extends AppCompatActivity implements
                 mMomentChatList.addAll(itemList);
                 // mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
                 mAdapterChat.notifyDataSetChanged();
+                rvMomentsChat.scrollToPosition(mMomentChatList.size() - 1);
             }
         });
     }
 
-    private void showDetailDialogWithAnimation(final int position) {
+    private void showDetailDialogWithAnimation(final int position, final boolean isChat) {
         if (menu.isOpened()) {
             menu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
                 @Override
                 public void onMenuToggle(boolean opened) {
                     menu.setOnMenuToggleListener(null);
                     if (!opened) {
-                        showDetailDialog(position);
+                        showDetailDialog(position, isChat);
                     }
                 }
             });
             menu.close(true);
         }
         else {
-            showDetailDialog(position);
+            showDetailDialog(position, isChat);
         }
     }
 
-    private void showDetailDialog(int position) {
+    private void showDetailDialog(int position, boolean isChat) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DetailDialogFragment composeDialogFragment =
-                DetailDialogFragment.newInstance(TimelineActivity.this, storyObjectId, position);
+                DetailDialogFragment.newInstance(TimelineActivity.this, storyObjectId, position, isChat);
         composeDialogFragment.show(fragmentManager, "fragment_compose");
     }
 
