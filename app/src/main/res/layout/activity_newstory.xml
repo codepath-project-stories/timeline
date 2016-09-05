@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:titleTextColor="@color/white"
+        fontPath="fonts/HelveticaNeue-Bold.ttf"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:background="@color/colorPrimary">
     </android.support.v7.widget.Toolbar>
@@ -216,7 +217,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryLight"
-            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:paddingBottom="5dp"
             android:orientation="horizontal" >
 
@@ -225,10 +226,12 @@
                 android:layout_width="@dimen/user_add_height"
                 android:layout_height="40dp"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:textSize="12sp"
+                android:lines="2"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="@string/search_friends" />
 
             <TextView
@@ -236,7 +239,6 @@
                 android:layout_width="@dimen/user_add_height"
                 android:layout_height="40dp"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:textSize="12sp"
@@ -250,7 +252,6 @@
                 android:layout_width="@dimen/user_add_height"
                 android:layout_height="40dp"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:textSize="12sp"
@@ -264,7 +265,6 @@
                 android:layout_width="@dimen/user_add_height"
                 android:layout_height="40dp"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:textSize="12sp"
@@ -278,7 +278,6 @@
                 android:layout_width="@dimen/user_add_height"
                 android:layout_height="40dp"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:lines="2"
@@ -299,9 +298,9 @@
             android:textColorHint="@color/colorPrimaryLight"
             android:hint="@string/publish"
             android:onClick="publish"
-            android:padding="10dp"
-            fontPath="fonts/HelveticaNeue-Bold.ttf"
             android:textSize="15sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             />
 
     </LinearLayout>
