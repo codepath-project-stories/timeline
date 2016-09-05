@@ -241,7 +241,11 @@ public class TimelineActivity extends AppCompatActivity implements
                     public boolean onScale(ScaleGestureDetector detector) {
                         if (!lock) {
                             // TODO: tune pinch zoom for demo
-                            if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
+                            if (true) { // no threshold, too sensitive, but good for emulator
+                            // 50
+                            // 100 // i prefer this
+                            // 200
+                            // if (detector.getCurrentSpan() > 100 && detector.getTimeDelta() > 100) {
                                 if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
                                     // pinch close
                                     if (pinch_zoom_index == 1) {
