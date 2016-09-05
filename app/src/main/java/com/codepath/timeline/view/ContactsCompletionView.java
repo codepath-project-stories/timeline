@@ -1,4 +1,4 @@
-package com.codepath.timeline.activities;
+package com.codepath.timeline.view;
 
 
 import android.app.Activity;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
+import com.codepath.timeline.models.Person;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;

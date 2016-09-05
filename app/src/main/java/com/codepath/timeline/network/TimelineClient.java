@@ -6,6 +6,7 @@ import android.util.Log;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
+import com.codepath.timeline.models.UserClient;
 import com.codepath.timeline.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;

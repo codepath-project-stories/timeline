@@ -1,4 +1,4 @@
-package com.codepath.timeline.activities;
+package com.codepath.timeline.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

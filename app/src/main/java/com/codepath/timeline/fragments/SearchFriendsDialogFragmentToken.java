@@ -19,10 +19,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
-import com.codepath.timeline.activities.ContactsCompletionView;
-import com.codepath.timeline.activities.Person;
+import com.codepath.timeline.view.ContactsCompletionView;
+import com.codepath.timeline.models.Person;
 import com.codepath.timeline.network.TimelineClient;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.parse.ParseUser;
 import com.tokenautocomplete.FilteredArrayAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;

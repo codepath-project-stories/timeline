@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
 import com.codepath.timeline.R;
+import com.codepath.timeline.models.Person;
+import com.codepath.timeline.view.ContactsCompletionView;
 
 public class TokenActivity extends Activity {
 	ContactsCompletionView completionView;

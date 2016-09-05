@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.LandingPagerAdapter;
 import com.codepath.timeline.network.ParseApplication;
-import com.codepath.timeline.network.UserClient;
+import com.codepath.timeline.models.UserClient;
 import com.parse.ParseUser;
 
 import butterknife.BindView;

@@ -15,7 +15,7 @@
         android:layout_margin="@dimen/small_margin"
         tools:src="@drawable/debug_profile"
         />
-    <com.codepath.timeline.activities.TokenTextView
+    <com.codepath.timeline.view.TokenTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

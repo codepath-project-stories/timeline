@@ -1,4 +1,4 @@
-package com.codepath.timeline.activities;
+package com.codepath.timeline.models;
 
 import java.io.Serializable;
 
