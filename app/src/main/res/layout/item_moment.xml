@@ -27,6 +27,8 @@
       android:layout_marginTop="@dimen/medium_margin"
       android:layout_marginRight="@dimen/large_margin"
       android:layout_toEndOf="@+id/tvDate"
+      android:maxLines="2"
+      android:ellipsize="end"
       android:textSize="@dimen/mediumText"
       tools:text="New Text"/>
 
