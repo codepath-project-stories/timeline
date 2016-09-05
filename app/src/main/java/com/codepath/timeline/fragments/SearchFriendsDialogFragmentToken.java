@@ -1,5 +1,6 @@
 package com.codepath.timeline.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,13 +14,17 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.activities.ContactsCompletionView;
 import com.codepath.timeline.activities.Person;
 import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.network.UserClient;
 import com.parse.ParseUser;
+import com.tokenautocomplete.FilteredArrayAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.ArrayList;
@@ -28,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 
 public class SearchFriendsDialogFragmentToken extends DialogFragment
@@ -92,7 +98,33 @@ public class SearchFriendsDialogFragmentToken extends DialogFragment
         people.add(new Person("Amanda Johnson", "amanda@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
         people.add(new Person("Terry Anderson", "terry@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
 
-        adapter = new ArrayAdapter<Person>(context, android.R.layout.simple_list_item_1, people);
+        adapter = new FilteredArrayAdapter<Person>(context, R.layout.person_layout, people) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    convertView = l.inflate(R.layout.person_layout, parent, false);
+                }
+
+                Person p = getItem(position);
+                Glide.with(context).load(p.getImage())
+                        .fitCenter()
+                        .bitmapTransform(new CropCircleTransformation(context))
+                        .placeholder(R.drawable.debug_profile)
+                        .error(R.drawable.debug_profile)
+                        .into((ImageView)convertView.findViewById(R.id.image));
+                ((TextView)convertView.findViewById(R.id.name)).setText(p.getName());
+                ((TextView)convertView.findViewById(R.id.email)).setText(p.getEmail());
+
+                return convertView;
+            }
+
+            @Override
+            protected boolean keepObject(Person person, String mask) {
+                mask = mask.toLowerCase();
+                return person.getName().toLowerCase().startsWith(mask) || person.getEmail().toLowerCase().startsWith(mask);
+            }
+        };
 
         completionView.allowDuplicates(false);
         completionView.setAdapter(adapter);
@@ -167,6 +199,7 @@ public class SearchFriendsDialogFragmentToken extends DialogFragment
         }
     }
 
+    // TODO: this doesn't work
     public void showSoftKeyboard(){
         if(view.requestFocus()){
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -175,6 +208,7 @@ public class SearchFriendsDialogFragmentToken extends DialogFragment
         }
     }
 
+    // TODO: make sure it is also working
     public void hideSoftKeyboard(){
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
