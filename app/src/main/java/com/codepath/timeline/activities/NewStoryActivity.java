@@ -116,6 +116,14 @@ public class NewStoryActivity extends NewItemClass
     }
 
     public void setupViews() {
+
+        // TODO: maybe use a small button instead of the following?
+        // TODO: most apps in the market do not have this kind of things.
+        // R.drawable.camera_background_1
+        // R.drawable.camera_background_2
+        // R.drawable.camera_background_3
+        Glide.with(this).load(R.drawable.camera_background_1).centerCrop().into(ivBackground);
+
         etStoryTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -328,7 +336,7 @@ public class NewStoryActivity extends NewItemClass
                 // ivBackground.setImageBitmap(takenImage);
 
                 // backward compatible
-                Glide.with(this).load(takenPhotoUri).into(ivBackground);
+                Glide.with(this).load(takenPhotoUri).centerCrop().into(ivBackground);
                 ivCameraIcon.setVisibility(View.INVISIBLE);
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
