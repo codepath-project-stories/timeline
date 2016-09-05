@@ -76,8 +76,16 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
             }
             mContext = view.getContext();
         }
+        else if (mode == 3) {
+            view = LayoutInflater
+                    .from(parent.getContext())
+                    .inflate(R.layout.item_moment_two_columns, parent, false);
+            mContext = view.getContext();
+        }
         else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_moment, parent, false);
+            view = LayoutInflater
+                    .from(parent.getContext())
+                    .inflate(R.layout.item_moment, parent, false);
             mContext = view.getContext();
         }
         ViewHolder viewHolder = new MomentsViewHolder(view);
@@ -93,6 +101,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
         Log.d(TAG, "getItemViewType(): " + viewType);
 
         MomentsViewHolder viewHolder = (MomentsViewHolder) holder;
+
         ParseUser author = moment.getAuthor();
         if (author != null) {
             Log.d(TAG, "URL: " + UserClient.getProfileImageUrl(author));

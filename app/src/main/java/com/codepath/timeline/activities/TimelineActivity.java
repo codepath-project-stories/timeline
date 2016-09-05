@@ -33,6 +33,7 @@ import com.codepath.timeline.network.UserClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.view.ItemClickSupport;
+import com.codepath.timeline.view.SpacesItemDecoration;
 import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseFile;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
@@ -205,19 +206,29 @@ public class TimelineActivity extends AppCompatActivity implements
             }
         });
 
-        mAdapterTwoColumns = new MomentsHeaderAdapter(this, mMomentList, 2);
+        mAdapterTwoColumns = new MomentsHeaderAdapter(this, mMomentList, 3);
         rvMomentsTwoColumns.setLayoutManager(layoutManagerTwoColumns);
         rvMomentsTwoColumns.setAdapter(mAdapterTwoColumns);
         // Add the sticky headers decoration
-        final StickyRecyclerHeadersDecoration headersDecorTwoColumns =
-                new StickyRecyclerHeadersDecoration(mAdapterTwoColumns);
-        rvMomentsTwoColumns.addItemDecoration(headersDecorTwoColumns);
-        mAdapterTwoColumns.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                headersDecorTwoColumns.invalidateHeaders();
-            }
-        });
+        // final StickyRecyclerHeadersDecoration headersDecorTwoColumns =
+        //         new StickyRecyclerHeadersDecoration(mAdapterTwoColumns);
+        // rvMomentsTwoColumns.addItemDecoration(headersDecorTwoColumns);
+        // mAdapterTwoColumns.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        //     @Override
+        //     public void onChanged() {
+        //         headersDecorTwoColumns.invalidateHeaders();
+        //     }
+        // });
+        // Drawable horizontalDivider = ContextCompat.getDrawable(this, R.drawable.divider_horizontal);
+        // Drawable verticalDivider = ContextCompat.getDrawable(this, R.drawable.divider_vertical);
+        // rvMomentsTwoColumns.addItemDecoration(
+        //         new GridDividerItemDecoration(
+        //                 horizontalDivider,
+        //                 verticalDivider,
+        //                 2
+        //         )
+        // );
+        rvMomentsTwoColumns.addItemDecoration(new SpacesItemDecoration(20));
 
         getMomentList();
 
