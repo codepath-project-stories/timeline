@@ -137,6 +137,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
                 for (int i = 0; i < stories.size(); i++) {
                     Story story = stories.get(i);
                     if (story.getTitle().contains(searchQuery)) {
+                        // Todo: when search give several results because of the contains method - append to the list
                         stories.clear();
                         stories.add(story);
                         adaptStories.notifyDataSetChanged();
