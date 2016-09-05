@@ -2,15 +2,16 @@ package com.codepath.timeline.activities;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,8 +20,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.LandingPagerAdapter;
@@ -184,21 +183,18 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (ParseApplication.TURN_ON_PARSE) {
-            new MaterialDialog.Builder(this)
-                    .content(getString(R.string.logout))
-                    .positiveText(getString(android.R.string.yes))
-                    .negativeText(getString(R.string.just_close))
-                    .onAny(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog,
-                                            @NonNull DialogAction which) {
-                            // http://stackoverflow.com/questions/8631095/android-preventing-going-back-to-the-previous-activity
-                            if (which.equals(DialogAction.POSITIVE)) {
-                                ParseApplication.logout();
-                                finish(); // going to kill the activity
-                            } else if (which.equals(DialogAction.NEGATIVE)) {
-                                moveTaskToBack(true); // Same as if user pressed Home button.
-                            }
+            // http://stackoverflow.com/questions/8631095/android-preventing-going-back-to-the-previous-activity
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.logout)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ParseApplication.logout();
+                            finish(); // going to kill the activity
+                        }
+                    })
+                    .setNegativeButton(R.string.just_close, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            moveTaskToBack(true); // Same as if user pressed Home button.
                         }
                     })
                     .show();
