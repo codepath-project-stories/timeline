@@ -167,8 +167,13 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
 
         Date momentDate = moment.getCreatedAtReal();
         if (momentDate != null) {
-            String formattedDate = DateUtil.getFormattedTimelineDate(mContext, moment.getCreatedAtReal());
+            String formattedDate = DateUtil.getFormattedTimelineDate(mContext, momentDate);
             Log.d(TAG, "formattedDate: " + formattedDate);
+
+            if (mode == 1) {
+                // display the full date if it's chat view
+                formattedDate = DateUtil.getFullDate(mContext, momentDate);
+            }
             viewHolder.tvDate.setText(formattedDate);
         }
         viewHolder.tvLocation.setText(moment.getLocation());
