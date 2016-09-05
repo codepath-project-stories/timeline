@@ -54,11 +54,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
         // start custom progress bar
 
         startAnim();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
