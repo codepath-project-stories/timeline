@@ -183,16 +183,19 @@ public class TimelineActivity extends AppCompatActivity implements
     }
 
     private void setupRecyclerView() {
-        layoutManagerChat = new LinearLayoutManager(this); // pinch_zoom_index 1
-        layoutManager = new GridLayoutManager(this, 1); // pinch_zoom_index 2
-        layoutManagerTwoColumns = new GridLayoutManager(this, 2); // pinch_zoom_index 3
-
         pinch_zoom_index = 2;
         showDefaultView = true;
         showTwoColumns = false;
         lock = false;
 
+        layoutManagerChat = new LinearLayoutManager(this); // pinch_zoom_index 1
+        layoutManager = new GridLayoutManager(this, 1); // pinch_zoom_index 2
+        layoutManagerTwoColumns = new GridLayoutManager(this, 2); // pinch_zoom_index 3
+
         // TODO: need to implement a input text box for chat
+        // TODO: try setReverseLayout()
+        // http://stackoverflow.com/questions/26580723/how-to-scroll-to-the-bottom-of-a-recyclerview-scrolltoposition-doesnt-work
+        // layoutManagerChat.setReverseLayout(true);
         mMomentChatList = new ArrayList<>();
         mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList, 1);
         rvMomentsChat.setLayoutManager(layoutManagerChat);
@@ -226,25 +229,6 @@ public class TimelineActivity extends AppCompatActivity implements
         mAdapterTwoColumns = new MomentsHeaderAdapter(this, mMomentList, 3);
         rvMomentsTwoColumns.setLayoutManager(layoutManagerTwoColumns);
         rvMomentsTwoColumns.setAdapter(mAdapterTwoColumns);
-        // Add the sticky headers decoration
-        // final StickyRecyclerHeadersDecoration headersDecorTwoColumns =
-        //         new StickyRecyclerHeadersDecoration(mAdapterTwoColumns);
-        // rvMomentsTwoColumns.addItemDecoration(headersDecorTwoColumns);
-        // mAdapterTwoColumns.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-        //     @Override
-        //     public void onChanged() {
-        //         headersDecorTwoColumns.invalidateHeaders();
-        //     }
-        // });
-        // Drawable horizontalDivider = ContextCompat.getDrawable(this, R.drawable.divider_horizontal);
-        // Drawable verticalDivider = ContextCompat.getDrawable(this, R.drawable.divider_vertical);
-        // rvMomentsTwoColumns.addItemDecoration(
-        //         new GridDividerItemDecoration(
-        //                 horizontalDivider,
-        //                 verticalDivider,
-        //                 2
-        //         )
-        // );
         rvMomentsTwoColumns.addItemDecoration(new SpacesItemDecoration(20));
     }
 
