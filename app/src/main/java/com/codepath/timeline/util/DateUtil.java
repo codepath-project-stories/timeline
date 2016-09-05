@@ -34,6 +34,17 @@ public class DateUtil {
         return formattedDate;
     }
 
+    /*
+        INPUT: 2016-08-22T19:22:54.695Z
+        EXPECTED OUTPUT: August 22, 2016
+    */
+    public static String getFullDate(Context context, Date date) {
+        String formattedDate = new SimpleDateFormat("MMMM d, yyyy").format(date.getTime());
+        Log.d(TAG, "getFormattedTimelineDate: " + date);
+
+        return formattedDate;
+    }
+
     public static Date getCurrentDate() {
         Calendar cal = Calendar.getInstance();
         return cal.getTime();
