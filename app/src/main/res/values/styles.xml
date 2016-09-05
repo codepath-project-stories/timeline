@@ -159,11 +159,12 @@
     <!-- Spotify -->
     <!-- @android:style/Theme.Holo -->
     <style name="SpoptifyTheme" parent="@android:style/Theme.Translucent.NoTitleBar">
-        <item name="android:dialogTheme">@style/CustomDialogTheme</item>
-        <item name="android:alertDialogTheme">@style/CustomDialogTheme</item>
+        <item name="dialogTheme">@style/CustomDialogTheme</item>
+        <item name="alertDialogTheme">@style/CustomDialogTheme</item>
     </style>
-
+    
     <!-- @android:style/Theme.Holo.Dialog -->
+    <!-- @android:color/transparent -->
     <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -171,35 +172,37 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:textColorPrimary">@color/whiteTransparent</item>
-        <item name="android:textColorSecondary">@color/whiteTransparent</item>
-        <item name="android:textColorTertiary">@color/whiteTransparent</item>
-        <item name="android:textColorPrimaryInverse">@color/whiteTransparent</item>
-        <item name="android:textColorSecondaryInverse">@color/whiteTransparent</item>
-        <item name="android:textColorTertiaryInverse">@color/whiteTransparent</item>
-        <item name="android:textColorPrimaryDisableOnly">@color/whiteTransparent</item>
-        <item name="android:textColorPrimaryInverseDisableOnly">@color/whiteTransparent</item>
-        <item name="android:textColorPrimaryNoDisable">@color/whiteTransparent</item>
-        <item name="android:textColorSecondaryNoDisable">@color/whiteTransparent</item>
-        <item name="android:textColorPrimaryInverseNoDisable">@color/whiteTransparent</item>
-        <item name="android:textColorSecondaryInverseNoDisable">@color/whiteTransparent</item>
-        <item name="android:textColorHint">@color/whiteTransparent</item>
-        <item name="android:textColorHintInverse">@color/whiteTransparent</item>
-        <item name="android:background">@color/whiteTransparent</item>
-        <item name="android:textColor">@color/whiteTransparent</item>
+        <item name="android:textColorPrimary">@color/red</item>
+        <item name="android:textColorSecondary">@color/red</item>
+        <item name="android:textColorTertiary">@color/red</item>
+        <item name="android:textColorPrimaryInverse">@color/red</item>
+        <item name="android:textColorSecondaryInverse">@color/red</item>
+        <item name="android:textColorTertiaryInverse">@color/red</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/red</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/red</item>
+        <item name="android:textColorPrimaryNoDisable">@color/red</item>
+        <item name="android:textColorSecondaryNoDisable">@color/red</item>
+        <item name="android:textColorPrimaryInverseNoDisable">@color/red</item>
+        <item name="android:textColorSecondaryInverseNoDisable">@color/red</item>
+        <item name="android:textColorHint">@color/red</item>
+        <item name="android:textColorHintInverse">@color/red</item>
+        <item name="android:background">@color/red</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:windowBackground">@color/red</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <item name="android:alertDialogStyle">@style/SpoptifyAlertDialogStyle</item>
     </style>
 
     <style name="SpoptifyAlertDialogStyle">
-        <item name="android:bottomBright">@color/whiteTransparent</item>
-        <item name="android:bottomDark">@color/whiteTransparent</item>
-        <item name="android:bottomMedium">@color/whiteTransparent</item>
-        <item name="android:centerBright">@color/whiteTransparent</item>
-        <item name="android:centerDark">@color/whiteTransparent</item>
-        <item name="android:centerMedium">@color/whiteTransparent</item>
-        <item name="android:fullBright">@color/whiteTransparent</item>
-        <item name="android:fullDark">@color/whiteTransparent</item>
-        <item name="android:topBright">@color/whiteTransparent</item>
-        <item name="android:topDark">@color/whiteTransparent</item>
+        <item name="android:bottomBright">@color/red</item>
+        <item name="android:bottomDark">@color/red</item>
+        <item name="android:bottomMedium">@color/red</item>
+        <item name="android:centerBright">@color/red</item>
+        <item name="android:centerDark">@color/red</item>
+        <item name="android:centerMedium">@color/red</item>
+        <item name="android:fullBright">@color/red</item>
+        <item name="android:fullDark">@color/red</item>
+        <item name="android:topBright">@color/red</item>
+        <item name="android:topDark">@color/red</item>
     </style>
 </resources>
