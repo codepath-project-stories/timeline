@@ -91,12 +91,12 @@ public class SearchFriendsDialogFragmentToken extends DialogFragment
 
         peopleSelected = new ArrayList<>();
         people = new ArrayList<>();
-        people.add(new Person("Marshall Weir", "marshall@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
-        people.add(new Person("Margaret Smith", "margaret@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
-        people.add(new Person("Max Jordan", "max@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
-        people.add(new Person("Meg Peterson", "meg@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
-        people.add(new Person("Amanda Johnson", "amanda@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
-        people.add(new Person("Terry Anderson", "terry@example.com", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
+        people.add(new Person("Marina Demo", "Marina@Demo", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
+        people.add(new Person("Dianne Demo", "Dianne@Demo", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
+        people.add(new Person("Chingyao Demo", "Chingyao@Demo", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
+        people.add(new Person("Hugo Demo", "Hugo@Demo", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
+        people.add(new Person("Demo Demo", "DemoDemo@Demo", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
+        people.add(new Person("Demo", "Demo@Demo", "https://avatars3.githubusercontent.com/u/2633155?v=3&s=460"));
 
         adapter = new FilteredArrayAdapter<Person>(context, R.layout.person_layout, people) {
             @Override
@@ -194,7 +194,8 @@ public class SearchFriendsDialogFragmentToken extends DialogFragment
         Dialog dialog = getDialog();
         if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            // int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             dialog.getWindow().setLayout(width, height);
         }
     }
