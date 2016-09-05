@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.codepath.timeline.R;
+import com.codepath.timeline.util.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +28,8 @@ public class ShareStoryActivity extends AppCompatActivity {
     com.wang.avi.AVLoadingIndicatorView avi;
     boolean loadingFinished = true;
     boolean redirect = false;
-
+    private String storyTitle;
+    private String storyHtmlUrl;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -44,8 +46,8 @@ public class ShareStoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String storyHTML = getIntent().getStringExtra("storyHTML");
-
+        storyHtmlUrl = getIntent().getStringExtra(AppConstants.STORY_HTML_SUMMARY_URL);
+        storyTitle = getIntent().getStringExtra(AppConstants.STORY_TITLE);
 //        startAnim();
 
         webView.setWebViewClient(new WebViewClient() {
@@ -80,7 +82,7 @@ public class ShareStoryActivity extends AppCompatActivity {
             }
 
         });
-        webView.loadUrl(storyHTML);
+        webView.loadUrl(storyHtmlUrl);
     }
 
     @Override
@@ -90,6 +92,7 @@ public class ShareStoryActivity extends AppCompatActivity {
         ShareActionProvider miShareAction = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out " + storyTitle + "'s story");
         shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
         miShareAction.setShareIntent(shareIntent);
 

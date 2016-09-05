@@ -592,13 +592,9 @@ public class TimelineActivity extends AppCompatActivity implements
 
                             if (storyHtmlSummaryUrl != null) {
                                 Intent intent = new Intent(TimelineActivity.this, ShareStoryActivity.class);
-                                intent.putExtra("storyHTML", storyHtmlSummaryUrl);
+                                intent.putExtra(AppConstants.STORY_HTML_SUMMARY_URL, storyHtmlSummaryUrl);
+                                intent.putExtra(AppConstants.STORY_TITLE, storyTitle);
                                 startActivity(intent);
-//                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//                    shareIntent.setType("text/plain");
-//                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out " + storyTitle + " Story");
-//                    shareIntent.putExtra(Intent.EXTRA_TEXT, storyHtmlSummaryUrl);
-//                    startActivity(Intent.createChooser(shareIntent, "Share story using..."));
                             }
 
                             // Todo: getting name doesn't quite work
