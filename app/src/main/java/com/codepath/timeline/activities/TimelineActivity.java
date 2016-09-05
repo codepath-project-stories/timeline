@@ -48,6 +48,7 @@ import com.spotify.sdk.android.player.Spotify;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -195,6 +196,7 @@ public class TimelineActivity extends AppCompatActivity implements
         // TODO: need to implement a input text box for chat
         // TODO: try setReverseLayout()
         // http://stackoverflow.com/questions/26580723/how-to-scroll-to-the-bottom-of-a-recyclerview-scrolltoposition-doesnt-work
+        // http://stackoverflow.com/questions/27727354/linearlayoutmanager-setreverselayout-true-but-items-stack-from-bottom
         // layoutManagerChat.setReverseLayout(true);
         mMomentChatList = new ArrayList<>();
         mAdapterChat = new MomentsHeaderAdapter(this, mMomentChatList, 1);
@@ -232,8 +234,11 @@ public class TimelineActivity extends AppCompatActivity implements
         rvMomentsTwoColumns.addItemDecoration(new SpacesItemDecoration(20));
     }
 
+    // TODO: now zoom in zoom out doesn't look like sony/album or google/photo
+    // TODO: the future work needs
+    // TODO: 1. different states for zoom in zoom out
+    // TODO: 2. current view size should respond to pinch difference (now size doesn't change at all)
     private void setupGesture() {
-
         mScaleGestureDetector = new ScaleGestureDetector(
                 this,
                 new ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -623,10 +628,38 @@ public class TimelineActivity extends AppCompatActivity implements
                 // Close the fab menu
                 menu.close(true);
 
-                showTwoColumns = !showTwoColumns;
-                alphaAnimationCreator(rvMomentsTwoColumns, showTwoColumns);
+                if (pinch_zoom_index == 1) {
+                    reverseRecyclerView(rvMomentsChat, mAdapterChat, mMomentChatList);
+                }
+                else if (pinch_zoom_index == 2) {
+                    reverseRecyclerView(rvMoments, mAdapter, mMomentList);
+                    mAdapterTwoColumns.notifyDataSetChanged();
+                    // rvMomentsTwoColumns.scrollToPosition(0);
+                }
+                else if (pinch_zoom_index == 3) {
+                    reverseRecyclerView(rvMomentsTwoColumns, mAdapterTwoColumns, mMomentList);
+                    mAdapter.notifyDataSetChanged();
+                    // rvMoments.scrollToPosition(0);
+                }
             }
         });
+    }
+
+    private void reverseRecyclerView(RecyclerView rv,
+                                     final MomentsHeaderAdapter adapter,
+                                     List<Moment> list) {
+        // http://stackoverflow.com/questions/26682277/how-do-i-get-the-position-selected-in-a-recyclerview
+        // http://stackoverflow.com/questions/24989218/get-visible-items-in-recyclerview
+        // int firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+        Collections.reverse(list);
+        final int end = list.size() - 1;
+        for (int position = 0; position < end; position++) {
+            // test_function(adapter, position, end);
+            adapter.notifyItemMoved(0, end - position);
+        }
+        // TODO: not sure the spec about this
+        // TODO: scroll to top for now
+        rv.scrollToPosition(0);
     }
 
     @Override

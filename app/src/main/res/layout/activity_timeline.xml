@@ -154,7 +154,7 @@
             app:fab_colorRipple="@color/colorPrimaryLight"
             app:fab_colorPressed="@color/colorBrightAccent"
             app:fab_size="mini"
-            app:fab_label="Debug Switch" />
+            app:fab_label="Sort moments" />
 
     </com.github.clans.fab.FloatingActionMenu>
 
