@@ -23,8 +23,8 @@ public class ParseApplication extends Application {
 	public static boolean TEST_TokenAutoComplete = false;
 
 	// TODO: use push notification instead of pulling and auto refresh every a few seconds
-	public static int REFRESH_INTERVAL = 60000; // default to 60s to avoid server overhead
-	// public static int REFRESH_INTERVAL = 5000; // default to 5s for the demo/production
+//	public static int REFRESH_INTERVAL = 60000; // default to 60s to avoid server overhead
+	 public static int REFRESH_INTERVAL = 10000; // default to 5s for the demo/production
 
 	@Override
 	public void onCreate() {
