@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
@@ -110,7 +111,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
                 Glide.with(mContext)
                         .load(UserClient.getProfileImageUrl(user))
                         .fitCenter()
-                        .bitmapTransform(new RoundedCornersTransformation(mContext, 25, 0))
+                        .bitmapTransform(new CropCircleTransformation(mContext))
                         .into(holder.ivProfilePhoto);
             }
 
