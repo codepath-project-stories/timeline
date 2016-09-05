@@ -162,7 +162,7 @@
         <item name="dialogTheme">@style/CustomDialogTheme</item>
         <item name="alertDialogTheme">@style/CustomDialogTheme</item>
     </style>
-    
+
     <!-- @android:style/Theme.Holo.Dialog -->
     <!-- @android:color/transparent -->
     <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">

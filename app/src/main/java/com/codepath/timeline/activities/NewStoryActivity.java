@@ -3,8 +3,6 @@ package com.codepath.timeline.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -221,6 +220,10 @@ public class NewStoryActivity extends NewItemClass
         }
     }
 
+    // http://stackoverflow.com/questions/29390695/onclick-array-with-optional-ids-butterknife
+    // @Nullable
+    // @Optional
+    @OnClick({R.id.ivSelected1, R.id.ivSelected2, R.id.ivSelected3, R.id.ivSelected4})
     public void highlightSelected(View view) {
         if (Integer.parseInt(view.getTag().toString()) == 1) {
             view.setBackgroundResource(R.drawable.circle_accent);
@@ -264,12 +267,14 @@ public class NewStoryActivity extends NewItemClass
 
     // Todo: add collaborators to the story
     // on click attached to text view id="@+id/tvAddPeople"
+    @OnClick(R.id.tvAddPeople)
     public void addPeople(View view) {
 //        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
 
     }
 
     // on click attached to text view id="@+id/tvPublish"
+    @OnClick(R.id.btnPublish)
     public void publish(View view) {
 //        Snackbar.make(findViewById(android.R.id.content), "clicked", Snackbar.LENGTH_SHORT).show();
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -314,13 +319,17 @@ public class NewStoryActivity extends NewItemClass
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                takenPhotoUri = getPhotoFileUri();
+                takenPhotoUri = getPhotoFileUri(); // extends NewItemClass
+                Log.d("onActivityResult", takenPhotoUri.toString());
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                ivBackground.setImageBitmap(takenImage);
-                // TODO: CHINGYAO: my device doesn't show any image in ivBackground
-                // TODO: try the following, but doesn't work
-                // ivBackground.invalidate();
+
+                // works for sdk 23 only
+                // Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                // ivBackground.setImageBitmap(takenImage);
+
+                // backward compatible
+                Glide.with(this).load(takenPhotoUri).into(ivBackground);
+                ivCameraIcon.setVisibility(View.INVISIBLE);
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
@@ -335,5 +344,11 @@ public class NewStoryActivity extends NewItemClass
             output = output + UserClient.getName(user) + "\n";
         }
         Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    @OnClick(R.id.flStoryPhoto)
+    public void onLaunchCamera(View view) {
+        super.onLaunchCamera(view);
     }
 }

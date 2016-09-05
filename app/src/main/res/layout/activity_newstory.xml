@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:onClick="onLaunchCamera">
+            >
 
             <ImageView
                 android:id="@+id/ivBackground"
@@ -92,7 +92,6 @@
             android:gravity="center_vertical"
             android:hint="@string/add_people"
             android:textStyle="bold"
-            android:onClick="addPeople"
             android:padding="10dp"
             android:textSize="15sp" />
 
@@ -133,7 +132,7 @@
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlightSelected"/>
+                    />
 
                 <ImageView
                     android:id="@+id/ivCollaborator1"
@@ -156,7 +155,7 @@
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlightSelected" />
+                    />
 
                 <ImageView
                     android:id="@+id/ivCollaborator2"
@@ -178,7 +177,7 @@
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlightSelected" />
+                    />
 
                 <ImageView
                     android:id="@+id/ivCollaborator3"
@@ -200,7 +199,7 @@
                     android:layout_height="50dp"
                     android:clickable="true"
                     android:tag="1"
-                    android:onClick="highlightSelected" />
+                    />
 
                 <ImageView
                     android:id="@+id/ivCollaborator4"
@@ -297,7 +296,6 @@
             android:background="@color/colorPrimary"
             android:textColorHint="@color/colorPrimaryLight"
             android:hint="@string/publish"
-            android:onClick="publish"
             android:textSize="15sp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
