@@ -318,6 +318,9 @@ public class TimelineActivity extends AppCompatActivity implements
             @Override
             public void onGetMomentList(List<Moment> itemList) {
                 // TODO: only need to add new items instead of clear()
+                // DB: Be careful when using 'notifyItemRangeInserted', I ran into an issue where the RecyclerView
+                // would throw an error like "Inconsistency detected. Invalid view holder adapter"
+                // Though less efficient, replacing it with 'notifyDataSetChanged' solved it
                 mMomentList.clear();
                 mMomentList.addAll(itemList);
                 // mAdapter.notifyItemRangeInserted(0, mMomentChatList.size());

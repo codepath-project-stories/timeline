@@ -150,7 +150,15 @@ public class StoriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         // TODO: Update the number of moments
-        holder.tvMomentCount.setText(story.getMomentList().size() + " Moments");
+        int momentsSize = story.getMomentChatList().size();
+        String numMomentsText = "";
+        if (momentsSize == 1) {
+            numMomentsText = momentsSize + " Moment";
+        } else if (momentsSize > 1) {
+            numMomentsText = momentsSize + " Moments";
+        }
+
+        holder.tvMomentCount.setText(numMomentsText);
     }
 
     private void updateCollaboratorDetails(StoriesAdapter.ViewHolderSimpleStory holder, List<ParseUser> collaboratorList) {

@@ -184,7 +184,7 @@ public class TimelineClient {
 	public void getStoryList2(ParseUser user,
 							  final TimelineClientGetStoryListener listener) {
 		mStoryListQuery = ParseQuery.getQuery(Story.class);
-		mStoryListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+		mStoryListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
 		mStoryListQuery.whereEqualTo("owner", user);
 		mStoryListQuery.include("owner"); // eagerly load the owner -- we need it for updating the story view
 		mStoryListQuery.include("collaboratorList");
@@ -230,7 +230,7 @@ public class TimelineClient {
 	public void getMomentList(String storyObjectId,
 							  final TimelineClientGetMomentListListener listener) {
 		mMomentListQuery = ParseQuery.getQuery(Story.class);
-		mMomentListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+		mMomentListQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
 		mMomentListQuery.include("momentList");
 		mMomentListQuery.include("momentList.author");
 		mMomentListQuery.getInBackground(storyObjectId, new GetCallback<Story>() {

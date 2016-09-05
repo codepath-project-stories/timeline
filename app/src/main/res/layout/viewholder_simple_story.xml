@@ -1,105 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/large_margin"
-    android:layout_marginTop="@dimen/large_margin"
-    android:layout_marginRight="@dimen/large_margin"
-    card_view:cardElevation="@dimen/card_view_elevation">
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/large_margin"
+                                    android:layout_marginRight="@dimen/large_margin"
+                                    android:layout_marginTop="@dimen/large_margin"
+                                    card_view:cardElevation="@dimen/card_view_elevation">
 
-    <RelativeLayout
-        android:id="@+id/rlMainView"
+  <RelativeLayout
+      android:id="@+id/rlMainView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimaryLight"
+      android:clickable="true"
+      android:paddingBottom="@dimen/small_padding">
+
+    <FrameLayout
+        android:id="@+id/flBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
-        android:clickable="true"
-        android:paddingBottom="@dimen/small_padding">
+        android:layout_height="@dimen/story_default_height">
 
-        <FrameLayout
-            android:id="@+id/flBackground"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/story_default_height">
+      <ImageView
+          android:id="@+id/ivBackgroundImage"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:transitionName="background"
+          tools:background="@drawable/image_test2"/>
 
-            <ImageView
-                android:id="@+id/ivBackgroundImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                tools:background="@drawable/image_test2"
-                android:transitionName="background" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="@dimen/large_margin">
-
-                <ImageView
-                    android:id="@+id/ivCollaborator1"
-                    android:layout_width="@dimen/user_default_height"
-                    android:layout_height="@dimen/user_default_height"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="-10dp"
-                    android:layout_toLeftOf="@+id/ivCollaborator2"
-                    tools:background="@color/colorPrimary" />
-
-                <ImageView
-                    android:id="@+id/ivCollaborator2"
-                    android:layout_width="@dimen/user_default_height"
-                    android:layout_height="@dimen/user_default_height"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="-10dp"
-                    android:layout_toLeftOf="@+id/tvUserCount"
-                    tools:background="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/tvUserCount"
-                    style="@style/CollaboratorCountText"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    tools:text="+3" />
-
-                <TextView
-                    android:id="@+id/tvMomentCount"
-                    style="@style/MomentCountText"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tvUserCount"
-                    android:shadowColor="@color/text_shadow"
-                    android:shadowDx="-5"
-                    android:shadowRadius="5"
-                    tools:text="30 Moments" />
-
-            </RelativeLayout>
-
-        </FrameLayout>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|right"
+          android:layout_margin="@dimen/large_margin">
 
         <ImageView
-            android:id="@+id/ivAuthorProfilePhoto"
-            android:layout_width="@dimen/author_profile_default_height"
-            android:layout_height="@dimen/author_profile_default_height"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/flBackground"
-            android:layout_margin="@dimen/small_margin"
-            tools:background="@color/colorPrimary" />
+            android:id="@+id/ivCollaborator1"
+            android:layout_width="@dimen/user_default_height"
+            android:layout_height="@dimen/user_default_height"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="-10dp"
+            android:layout_toLeftOf="@+id/ivCollaborator2"
+            tools:background="@color/colorPrimary"/>
+
+        <ImageView
+            android:id="@+id/ivCollaborator2"
+            android:layout_width="@dimen/user_default_height"
+            android:layout_height="@dimen/user_default_height"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="-10dp"
+            android:layout_toLeftOf="@+id/tvUserCount"
+            tools:background="@color/colorAccent"/>
 
         <TextView
-            android:id="@+id/tvStoryTitle"
-            style="@style/StoryTitleText"
-            android:layout_alignTop="@+id/ivAuthorProfilePhoto"
-            android:layout_toRightOf="@+id/ivAuthorProfilePhoto"
-            tools:text="Fun times in Seattle" />
+            android:id="@+id/tvUserCount"
+            style="@style/CollaboratorCountText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            tools:text="+3"/>
 
         <TextView
-            android:id="@+id/tvStoryAuthor"
-            style="@style/StoryAuthorText"
-            android:layout_alignLeft="@+id/tvStoryTitle"
-            android:layout_below="@+id/tvStoryTitle"
-            tools:text="By Jane Smith" />
+            android:id="@+id/tvMomentCount"
+            style="@style/MomentCountText"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvUserCount"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="-5"
+            android:shadowRadius="5"
+            tools:text="30 Moments"/>
 
-    </RelativeLayout>
+      </RelativeLayout>
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ivAuthorProfilePhoto"
+        android:layout_width="@dimen/author_profile_default_height"
+        android:layout_height="@dimen/author_profile_default_height"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flBackground"
+        android:layout_margin="@dimen/small_margin"
+        tools:background="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/tvStoryTitle"
+        style="@style/StoryTitleText"
+        android:layout_alignTop="@+id/ivAuthorProfilePhoto"
+        android:layout_toRightOf="@+id/ivAuthorProfilePhoto"
+        tools:text="Fun times in Seattle"/>
+
+    <TextView
+        android:id="@+id/tvStoryAuthor"
+        style="@style/StoryAuthorText"
+        android:layout_alignLeft="@+id/tvStoryTitle"
+        android:layout_below="@+id/tvStoryTitle"
+        android:layout_marginTop="-5dp"
+        tools:text="By Jane Smith"/>
+
+  </RelativeLayout>
 
 </android.support.v7.widget.CardView>
