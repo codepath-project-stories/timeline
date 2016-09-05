@@ -4,8 +4,6 @@ package com.codepath.timeline.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -24,10 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.NewItemClass;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,9 +152,10 @@ public class NewMomentActivity extends NewItemClass {
             if (resultCode == RESULT_OK) {
                 takenPhotoUri = getPhotoFileUri();
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+//                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 // Load the taken image into a preview
-                ivBackground.setImageBitmap(takenImage);
+//                ivBackground.setImageBitmap(takenImage);
+                Glide.with(this).load(takenPhotoUri).centerCrop().into(ivBackground);
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
