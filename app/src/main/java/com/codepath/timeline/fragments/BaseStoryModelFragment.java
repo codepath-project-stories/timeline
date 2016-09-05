@@ -134,19 +134,25 @@ abstract public class BaseStoryModelFragment extends Fragment {
                 // in some cases text submit fires several times, clear the focus
                 searched = true;
                 searchView.clearFocus();
+                String lowerCaseQuery = searchQuery.toLowerCase();
+                List<Story> matchingQueryStory = new ArrayList<Story>();
                 for (int i = 0; i < stories.size(); i++) {
                     Story story = stories.get(i);
-                    if (story.getTitle().contains(searchQuery)) {
-                        // Todo: when search give several results because of the contains method - append to the list
-                        stories.clear();
-                        stories.add(story);
-                        adaptStories.notifyDataSetChanged();
-                    } else {
-                        if (getView() != null) {
-                            Snackbar.make(getView(), "No stories found", Snackbar.LENGTH_SHORT).show();
-                        }
+                    if (story.getTitle().toLowerCase().contains(lowerCaseQuery)) {
+                        matchingQueryStory.add(story);
                     }
                 }
+
+                if (matchingQueryStory.size() == 0) {
+                    if (getView() != null) {
+                        Snackbar.make(getView(), "No stories found", Snackbar.LENGTH_SHORT).show();
+                    }
+                } else {
+                    stories.clear();
+                    stories.addAll(matchingQueryStory);
+                    adaptStories.notifyDataSetChanged();
+                }
+
                 return true;
             }
         });
