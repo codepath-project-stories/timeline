@@ -22,7 +22,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
@@ -30,8 +29,8 @@ import com.codepath.timeline.fragments.SearchFriendsDialogFragment;
 import com.codepath.timeline.fragments.SearchFriendsDialogFragmentToken;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Person;
-import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.models.UserClient;
+import com.codepath.timeline.network.TimelineClient;
 import com.codepath.timeline.util.AppConstants;
 import com.codepath.timeline.util.DateUtil;
 import com.codepath.timeline.util.NewItemClass;
@@ -129,7 +128,7 @@ public class NewStoryActivity extends NewItemClass
         // R.drawable.camera_background_1
         // R.drawable.camera_background_2
         // R.drawable.camera_background_3
-        Glide.with(this).load(R.drawable.camera_background_1).centerCrop().into(ivBackground);
+//        Glide.with(this).load(R.drawable.camera_background_1).centerCrop().into(ivBackground);
 
         etStoryTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -154,26 +153,11 @@ public class NewStoryActivity extends NewItemClass
                 btnPublish.setEnabled(etStoryTitle.getText().length() <= 35);
             }
         });
-        /*
-        ivSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Todo: fix the search according to the API
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                SearchFriendsDialogFragment composeDialogFragment =
-                        SearchFriendsDialogFragment.newInstance(context, "Search friends");
-                composeDialogFragment.show(fragmentManager, "fragment_compose");
-            }
-        });
-        */
     }
 
     @OnClick(R.id.ivSearch)
     void onSearch() {
-        // Intent intent = new Intent(NewStoryActivity.this, TokenActivity.class);
-        // startActivityForResult(intent, TokenActivity_REQUEST_CODE);
 
-        // Todo: fix the search according to the API
         FragmentManager fragmentManager = getSupportFragmentManager();
         SearchFriendsDialogFragmentToken composeDialogFragment =
                 SearchFriendsDialogFragmentToken.newInstance(context, "Search friends");
@@ -358,7 +342,7 @@ public class NewStoryActivity extends NewItemClass
 
                 // backward compatible
                 Glide.with(this).load(takenPhotoUri).centerCrop().into(ivBackground);
-                ivCameraIcon.setVisibility(View.INVISIBLE);
+//                ivCameraIcon.setVisibility(View.INVISIBLE);
             } else { // Result was a failure
                 Snackbar.make(findViewById(android.R.id.content), "Picture wasn't taken!", Snackbar.LENGTH_SHORT).show();
             }
@@ -378,11 +362,12 @@ public class NewStoryActivity extends NewItemClass
     @Override
     public void onFinishSearchDialog(List<ParseUser> collabs) {
         // TODO: change the corresponding items in R.layout.activity_newstory
-        String output = "from MultiAutoCompleteTextView\n";
+//        String output = "from MultiAutoCompleteTextView\n";
+        String output = "";
         for (ParseUser user : collabs) {
             output = output + UserClient.getName(user) + "\n";
         }
-        Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
+//        Snackbar.make(findViewById(android.R.id.content), output, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -394,7 +379,8 @@ public class NewStoryActivity extends NewItemClass
     @Override
     public void onFinishSearchDialogToken(List<Person> collabs) {
         // TODO: change the corresponding items in R.layout.activity_newstory
-        String output = "from SearchFriendsDialogFragmentToken\n";
+//        String output = "from SearchFriendsDialogFragmentToken\n";
+        String output = "";
         for (Person user : collabs) {
             for (ParseUser each : mFriendsList) {
                 if (each.getEmail().equals(user.getEmail())) {
@@ -402,6 +388,6 @@ public class NewStoryActivity extends NewItemClass
                 }
             }
         }
-        Toast.makeText(NewStoryActivity.this, output, Toast.LENGTH_LONG).show();
+//        Snackbar.make(findViewById(android.R.id.content), output, Snackbar.LENGTH_SHORT).show();
     }
 }
