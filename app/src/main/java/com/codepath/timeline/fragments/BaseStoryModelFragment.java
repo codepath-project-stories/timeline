@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -120,13 +121,31 @@ abstract public class BaseStoryModelFragment extends Fragment {
             public boolean onQueryTextSubmit(String searchQuery) {
                 // in some cases text submit fires several times, clear the focus
                 searchView.clearFocus();
-                for (Story story: stories) {
+                for (int i = 0; i < stories.size(); i++) {
+                    Story story = stories.get(i);
                     if (story.getTitle().equals(searchQuery)) {
                         stories.clear();
-                        adaptStories.notifyItemRangeRemoved(0, adaptStories.getItemCount());
-                        addNew(story);
+                        stories.add(story);
+                        adaptStories.notifyDataSetChanged();
+                    } else {
+                        if (getView() != null) {
+                            Snackbar.make(getView(), "No stories found", Snackbar.LENGTH_SHORT).show();
+                        }
                     }
                 }
+                return true;
+            }
+        });
+
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                populateList();
                 return true;
             }
         });
