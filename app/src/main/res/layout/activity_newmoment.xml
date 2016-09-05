@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -60,10 +61,8 @@
                 android:minLines="2"
                 android:maxLines="2"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 android:hint="@string/add_title"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tvCount"
@@ -72,10 +71,8 @@
                 android:paddingRight="10dp"
                 android:gravity="center|end"
                 android:background="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif-condensed"
                 tools:text="30"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -106,8 +103,7 @@
             android:onClick="addLocation"
             android:padding="10dp"
             android:tag="1"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btnPublish"
@@ -117,13 +113,12 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColorHint="@color/colorPrimaryLight"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
             android:hint="@string/share"
             android:onClick="publish"
             android:padding="10dp"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            fontPath="fonts/HelveticaNeue-Bold.ttf" />
 
     </LinearLayout>
 

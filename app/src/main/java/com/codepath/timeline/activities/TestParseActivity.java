@@ -69,7 +69,7 @@ public class TestParseActivity extends AppCompatActivity {
                 // set up callback
                 new TimelineClient.TimelineClientGetStoryListener() {
                     @Override
-                    public void onGetStoryList(List<Story> itemList) {
+                    public void onGetStoryListSuccess(List<Story> itemList) {
                         String buffer = "getStoryList\n";
                         if (itemList != null) {
                             for (Story eachStory : itemList) {
@@ -77,6 +77,11 @@ public class TestParseActivity extends AppCompatActivity {
                             }
                         }
                         output.setText(buffer);
+                    }
+
+                    @Override
+                    public void onGetStoryListFailed(String message) {
+
                     }
                 });
     }
@@ -89,7 +94,7 @@ public class TestParseActivity extends AppCompatActivity {
                 // set up callback
                 new TimelineClient.TimelineClientGetStoryListener() {
                     @Override
-                    public void onGetStoryList(List<Story> itemList) {
+                    public void onGetStoryListSuccess(List<Story> itemList) {
                         String buffer = "getStoryList2\n";
                         if (itemList != null) {
                             for (Story eachStory : itemList) {
@@ -97,6 +102,11 @@ public class TestParseActivity extends AppCompatActivity {
                             }
                         }
                         output.setText(buffer);
+                    }
+
+                    @Override
+                    public void onGetStoryListFailed(String message) {
+
                     }
                 });
     }
@@ -109,7 +119,7 @@ public class TestParseActivity extends AppCompatActivity {
                 // set up callback
                 new TimelineClient.TimelineClientGetStoryListener() {
                     @Override
-                    public void onGetStoryList(List<Story> itemList) {
+                    public void onGetStoryListSuccess(List<Story> itemList) {
                         if (itemList != null && itemList.size() > 0) {
                             TimelineClient.getInstance().getCollaboratorList(
                                     itemList.get(0),
@@ -131,6 +141,11 @@ public class TestParseActivity extends AppCompatActivity {
                             buffer = buffer + "empty stories" + "\n";
                             output.setText(buffer);
                         }
+                    }
+
+                    @Override
+                    public void onGetStoryListFailed(String message) {
+
                     }
                 });
     }
@@ -155,7 +170,7 @@ public class TestParseActivity extends AppCompatActivity {
                 // set up callback
                 new TimelineClient.TimelineClientGetStoryListener() {
                     @Override
-                    public void onGetStoryList(List<Story> itemList) {
+                    public void onGetStoryListSuccess(List<Story> itemList) {
                         String buffer = "getSharedStoryList\n";
                         if (itemList != null) {
                             for (Story eachStory : itemList) {
@@ -163,6 +178,11 @@ public class TestParseActivity extends AppCompatActivity {
                             }
                         }
                         output.setText(buffer);
+                    }
+
+                    @Override
+                    public void onGetStoryListFailed(String message) {
+
                     }
                 });
     }

@@ -1,5 +1,6 @@
 package com.codepath.timeline.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +52,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class TimelineActivity extends AppCompatActivity implements
         PlayerNotificationCallback, ConnectionStateCallback {
@@ -110,7 +112,7 @@ public class TimelineActivity extends AppCompatActivity implements
 
     private Player mPlayer;
 
-    // TODO: use push notification instead of pulling and auto refresh every a few seconds
+    // TODO: use push notification instead of pulling and auto refresh every few seconds
     private Runnable getMomentsRunnable = new Runnable() {
         @Override
         public void run() {
@@ -121,8 +123,14 @@ public class TimelineActivity extends AppCompatActivity implements
     };
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
 

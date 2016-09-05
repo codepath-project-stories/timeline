@@ -25,7 +25,6 @@
       android:layout_marginLeft="@dimen/medium_margin"
       android:layout_toEndOf="@+id/ivProfilePhoto"
       android:layout_toRightOf="@+id/ivProfilePhoto"
-      android:fontFamily="sans-serif"
       tools:text="Dianne Bautista"/>
 
   <ImageView
@@ -43,9 +42,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/imageView"
-      android:layout_toEndOf="@+id/imageView"
+      android:layout_marginTop="2dp"
       android:layout_toRightOf="@+id/imageView"
-      android:fontFamily="sans-serif"
       android:textSize="@dimen/smallText"
       tools:text="San Francisco, CA"/>
 
@@ -55,9 +53,8 @@
       android:layout_height="wrap_content"
       android:layout_alignLeft="@+id/ivProfilePhoto"
       android:layout_below="@+id/ivProfilePhoto"
-      android:layout_marginTop="@dimen/large_margin"
-      android:fontFamily="sans-serif"
-      android:textSize="@dimen/mediumText"
+      android:layout_marginTop="@dimen/medium_margin"
+      android:textSize="@dimen/smallText"
       tools:text="Exploring Melbourne"/>
 
 </RelativeLayout>

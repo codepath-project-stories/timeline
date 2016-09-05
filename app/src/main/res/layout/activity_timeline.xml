@@ -100,7 +100,7 @@
         app:menu_labels_position="left"
         app:menu_openDirection="up"
         app:menu_backgroundColor="@android:color/transparent"
-        app:menu_animationDelayPerItem="50">
+        app:menu_animationDelayPerItem="50" >
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/miAdd"

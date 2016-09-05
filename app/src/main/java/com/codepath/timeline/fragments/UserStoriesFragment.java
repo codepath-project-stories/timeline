@@ -33,6 +33,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     com.github.clans.fab.FloatingActionButton add;
     private int REQUEST_CODE = 5;
 
+
     // newInstance constructor for creating fragment with arguments
     public static UserStoriesFragment newInstance(Context context, int page) {
         UserStoriesFragment frag = new UserStoriesFragment();
@@ -51,6 +52,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     @Override
     protected void populateList() {
         // start custom progress bar
+
         startAnim();
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -68,19 +70,25 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                     // set up callback
                     new TimelineClient.TimelineClientGetStoryListener() {
                         @Override
-                        public void onGetStoryList(List<Story> itemList) {
+                        public void onGetStoryListSuccess(List<Story> itemList) {
                             if (itemList != null) {
                                 Log.d(TAG, "populateList");
                                 // Sort by newly updated story on top of the list
                                 Collections.sort(itemList);
                                 addAll(itemList);
                             }
+
+                            // stop custom progress bar
+                            stopAnim();
+                        }
+
+                        @Override
+                        public void onGetStoryListFailed(String message) {
+                            stopAnim();
                         }
                     }
             );
         }
-        // stop custom progress bar
-        stopAnim();
     }
 
     @Override

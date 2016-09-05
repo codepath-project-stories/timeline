@@ -2,6 +2,7 @@ package com.codepath.timeline.network;
 
 import android.app.Application;
 
+import com.codepath.timeline.R;
 import com.codepath.timeline.models.Comment;
 import com.codepath.timeline.models.Moment;
 import com.codepath.timeline.models.Story;
@@ -9,6 +10,8 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.interceptors.ParseLogInterceptor;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class ParseApplication extends Application {
 	// http://parseplatform.github.io/docs/android/guide
@@ -24,6 +27,12 @@ public class ParseApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+				.setDefaultFontPath("fonts/HelveticaNeue-Regular.ttf")
+				.setFontAttrId(R.attr.fontPath)
+				.build()
+		);
 
 		// TODO: Local Store
 		// http://guides.codepath.com/android/Building-Data-driven-Apps-with-Parse
