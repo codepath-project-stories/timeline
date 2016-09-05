@@ -67,6 +67,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup parent, @Nullable Bundle savedInstanceState) {
 
+        // Todo: finish up the animation http://frogermcs.github.io/Instagram-with-Material-Design-concept-is-getting-real/
         if (savedInstanceState == null) {
             pendingIntroAnimation = true;
         }
