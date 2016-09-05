@@ -43,7 +43,7 @@ Here are some sample stories:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of implemented user stories: test pull request
 
 ![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif)
 
