@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,8 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.timeline.R;
 import com.codepath.timeline.adapters.LandingPagerAdapter;
-import com.codepath.timeline.network.ParseApplication;
 import com.codepath.timeline.models.UserClient;
+import com.codepath.timeline.network.ParseApplication;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
@@ -33,8 +34,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LandingActivity extends AppCompatActivity {
-    private static final String TAG = LandingActivity.class.getSimpleName();
-
     // LandingActivity creates LandingPagerAdapter
     // LandingPagerAdapter creates UserStoriesFragment and SharedStoriesFragment
     // UserStoriesFragment extends BaseStoryModelFragment
@@ -53,6 +52,10 @@ public class LandingActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
 
+    private static final String TAG = LandingActivity.class.getSimpleName();
+    private int[] tabIcons = {R.drawable.my_stories, R.drawable.friends_stories};
+    private String tabTitles[] = new String[] { "My stories", "Friends stories"};
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -65,6 +68,8 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         ButterKnife.bind(this);
 
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+        toolbar.setTitleTextAppearance(getApplicationContext(), R.style.MyCustomTabTextAppearance);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -77,6 +82,40 @@ public class LandingActivity extends AppCompatActivity {
 
         setupViewPager();
 
+        getCurrentUser();
+
+        setupTabBar();
+
+    }
+
+    private void setupTabBar() {
+        if (tabBar != null) {
+            for (int i = 0; i < tabBar.getTabCount(); i++) {
+                tabBar.getTabAt(i).setIcon(tabIcons[i]);
+            }
+        }
+
+        setActionBarTitle(tabTitles[0]);
+        tabBar.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Log.d(TAG, "tab: onTabSelected" + position);
+                viewPager.setCurrentItem(position);
+                setActionBarTitle(tabTitles[tab.getPosition()]);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    private void getCurrentUser() {
         ParseUser currentUser = UserClient.getCurrentUser();
         if (currentUser != null) {
             String name = currentUser.getString("name");
@@ -85,11 +124,14 @@ public class LandingActivity extends AppCompatActivity {
             }
 
             UserClient.printUser(currentUser);
+            fillOutDrawer(currentUser);
         } else {
             // show the signup or login screen
             Log.d(TAG, "getCurrentUser failed");
         }
+    }
 
+    private void fillOutDrawer(ParseUser currentUser) {
         // Fill out navigation drawer
         View headerLayout = nvDrawer.inflateHeaderView(R.layout.nav_header);
         ImageView ivHeaderPhoto = (ImageView) headerLayout.findViewById(R.id.ivHeaderImage);
@@ -145,15 +187,16 @@ public class LandingActivity extends AppCompatActivity {
             default:
         }
 
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        /*
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit(); */
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -161,6 +204,13 @@ public class LandingActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
+    }
+
+    private void setActionBarTitle(String title){
+        if (getSupportActionBar() != null) {
+            toolbar.setTitle(title);
+            setSupportActionBar(toolbar);
+        }
     }
 
     private void setupViewPager() {

@@ -7,6 +7,7 @@
     <color name="colorBrightAccent">#f30053</color>
     <color name="text_shadow">#7F000000</color>
 
+    <color name="colorTest">#D4F3F5</color>
     <color name="secondary">#14171A</color>
     <color name="dark_gray">#657786</color>
     <color name="light_gray">#AAB8C2</color>
