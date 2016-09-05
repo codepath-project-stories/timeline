@@ -234,6 +234,14 @@ public class TimelineActivity extends AppCompatActivity implements
 
         setupFAB();
 
+        setupGesture();
+
+        mMomentsHandler = new Handler(Looper.getMainLooper());
+        mMomentsHandler.postDelayed(getMomentsRunnable, ParseApplication.REFRESH_INTERVAL);
+    }
+
+    private void setupGesture() {
+
         mScaleGestureDetector = new ScaleGestureDetector(
                 this,
                 new ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -242,10 +250,10 @@ public class TimelineActivity extends AppCompatActivity implements
                         if (!lock) {
                             // TODO: tune pinch zoom for demo
                             if (true) { // no threshold, too sensitive, but good for emulator
-                            // 50
-                            // 100 // i prefer this
-                            // 200
-                            // if (detector.getCurrentSpan() > 100 && detector.getTimeDelta() > 100) {
+                                // 50
+                                // 100 // i prefer this
+                                // 200
+                                // if (detector.getCurrentSpan() > 100 && detector.getTimeDelta() > 100) {
                                 if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
                                     // pinch close
                                     if (pinch_zoom_index == 1) {
@@ -255,14 +263,19 @@ public class TimelineActivity extends AppCompatActivity implements
                                         alphaAnimationCreator(rvMoments, showDefaultView);
                                         return true;
                                     } else if (pinch_zoom_index == 2) {
-                                        // lock = true;
-                                        // rvMoments.setLayoutManager(layoutManagerTwoColumns);
-                                        // pinch_zoom_index = 3;
+                                        lock = true;
+                                        pinch_zoom_index = 3;
+                                        showTwoColumns = !showTwoColumns;
+                                        alphaAnimationCreator(rvMomentsTwoColumns, showTwoColumns);
                                         return true;
                                     }
                                 } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
                                     // pinch away
                                     if (pinch_zoom_index == 3) {
+                                        lock = true;
+                                        pinch_zoom_index = 2;
+                                        showTwoColumns = !showTwoColumns;
+                                        alphaAnimationCreator(rvMomentsTwoColumns, showTwoColumns);
                                         return true;
                                     } else if (pinch_zoom_index == 2) {
                                         lock = true;
@@ -278,31 +291,28 @@ public class TimelineActivity extends AppCompatActivity implements
                     }
                 });
 
+        setupGestureOnView(rvMomentsChat);
+        setupGestureOnView(rvMoments);
+        setupGestureOnView(rvMomentsTwoColumns);
+    }
+
+    private void setupGestureOnView(RecyclerView rv) {
         // onClicked != onItemClicked
-        ItemClickSupport.addTo(rvMoments).setOnItemClickListener(
+        ItemClickSupport.addTo(rv).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         showDetailDialogWithAnimation(position);
                     }
                 });
-        rvMoments.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mScaleGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
-        rvMomentsChat.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mScaleGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
 
-        mMomentsHandler = new Handler(Looper.getMainLooper());
-        mMomentsHandler.postDelayed(getMomentsRunnable, ParseApplication.REFRESH_INTERVAL);
+        rv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScaleGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
     }
 
     private void getMomentList() {
