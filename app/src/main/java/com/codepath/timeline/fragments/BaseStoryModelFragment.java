@@ -219,12 +219,14 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     protected void startAnim() {
         Log.d(TAG, "startAnim");
-        avi.show();
+        if (avi != null) {
+            avi.show();
+        }
     }
 
     protected void stopAnim() {
         Log.d(TAG, "stopAnim");
-        if (avi.isShown()) {
+        if (avi != null && avi.isShown()) {
             avi.hide();
         }
     }
