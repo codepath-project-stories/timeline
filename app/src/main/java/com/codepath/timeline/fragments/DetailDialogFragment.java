@@ -122,7 +122,9 @@ public class DetailDialogFragment extends DialogFragment {
                     @Override
                     public void onGetMomentList(List<Moment> itemList) {
                         if (!isChat) {
-                            if (itemList != null) {
+                            // TODO: Hacky but check the size so we don't update the list everytime it's auto-refreshing
+                            // Current behavior is causing the view to flicker
+                            if (mMomentList != null && itemList != null && mMomentList.size() != itemList.size()) {
                                 mMomentList = new ArrayList<Moment>();
                                 mMomentList.addAll(itemList);
                                 initDialog();
