@@ -321,21 +321,34 @@ public class TimelineActivity extends AppCompatActivity implements
                 // DB: Be careful when using 'notifyItemRangeInserted', I ran into an issue where the RecyclerView
                 // would throw an error like "Inconsistency detected. Invalid view holder adapter"
                 // Though less efficient, replacing it with 'notifyDataSetChanged' solved it
-                mMomentList.clear();
-                mMomentList.addAll(itemList);
-                // mAdapter.notifyItemRangeInserted(0, mMomentChatList.size());
-                mAdapter.notifyDataSetChanged();
-                mAdapterTwoColumns.notifyDataSetChanged();
+
+                // TODO: Hacky but check the size so we don't update the list everytime it's auto-refreshing
+                if(itemList.size() != mMomentList.size()) {
+                    Log.d(TAG, "Updating with new moments list");
+
+                    mMomentList.clear();
+                    mMomentList.addAll(itemList);
+                    // mAdapter.notifyItemRangeInserted(0, mMomentChatList.size());
+                    mAdapter.notifyDataSetChanged();
+                    mAdapterTwoColumns.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "Same moments list");
+                }
             }
 
             @Override
             public void onGetMomentChatList(List<Moment> itemList) {
-                // TODO: only need to add new items instead of clear()
-                mMomentChatList.clear();
-                mMomentChatList.addAll(itemList);
-                // mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
-                mAdapterChat.notifyDataSetChanged();
-                rvMomentsChat.scrollToPosition(mMomentChatList.size() - 1);
+                if(itemList.size() != mMomentChatList.size()) {
+                    Log.d(TAG, "Updating with new moments list");
+                    // TODO: only need to add new items instead of clear()
+                    mMomentChatList.clear();
+                    mMomentChatList.addAll(itemList);
+                    // mAdapterChat.notifyItemRangeInserted(0, mMomentChatList.size());
+                    mAdapterChat.notifyDataSetChanged();
+
+                    // TODO: since it's auto-refreshing, this is causing the list to always scroll to the bottom
+//                rvMomentsChat.scrollToPosition(mMomentChatList.size() - 1);
+                }
             }
         });
     }

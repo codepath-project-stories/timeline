@@ -38,7 +38,7 @@ abstract public class BaseStoryModelFragment extends Fragment {
     // BaseStoryModelFragment is a parent class for UserStoriesFragment and SharedStoriesFragment
     // calls TimelineActivity
 
-    private static final String TAG = BaseStoryModelFragment.class.getSimpleName();
+    private static final String TAG = "TimelineLog: " + BaseStoryModelFragment.class.getSimpleName();
 
     protected ArrayList<Story> stories;
     protected StoriesAdapter adaptStories;
@@ -200,10 +200,15 @@ abstract public class BaseStoryModelFragment extends Fragment {
 
     // TODO: only need to add new items instead of clear()
     protected void addAll(List<Story> newStories) {
-        Log.d(TAG, "addAll");
-        stories.clear();
-        stories.addAll(newStories);
-        adaptStories.notifyDataSetChanged();
+        // TODO: Hacky but check the size so we don't update the list everytime it's auto-refreshing
+        if(newStories.size() != stories.size()) {
+            Log.d(TAG, "Updating stories list");
+            stories.clear();
+            stories.addAll(newStories);
+            adaptStories.notifyDataSetChanged();
+        } else {
+            Log.d(TAG, "Same stories list");
+        }
     }
 
     protected void addNew(Story story) {
@@ -213,11 +218,15 @@ abstract public class BaseStoryModelFragment extends Fragment {
     }
 
     protected void startAnim() {
+        Log.d(TAG, "startAnim");
         avi.show();
     }
 
     protected void stopAnim() {
-        avi.hide();
+        Log.d(TAG, "stopAnim");
+        if (avi.isShown()) {
+            avi.hide();
+        }
     }
 
     @Override

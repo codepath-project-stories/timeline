@@ -27,7 +27,7 @@ import butterknife.BindView;
 public class UserStoriesFragment extends BaseStoryModelFragment {
     // UserStoriesFragment extends BaseStoryModelFragment
     // BaseStoryModelFragment calls TimelineActivity
-    private static final String TAG = UserStoriesFragment.class.getSimpleName();
+    private static final String TAG = "TimelineLog: " + UserStoriesFragment.class.getSimpleName();
 
     @BindView(R.id.addBtn)
     com.github.clans.fab.FloatingActionButton add;
@@ -50,11 +50,13 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
     }
 
     @Override
-    protected void populateList() {
-        // start custom progress bar
-
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         startAnim();
+    }
 
+    @Override
+    protected void populateList() {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +86,12 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
 
                         @Override
                         public void onGetStoryListFailed(String message) {
-                            stopAnim();
+                            Log.d(TAG, "Error fetching story list: " + message);
+                            // TODO: Since the network request is set to CACHE_THEN_NETWORK, it fails the first time due
+                            // to "results not cached", but should succeed the second time
+                            if (!message.toLowerCase().contains("results not cached")) {
+                                stopAnim();
+                            }
                         }
                     }
             );
