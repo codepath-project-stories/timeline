@@ -34,8 +34,8 @@ Here are some sample stories:
 * [x] User can see the stories of friends
 * [x] User can comment on a moment
 * [x] User can like particular moment
-* [ ] User can search for a particular story
-* [ ] User can search for a particular friend as a collaborator to the story
+* [x] User can search for a particular story
+* [x] User can search for a particular friend as a collaborator to the story
 * [ ] User receives push notification when a new moment is added to the story by another user
 * [ ] User has a list of friends auto populated from Facebook
 * [ ] User can add a videos in their timeline
