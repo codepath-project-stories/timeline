@@ -73,7 +73,7 @@
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:layout_below="@+id/tvBody"
-      tools:background="@color/colorPrimary">
+      android:background="@color/colorPrimaryLight">
 
     <ImageView
         android:id="@+id/ivMedia"
