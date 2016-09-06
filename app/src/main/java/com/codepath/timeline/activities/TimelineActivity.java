@@ -323,7 +323,7 @@ public class TimelineActivity extends AppCompatActivity implements
                 // Though less efficient, replacing it with 'notifyDataSetChanged' solved it
 
                 // TODO: Hacky but check the size so we don't update the list everytime it's auto-refreshing
-                if(itemList.size() != mMomentList.size()) {
+                if(mMomentList != null && itemList != null && itemList.size() != mMomentList.size()) {
                     Log.d(TAG, "Updating with new moments list");
 
                     mMomentList.clear();
