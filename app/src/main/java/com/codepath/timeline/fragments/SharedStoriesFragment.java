@@ -43,7 +43,7 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
     protected void populateList() {
 
         // start custom progress bar
-//        startAnim();
+        startAnim();
 
         // remove floating button from this view, only implemented for adding a moment to friend's story
         add.setVisibility(View.GONE);
@@ -56,7 +56,7 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
                     @Override
                     public void onGetStoryListSuccess(List<Story> itemList) {
                         if (itemList != null) {
-                            Log.d(TAG, "populateList");
+                            Log.d(TAG, "populateList from SharedStoriesFragment");
                             addAll(itemList);
                         }
 
@@ -66,7 +66,11 @@ public class SharedStoriesFragment extends BaseStoryModelFragment {
 
                     @Override
                     public void onGetStoryListFailed(String message) {
-//                        stopAnim();
+                      // TODO: Since the network request is set to CACHE_THEN_NETWORK, it fails the first time due
+                      // to "results not cached", but should succeed the second time
+                      if (!message.toLowerCase().contains("results not cached")) {
+                        stopAnim();
+                      }
                     }
                 }
         );

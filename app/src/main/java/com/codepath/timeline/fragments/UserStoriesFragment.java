@@ -74,7 +74,7 @@ public class UserStoriesFragment extends BaseStoryModelFragment {
                         @Override
                         public void onGetStoryListSuccess(List<Story> itemList) {
                             if (itemList != null) {
-                                Log.d(TAG, "populateList");
+                                Log.d(TAG, "populateList from UserStoriesFragment");
                                 // Sort by newly updated story on top of the list
                                 Collections.sort(itemList);
                                 addAll(itemList);
