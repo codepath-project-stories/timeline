@@ -60,7 +60,7 @@ Here's a walkthrough of implemented user stories: test pull request
 ![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif)
 
 ### Sprint 3
-![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint3.gif)
+![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/git_sprint3.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
