@@ -345,39 +345,44 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void enterReveal(final View myView) {
-        // previously invisible view
-        // final View myView = findViewById(R.id.my_view);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            // previously invisible view
+            // final View myView = findViewById(R.id.my_view);
 
-        // get the center for the clipping circle
-        int cx = myView.getMeasuredWidth() / 2;
-        int cy = myView.getMeasuredHeight() / 2;
+            // get the center for the clipping circle
+            int cx = myView.getMeasuredWidth() / 2;
+            int cy = myView.getMeasuredHeight() / 2;
 
-        // get the final radius for the clipping circle
-        int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
-        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
-        myView.setVisibility(View.VISIBLE);
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
+            // get the final radius for the clipping circle
+            int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
+            Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+            myView.setVisibility(View.VISIBLE);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
-            }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
+                }
 
-            @Override
-            public void onAnimationCancel(Animator animation) {
+                @Override
+                public void onAnimationCancel(Animator animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationRepeat(Animator animation) {
+                @Override
+                public void onAnimationRepeat(Animator animation) {
 
-            }
-        });
-        anim.start();
+                }
+            });
+            anim.start();
+        }
+        else {
+            myView.setVisibility(View.VISIBLE);
+        }
     }
 
     void setupAnimation() {
@@ -422,7 +427,10 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("TransitionListener", "onTransitionResume");
             }
         };
-        getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            // only for gingerbread and newer versions
+            getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+        }
     }
 
 }
