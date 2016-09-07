@@ -39,4 +39,4 @@ captures/
 # Keystore files
 *.jks
 .idea
-/app/src/main/java/com/codepath/timeline/activities/SpotifyActivity.java
+app/src/main/java/com/codepath/timeline/activities/SpotifyActivity.java
