@@ -56,11 +56,12 @@ Here are some sample stories:
 
 Here's a walkthrough of implemented user stories: test pull request
 
-### Sprint 2
-![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif)
-
 ### Sprint 3
-![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/git_sprint3.gif)
+<img src='https://github.com/codepath-project-stories/timeline/blob/dev/git_sprint3.gif' title='Screenshot' width="300" alt='Screenshot' /><br><br>
+
+### Sprint 2
+https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif
+<br><br>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
