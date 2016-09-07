@@ -115,6 +115,8 @@ public class DetailDialogFragment extends DialogFragment {
             return;
         }
 
+        mMomentList = new ArrayList<Moment>();
+
         // TODO: no need to query
         // TODO: let caller pass data into DetailDialogFragment
         TimelineClient.getInstance().getMomentList(mStoryObjectId,
@@ -122,8 +124,10 @@ public class DetailDialogFragment extends DialogFragment {
                     @Override
                     public void onGetMomentList(List<Moment> itemList) {
                         if (!isChat) {
-                            if (itemList != null) {
-                                mMomentList = new ArrayList<Moment>();
+                            // TODO: Hacky but check the size so we don't update the list everytime it's auto-refreshing
+                            // Current behavior is causing the view to flicker
+                            if (mMomentList != null && itemList != null && mMomentList.size() != itemList.size()) {
+                                mMomentList.clear();
                                 mMomentList.addAll(itemList);
                                 initDialog();
                             }

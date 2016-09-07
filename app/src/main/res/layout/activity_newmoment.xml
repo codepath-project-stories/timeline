@@ -95,15 +95,21 @@
             android:layout_gravity="right"
             android:background="@drawable/primary_dark_button"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_weight="0"
             android:textColorHint="@color/white"
             android:gravity="center"
             android:hint="@string/share"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingBottom="@dimen/medium_padding"
+            android:paddingLeft="@dimen/extra_large_padding"
+            android:paddingRight="@dimen/extra_large_padding"
+            android:paddingTop="@dimen/medium_padding"
             android:onClick="publish"
             android:textAllCaps="true"
-            android:textSize="15sp" />
+            android:textSize="@dimen/mediumText" />
 
     </LinearLayout>
 

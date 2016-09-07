@@ -25,8 +25,8 @@
     <string name="add_people">Add collaborators (optional):</string>
     <string name="add_date">Set the date</string>
     <string name="add_location">Set location</string>
-    <string name="share">Share</string>
-    <string name="publish">Create a story</string>
+    <string name="share">SHARE</string>
+    <string name="publish">CREATE</string>
     <string name="cancel">Cancel</string>
     <string name="all_changes_will_be_lost">All changes will be lost, are you sure you want to exit?</string>
     <string name="yes">yes</string>
