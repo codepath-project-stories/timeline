@@ -32,20 +32,35 @@ Here are some sample stories:
 
 ## Stretched Goals
 * [x] User can see the stories of friends
+* [x] User can play music with spotify when in the detailed story view
 * [x] User can comment on a moment
 * [x] User can like particular moment
 * [x] User can search for a particular story
-* [x] User can search for a particular friend as a collaborator to the story
+* [x] User can search for a particular friend as a collaborator to add to the story
+* [x] Chat view of the moments can be brought up by pinching the screen
+* [x] User can switch from one column view to two column view by zoom in zoom out
+
+## Super streched goals
 * [ ] User receives push notification when a new moment is added to the story by another user
 * [ ] User has a list of friends auto populated from Facebook
-* [ ] User can add a videos in their timeline
+* [ ] User can add videos into their timeline
+* [ ] Shutterfly integration
+* [ ] Custom camera
+* [ ] Map view
+* [ ] Adding photos from gallery
+* [ ] Changing the story (add/remove collaborators, change music, delete a story, delete a moment etc.)
+* [ ] Customizable timeline theme
 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories: test pull request
 
+### Sprint 2
 ![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif)
+
+### Sprint 3
+![Alt Text](https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint3.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
