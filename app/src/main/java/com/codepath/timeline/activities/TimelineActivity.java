@@ -66,8 +66,8 @@ public class TimelineActivity extends AppCompatActivity implements
     // 1: getIntent().getStringExtra("imageUrl")
 
     private static final String TAG = TimelineActivity.class.getSimpleName();
-    private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
-    private static final String REDIRECT_URI = "timeline-spotify-integration://callback";
+    private static String CLIENT_ID;
+    private static String REDIRECT_URI;
     // Request code that will be passed together with authentication result to the onAuthenticationResult callback
     private static final int REQUEST_CODE = 1337;
 
@@ -139,6 +139,9 @@ public class TimelineActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        CLIENT_ID = getResources().getString(R.string.CLIENT_ID);
+        REDIRECT_URI = getResources().getString(R.string.REDIRECT_URI);
 
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);

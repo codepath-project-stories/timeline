@@ -30,9 +30,9 @@ public class SpotifyActivity extends Activity implements
     private static final String TAG = SpotifyActivity.class.getSimpleName();
 
     // TODO: Replace with your client ID
-    private static final String CLIENT_ID = "08fae0038f1148a5b60c36db0322805f";
+    private final String CLIENT_ID = getString(R.string.CLIENT_ID);
     // TODO: Replace with your redirect URI
-    private static final String REDIRECT_URI = "timeline-spotify-integration://callback";
+    private final String REDIRECT_URI = getString(R.string.REDIRECT_URI);
 
     // Request code that will be passed together with authentication result to the onAuthenticationResult callback
     // Can be any integer

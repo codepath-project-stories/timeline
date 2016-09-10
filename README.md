@@ -57,7 +57,7 @@ Here are some sample stories:
 Here's a walkthrough of implemented user stories: test pull request
 
 ### Sprint 3
-<img src='https://github.com/codepath-project-stories/timeline/blob/dev/git_sprint3.gif' title='Screenshot' width="300" alt='Screenshot' /><br><br>
+<img src='https://github.com/codepath-project-stories/timeline/blob/dev/git_sprint3v2.gif' title='Screenshot' width="300" alt='Screenshot' /><br><br>
 
 ### Sprint 2
 https://github.com/codepath-project-stories/timeline/blob/dev/gif_sprint2.gif
