@@ -2,6 +2,7 @@ package com.codepath.timeline.activities;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.util.Log;
@@ -21,10 +23,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.timeline.R;
-import com.codepath.timeline.network.ParseApplication;
 import com.codepath.timeline.models.UserClient;
+import com.codepath.timeline.network.ParseApplication;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
@@ -295,11 +296,20 @@ public class LoginActivity extends AppCompatActivity {
     void showMaterialDialog(String input) {
         lock = false;
         button_start.setText(getResources().getString(R.string.start));
+        /*
         new MaterialDialog.Builder(LoginActivity.this)
                 .content(input)
                 .positiveText(android.R.string.ok)
                 // .backgroundColorRes(R.color.colorPrimaryLoginDark)
                 .backgroundColorRes(R.color.colorPrimaryDark)
+                .show();
+                */
+        new AlertDialog.Builder(LoginActivity.this)
+                .setMessage(input)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
                 .show();
     }
 
@@ -335,39 +345,44 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void enterReveal(final View myView) {
-        // previously invisible view
-        // final View myView = findViewById(R.id.my_view);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            // previously invisible view
+            // final View myView = findViewById(R.id.my_view);
 
-        // get the center for the clipping circle
-        int cx = myView.getMeasuredWidth() / 2;
-        int cy = myView.getMeasuredHeight() / 2;
+            // get the center for the clipping circle
+            int cx = myView.getMeasuredWidth() / 2;
+            int cy = myView.getMeasuredHeight() / 2;
 
-        // get the final radius for the clipping circle
-        int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
-        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
-        myView.setVisibility(View.VISIBLE);
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
+            // get the final radius for the clipping circle
+            int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
+            Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+            myView.setVisibility(View.VISIBLE);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
-            }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
+                }
 
-            @Override
-            public void onAnimationCancel(Animator animation) {
+                @Override
+                public void onAnimationCancel(Animator animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationRepeat(Animator animation) {
+                @Override
+                public void onAnimationRepeat(Animator animation) {
 
-            }
-        });
-        anim.start();
+                }
+            });
+            anim.start();
+        }
+        else {
+            myView.setVisibility(View.VISIBLE);
+        }
     }
 
     void setupAnimation() {
@@ -412,7 +427,10 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("TransitionListener", "onTransitionResume");
             }
         };
-        getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            // only for gingerbread and newer versions
+            getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+        }
     }
 
 }
